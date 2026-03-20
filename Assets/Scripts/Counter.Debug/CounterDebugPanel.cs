@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Counter.Debug
 {
+    [RequireComponent(typeof(UIDocument))]
     public class CounterDebugPanel : MonoBehaviour
     {
         public UIDocument uiDocument;

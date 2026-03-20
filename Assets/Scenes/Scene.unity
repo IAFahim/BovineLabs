@@ -494,6 +494,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1568922601}
+  - component: {fileID: 1568922603}
   - component: {fileID: 1568922602}
   m_Layer: 0
   m_Name: Editor
@@ -529,7 +530,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80963314e411e398a4d63cfb201a66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Counter.Debug::Counter.Debug.CounterDebugPanel
-  CounterText: {fileID: 0}
+  uiDocument: {fileID: 1568922603}
+--- !u!114 &1568922603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568922600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 0166e6e5f8c1dcd7c9975adddab58621, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
