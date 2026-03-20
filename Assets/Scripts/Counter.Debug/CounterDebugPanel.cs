@@ -29,13 +29,13 @@ namespace Counter.Debug
             var entityManager = world.EntityManager;
             entityManager.CompleteDependencyBeforeRO<CounterComponent>();
             var query = entityManager.CreateEntityQuery(typeof(CounterComponent));
-            if (query.TryGetSingleton(out CounterComponent counter)) SetLabel(_counterLabel, counter, "Counter: ", "");
+            if (query.TryGetSingleton(out CounterComponent counter)) SetLabelAsCounter(_counterLabel, counter);
             query.Dispose();
         }
 
-        private void SetLabel(Label label, CounterComponent counter, FixedString128Bytes start, FixedString128Bytes end)
+        private void SetLabelAsCounter(Label label, CounterComponent counter)
         {
-            label.text = start + counter.Value.ToString() + end;
+            label.text = $"Counter: {counter.Value}";
         }
     }
 }
