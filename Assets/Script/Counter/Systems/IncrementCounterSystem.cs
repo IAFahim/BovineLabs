@@ -1,3 +1,4 @@
+using Examples._01_AssemblyArchitecture.Script.Counter.Data;
 using Unity.Burst;
 using Unity.Entities;
 
@@ -24,9 +25,9 @@ namespace Examples._01_AssemblyArchitecture.Script.Counter.Systems
     }
 
     [BurstCompile]
-    partial struct IncrementCounterJob : IJobEntity
+    internal partial struct IncrementCounterJob : IJobEntity
     {
-        void Execute(ref Data.CounterComponent counterComponent)
+        private void Execute(ref CounterComponent counterComponent)
         {
             counterComponent.Value++;
         }

@@ -9,7 +9,7 @@ namespace Examples._01_AssemblyArchitecture.Script.Counter.Debug
     {
         public Text CounterText;
 
-        void Update()
+        private void Update()
         {
             var world = World.DefaultGameObjectInjectionWorld;
             if (world == null) return;
@@ -17,10 +17,7 @@ namespace Examples._01_AssemblyArchitecture.Script.Counter.Debug
             var entityManager = world.EntityManager;
             var query = entityManager.CreateEntityQuery(typeof(CounterComponent));
 
-            if (query.TryGetSingleton(out CounterComponent counter))
-            {
-                CounterText.text = $"Counter: {counter.Value}";
-            }
+            if (query.TryGetSingleton(out CounterComponent counter)) CounterText.text = $"Counter: {counter.Value}";
 
             query.Dispose();
         }

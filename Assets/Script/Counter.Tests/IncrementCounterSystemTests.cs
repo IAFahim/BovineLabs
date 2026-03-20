@@ -33,10 +33,7 @@ namespace Examples._01_AssemblyArchitecture.Script.Counter.Tests
 
             var system = World.GetOrCreateSystem<IncrementCounterSystem>();
 
-            for (int i = 0; i < 10; i++)
-            {
-                system.Update(World.Unmanaged);
-            }
+            for (var i = 0; i < 10; i++) system.Update(World.Unmanaged);
 
             Manager.CompleteAllTrackedJobs();
 

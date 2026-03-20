@@ -10,7 +10,7 @@ namespace Examples._01_AssemblyArchitecture.Counter.Editor
         {
             DrawDefaultInspector();
 
-            CounterAuthoring authoring = (CounterAuthoring)target;
+            var authoring = (CounterAuthoring)target;
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Counter Preview", EditorStyles.boldLabel);
