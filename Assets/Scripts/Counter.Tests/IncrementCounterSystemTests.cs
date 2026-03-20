@@ -1,10 +1,10 @@
 using BovineLabs.Testing;
-using Examples._01_AssemblyArchitecture.Script.Counter.Data;
-using Examples._01_AssemblyArchitecture.Script.Counter.Systems;
+using Counter.Data.Components;
+using Counter.Systems;
 using NUnit.Framework;
 using Unity.Entities;
 
-namespace Examples._01_AssemblyArchitecture.Script.Counter.Tests
+namespace Counter.Tests
 {
     public class IncrementCounterSystemTests : ECSTestsFixture
     {

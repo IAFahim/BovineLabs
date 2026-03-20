@@ -1,7 +1,7 @@
-using Examples._01_AssemblyArchitecture.Script.Counter.Authoring;
+using Counter.Authoring;
 using UnityEditor;
 
-namespace Examples._01_AssemblyArchitecture.Counter.Editor
+namespace Counter.Editor
 {
     [CustomEditor(typeof(CounterAuthoring))]
     public class CounterEditor : UnityEditor.Editor

@@ -1,8 +1,8 @@
-using Examples._01_AssemblyArchitecture.Script.Counter.Data;
+using Counter.Data.Components;
 using Unity.Burst;
 using Unity.Entities;
 
-namespace Examples._01_AssemblyArchitecture.Script.Counter.Systems
+namespace Counter.Systems
 {
     [BurstCompile]
     public partial struct IncrementCounterSystem : ISystem

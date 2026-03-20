@@ -1,9 +1,9 @@
-using Examples._01_AssemblyArchitecture.Script.Counter.Data;
+using Counter.Data.Components;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Examples._01_AssemblyArchitecture.Script.Counter.Debug
+namespace Counter.Debug
 {
     public class CounterDebugPanel : MonoBehaviour
     {

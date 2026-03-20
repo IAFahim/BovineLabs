@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace Examples._01_AssemblyArchitecture.Script.Counter.Data
+namespace Counter.Data.Components
 {
     public struct CounterComponent : IComponentData
     {

@@ -1,8 +1,8 @@
-using Examples._01_AssemblyArchitecture.Script.Counter.Data;
+using Counter.Data.Components;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Examples._01_AssemblyArchitecture.Script.Counter.Authoring
+namespace Counter.Authoring
 {
     public class CounterAuthoring : MonoBehaviour
     {
