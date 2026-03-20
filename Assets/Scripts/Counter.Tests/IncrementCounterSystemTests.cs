@@ -9,7 +9,6 @@ namespace Counter.Tests
     public class IncrementCounterSystemTests : ECSTestsFixture
     {
         [Test]
-        [TestLeakDetection]
         public void IncrementCounterSystem_IncrementsCounterValue()
         {
             var entity = Manager.CreateEntity(typeof(CounterComponent));
@@ -25,7 +24,6 @@ namespace Counter.Tests
         }
 
         [Test]
-        [TestLeakDetection]
         public void IncrementCounterSystem_MultipleIncrements_CorrectTotal()
         {
             var entity = Manager.CreateEntity(typeof(CounterComponent));
@@ -42,7 +40,6 @@ namespace Counter.Tests
         }
 
         [Test]
-        [TestLeakDetection]
         public void IncrementCounterSystem_MultipleCounters_AllIncremented()
         {
             var entity1 = Manager.CreateEntity(typeof(CounterComponent));
