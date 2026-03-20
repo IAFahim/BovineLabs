@@ -1,24 +1,33 @@
 using Counter.Data.Components;
 using Unity.Entities;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Counter.Debug
 {
     public class CounterDebugPanel : MonoBehaviour
     {
-        public Text CounterText;
+        public UIDocument uiDocument;
+        private Label _counterLabel;
+
+        private void OnValidate()
+        {
+            uiDocument = GetComponent<UIDocument>();
+        }
+
+        private void OnEnable()
+        {
+            _counterLabel = new Label();
+            uiDocument.rootVisualElement.Add(_counterLabel);
+        }
 
         private void Update()
         {
             var world = World.DefaultGameObjectInjectionWorld;
-            if (world == null) return;
 
             var entityManager = world.EntityManager;
             var query = entityManager.CreateEntityQuery(typeof(CounterComponent));
-
-            if (query.TryGetSingleton(out CounterComponent counter)) CounterText.text = $"Counter: {counter.Value}";
-
+            if (query.TryGetSingleton(out CounterComponent counter)) _counterLabel.text = $"Counter: {counter.Value}";
             query.Dispose();
         }
     }
