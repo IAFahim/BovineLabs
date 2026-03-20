@@ -1,10 +1,12 @@
 using Counter.Data.Components;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Counter.Debug
-{[RequireComponent(typeof(UIDocument))]
+{
+    [RequireComponent(typeof(UIDocument))]
     public class CounterDebugPanel : MonoBehaviour
     {
         public UIDocument uiDocument;
@@ -27,8 +29,13 @@ namespace Counter.Debug
             var entityManager = world.EntityManager;
             entityManager.CompleteDependencyBeforeRO<CounterComponent>();
             var query = entityManager.CreateEntityQuery(typeof(CounterComponent));
-            if (query.TryGetSingleton(out CounterComponent counter)) _counterLabel.text = $"Counter: {counter.Value}";
+            if (query.TryGetSingleton(out CounterComponent counter)) SetLabel(_counterLabel, counter, "Counter: ", "");
             query.Dispose();
+        }
+
+        private void SetLabel(Label label, CounterComponent counter, FixedString128Bytes start, FixedString128Bytes end)
+        {
+            label.text = start + counter.Value.ToString() + end;
         }
     }
 }
