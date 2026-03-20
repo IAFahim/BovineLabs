@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Quarto",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "1. NativeThreadStream: Block-Based Thread-Safe Streaming\nStandard: Never pre-allocate massive arrays “just in case.” Use NativeThreadStream for highly parallel producers creating an unknown amount of sequential data.\nTest Standard: Must use [TestLeakDetection] and strictly balance BeginForEachIndex with EndForEachIndex.\nusing BovineLabs.Core.Collections;\nusing Unity.Burst;\nusing Unity.Collections;\nusing Unity.Entities;\nusing Unity.Jobs;\n\n[BurstCompile(CompileSynchronously = true)]\npublic struct ProduceStreamJob : IJobFor\n{\n    public NativeThreadStream.Writer Writer;\n\n    public void Execute(int index)\n    {\n        // Zero-allocation, block-based expansion\n        this.Writer.Write(index);\n        this.Writer.Write(index * 2);\n    }\n}\n\npublic static class NativeThreadStreamExample\n{\n    public static void Execute(ref SystemState state)\n    {\n        var stream = new NativeThreadStream(Allocator.TempJob);\n        \n        state.Dependency = new ProduceStreamJob \n        { \n            Writer = stream.AsWriter() \n        }.ScheduleParallel(100, 16, state.Dependency);\n\n        state.Dependency = stream.Dispose(state.Dependency);\n    }\n}"
   },
   {
     "objectID": "about.html",

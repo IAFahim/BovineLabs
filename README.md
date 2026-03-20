@@ -6,7 +6,6 @@
 
 ### 1. `NativeThreadStream`: Block-Based Thread-Safe Streaming
 **Standard:** Never pre-allocate massive arrays "just in case." Use `NativeThreadStream` for highly parallel producers creating an unknown amount of sequential data.
-**Test Standard:** Must use `[TestLeakDetection]` and strictly balance `BeginForEachIndex` with `EndForEachIndex`.
 
 ```csharp
 using BovineLabs.Core.Collections;
