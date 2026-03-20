@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Counter.Debug
-{
-    [RequireComponent(typeof(UIDocument))]
+{[RequireComponent(typeof(UIDocument))]
     public class CounterDebugPanel : MonoBehaviour
     {
         public UIDocument uiDocument;
@@ -25,8 +24,8 @@ namespace Counter.Debug
         private void Update()
         {
             var world = World.DefaultGameObjectInjectionWorld;
-
             var entityManager = world.EntityManager;
+            entityManager.CompleteDependencyBeforeRO<CounterComponent>();
             var query = entityManager.CreateEntityQuery(typeof(CounterComponent));
             if (query.TryGetSingleton(out CounterComponent counter)) _counterLabel.text = $"Counter: {counter.Value}";
             query.Dispose();
