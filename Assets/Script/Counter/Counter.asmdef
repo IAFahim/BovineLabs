@@ -1,0 +1,20 @@
+{
+  "name": "Counter",
+  "references": [
+    "BovineLabs.Core",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Mathematics",
+    "Unity.Burst",
+    "Counter.Data"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
