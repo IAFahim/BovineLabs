@@ -1,0 +1,25 @@
+{
+  "name": "_Shared",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "BovineLabs.Core",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Mathematics",
+    "BovineLabs.Testing"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
