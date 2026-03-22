@@ -2,35 +2,28 @@
     "name": "Scripts.Debug",
     "rootNamespace": "",
     "references": [
-        "BovineLabs.Anchor",
         "BovineLabs.Core",
-        "BovineLabs.Core.Extensions",
+        "BovineLabs.Core.Editor",
         "Scripts",
         "Scripts.Data",
-        "Unity.AppUI",
-        "Unity.AppUI.MVVM",
-        "Unity.AppUI.Navigation",
         "Unity.Burst",
         "Unity.Collections",
         "Unity.Entities",
-        "Unity.Entities.Graphics",
-        "Unity.Entities.Hybrid",
-        "Unity.InputSystem",
         "Unity.Mathematics",
-        "Unity.Mathematics.Extensions",
-        "Unity.Physics",
-        "Unity.Transforms"
+        "Unity.Transforms",
+        "Unity.UIElements",
+        "Unity.UIElements.Toolkit"
     ],
     "optionalUnityReferences": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_EDITOR || BL_DEBUG"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }
