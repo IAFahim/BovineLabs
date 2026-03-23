@@ -5,7 +5,7 @@ Zero Complexity Validation: Is the system's OnUpdate CC=1? If not, extract the l
 Self-documenting names, clear structure, and well-named systems replace every comment. If you feel the urge to write a comment, rename the variable, extract the method, or redesign the structure until the comment is unnecessary.
 
 Follow DOD. AND Data structure follows Database normalization technices.
-Mehtord may never have a return statement. Follow TryXOut Pattarn in case we need bool. OUT over return;
+Mehtord may never have a return statement. Follow TryXOut Pattarn in case we need bool. OUT over return. Always create pure function.
 Goal is to run test mainly. Its test driven development.
 
 Create Files in 6 places:
