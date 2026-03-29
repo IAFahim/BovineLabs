@@ -241,6 +241,9 @@ namespace Scripts.Stats
             this.floatTab.clicked += this.ToggleFloat;
             this.intTab.clicked += this.ToggleInt;
             this.boolTab.clicked += this.ToggleBool;
+
+            this.panel.AddManipulator(new SimpleDragManipulator(this.panel));
+
             this.treeReady = true;
             return true;
         }
