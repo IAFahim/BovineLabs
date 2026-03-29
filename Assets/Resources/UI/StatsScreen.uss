@@ -40,6 +40,7 @@
     border-bottom-color: rgba(154, 181, 210, 0.2);
     border-left-color: rgba(154, 181, 210, 0.2);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 .stats-screen__drag-handle {
@@ -50,37 +51,40 @@
     height: 26px;
     cursor: move;
     border-bottom-width: 1px;
-    border-bottom-color: rgba(255, 255, 255, 0.03);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
+    z-index: 10;
 }
 
 .stats-screen__drag-handle:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(255, 255, 255, 0.03);
 }
 
 .stats-screen__drag-handle::before {
     content: "";
-    width: 4px;
-    height: 4px;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
 .stats-screen__drag-handle::after {
     content: "";
-    width: 4px;
-    height: 4px;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
 .stats-screen__drag-handle:hover::before,
 .stats-screen__drag-handle:hover::after {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .stats-screen__title {
@@ -98,6 +102,7 @@
 .stats-screen__tabs {
     flex-direction: row;
     margin-bottom: 4px;
+    margin-top: 26px;
 }
 
 .stats-screen__tab {
