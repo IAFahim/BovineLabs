@@ -1,0 +1,345 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688c3c3ae3a3651cf9c00789023f0a4c, type: 3}
+  m_Name: GlobalIntCatalogSettings
+  m_EditorClassIdentifier: Scripts.Authoring::Scripts.Authoring.Stats.StatIntCatalogSettings
+  Definitions:
+  - Name: Jumps
+    ShortName: Jumps
+    InitialValue: 2
+    View: 5
+    LinkId: 1
+  - Name: Jumps Max
+    ShortName: Jumps Max
+    InitialValue: 5
+    View: 2
+    LinkId: -1
+  - Name: Air Dashes
+    ShortName: Air Dashes
+    InitialValue: 3
+    View: 5
+    LinkId: 3
+  - Name: Air Dashes Max
+    ShortName: Air Dashes Max
+    InitialValue: 7
+    View: 2
+    LinkId: -1
+  - Name: Potions
+    ShortName: Potions
+    InitialValue: 4
+    View: 5
+    LinkId: 5
+  - Name: Potions Max
+    ShortName: Potions Max
+    InitialValue: 9
+    View: 2
+    LinkId: -1
+  - Name: Keys
+    ShortName: Keys
+    InitialValue: 5
+    View: 5
+    LinkId: 7
+  - Name: Keys Max
+    ShortName: Keys Max
+    InitialValue: 11
+    View: 2
+    LinkId: -1
+  - Name: Bombs
+    ShortName: Bombs
+    InitialValue: 6
+    View: 5
+    LinkId: 9
+  - Name: Bombs Max
+    ShortName: Bombs Max
+    InitialValue: 13
+    View: 2
+    LinkId: -1
+  - Name: Rooms
+    ShortName: Rooms
+    InitialValue: 7
+    View: 5
+    LinkId: 11
+  - Name: Rooms Max
+    ShortName: Rooms Max
+    InitialValue: 15
+    View: 2
+    LinkId: -1
+  - Name: Quests
+    ShortName: Quests
+    InitialValue: 8
+    View: 5
+    LinkId: 13
+  - Name: Quests Max
+    ShortName: Quests Max
+    InitialValue: 17
+    View: 2
+    LinkId: -1
+  - Name: Lives
+    ShortName: Lives
+    InitialValue: 9
+    View: 5
+    LinkId: 15
+  - Name: Lives Max
+    ShortName: Lives Max
+    InitialValue: 19
+    View: 2
+    LinkId: -1
+  - Name: Jump Count
+    ShortName: Jump Count
+    InitialValue: 3
+    View: 2
+    LinkId: -1
+  - Name: Dash Count
+    ShortName: Dash Count
+    InitialValue: 5
+    View: 2
+    LinkId: -1
+  - Name: Kill Count
+    ShortName: Kill Count
+    InitialValue: 7
+    View: 2
+    LinkId: -1
+  - Name: Elite Kills
+    ShortName: Elite Kills
+    InitialValue: 9
+    View: 2
+    LinkId: -1
+  - Name: Boss Kills
+    ShortName: Boss Kills
+    InitialValue: 11
+    View: 2
+    LinkId: -1
+  - Name: Chest Opens
+    ShortName: Chest Opens
+    InitialValue: 13
+    View: 2
+    LinkId: -1
+  - Name: Quest Count
+    ShortName: Quest Count
+    InitialValue: 15
+    View: 2
+    LinkId: -1
+  - Name: Room Clears
+    ShortName: Room Clears
+    InitialValue: 17
+    View: 2
+    LinkId: -1
+  - Name: Secrets
+    ShortName: Secrets
+    InitialValue: 19
+    View: 2
+    LinkId: -1
+  - Name: Shrines
+    ShortName: Shrines
+    InitialValue: 21
+    View: 2
+    LinkId: -1
+  - Name: Crafts
+    ShortName: Crafts
+    InitialValue: 23
+    View: 2
+    LinkId: -1
+  - Name: Rerolls
+    ShortName: Rerolls
+    InitialValue: 25
+    View: 2
+    LinkId: -1
+  - Name: Purchases
+    ShortName: Purchases
+    InitialValue: 27
+    View: 2
+    LinkId: -1
+  - Name: Combos
+    ShortName: Combos
+    InitialValue: 29
+    View: 2
+    LinkId: -1
+  - Name: Chains
+    ShortName: Chains
+    InitialValue: 31
+    View: 2
+    LinkId: -1
+  - Name: Perfects
+    ShortName: Perfects
+    InitialValue: 33
+    View: 2
+    LinkId: -1
+  - Name: Fails
+    ShortName: Fails
+    InitialValue: 35
+    View: 2
+    LinkId: -1
+  - Name: Deaths
+    ShortName: Deaths
+    InitialValue: 37
+    View: 2
+    LinkId: -1
+  - Name: Revives
+    ShortName: Revives
+    InitialValue: 39
+    View: 2
+    LinkId: -1
+  - Name: Relics
+    ShortName: Relics
+    InitialValue: 41
+    View: 2
+    LinkId: -1
+  - Name: Weapons
+    ShortName: Weapons
+    InitialValue: 43
+    View: 2
+    LinkId: -1
+  - Name: Traits
+    ShortName: Traits
+    InitialValue: 45
+    View: 2
+    LinkId: -1
+  - Name: Mutations
+    ShortName: Mutations
+    InitialValue: 47
+    View: 2
+    LinkId: -1
+  - Name: Followers
+    ShortName: Followers
+    InitialValue: 49
+    View: 2
+    LinkId: -1
+  - Name: Summons
+    ShortName: Summons
+    InitialValue: 51
+    View: 2
+    LinkId: -1
+  - Name: Hits
+    ShortName: Hits
+    InitialValue: 53
+    View: 2
+    LinkId: -1
+  - Name: Crits
+    ShortName: Crits
+    InitialValue: 55
+    View: 2
+    LinkId: -1
+  - Name: Dodges
+    ShortName: Dodges
+    InitialValue: 57
+    View: 2
+    LinkId: -1
+  - Name: Blocks
+    ShortName: Blocks
+    InitialValue: 59
+    View: 2
+    LinkId: -1
+  - Name: Parries
+    ShortName: Parries
+    InitialValue: 61
+    View: 2
+    LinkId: -1
+  - Name: Player Level
+    ShortName: Player Level
+    InitialValue: 1
+    View: 4
+    LinkId: -1
+  - Name: Quest Tier
+    ShortName: Quest Tier
+    InitialValue: 2
+    View: 4
+    LinkId: -1
+  - Name: World Tier
+    ShortName: World Tier
+    InitialValue: 3
+    View: 4
+    LinkId: -1
+  - Name: Camp Tier
+    ShortName: Camp Tier
+    InitialValue: 4
+    View: 4
+    LinkId: -1
+  - Name: Weapon Tier
+    ShortName: Weapon Tier
+    InitialValue: 5
+    View: 4
+    LinkId: -1
+  - Name: Skill Tier
+    ShortName: Skill Tier
+    InitialValue: 6
+    View: 4
+    LinkId: -1
+  - Name: Rune Tier
+    ShortName: Rune Tier
+    InitialValue: 7
+    View: 4
+    LinkId: -1
+  - Name: Shop Tier
+    ShortName: Shop Tier
+    InitialValue: 8
+    View: 4
+    LinkId: -1
+  - Name: Map Tier
+    ShortName: Map Tier
+    InitialValue: 9
+    View: 4
+    LinkId: -1
+  - Name: Threat Tier
+    ShortName: Threat Tier
+    InitialValue: 10
+    View: 4
+    LinkId: -1
+  - Name: Armor Delta
+    ShortName: Armor Delta
+    InitialValue: 1
+    View: 1
+    LinkId: -1
+  - Name: Threat Delta
+    ShortName: Threat Delta
+    InitialValue: 2
+    View: 1
+    LinkId: -1
+  - Name: Heat Delta
+    ShortName: Heat Delta
+    InitialValue: 3
+    View: 1
+    LinkId: -1
+  - Name: Quest Delta
+    ShortName: Quest Delta
+    InitialValue: 4
+    View: 1
+    LinkId: -1
+  - Name: Spread Delta
+    ShortName: Spread Delta
+    InitialValue: 5
+    View: 1
+    LinkId: -1
+  - Name: Stability Delta
+    ShortName: Stability Delta
+    InitialValue: 6
+    View: 1
+    LinkId: -1
+  - Name: Shop Delta
+    ShortName: Shop Delta
+    InitialValue: 7
+    View: 1
+    LinkId: -1
+  - Name: Luck Delta
+    ShortName: Luck Delta
+    InitialValue: 8
+    View: 1
+    LinkId: -1
+  - Name: Camp Delta
+    ShortName: Camp Delta
+    InitialValue: 9
+    View: 1
+    LinkId: -1
+  - Name: Spawn Delta
+    ShortName: Spawn Delta
+    InitialValue: 10
+    View: 1
+    LinkId: -1

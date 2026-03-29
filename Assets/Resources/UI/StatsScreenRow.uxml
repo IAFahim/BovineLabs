@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement class="stats-screen__row">
+        <ui:VisualElement class="stats-screen__progress">
+            <ui:VisualElement class="stats-screen__progress-bar"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="stats-screen__row-content">
+            <ui:Label text="text" class="stats-screen__row-name"/>
+            <ui:Label text="text" class="stats-screen__row-value"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
