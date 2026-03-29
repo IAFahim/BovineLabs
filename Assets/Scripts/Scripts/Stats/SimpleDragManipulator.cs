@@ -8,12 +8,10 @@ namespace Scripts.Stats
         private bool isDragging;
         private Vector2 pointerStartPosition;
         private Vector2 targetStartPosition;
-        private VisualElement dragHandle;
 
-        public SimpleDragManipulator(VisualElement target, VisualElement dragHandle = null)
+        public SimpleDragManipulator(VisualElement target)
         {
             this.target = target;
-            this.dragHandle = dragHandle ?? target;
         }
 
         protected override void RegisterCallbacksOnTarget()
@@ -36,7 +34,7 @@ namespace Scripts.Stats
         {
             if (evt.button != 0) return;
 
-            if (evt.target != dragHandle && !dragHandle.Contains(evt.target as VisualElement)) return;
+            if (evt.target is Button) return;
 
             target.style.position = Position.Absolute;
             isDragging = true;

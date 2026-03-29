@@ -14,8 +14,6 @@ namespace Scripts.Stats
         private const string RowTemplatePath = "UI/StatsScreenRow";
         private const string RootName = "stats-screen-root";
         private const string PanelName = "stats-screen-panel";
-        private const string HeaderName = "stats-screen-header";
-        private const string DragHandleName = "stats-screen-drag-handle";
         private const string MinimizeBtnName = "stats-screen-minimize-btn";
         private const string TabsName = "stats-screen-tabs";
         private const string ColumnsName = "stats-screen-columns";
@@ -38,8 +36,6 @@ namespace Scripts.Stats
         private VisualTreeAsset screenAsset;
         private VisualElement root;
         private VisualElement panel;
-        private VisualElement header;
-        private VisualElement dragHandle;
         private Button minimizeBtn;
         private VisualElement tabs;
         private VisualElement columns;
@@ -250,12 +246,10 @@ namespace Scripts.Stats
             this.intTab.clicked += this.ToggleInt;
             this.boolTab.clicked += this.ToggleBool;
 
-            this.header = this.root.Q<VisualElement>(HeaderName);
-            this.dragHandle = this.root.Q<VisualElement>(DragHandleName);
             this.minimizeBtn = this.root.Q<Button>(MinimizeBtnName);
             
             this.minimizeBtn.clicked += this.ToggleMinimize;
-            this.panel.AddManipulator(new SimpleDragManipulator(this.panel, this.dragHandle));
+            this.panel.AddManipulator(new SimpleDragManipulator(this.panel));
 
             this.treeReady = true;
             return true;

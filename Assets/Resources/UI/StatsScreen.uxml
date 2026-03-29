@@ -3,35 +3,11 @@
     <ui:VisualElement name="stats-screen-root" class="stats-screen">
         <ui:VisualElement class="stats-screen__spacer"/>
         <ui:VisualElement name="stats-screen-panel" class="stats-screen__panel">
-            <ui:VisualElement name="stats-screen-header" class="stats-screen__header">
-                <ui:VisualElement name="stats-screen-drag-handle" class="stats-screen__drag-handle">
-                    <ui:VisualElement class="stats-screen__drag-dots"/>
-                    <ui:Button name="stats-screen-minimize-btn" class="stats-screen__minimize-btn">
-                        <ui:VisualElement class="stats-screen__minimize-icon"/>
-                    </ui:Button>
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="stats-screen-content" class="stats-screen__content">
-                <ui:VisualElement name="stats-screen-tabs" class="stats-screen__tabs">
-                    <ui:Button name="stats-screen-tab-float" text="Stats" class="stats-screen__tab"/>
-                    <ui:Button name="stats-screen-tab-int" text="Intrinsic" class="stats-screen__tab"/>
-                    <ui:Button name="stats-screen-tab-bool" text="Events" class="stats-screen__tab"/>
-                </ui:VisualElement>
-                <ui:Label name="stats-screen-empty" text="No panels enabled" class="stats-screen__empty"/>
-                <ui:VisualElement name="stats-screen-columns" class="stats-screen__columns">
-                    <ui:VisualElement name="stats-screen-column-float" class="stats-screen__column">
-                        <ui:Label text="Stats" class="stats-screen__column-title"/>
-                        <ui:ScrollView name="stats-screen-list-float" mode="Vertical" class="stats-screen__list"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="stats-screen-column-int" class="stats-screen__column">
-                        <ui:Label text="Intrinsic" class="stats-screen__column-title"/>
-                        <ui:ScrollView name="stats-screen-list-int" mode="Vertical" class="stats-screen__list"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="stats-screen-column-bool" class="stats-screen__column">
-                        <ui:Label text="Events" class="stats-screen__column-title"/>
-                        <ui:ScrollView name="stats-screen-list-bool" mode="Vertical" class="stats-screen__list"/>
-                    </ui:VisualElement>
-                </ui:VisualElement>
+            <ui:Button name="stats-screen-minimize-btn" class="stats-screen__minimize-btn"/>
+            <ui:VisualElement name="stats-screen-tabs" class="stats-screen__tabs">
+                <ui:Button name="stats-screen-tab-float" text="Stats" class="stats-screen__tab"/>
+                <ui:Button name="stats-screen-tab-int" text="Intrinsic" class="stats-screen__tab"/>
+                <ui:Button name="stats-screen-tab-bool" text="Events" class="stats-screen__tab"/>
             </ui:VisualElement>
             <ui:Label name="stats-screen-empty" text="No panels enabled" class="stats-screen__empty"/>
             <ui:VisualElement name="stats-screen-columns" class="stats-screen__columns">
