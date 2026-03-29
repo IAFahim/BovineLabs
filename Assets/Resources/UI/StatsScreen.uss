@@ -51,10 +51,36 @@
     cursor: move;
     border-bottom-width: 1px;
     border-bottom-color: rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
 }
 
 .stats-screen__drag-handle:hover {
     background-color: rgba(255, 255, 255, 0.02);
+}
+
+.stats-screen__drag-handle::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}
+
+.stats-screen__drag-handle::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+}
+
+.stats-screen__drag-handle:hover::before,
+.stats-screen__drag-handle:hover::after {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .stats-screen__title {
