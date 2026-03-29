@@ -8,10 +8,12 @@ namespace Scripts.Stats
         private bool isDragging;
         private Vector2 pointerStartPosition;
         private Vector2 targetStartPosition;
+        private VisualElement dragHandle;
 
-        public SimpleDragManipulator(VisualElement target)
+        public SimpleDragManipulator(VisualElement target, VisualElement dragHandle = null)
         {
             this.target = target;
+            this.dragHandle = dragHandle ?? target;
         }
 
         protected override void RegisterCallbacksOnTarget()
@@ -34,6 +36,8 @@ namespace Scripts.Stats
         {
             if (evt.button != 0) return;
 
+            if (evt.target != dragHandle && !dragHandle.Contains(evt.target as VisualElement)) return;
+
             target.style.position = Position.Absolute;
             isDragging = true;
             pointerStartPosition = (Vector2)evt.position;
@@ -50,6 +54,9 @@ namespace Scripts.Stats
             Vector2 pointerCurrent = (Vector2)evt.position;
             Vector2 pointerDelta = pointerCurrent - pointerStartPosition;
             Vector2 newWorldPosition = targetStartPosition + pointerDelta;
+            
+            newWorldPosition = ClampToScreenBounds(newWorldPosition);
+            
             Vector2 newLocalPosition = target.parent != null ? target.parent.WorldToLocal(newWorldPosition) : newWorldPosition;
 
             target.style.left = newLocalPosition.x;
@@ -70,6 +77,23 @@ namespace Scripts.Stats
         private void OnPointerCaptureOut(PointerCaptureOutEvent evt)
         {
             isDragging = false;
+        }
+        
+        private Vector2 ClampToScreenBounds(Vector2 position)
+        {
+            var panelRect = target.worldBound;
+            var screenW = Screen.width;
+            var screenH = Screen.height;
+            
+            float minX = 0;
+            float minY = 0;
+            float maxX = screenW - panelRect.width;
+            float maxY = screenH - panelRect.height;
+            
+            float clampedX = Mathf.Clamp(position.x, minX, maxX);
+            float clampedY = Mathf.Clamp(position.y, minY, maxY);
+            
+            return new Vector2(clampedX, clampedY);
         }
     }
 }

@@ -3,6 +3,7 @@
     <ui:VisualElement name="stats-screen-root" class="stats-screen">
         <ui:VisualElement class="stats-screen__spacer"/>
         <ui:VisualElement name="stats-screen-panel" class="stats-screen__panel">
+            <ui:VisualElement name="stats-screen-drag-handle" class="stats-screen__drag-handle"/>
             <ui:VisualElement name="stats-screen-tabs" class="stats-screen__tabs">
                 <ui:Button name="stats-screen-tab-float" text="Stats" class="stats-screen__tab"/>
                 <ui:Button name="stats-screen-tab-int" text="Intrinsic" class="stats-screen__tab"/>

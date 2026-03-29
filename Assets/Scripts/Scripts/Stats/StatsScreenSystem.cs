@@ -242,7 +242,8 @@ namespace Scripts.Stats
             this.intTab.clicked += this.ToggleInt;
             this.boolTab.clicked += this.ToggleBool;
 
-            this.panel.AddManipulator(new SimpleDragManipulator(this.panel));
+            var dragHandle = this.root.Q<VisualElement>("stats-screen-drag-handle");
+            this.panel.AddManipulator(new SimpleDragManipulator(this.panel, dragHandle));
 
             this.treeReady = true;
             return true;

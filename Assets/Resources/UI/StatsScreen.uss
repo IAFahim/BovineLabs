@@ -42,6 +42,21 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
+.stats-screen__drag-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    cursor: move;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(255, 255, 255, 0.03);
+}
+
+.stats-screen__drag-handle:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
 .stats-screen__title {
     height: 20px;
     margin-bottom: 4px;
