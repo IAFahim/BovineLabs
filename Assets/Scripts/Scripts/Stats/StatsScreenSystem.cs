@@ -14,12 +14,16 @@ namespace Scripts.Stats
         private const string RowTemplatePath = "UI/StatsScreenRow";
         private const string RootName = "stats-screen-root";
         private const string PanelName = "stats-screen-panel";
+        private const string HeaderName = "stats-screen-header";
+        private const string DragHandleName = "stats-screen-drag-handle";
+        private const string MinimizeBtnName = "stats-screen-minimize-btn";
         private const string TabsName = "stats-screen-tabs";
         private const string ColumnsName = "stats-screen-columns";
         private const string EmptyName = "stats-screen-empty";
         private const string FloatTabName = "stats-screen-tab-float";
         private const string IntTabName = "stats-screen-tab-int";
         private const string BoolTabName = "stats-screen-tab-bool";
+        private const string MinimizedClass = "stats-screen__panel--minimized";
         private const float WidthFactor = 0.2f;
         private const float MinPanelWidth = 280f;
         private const float MaxPanelWidth = 380f;
@@ -34,6 +38,9 @@ namespace Scripts.Stats
         private VisualTreeAsset screenAsset;
         private VisualElement root;
         private VisualElement panel;
+        private VisualElement header;
+        private VisualElement dragHandle;
+        private Button minimizeBtn;
         private VisualElement tabs;
         private VisualElement columns;
         private Label empty;
@@ -44,6 +51,7 @@ namespace Scripts.Stats
         private ColumnView intColumn;
         private ColumnView boolColumn;
         private bool treeReady;
+        private bool isMinimized;
         private bool showFloat = true;
         private bool showInt = true;
         private bool showBool;
@@ -242,8 +250,12 @@ namespace Scripts.Stats
             this.intTab.clicked += this.ToggleInt;
             this.boolTab.clicked += this.ToggleBool;
 
-            var dragHandle = this.root.Q<VisualElement>("stats-screen-drag-handle");
-            this.panel.AddManipulator(new SimpleDragManipulator(this.panel, dragHandle));
+            this.header = this.root.Q<VisualElement>(HeaderName);
+            this.dragHandle = this.root.Q<VisualElement>(DragHandleName);
+            this.minimizeBtn = this.root.Q<Button>(MinimizeBtnName);
+            
+            this.minimizeBtn.clicked += this.ToggleMinimize;
+            this.panel.AddManipulator(new SimpleDragManipulator(this.panel, this.dragHandle));
 
             this.treeReady = true;
             return true;
@@ -271,6 +283,20 @@ namespace Scripts.Stats
         private void ToggleBool()
         {
             this.showBool = !this.showBool;
+        }
+
+        private void ToggleMinimize()
+        {
+            this.isMinimized = !this.isMinimized;
+            
+            if (this.isMinimized)
+            {
+                this.panel.AddToClassList(MinimizedClass);
+            }
+            else
+            {
+                this.panel.RemoveFromClassList(MinimizedClass);
+            }
         }
 
         private void EnsureFloatRows(int count)
