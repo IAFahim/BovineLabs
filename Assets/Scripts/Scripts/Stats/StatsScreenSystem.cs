@@ -98,8 +98,11 @@ namespace Scripts.Stats
             var boolBuffer = this.EntityManager.GetBuffer<StatBoolElement>(entity, true);
 
             var visibleCount = CountVisibleColumns(this.showFloat, this.showInt, this.showBool);
-            this.empty.style.display = visibleCount == 0 ? DisplayStyle.Flex : DisplayStyle.None;
-            this.columns.style.display = visibleCount == 0 ? DisplayStyle.None : DisplayStyle.Flex;
+            if (!this.isMinimized)
+            {
+                this.empty.style.display = visibleCount == 0 ? DisplayStyle.Flex : DisplayStyle.None;
+                this.columns.style.display = visibleCount == 0 ? DisplayStyle.None : DisplayStyle.Flex;
+            }
 
             this.ApplyColumn(this.floatColumn.Root, this.showFloat, visibleCount);
             this.ApplyColumn(this.intColumn.Root, this.showInt, visibleCount);

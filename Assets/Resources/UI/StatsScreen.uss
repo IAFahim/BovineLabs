@@ -69,31 +69,14 @@
     align-items: center;
     transition: background-color 0.15s ease, transform 0.15s ease;
     flex-shrink: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
 }
 
 .stats-screen__minimize-btn:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
-}
-
-.stats-screen__minimize-btn::before {
-    content: "-";
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: bold;
-    line-height: 16px;
-}
-
-.stats-screen__title {
-    height: 20px;
-    margin-bottom: 4px;
-    padding-left: 2px;
-    padding-right: 2px;
-    font-size: 10px;
-    color: rgba(235, 242, 255, 0.9);
-    letter-spacing: 0.1px;
-    border-bottom-width: 1px;
-    border-bottom-color: rgba(255, 255, 255, 0.04);
 }
 
 .stats-screen__tabs {
@@ -251,10 +234,6 @@
     margin: 0px !important;
 }
 
-.stats-screen__list .unity-scroller__slider {
-    background-color: rgba(171, 184, 198, 0.24);
-}
-
 .stats-screen__row {
     height: 16px;
     min-height: 16px;
@@ -291,7 +270,7 @@
     min-width: 0;
     margin-right: 4px;
     font-size: 8px;
-    color: rgba(235, 242, 250, 0.95);
+    color: rgba(235, 242, 250, 0.9);
     white-space: nowrap;
     overflow: hidden;
     -unity-text-overflow-position: end;
@@ -334,7 +313,8 @@
 .stats-screen__progress-bar {
     height: 100%;
     border-radius: 1px;
-    transition: width 0.1s ease;
+    transition: width 0.15s ease;
+    opacity: 0.3;
 }
 
 .stats-screen__progress-bar--primary {
