@@ -19,10 +19,9 @@
         "Unity.Mathematics.Extensions",
         "Unity.Physics",
         "Unity.Transforms",
-        "Unity.UIElements",
-        "Unity.UIElements.Toolkit"
+        "Unity.Tutorials.Core",
+        "Unity.Tutorials.Core.Editor"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
