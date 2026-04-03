@@ -18,6 +18,16 @@
       },
       "hash": "12212f45215469275e1dbc69f9ba3791fd390e11"
     },
+    "com.bovinelabs.quill": {
+      "version": "https://github.com/IAFahim/com.bovinelabs.quill.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bovinelabs.core": "1.4.6",
+        "com.unity.entities.graphics": "1.4.13-pre.4"
+      },
+      "hash": "e79f2abd10ffd0418ac388b3403be189fe9baa13"
+    },
     "com.unity.burst": {
       "version": "1.8.28",
       "depth": 1,
@@ -36,8 +46,20 @@
         "com.unity.burst": "1.8.25",
         "com.unity.nuget.mono-cecil": "1.11.6",
         "com.unity.test-framework": "1.4.6",
-        "com.unity.test-framework.performance": "3.0.3"
+        "com.unity.test-framework.performance": "3.2.0"
       }
+    },
+    "com.unity.dt.app-ui": {
+      "version": "https://github.com/IAFahim/com.unity.dt.app-ui.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.modules.androidjni": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.modules.screencapture": "1.0.0"
+      },
+      "hash": "74b82d607f97744b8f2d1abf1159538e9c495a25"
     },
     "com.unity.entities": {
       "version": "6.5.0",
@@ -50,7 +72,7 @@
         "com.unity.profiling.core": "1.0.3",
         "com.unity.scriptablebuildpipeline": "1.23.1",
         "com.unity.serialization": "6.5.0",
-        "com.unity.test-framework.performance": "3.0.3",
+        "com.unity.test-framework.performance": "3.2.0",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.physics": "1.0.0",
@@ -251,7 +273,15 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1"
       },
-      "hash": "b753cc0036dde4237b15f12c2577e6aa706d9688"
+      "hash": "19f979f28dfc56444f3d41de50299133574ece06"
+    },
+    "com.unity.modules.androidjni": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.jsonserialize": "1.0.0"
+      }
     },
     "com.unity.modules.animation": {
       "version": "1.0.0",
@@ -287,6 +317,12 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.modules.imageconversion": {
+      "version": "1.0.0",
+      "depth": 2,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.modules.imgui": {
       "version": "1.0.0",
       "depth": 1,
@@ -310,6 +346,14 @@
       "depth": 1,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.modules.screencapture": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.imageconversion": "1.0.0"
+      }
     },
     "com.unity.modules.terrain": {
       "version": "1.0.0",

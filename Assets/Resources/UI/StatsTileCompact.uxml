@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <ui:VisualElement class="stats-tile stats-tile--compact">
-        <ui:VisualElement class="stats-tile__top">
-            <ui:Label name="stat-badge" text="STAT" class="stats-tile__badge" />
-            <ui:Label name="stat-value" text="0" class="stats-tile__value" />
-        </ui:VisualElement>
-        <ui:Label name="stat-name" text="Name" class="stats-tile__name" />
-    </ui:VisualElement>
-</ui:UXML>

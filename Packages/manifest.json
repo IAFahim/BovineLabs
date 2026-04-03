@@ -2,7 +2,9 @@
   "dependencies": {
     "com.bovinelabs.anchor": "https://gitlab.com/tertle/com.bovinelabs.anchor.git#2.0.0",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
+    "com.bovinelabs.quill": "https://github.com/IAFahim/com.bovinelabs.quill.git",
     "com.unity.collections": "6.5.0",
+    "com.unity.dt.app-ui": "https://github.com/IAFahim/com.unity.dt.app-ui.git",
     "com.unity.entities": "6.5.0",
     "com.unity.entities.graphics": "6.5.0",
     "com.unity.ide.rider": "3.0.39",
