@@ -110,7 +110,7 @@
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -171,14 +171,14 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.learn.iet-framework": {
-      "version": "5.0.3",
-      "depth": 1,
-      "source": "registry",
+      "version": "https://github.com/IAFahim/iet-framework.git",
+      "depth": 0,
+      "source": "git",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.settings-manager": "1.0.3"
       },
-      "url": "https://packages.unity.com"
+      "hash": "bd5d9456c4dfd5e86e56bd95a27b0a6ffe174454"
     },
     "com.unity.learn.iet-framework.authoring": {
       "version": "https://github.com/IAFahim/iet-framework-authoring.git",
@@ -296,7 +296,7 @@
     },
     "com.unity.settings-manager": {
       "version": "2.1.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

@@ -13,6 +13,7 @@
     "com.unity.entities.graphics": "6.5.0",
     "com.unity.ide.rider": "3.0.39",
     "com.unity.inputsystem": "1.19.0",
+    "com.unity.learn.iet-framework": "https://github.com/IAFahim/iet-framework.git",
     "com.unity.learn.iet-framework.authoring": "https://github.com/IAFahim/iet-framework-authoring.git",
     "com.unity.physics": "6.5.0",
     "com.unity.render-pipelines.universal": "17.5.0",

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 873c6192b4a51ef79879373164d28577, type: 3}
-  m_Name: PrefabInstantiatedCriterion
-  m_EditorClassIdentifier: Scripts.Editor::PrefabInstantiatedCriterion
+  m_Script: {fileID: 11500000, guid: 09cf94368c18acd4b87b173cdb62b502, type: 3}
+  m_Name: ActiveToolCriterion_Move
+  m_EditorClassIdentifier: Unity.Tutorials.Core.Editor::Unity.Tutorials.Core.Editor.ActiveToolCriterion
   Completed:
     m_PersistentCalls:
       m_Calls: []
@@ -19,4 +19,4 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isTesting: 0
-  requiredPrefab: {fileID: 7912966824055113308, guid: 951de27fae0f19b47887d9c49647f931, type: 3}
+  m_TargetTool: 1
