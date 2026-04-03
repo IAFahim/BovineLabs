@@ -108,6 +108,13 @@
       },
       "hash": "74b82d607f97744b8f2d1abf1159538e9c495a25"
     },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.entities": {
       "version": "6.5.0",
       "depth": 0,
@@ -162,6 +169,25 @@
         "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.learn.iet-framework": {
+      "version": "5.0.3",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.settings-manager": "1.0.3"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.learn.iet-framework.authoring": {
+      "version": "https://github.com/IAFahim/iet-framework-authoring.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.learn.iet-framework": "5.0.3"
+      },
+      "hash": "36bb16103676ddc93bcaaa2eff52aa51996d4395"
     },
     "com.unity.mathematics": {
       "version": "1.4.0",
@@ -267,6 +293,13 @@
         "com.unity.collections": "2.1.2",
         "com.unity.burst": "1.7.2"
       }
+    },
+    "com.unity.settings-manager": {
+      "version": "2.1.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
       "version": "17.5.0",

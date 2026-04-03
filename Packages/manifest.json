@@ -3,6 +3,8 @@
     "com.bovinelabs.anchor": "https://gitlab.com/tertle/com.bovinelabs.anchor.git#2.0.0",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
     "com.bovinelabs.quill": "https://github.com/IAFahim/com.bovinelabs.quill.git",
+    "com.bovinelabs.reaction": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
+    "com.bovinelabs.timeline": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
     "com.bovinelabs.timeline.core": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",
     "com.bovinelabs.timeline.targets": "https://github.com/IAFahim/com.bovinelabs.timeline.targets.git",
     "com.unity.collections": "6.5.0",
@@ -11,13 +13,12 @@
     "com.unity.entities.graphics": "6.5.0",
     "com.unity.ide.rider": "3.0.39",
     "com.unity.inputsystem": "1.19.0",
+    "com.unity.learn.iet-framework.authoring": "https://github.com/IAFahim/iet-framework-authoring.git",
     "com.unity.physics": "6.5.0",
     "com.unity.render-pipelines.universal": "17.5.0",
     "com.unity.sdk.linux-x86_64": "1.0.2",
     "com.unity.test-framework": "1.7.0",
     "com.unity.toolchain.linux-x86_64-linux": "1.0.2",
-    "com.bovinelabs.timeline" : "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
-    "com.bovinelabs.reaction" : "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
     "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#linux-patch-DotNetSdkRoslyn"
   }
 }
