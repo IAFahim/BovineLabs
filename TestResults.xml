@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="19" result="Passed" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.4814583">
+  <test-suite type="TestSuite" id="1000" name="BovineLabs" fullname="BovineLabs" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.481458" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1026" name="Scripts.Tests.dll" fullname="/home/l/Github/BovineLabs/Library/ScriptAssemblies/Scripts.Tests.dll" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.442871" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="53688" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1027" name="Scripts" fullname="Scripts" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.441446" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1028" name="Tests" fullname="Scripts.Tests" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.440528" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1033" name="BitArray256Example" fullname="Scripts.Tests.BitArray256Example" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.266186" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1022" name="BitArray256SystemTests" fullname="Scripts.Tests.BitArray256Example.BitArray256SystemTests" classname="Scripts.Tests.BitArray256Example.BitArray256SystemTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.260737" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1025" name="BitArray256BitwiseOperations" fullname="Scripts.Tests.BitArray256Example.BitArray256SystemTests.BitArray256BitwiseOperations" methodname="BitArray256BitwiseOperations" classname="Scripts.Tests.BitArray256Example.BitArray256SystemTests" runstate="Runnable" seed="982674345" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.197292" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="BitArray256CountBits" fullname="Scripts.Tests.BitArray256Example.BitArray256SystemTests.BitArray256CountBits" methodname="BitArray256CountBits" classname="Scripts.Tests.BitArray256Example.BitArray256SystemTests" runstate="Runnable" seed="987991971" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.005459" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="BitArray256IndexerGetSet" fullname="Scripts.Tests.BitArray256Example.BitArray256SystemTests.BitArray256IndexerGetSet" methodname="BitArray256IndexerGetSet" classname="Scripts.Tests.BitArray256Example.BitArray256SystemTests" runstate="Runnable" seed="706353987" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.008724" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1032" name="NativeArrayExample" fullname="Scripts.Tests.NativeArrayExample" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.046902" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1016" name="NativeArraySystemTests" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.045477" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1019" name="ArrayItemCreation" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests.ArrayItemCreation" methodname="ArrayItemCreation" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" seed="948523144" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.008238" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="ArrayItemIndexToRowColCalculation" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests.ArrayItemIndexToRowColCalculation" methodname="ArrayItemIndexToRowColCalculation" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" seed="1592632091" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.009839" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="NativeArrayAllocationDeallocation" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests.NativeArrayAllocationDeallocation" methodname="NativeArrayAllocationDeallocation" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" seed="1164651072" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006148" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="NativeArrayConfigCreation" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests.NativeArrayConfigCreation" methodname="NativeArrayConfigCreation" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" seed="1984561746" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.009590" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="NativeArrayControllerCreation" fullname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests.NativeArrayControllerCreation" methodname="NativeArrayControllerCreation" classname="Scripts.Tests.NativeArrayExample.NativeArraySystemTests" runstate="Runnable" seed="608161614" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006148" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1031" name="SlabAllocatorExample" fullname="Scripts.Tests.SlabAllocatorExample" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.033246" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1011" name="SlabAllocatorSystemTests" fullname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" classname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.032110" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1012" name="SlabAllocatorConfigCreation" fullname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests.SlabAllocatorConfigCreation" methodname="SlabAllocatorConfigCreation" classname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" runstate="Runnable" seed="1493019914" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.004103" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="SlabAllocatorControllerCreation" fullname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests.SlabAllocatorControllerCreation" methodname="SlabAllocatorControllerCreation" classname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" runstate="Runnable" seed="2054433957" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.009637" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="SlabItemCreation" fullname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests.SlabItemCreation" methodname="SlabItemCreation" classname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" runstate="Runnable" seed="1251717684" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.003786" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="SlabItemIndexCalculation" fullname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests.SlabItemIndexCalculation" methodname="SlabItemIndexCalculation" classname="Scripts.Tests.SlabAllocatorExample.SlabAllocatorSystemTests" runstate="Runnable" seed="1940188178" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.003534" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1030" name="SpinLockExample" fullname="Scripts.Tests.SpinLockExample" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.034419" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1006" name="SpinLockSystemTests" fullname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" classname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.033152" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1009" name="SharedResourceCreation" fullname="Scripts.Tests.SpinLockExample.SpinLockSystemTests.SharedResourceCreation" methodname="SharedResourceCreation" classname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" runstate="Runnable" seed="1260387289" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.003695" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="SpinLockConfigCreation" fullname="Scripts.Tests.SpinLockExample.SpinLockSystemTests.SpinLockConfigCreation" methodname="SpinLockConfigCreation" classname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" runstate="Runnable" seed="1196942950" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006448" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="SpinLockControllerCreation" fullname="Scripts.Tests.SpinLockExample.SpinLockSystemTests.SpinLockControllerCreation" methodname="SpinLockControllerCreation" classname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" runstate="Runnable" seed="2077618446" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006653" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="SpinLockWriterReaderCreation" fullname="Scripts.Tests.SpinLockExample.SpinLockSystemTests.SpinLockWriterReaderCreation" methodname="SpinLockWriterReaderCreation" classname="Scripts.Tests.SpinLockExample.SpinLockSystemTests" runstate="Runnable" seed="189969819" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006282" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1029" name="ThreadRandomExample" fullname="Scripts.Tests.ThreadRandomExample" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.058387" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1002" name="ThreadRandomSystemTests" fullname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests" classname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.057190" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1005" name="RandomSpawnedEntityCreation" fullname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests.RandomSpawnedEntityCreation" methodname="RandomSpawnedEntityCreation" classname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests" runstate="Runnable" seed="643363105" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.029590" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="ThreadRandomConfigCreation" fullname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests.ThreadRandomConfigCreation" methodname="ThreadRandomConfigCreation" classname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests" runstate="Runnable" seed="1236675800" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.006793" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="ThreadRandomControllerCreation" fullname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests.ThreadRandomControllerCreation" methodname="ThreadRandomControllerCreation" classname="Scripts.Tests.ThreadRandomExample.ThreadRandomSystemTests" runstate="Runnable" seed="1519393952" result="Passed" start-time="2026-03-22 19:47:15Z" end-time="2026-03-22 19:47:15Z" duration="0.012917" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/l/.config/unity3d/DefaultCompany/BovineLabs/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

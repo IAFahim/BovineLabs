@@ -18,7 +18,9 @@
         "Unity.Mathematics",
         "Unity.Mathematics.Extensions",
         "Unity.Physics",
-        "Unity.Transforms"
+        "Unity.Transforms",
+        "Unity.UIElements",
+        "Unity.UIElements.Toolkit"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
