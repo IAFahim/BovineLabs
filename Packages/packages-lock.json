@@ -19,14 +19,13 @@
       "hash": "56db1c894b845b8b55a8e15a86be9dcb9678e553"
     },
     "com.bovinelabs.quill": {
-      "version": "https://github.com/IAFahim/com.bovinelabs.quill.git",
+      "version": "file:com.bovinelabs.quill",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.bovinelabs.core": "1.4.6",
         "com.unity.entities.graphics": "1.4.13-pre.4"
-      },
-      "hash": "e79f2abd10ffd0418ac388b3403be189fe9baa13"
+      }
     },
     "com.bovinelabs.reaction": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
@@ -231,32 +230,31 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "17.5.0",
+      "version": "17.6.0",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
         "com.unity.burst": "1.8.14",
         "com.unity.collections": "2.4.3",
-        "com.unity.modules.terrain": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "17.5.0",
+      "version": "17.6.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "17.5.0",
-        "com.unity.shadergraph": "17.5.0",
-        "com.unity.render-pipelines.universal-config": "17.5.0"
+        "com.unity.render-pipelines.core": "17.6.0",
+        "com.unity.shadergraph": "17.6.0",
+        "com.unity.render-pipelines.universal-config": "17.6.0"
       }
     },
     "com.unity.render-pipelines.universal-config": {
-      "version": "17.5.0",
+      "version": "17.6.0",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "17.5.0"
+        "com.unity.render-pipelines.core": "17.6.0"
       }
     },
     "com.unity.scriptablebuildpipeline": {
@@ -302,11 +300,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "17.5.0",
+      "version": "17.6.0",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "17.5.0",
+        "com.unity.render-pipelines.core": "17.6.0",
         "com.unity.searcher": "4.9.3"
       }
     },
@@ -455,12 +453,6 @@
       "dependencies": {
         "com.unity.modules.imageconversion": "1.0.0"
       }
-    },
-    "com.unity.modules.terrain": {
-      "version": "1.0.0",
-      "depth": 2,
-      "source": "builtin",
-      "dependencies": {}
     },
     "com.unity.modules.ui": {
       "version": "1.0.0",

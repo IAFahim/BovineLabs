@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: New Tutorial
   m_EditorClassIdentifier: Unity.Tutorials.Core.Editor::Unity.Tutorials.Core.Editor.Tutorial
   TutorialTitle:
-    m_Untranslated: How to Make a Cube
+    m_Untranslated: New Tutorial
   m_ProgressTrackingEnabled: 1
-  m_LessonId: 43298214-ebb5-4f3d-9c65-2b3ccaac7e39
-  m_Version: 0
+  m_LessonId: 2b2ad827-04be-45ad-a1f0-0f0f0b407f67
+  m_Version: 1
   m_ReturnToPreviousScenes: 1
   m_SceneManagementBehavior: 0
   m_Scenes: []
@@ -39,9 +39,9 @@ MonoBehaviour:
   m_WindowLayout: {fileID: 0}
   m_Pages:
     m_Items:
-    - {fileID: 11400000, guid: 5059c47e4207d1835b3a8b86208a0ebd, type: 2}
-    - {fileID: 11400000, guid: 5d049b2d982425ff69dde4e90649f14d, type: 2}
-    - {fileID: 11400000, guid: f7a1cd6fd0ab52644bf46562e674b5a2, type: 2}
+    - {fileID: 11400000, guid: ad20a818907b19aef87790110f9117f1, type: 2}
+    - {fileID: 11400000, guid: 1677de6ee34042429ad846f8cf1f6e7c, type: 2}
+    - {fileID: 11400000, guid: 669a57d462342987daa4198fa8b659ce, type: 2}
   CompletionDialog: {fileID: 0}
   Modified:
     m_PersistentCalls:
@@ -62,5 +62,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Scene: {fileID: 0}
-  m_TutorialTitle: How to Make a Cube
+  m_TutorialTitle: 
   m_FaqEntries: []

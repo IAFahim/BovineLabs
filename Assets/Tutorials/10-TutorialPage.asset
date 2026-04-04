@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff771ccdf4150419d9ff4d342b069aae, type: 3}
-  m_Name: Page3_MoveTool
+  m_Name: 10-TutorialPage
   m_EditorClassIdentifier: Unity.Tutorials.Core.Editor::Unity.Tutorials.Core.Editor.TutorialPage
   Title:
-    m_Untranslated: ds
+    m_Untranslated: 
   m_Paragraphs:
     m_Items:
-    - m_Type: 9
+    - m_Type: 6
       Title:
         m_Untranslated: 
       Text:
@@ -32,8 +32,37 @@ MonoBehaviour:
         m_Image: {fileID: 0}
         m_VideoClip: {fileID: 0}
         m_Url: 
-        m_AutoStart: 0
-        m_Loop: 0
+        m_AutoStart: 1
+        m_Loop: 1
+      m_CriteriaCompletion: 0
+      m_Criteria:
+        m_Items: []
+      m_MaskingSettings:
+        m_MaskingEnabled: 0
+        m_UnmaskedViews: []
+      m_Summary: 
+      m_Description: 
+      m_InstructionBoxTitle: 
+      m_InstructionText: 
+      m_TutorialButtonText: 
+    - m_Type: 0
+      Title:
+        m_Untranslated: Page title
+      Text:
+        m_Untranslated: Put your tutorial narrative description here
+      m_CodeSample: 
+      m_PostInstructionImage: {fileID: 0}
+      m_Tutorial: {fileID: 0}
+      m_Image: {fileID: 0}
+      m_VideoUrl: 
+      m_Video: {fileID: 0}
+      m_Media:
+        m_ContentType: 0
+        m_Image: {fileID: 0}
+        m_VideoClip: {fileID: 0}
+        m_Url: 
+        m_AutoStart: 1
+        m_Loop: 1
       m_CriteriaCompletion: 0
       m_Criteria:
         m_Items: []
@@ -47,10 +76,9 @@ MonoBehaviour:
       m_TutorialButtonText: 
     - m_Type: 1
       Title:
-        m_Untranslated: 
+        m_Untranslated: Instruction title
       Text:
-        m_Untranslated: Click the Move tool in the top-left toolbar, or press W on
-          your keyboard.
+        m_Untranslated: Put your tutorial instructions here
       m_CodeSample: 
       m_PostInstructionImage: {fileID: 0}
       m_Tutorial: {fileID: 0}
@@ -62,29 +90,14 @@ MonoBehaviour:
         m_Image: {fileID: 0}
         m_VideoClip: {fileID: 0}
         m_Url: 
-        m_AutoStart: 0
-        m_Loop: 0
+        m_AutoStart: 1
+        m_Loop: 1
       m_CriteriaCompletion: 0
       m_Criteria:
-        m_Items:
-        - Type:
-            m_TypeName: Unity.Tutorials.Core.Editor.ActiveToolCriterion, Unity.Tutorials.Core.Editor
-          Criterion: {fileID: 11400000, guid: b48dfca39ed12b397b963ff9798e5f1b, type: 2}
+        m_Items: []
       m_MaskingSettings:
-        m_MaskingEnabled: 1
-        m_UnmaskedViews:
-        - m_SelectorType: 0
-          m_ViewType:
-            m_TypeName: UnityEditor.MainToolbarWindow, UnityEditor, Version=0.0.0.0,
-              Culture=neutral, PublicKeyToken=null
-          m_FocusEditorWindow: 0
-          m_EditorWindowType:
-            m_TypeName: 
-          m_AlternateEditorWindowTypes:
-            m_Items: []
-          m_MaskType: 0
-          m_MaskSizeModifier: 0
-          m_UnmaskedControls: []
+        m_MaskingEnabled: 0
+        m_UnmaskedViews: []
       m_Summary: 
       m_Description: 
       m_InstructionBoxTitle: 

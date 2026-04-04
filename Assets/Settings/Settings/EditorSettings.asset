@@ -27,6 +27,10 @@ MonoBehaviour:
     Path: Assets/Settings/Scenes/Editor
   - Key: bl.ar.assetset
     Path: Assets/Settings/Scenes/Assets
+  - Key: bl.ar.anchornamedaction
+    Path: Assets/Settings/UI/Actions
+  - Key: bl.ar.anchornavanimation
+    Path: Assets/Settings/UI/Animations
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}

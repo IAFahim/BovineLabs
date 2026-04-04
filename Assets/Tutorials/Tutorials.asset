@@ -19,20 +19,20 @@ MonoBehaviour:
   OrderInView: 0
   BackgroundImage: {fileID: 0}
   Title:
-    m_Untranslated: My Tutorials
+    m_Untranslated: Title
   Subtitle:
-    m_Untranslated: 
+    m_Untranslated: Subtitle
   Description:
     m_Untranslated: 
   ProjectLayout: {fileID: 0}
   Sections:
   - OrderInView: 0
     Heading:
-      m_Untranslated: How to Make a Cube
+      m_Untranslated: Tutorial title
     Text:
-      m_Untranslated: Learn to create and move a Cube in the scene.
+      m_Untranslated: Tutorial description
     Metadata: 
     Url: 
     Image: {fileID: 0}
-    Tutorial: {fileID: 11400000, guid: 0c935213b1db35b0da887a2484ceefe5, type: 2}
+    Tutorial: {fileID: 11400000, guid: 0d59f04687be28c7f8fb3f575a7fee71, type: 2}
   FaqEntries: []
