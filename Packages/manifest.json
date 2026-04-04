@@ -6,7 +6,6 @@
     "com.bovinelabs.reaction": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
     "com.bovinelabs.timeline": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
     "com.bovinelabs.timeline.core": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",
-    "com.bovinelabs.timeline.targets": "https://github.com/IAFahim/com.bovinelabs.timeline.targets.git",
     "com.bovinelabs.timeline.parenting": "https://github.com/IAFahim/com.bovinelabs.timeline.parenting.git",
     "com.unity.collections": "6.6.0",
     "com.unity.dt.app-ui": "https://github.com/IAFahim/com.unity.dt.app-ui.git",

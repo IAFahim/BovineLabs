@@ -1,0 +1,54 @@
+name: unity-linux-build
+
+on:
+  push:
+    branches:
+      - main
+      - timeline.targets
+      - com.bovinelabs.timeline.*
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          submodules: recursive
+
+      - id: unity-version
+        shell: bash
+        run: |
+          echo "version=$(sed -n 's/^m_EditorVersion: //p' ProjectSettings/ProjectVersion.txt)" >> "$GITHUB_OUTPUT"
+
+      - id: build-name
+        shell: bash
+        run: |
+          ref_name='${{ github.ref_name }}'
+          sanitized=$(printf '%s' "$ref_name" | tr '/ ' '-' | tr -cd '[:alnum:]._-')
+          if [ -z "$sanitized" ]; then
+            sanitized=BovineLabs
+          fi
+          echo "value=$sanitized" >> "$GITHUB_OUTPUT"
+
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          BUILD_NAME: ${{ steps.build-name.outputs.value }}
+        with:
+          unityVersion: ${{ steps.unity-version.outputs.version }}
+          targetPlatform: StandaloneLinux64
+          customMethod: Scripts.Editor.BuildAutomation.BuildLinuxWithCurrentProfile
+          allowDirtyBuild: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-player-${{ steps.build-name.outputs.value }}
+          path: build/StandaloneLinux64
+          if-no-files-found: error
