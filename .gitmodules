@@ -1,0 +1,3 @@
+[submodule "Packages/com.bovinelabs.timeline.parenting"]
+	path = Packages/com.bovinelabs.timeline.parenting
+	url = https://github.com/IAFahim/com.bovinelabs.timeline.parenting.git
