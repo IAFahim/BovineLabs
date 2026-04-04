@@ -11,8 +11,6 @@
         "Unity.Entities",
         "Unity.Mathematics",
         "Unity.Transforms",
-        "Unity.UIElements",
-        "Unity.UIElements.Toolkit",
         "BovineLabs.Quill",
         "BovineLabs.Quill.Debug"
     ],
@@ -25,7 +23,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_EDITOR || BL_DEBUG"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

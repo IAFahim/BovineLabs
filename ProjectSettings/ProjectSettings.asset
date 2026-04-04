@@ -832,7 +832,7 @@ PlayerSettings:
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
     Server: BL_CORE_EXTENSIONS
-    Standalone: BL_CORE_EXTENSIONS;UNITY_BURST_EXPERIMENTAL_ATOMIC_INTRINSICS;BL_ENTITIES_CUSTOM
+    Standalone: BL_CORE_EXTENSIONS;UNITY_BURST_EXPERIMENTAL_ATOMIC_INTRINSICS;BL_ENTITIES_CUSTOM;UNITY_PHYSICS_CUSTOM;BL_DEBUG
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
