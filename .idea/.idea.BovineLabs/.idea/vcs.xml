@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.parenting" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.physics" vcs="Git" />
   </component>
 </project>
