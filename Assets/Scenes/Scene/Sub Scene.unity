@@ -1073,7 +1073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
   Owner: {fileID: 1744075428}
   Source: {fileID: 1744075428}
-  Target: {fileID: 1744075428}
+  Target: {fileID: 716307181}
   Custom:
     Enable: 0
     Target0: {fileID: 0}

@@ -326,11 +326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb463547df244d9ad791fc3cb7f975a, type: 3}
   m_Name: PhysicsPIDClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Physics.Authoring::BovineLabs.Timeline.Physics.Authoring.PhysicsPIDClip
-  LocalTargetOffset: {x: 0, y: 0, z: -2}
-  Proportional: {x: 10, y: 10, z: 10}
+  ChaseTargetBlend: 1
+  LocalTargetOffset: {x: 0, y: 1, z: 0}
+  Proportional: {x: 2, y: 2, z: 2}
   Integral: {x: 20, y: 20, z: 20}
   Derivative: {x: 1, y: 1, z: 1}
-  MaxForce: 50
+  MaxForce: 20
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
