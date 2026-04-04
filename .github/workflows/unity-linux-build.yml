@@ -2,10 +2,6 @@ name: unity-linux-build
 
 on:
   push:
-    branches:
-      - main
-      - timeline.targets
-      - com.bovinelabs.timeline.*
   workflow_dispatch:
 
 permissions:
@@ -68,3 +64,36 @@ jobs:
           name: linux-player-${{ steps.build-name.outputs.value }}
           path: build/StandaloneLinux64
           if-no-files-found: error
+
+      - name: Pack Linux build
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import tarfile
+          from pathlib import Path
+          root = Path('build/StandaloneLinux64')
+          build_name = '${{ steps.build-name.outputs.value }}'
+          archive = Path(f'{build_name}-linux.tar.gz')
+          with tarfile.open(archive, 'w:gz') as tar:
+              for rel in [
+                  root / f'{build_name}.x86_64',
+                  root / 'UnityPlayer.so',
+                  root / 'libdecor-0.so.0',
+                  root / 'libdecor-cairo.so',
+                  root / f'{build_name}_Data',
+              ]:
+                  tar.add(rel, arcname=rel.name)
+          print(archive)
+          PY
+
+      - name: Send build to Telegram
+        shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          caption='${{ github.repository }} • ${{ github.ref_name }} • ${{ github.sha }}'
+          curl -fsSL -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument" \
+            -F chat_id="${TELEGRAM_CHAT_ID}" \
+            -F caption="${caption}" \
+            -F document=@"${{ steps.build-name.outputs.value }}-linux.tar.gz"
