@@ -1,0 +1,33 @@
+{
+    "name": "Quill.Sample",
+    "rootNamespace": "",
+    "references": [
+        "BovineLabs.Anchor",
+        "BovineLabs.Core",
+        "BovineLabs.Core.Extensions",
+        "BovineLabs.Quill",
+        "Unity.AppUI",
+        "Unity.AppUI.MVVM",
+        "Unity.AppUI.Navigation",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Entities.Graphics",
+        "Unity.Entities.Hybrid",
+        "Unity.InputSystem",
+        "Unity.Logging",
+        "Unity.Mathematics",
+        "Unity.Mathematics.Extensions",
+        "Unity.Physics",
+        "Unity.Transforms"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,28 @@
+{
+  "name": "com.bovinelabs.quill",
+  "description": "Drawing tool for Unity Entities projects.",
+  "version": "1.2.0",
+  "unity": "6000.0",
+  "displayName": "BovineLabs Quill",
+  "dependencies": {
+    "com.bovinelabs.core": "1.4.6",
+    "com.unity.entities.graphics": "1.4.13-pre.4"
+  },
+  "keywords": [
+    "DOTS",
+    "Entities",
+    "ECS",
+    "Graphics"
+  ],
+  "author": {
+    "name": "BovineLabs"
+  },
+  "samples": [
+    {
+      "displayName": "Sample",
+      "description": "A simple setup of anchor and using the toolbar.",
+      "path": "Sample~"
+    }
+  ],
+  "_fingerprint": "e79f2abd10ffd0418ac388b3403be189fe9baa13"
+}
