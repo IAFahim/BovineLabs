@@ -17,12 +17,5 @@
   "author": {
     "name": "BovineLabs"
   },
-  "samples": [
-    {
-      "displayName": "Sample",
-      "description": "A simple setup of anchor and using the toolbar.",
-      "path": "Sample~"
-    }
-  ],
   "_fingerprint": "e79f2abd10ffd0418ac388b3403be189fe9baa13"
 }
