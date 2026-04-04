@@ -223,8 +223,9 @@ GameObject:
   - component: {fileID: 716307183}
   - component: {fileID: 716307182}
   - component: {fileID: 716307187}
+  - component: {fileID: 716307188}
   m_Layer: 0
-  m_Name: goal
+  m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,6 +516,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374892803943bc04cb79933b2eeba006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Extensions.Authoring::BovineLabs.Core.Authoring.PhysicsStates.StatefulTriggerEventAuthoring
+--- !u!114 &716307188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716307181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
+  Owner: {fileID: 716307181}
+  Source: {fileID: 716307181}
+  Target: {fileID: 716307181}
+  Custom:
+    Enable: 0
+    Target0: {fileID: 0}
+    Target1: {fileID: 0}
+  Initialize:
+    Target: 1
 --- !u!1 &833677936
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,6 +601,8 @@ PlayableDirector:
     value: {fileID: 1744075433}
   - key: {fileID: -2044499626934717807, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 716307187}
+  - key: {fileID: -3769606622342660132, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 716307182}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1076127290
@@ -640,6 +664,7 @@ GameObject:
   - component: {fileID: 1744075430}
   - component: {fileID: 1744075434}
   - component: {fileID: 1744075433}
+  - component: {fileID: 1744075435}
   m_Layer: 0
   m_Name: Drop cube
   m_TagString: Untagged
@@ -921,6 +946,27 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 3
+--- !u!114 &1744075435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744075428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
+  Owner: {fileID: 1744075428}
+  Source: {fileID: 1744075428}
+  Target: {fileID: 1744075428}
+  Custom:
+    Enable: 0
+    Target0: {fileID: 0}
+    Target1: {fileID: 0}
+  Initialize:
+    Target: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
