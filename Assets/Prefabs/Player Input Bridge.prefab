@@ -75,4 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: PlayerInputs::PlayerInputs.PlayerInputBridge
   PlayerID: -1
-  CreateConsumerEntity: 0
+  CreateConsumerEntity: 1

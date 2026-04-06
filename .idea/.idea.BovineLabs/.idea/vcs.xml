@@ -4,5 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.parenting" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.physics" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.playerinput" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/com.playerinputs" vcs="Git" />
   </component>
 </project>
