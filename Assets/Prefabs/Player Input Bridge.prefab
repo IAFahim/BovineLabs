@@ -74,4 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03be15333b1ff4b95a9f7f4219ac988f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PlayerInputs::PlayerInputs.PlayerInputBridge
-  PlayerID: 0
+  PlayerID: -1
+  CreateConsumerEntity: 0
