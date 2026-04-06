@@ -18,6 +18,18 @@
       },
       "hash": "56db1c894b845b8b55a8e15a86be9dcb9678e553"
     },
+    "com.bovinelabs.entity.links": {
+      "version": "file:com.bovinelabs.entity.links",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.entities": "6.5.0",
+        "com.unity.collections": "6.5.0",
+        "com.unity.burst": "1.8.11",
+        "com.unity.mathematics": "1.3.2",
+        "com.bovinelabs.core": "1.0.0"
+      }
+    },
     "com.bovinelabs.quill": {
       "version": "file:com.bovinelabs.quill",
       "depth": 0,

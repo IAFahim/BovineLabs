@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.bovinelabs.entity.links": "file:com.bovinelabs.entity.links",
     "com.bovinelabs.anchor": "https://gitlab.com/tertle/com.bovinelabs.anchor.git#2.0.0",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
     "com.bovinelabs.quill": "https://github.com/IAFahim/com.bovinelabs.quill.git",

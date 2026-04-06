@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1830063934216274543}
   - component: {fileID: 6611220417546278592}
-  - component: {fileID: 1404302221274401044}
+  - component: {fileID: 1664778780775159065}
   m_Layer: 0
   m_Name: Player Input Bridge
   m_TagString: Untagged
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1404302221274401044
+--- !u!114 &1664778780775159065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,8 +71,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1237989348901764266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03be15333b1ff4b95a9f7f4219ac988f, type: 3}
+  m_Script: {fileID: 11500000, guid: 49e4350ebaf2e1109be13b0f78b88fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PlayerInputs::PlayerInputs.PlayerInputBridge
-  PlayerID: -1
-  CreateConsumerEntity: 1
+  PlayerIdOverride: -1
+  ButtonMappings:
+  - UnityActionName: 
+    ActionId: 0
+  AxisMappings: []
