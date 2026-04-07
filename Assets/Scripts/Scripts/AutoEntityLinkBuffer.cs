@@ -32,6 +32,7 @@ public class LinkComponentAuthoring : MonoBehaviour
                     Key = authoring.autoEntityLinkSettings.key,
                 }
             );
+
         }
     }
 }

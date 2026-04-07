@@ -16,5 +16,15 @@ MonoBehaviour:
   keys:
   - name: Player
     value: 0
-  - name: Weapon
+  - name: Inventory
     value: 1
+  - name: Weapon
+    value: 2
+  - name: Hand
+    value: 3
+  - name: Head
+    value: 4
+  - name: Left-Hand
+    value: 5
+  - name: Right-Hand
+    value: 6

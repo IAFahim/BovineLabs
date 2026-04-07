@@ -10,7 +10,8 @@
     "BovineLabs.Core",
     "BovineLabs.Core.Authoring",
     "BovineLabs.EntityLinks",
-    "BovineLabs.EntityLinks.Authoring"
+    "BovineLabs.EntityLinks.Authoring",
+    "Unity.Collections"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

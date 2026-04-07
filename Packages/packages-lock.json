@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "com.bovinelabs.anchor": {
-      "version": "https://gitlab.com/tertle/com.bovinelabs.anchor.git#2.0.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.bovinelabs.core": "1.6.0"
-      },
-      "hash": "b3af043cfdd486553e9402a5be1c2b41eedde41c"
-    },
     "com.bovinelabs.core": {
       "version": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
       "depth": 0,
@@ -157,25 +148,6 @@
         "com.unity.test-framework.performance": "3.2.0"
       }
     },
-    "com.unity.dt.app-ui": {
-      "version": "https://github.com/IAFahim/com.unity.dt.app-ui.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.modules.androidjni": "1.0.0",
-        "com.unity.modules.uielements": "1.0.0",
-        "com.unity.modules.physics": "1.0.0",
-        "com.unity.modules.screencapture": "1.0.0"
-      },
-      "hash": "74b82d607f97744b8f2d1abf1159538e9c495a25"
-    },
-    "com.unity.editorcoroutines": {
-      "version": "1.0.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.entities": {
       "version": "6.5.0",
       "depth": 0,
@@ -230,25 +202,6 @@
         "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity.learn.iet-framework": {
-      "version": "https://github.com/IAFahim/iet-framework.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.editorcoroutines": "1.0.0",
-        "com.unity.settings-manager": "1.0.3"
-      },
-      "hash": "bd5d9456c4dfd5e86e56bd95a27b0a6ffe174454"
-    },
-    "com.unity.learn.iet-framework.authoring": {
-      "version": "https://github.com/IAFahim/iet-framework-authoring.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.learn.iet-framework": "5.0.3"
-      },
-      "hash": "4d67f91301128096a02822575133940b308a2598"
     },
     "com.unity.mathematics": {
       "version": "1.4.0",
@@ -354,13 +307,6 @@
         "com.unity.burst": "1.7.2"
       }
     },
-    "com.unity.settings-manager": {
-      "version": "2.1.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.shadergraph": {
       "version": "17.6.0",
       "depth": 1,
@@ -427,14 +373,6 @@
       },
       "hash": "19f979f28dfc56444f3d41de50299133574ece06"
     },
-    "com.unity.modules.androidjni": {
-      "version": "1.0.0",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.modules.jsonserialize": "1.0.0"
-      }
-    },
     "com.unity.modules.animation": {
       "version": "1.0.0",
       "depth": 2,
@@ -478,12 +416,6 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.modules.imageconversion": {
-      "version": "1.0.0",
-      "depth": 2,
-      "source": "builtin",
-      "dependencies": {}
-    },
     "com.unity.modules.imgui": {
       "version": "1.0.0",
       "depth": 1,
@@ -507,14 +439,6 @@
       "depth": 1,
       "source": "builtin",
       "dependencies": {}
-    },
-    "com.unity.modules.screencapture": {
-      "version": "1.0.0",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.modules.imageconversion": "1.0.0"
-      }
     },
     "com.unity.modules.subsystems": {
       "version": "1.0.0",
