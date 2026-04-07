@@ -72,21 +72,22 @@
       "hash": "06a26c7a90286dc972ace4bc8cc26eda4685b407"
     },
     "com.bovinelabs.timeline.parenting": {
-      "version": "file:com.bovinelabs.timeline.parenting",
+      "version": "https://github.com/IAFahim/com.bovinelabs.timeline.parenting.git",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
         "com.unity.entities": "6.5.0",
         "com.unity.collections": "6.5.0",
         "com.unity.burst": "1.8.11",
         "com.unity.mathematics": "1.3.2",
         "com.bovinelabs.timeline.core": "1.0.0"
-      }
+      },
+      "hash": "b1111903d9743b17d8f54a09aeb60777d3689ba9"
     },
     "com.bovinelabs.timeline.physics": {
-      "version": "file:com.bovinelabs.timeline.physics",
+      "version": "https://github.com/IAFahim/com.bovinelabs.timeline.physics.git",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
         "com.unity.burst": "1.8.11",
         "com.unity.collections": "6.5.0",
@@ -97,23 +98,8 @@
         "com.bovinelabs.core": "1.6.1",
         "com.bovinelabs.timeline": "1.0.0",
         "com.bovinelabs.timeline.core": "1.0.0"
-      }
-    },
-    "com.bovinelabs.timeline.playerinput": {
-      "version": "file:com.bovinelabs.timeline.playerinput",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.burst": "1.8.11",
-        "com.unity.collections": "6.5.0",
-        "com.unity.entities": "6.5.0",
-        "com.unity.mathematics": "1.3.2",
-        "com.unity.timeline": "1.8.12",
-        "com.bovinelabs.core": "1.6.1",
-        "com.bovinelabs.timeline": "1.0.0",
-        "com.bovinelabs.timeline.core": "1.0.0",
-        "com.playerinputs": "1.0.0"
-      }
+      },
+      "hash": "e53ed48fa6b3ecba42f8da6ab5ceb3b103d505a7"
     },
     "com.gitcopy.gc": {
       "version": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
@@ -123,19 +109,6 @@
         "com.unity.modules.subsystems": "1.0.0"
       },
       "hash": "51bb63dccdb0ac4e40b6a8bfd17a153b1696ae11"
-    },
-    "com.playerinputs": {
-      "version": "file:com.playerinputs",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.entities": "1.3.0",
-        "com.unity.collections": "1.5.1",
-        "com.unity.burst": "1.8.11",
-        "com.unity.mathematics": "1.3.2",
-        "com.unity.inputsystem": "1.7.0",
-        "com.bovinelabs.reaction": "2.0.0"
-      }
     },
     "com.unity.burst": {
       "version": "1.8.28",
