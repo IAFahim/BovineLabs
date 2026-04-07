@@ -24,6 +24,6 @@ echo ""
 git commit -m "chore: auto-update all packages [${DATETIME}]"
 
 # Push to origin
-git push origin HEAD
+git push origin
 
 echo "✅ Pushed to origin successfully."
