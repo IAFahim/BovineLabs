@@ -31,6 +31,8 @@ MonoBehaviour:
     Path: Assets/Settings/UI/Actions
   - Key: bl.ar.anchornavanimation
     Path: Assets/Settings/UI/Animations
+  - Key: bl.ar.conditioneventobject
+    Path: Assets/Settings/Schemas/Events/
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
