@@ -9,7 +9,8 @@
     "Unity.Mathematics",
     "BovineLabs.Core",
     "BovineLabs.Core.Authoring",
-    "BovineLabs.EntityLinks"
+    "BovineLabs.EntityLinks",
+    "BovineLabs.Reaction.Data"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
