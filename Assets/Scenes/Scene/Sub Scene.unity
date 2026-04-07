@@ -796,6 +796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.Settings.SettingsAuthoring
   settings:
   - {fileID: 11400000, guid: 1288f2da12d38259bba0a73616fcefcb, type: 2}
+  - {fileID: 11400000, guid: 2c3495472aaa942d7a34e8bcef68cab4, type: 2}
 --- !u!4 &1076127292
 Transform:
   m_ObjectHideFlags: 0
