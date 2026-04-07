@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.LinkRequestAuthoring
   entityLinkLookupBufferBakeData:
-  - key: 5
+  - key: 3
     resolveRule: 1
   resolveAtStart: 1
 --- !u!1 &1007598383
