@@ -1,6 +1,7 @@
 using System;
 using BovineLabs.Reaction.Data.Core;
 using Unity.Entities;
+using Unity.Transforms;
 
 namespace BovineLabs.EntityLinks
 {
@@ -8,6 +9,7 @@ namespace BovineLabs.EntityLinks
     {
         public byte Key;
         public Entity Value;
+        public LocalTransform LocalTransform;
     }
 
     [InternalBufferCapacity(4)]

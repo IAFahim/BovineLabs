@@ -6,6 +6,8 @@
     "Unity.Collections",
     "Unity.Entities",
     "Unity.Entities.Hybrid",
+    "Unity.Transforms",
+    "Unity.Transforms.Hybrid",
     "Unity.Mathematics",
     "BovineLabs.Core",
     "BovineLabs.Core.Authoring",

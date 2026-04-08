@@ -34,18 +34,18 @@ namespace BovineLabs.EntityLinks.Authoring
         {
             public override void Bake(LinkRequestAuthoring authoring)
             {
-                var entity = this.GetEntity(TransformUsageFlags.None);
-                var requests = this.AddBuffer<EntityLookupRequestBuffer>(entity);
+                var entity = GetEntity(TransformUsageFlags.None);
+                var requests = AddBuffer<EntityLookupRequestBuffer>(entity);
     
                 foreach (var b in authoring.entityLinkLookupBufferBakeData)
                 {
                     requests.Add(b.ToEntityLookupStoreBuffer());
                 }
 
-                this.AddComponent<EntityLookupRequestedThisFrame>(entity);
-                this.SetComponentEnabled<EntityLookupRequestedThisFrame>(entity, authoring.resolveAtStart);
+                AddComponent<EntityLookupRequestedThisFrame>(entity);
+                SetComponentEnabled<EntityLookupRequestedThisFrame>(entity, authoring.resolveAtStart);
                 
-                this.AddBuffer<EntityLookupResolveResult>(entity);
+                AddBuffer<EntityLookupResolveResult>(entity);
             }
         }
     }

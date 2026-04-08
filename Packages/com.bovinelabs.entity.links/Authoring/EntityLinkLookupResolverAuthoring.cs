@@ -1,5 +1,6 @@
 using System;
 using Unity.Entities;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace BovineLabs.EntityLinks.Authoring
@@ -14,7 +15,7 @@ namespace BovineLabs.EntityLinks.Authoring
         {
             public override void Bake(EntityLinkLookupResolverAuthoring authoring)
             {
-                var entity = GetEntity(TransformUsageFlags.Dynamic);
+                var entity = GetEntity(TransformUsageFlags.None);
                 var entityLookupStoreBuffers = AddBuffer<EntityLookupStoreBuffer>(entity);
                 foreach (var entitySelfIdMonoBehavior in authoring.links)
                 {
@@ -23,9 +24,16 @@ namespace BovineLabs.EntityLinks.Authoring
                         entityLookupStoreBuffers.Add(new EntityLookupStoreBuffer
                             {
                                 Key = entitySelfIdData.key,
-                                Value = GetEntity(entitySelfIdMonoBehavior.gameObject, TransformUsageFlags.None)
+                                Value = GetEntity(entitySelfIdMonoBehavior.gameObject, TransformUsageFlags.None),
+                                LocalTransform = entitySelfIdData.linkTransformOffset != null
+                                    ? LocalTransform.FromPositionRotationScale(
+                                        entitySelfIdData.linkTransformOffset.localPosition,
+                                        entitySelfIdData.linkTransformOffset.localRotation,
+                                        entitySelfIdData.linkTransformOffset.localScale.x)
+                                    : LocalTransform.Identity
                             }
                         );
+                        DependsOn(entitySelfIdData.linkTransformOffset);
                     }
                 }
             }
