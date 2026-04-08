@@ -4,7 +4,7 @@
 # This script runs Unity tests in batch mode
 # Make sure Unity Editor is closed before running this script
 
-UNITY_EDITOR="/home/l/Unity/Hub/Editor/6000.5.0a8/Editor/Unity"
+UNITY_EDITOR="/home/l/Unity/Hub/Editor/6000.5.0b1/Editor/Unity"
 PROJECT_PATH="/home/l/Github/BovineLabs"
 TEST_RESULTS="TestResults.xml"
 

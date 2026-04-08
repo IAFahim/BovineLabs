@@ -1,17 +1,12 @@
 {
   "dependencies": {
-    "com.bovinelabs.anchor": "https://gitlab.com/tertle/com.bovinelabs.anchor.git#2.0.0",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
     "com.unity.collections": "6.5.0",
     "com.unity.entities": "6.5.0",
     "com.unity.entities.graphics": "6.5.0",
     "com.unity.ide.rider": "3.0.39",
-    "com.unity.inputsystem": "1.19.0",
-    "com.unity.physics": "6.5.0",
     "com.unity.render-pipelines.universal": "17.5.0",
-    "com.unity.sdk.linux-x86_64": "1.0.2",
     "com.unity.test-framework": "1.7.0",
-    "com.unity.toolchain.linux-x86_64-linux": "1.0.2",
-    "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#linux-patch-DotNetSdkRoslyn"
+    "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#main"
   }
 }
