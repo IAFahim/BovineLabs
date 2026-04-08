@@ -5,6 +5,7 @@
     "com.unity.entities": "6.5.0",
     "com.unity.entities.graphics": "6.5.0",
     "com.unity.ide.rider": "3.0.39",
+    "com.unity.inputsystem": "1.19.0",
     "com.unity.render-pipelines.universal": "17.5.0",
     "com.unity.test-framework": "1.7.0",
     "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#main"
