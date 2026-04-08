@@ -23,11 +23,8 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Packages/com.bovinelabs.entity.links/Samples/EntityLinks/Scenes/EntityLinksSample.unity
-    m_guid: 182e85c0b5bd0a7b38c114548a90cfd3
-  - m_enabled: 1
-    m_path: Assets/Samples/BovineLabs Entity Links/1.0.0/EntityLinks/EntityLinksSubScene.unity
-    m_guid: 3d1832d3de345a8aea0fcbe0e077ecee
+    m_path: Assets/Samples/BovineLabs Entity Links/1.0.0/EntityLinks/EntityLinksSample.unity
+    m_guid: 4b30a46c0ac7e1dfe89c2b543c987c22
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:
