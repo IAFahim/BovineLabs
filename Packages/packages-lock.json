@@ -72,6 +72,14 @@
       },
       "hash": "06a26c7a90286dc972ace4bc8cc26eda4685b407"
     },
+    "com.fahimmanowarj5.bovinelabstimelineentitylinks": {
+      "version": "file:com.bovinelabs.timeline.entity.links",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.test-framework": "1.6.0"
+      }
+    },
     "com.gitcopy.gc": {
       "version": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
       "depth": 0,
