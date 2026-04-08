@@ -42,8 +42,8 @@ namespace BovineLabs.EntityLinks.Authoring
                     requests.Add(b.ToEntityLookupStoreBuffer());
                 }
 
-                this.AddComponent<EntityLookupResolvedThisFrame>(entity);
-                this.SetComponentEnabled<EntityLookupResolvedThisFrame>(entity, authoring.resolveAtStart);
+                this.AddComponent<EntityLookupRequestedThisFrame>(entity);
+                this.SetComponentEnabled<EntityLookupRequestedThisFrame>(entity, authoring.resolveAtStart);
                 
                 this.AddBuffer<EntityLookupResolveResult>(entity);
             }

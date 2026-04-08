@@ -18,7 +18,7 @@ namespace BovineLabs.EntityLinks
         {
             this.query = SystemAPI.QueryBuilder()
                 .WithAll<EntityLookupRequestBuffer, EntityLookupResolveResult>()
-                .WithAllRW<EntityLookupResolvedThisFrame>()
+                .WithAllRW<EntityLookupRequestedThisFrame>()
                 .Build();
         }
 
@@ -30,7 +30,7 @@ namespace BovineLabs.EntityLinks
                 EntityType = SystemAPI.GetEntityTypeHandle(),
                 RequestType = SystemAPI.GetBufferTypeHandle<EntityLookupRequestBuffer>(true),
                 ResultType = SystemAPI.GetBufferTypeHandle<EntityLookupResolveResult>(),
-                TriggerType = SystemAPI.GetComponentTypeHandle<EntityLookupResolvedThisFrame>(),
+                TriggerType = SystemAPI.GetComponentTypeHandle<EntityLookupRequestedThisFrame>(),
                 StoreLookup = SystemAPI.GetBufferLookup<EntityLookupStoreBuffer>(true),
                 ParentLookup = SystemAPI.GetComponentLookup<Parent>(true),
                 TargetsLookup = SystemAPI.GetComponentLookup<Targets>(true),
@@ -46,7 +46,7 @@ namespace BovineLabs.EntityLinks
         [ReadOnly] public EntityTypeHandle EntityType;
         [ReadOnly] public BufferTypeHandle<EntityLookupRequestBuffer> RequestType;
         public BufferTypeHandle<EntityLookupResolveResult> ResultType;
-        public ComponentTypeHandle<EntityLookupResolvedThisFrame> TriggerType;
+        public ComponentTypeHandle<EntityLookupRequestedThisFrame> TriggerType;
 
         [ReadOnly] public BufferLookup<EntityLookupStoreBuffer> StoreLookup;
         [ReadOnly] public ComponentLookup<Parent> ParentLookup;

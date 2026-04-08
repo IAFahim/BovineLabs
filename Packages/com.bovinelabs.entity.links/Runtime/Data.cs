@@ -4,7 +4,6 @@ using Unity.Entities;
 
 namespace BovineLabs.EntityLinks
 {
-    [InternalBufferCapacity(4)]
     public struct EntityLookupStoreBuffer : IBufferElementData
     {
         public byte Key;
@@ -19,7 +18,7 @@ namespace BovineLabs.EntityLinks
         public Target AssignTo;
     }
 
-    public struct EntityLookupResolvedThisFrame : IComponentData, IEnableableComponent
+    public struct EntityLookupRequestedThisFrame : IComponentData, IEnableableComponent
     {
     }
 
