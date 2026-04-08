@@ -72,14 +72,6 @@
       },
       "hash": "06a26c7a90286dc972ace4bc8cc26eda4685b407"
     },
-    "com.bovinelabs.timeline.entity.links": {
-      "version": "file:com.bovinelabs.timeline.entity.links",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.test-framework": "1.6.0"
-      }
-    },
     "com.gitcopy.gc": {
       "version": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
       "depth": 0,
@@ -88,19 +80,6 @@
         "com.unity.modules.subsystems": "1.0.0"
       },
       "hash": "51bb63dccdb0ac4e40b6a8bfd17a153b1696ae11"
-    },
-    "com.playerinputs": {
-      "version": "file:com.playerinputs",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.entities": "1.3.0",
-        "com.unity.collections": "1.5.1",
-        "com.unity.burst": "1.8.11",
-        "com.unity.mathematics": "1.3.2",
-        "com.unity.inputsystem": "1.7.0",
-        "com.bovinelabs.reaction": "2.0.0"
-      }
     },
     "com.unity.burst": {
       "version": "1.8.28",
