@@ -171,8 +171,8 @@ PlayableDirector:
     value: {fileID: 993887083}
   - key: {fileID: 0}
     value: {fileID: 993887083}
-  - key: {fileID: 8093092550757627359, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
-    value: {fileID: 993887088}
+  - key: {fileID: 497872645503015079, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 993887083}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 0
+  key: 5
 --- !u!114 &191613265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 0
+  key: 3
 --- !u!114 &328345292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -602,6 +602,7 @@ MonoBehaviour:
   - {fileID: 1019947924}
   - {fileID: 191613264}
   - {fileID: 328345291}
+  - {fileID: 856893513}
 --- !u!1 &856893510
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856893511}
+  - component: {fileID: 856893513}
   - component: {fileID: 856893512}
   m_Layer: 0
   m_Name: Hand Tip
@@ -647,6 +649,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!114 &856893513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856893510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagAuthoring
+  key: 6
 --- !u!1 &993887083
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +771,7 @@ Transform:
   m_GameObject: {fileID: 993887083}
   serializedVersion: 2
   m_LocalRotation: {x: -0.68165255, y: -0, z: -0, w: 0.73167604}
-  m_LocalPosition: {x: -0.631, y: -0.23632386, z: -0.092}
+  m_LocalPosition: {x: -0.631, y: -0.118, z: -1.757}
   m_LocalScale: {x: 0.20000003, y: 1, z: 0.20000005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -774,7 +789,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c06fffc172f02e75b60f19fd0241e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.LinkRequestAuthoring
-  entityLinkLookupBufferBakeDatas: []
+  entityLinkLookupBufferBakeDatas:
+  - key: 6
+    resolveRule: 1
+    assignTo: 4
   resolveAtStart: 1
 --- !u!1 &1007598383
 GameObject:
