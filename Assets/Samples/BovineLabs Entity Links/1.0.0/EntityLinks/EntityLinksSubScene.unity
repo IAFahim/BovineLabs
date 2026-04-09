@@ -171,8 +171,10 @@ PlayableDirector:
     value: {fileID: 993887083}
   - key: {fileID: 0}
     value: {fileID: 993887083}
-  - key: {fileID: 497872645503015079, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+  - key: {fileID: 4461326593067107879, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 993887083}
+  - key: {fileID: 4699248473348086526, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 547519298}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -198,9 +200,9 @@ GameObject:
   - component: {fileID: 191613260}
   - component: {fileID: 191613263}
   - component: {fileID: 191613262}
-  - component: {fileID: 191613261}
   - component: {fileID: 191613264}
   - component: {fileID: 191613265}
+  - component: {fileID: 191613267}
   m_Layer: 0
   m_Name: Left hand
   m_TagString: Untagged
@@ -223,27 +225,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1007598384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &191613261
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191613259}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &191613262
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -313,7 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 5
+  tag: {fileID: 11400000, guid: 76647808ebb7b0bbb904a697f563fa51, type: 2}
 --- !u!114 &191613265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +308,155 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!114 &191613267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191613259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Physics.Custom::Unity.Physics.Authoring.PhysicsShapeAuthoring
+  m_ForceUniqueID: 1391853729
+  m_PrefabInstanceID: 0
+  m_ShapeType: 0
+  m_PrimitiveCenter:
+    x: 0
+    y: 0
+    z: 0
+  m_PrimitiveSize:
+    x: 1
+    y: 0.99999994
+    z: 1
+  m_PrimitiveOrientation:
+    Value:
+      x: -0
+      y: 0
+      z: 0
+    RotationOrder: 4
+  m_Capsule:
+    Height: 1
+    Radius: 0.5
+    Axis: 2
+  m_Cylinder:
+    Height: 0.99999994
+    Radius: 0.5
+    Axis: 1
+  m_CylinderSideCount: 20
+  m_SphereRadius: 0.5
+  m_MinimumSkinnedVertexWeight: 0.1
+  m_ConvexHullGenerationParameters:
+    m_SimplificationTolerance: 0.015
+    m_BevelRadius: 0.05
+    m_MinimumAngle: 2.5000002
+  m_CustomMesh: {fileID: 0}
+  m_ForceUnique: 0
+  m_Material:
+    m_SupportsTemplate: 1
+    m_Template: {fileID: 0}
+    m_CollisionResponse:
+      m_Override: 0
+      m_Value: 0
+    m_DetailedStaticMeshCollision:
+      m_Override: 0
+      m_Value:
+        Value: 0
+    m_Friction:
+      m_Override: 0
+      m_Value:
+        Value: 0.5
+        CombineMode: 0
+    m_Restitution:
+      m_Override: 0
+      m_Value:
+        Value: 0
+        CombineMode: 2
+    m_BelongsToCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CollidesWithCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CustomMaterialTags:
+      m_Override: 0
+      m_Value:
+        Tag00: 0
+        Tag01: 0
+        Tag02: 0
+        Tag03: 0
+        Tag04: 0
+        Tag05: 0
+        Tag06: 0
+        Tag07: 0
+    m_SerializedVersion: 1
+  m_SerializedVersion: 3
 --- !u!1 &328345286
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,9 +468,9 @@ GameObject:
   - component: {fileID: 328345287}
   - component: {fileID: 328345290}
   - component: {fileID: 328345289}
-  - component: {fileID: 328345288}
   - component: {fileID: 328345291}
   - component: {fileID: 328345292}
+  - component: {fileID: 328345294}
   m_Layer: 0
   m_Name: Right hand
   m_TagString: Untagged
@@ -364,27 +494,6 @@ Transform:
   - {fileID: 856893511}
   m_Father: {fileID: 1007598384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &328345288
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328345286}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &328345289
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -454,7 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 4
+  tag: {fileID: 11400000, guid: e171bfe1e0df23080a0cd0d1e36236d2, type: 2}
 --- !u!114 &328345292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,6 +577,155 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!114 &328345294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328345286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Physics.Custom::Unity.Physics.Authoring.PhysicsShapeAuthoring
+  m_ForceUniqueID: 779375448
+  m_PrefabInstanceID: 0
+  m_ShapeType: 0
+  m_PrimitiveCenter:
+    x: 0
+    y: 0
+    z: 0
+  m_PrimitiveSize:
+    x: 1
+    y: 0.99999994
+    z: 1
+  m_PrimitiveOrientation:
+    Value:
+      x: -0
+      y: 0
+      z: 0
+    RotationOrder: 4
+  m_Capsule:
+    Height: 1
+    Radius: 0.5
+    Axis: 2
+  m_Cylinder:
+    Height: 0.99999994
+    Radius: 0.5
+    Axis: 1
+  m_CylinderSideCount: 20
+  m_SphereRadius: 0.5
+  m_MinimumSkinnedVertexWeight: 0.1
+  m_ConvexHullGenerationParameters:
+    m_SimplificationTolerance: 0.015
+    m_BevelRadius: 0.05
+    m_MinimumAngle: 2.5000002
+  m_CustomMesh: {fileID: 0}
+  m_ForceUnique: 0
+  m_Material:
+    m_SupportsTemplate: 1
+    m_Template: {fileID: 0}
+    m_CollisionResponse:
+      m_Override: 0
+      m_Value: 0
+    m_DetailedStaticMeshCollision:
+      m_Override: 0
+      m_Value:
+        Value: 0
+    m_Friction:
+      m_Override: 0
+      m_Value:
+        Value: 0.5
+        CombineMode: 0
+    m_Restitution:
+      m_Override: 0
+      m_Value:
+        Value: 0
+        CombineMode: 2
+    m_BelongsToCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CollidesWithCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CustomMaterialTags:
+      m_Override: 0
+      m_Value:
+        Tag00: 0
+        Tag01: 0
+        Tag02: 0
+        Tag03: 0
+        Tag04: 0
+        Tag05: 0
+        Tag06: 0
+        Tag07: 0
+    m_SerializedVersion: 1
+  m_SerializedVersion: 3
 --- !u!1 &547519298
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +739,8 @@ GameObject:
   - component: {fileID: 547519300}
   - component: {fileID: 547519299}
   - component: {fileID: 547519303}
+  - component: {fileID: 547519305}
+  - component: {fileID: 547519304}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -579,10 +839,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1336369580}
   - {fileID: 1007598384}
+  - {fileID: 993887087}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &547519303
@@ -598,11 +859,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
   links:
+  - {fileID: 547519305}
   - {fileID: 1336369581}
   - {fileID: 1019947924}
   - {fileID: 191613264}
   - {fileID: 328345291}
-  - {fileID: 856893513}
+--- !u!114 &547519304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547519298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
+--- !u!114 &547519305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547519298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Bovinelabs.Timeline.Entity.Links.Authoring::Bovinelabs.Timeline.Entity.Links.Authoring.EntityTagAuthoring
+  tag: {fileID: 11400000, guid: 82c8b7806cd430c0cbb4e26755d8cdee, type: 2}
 --- !u!1 &856893510
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,15 +899,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856893511}
-  - component: {fileID: 856893513}
-  - component: {fileID: 856893512}
   m_Layer: 0
   m_Name: Hand Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &856893511
 Transform:
   m_ObjectHideFlags: 0
@@ -636,32 +921,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 328345287}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &856893512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 856893510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
-  TransformUsageFlags: 2
---- !u!114 &856893513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 856893510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagAuthoring
-  key: 6
 --- !u!1 &993887083
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,13 +1028,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993887083}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.68165255, y: -0, z: -0, w: 0.73167604}
-  m_LocalPosition: {x: -1.0092447, y: -0.16656551, z: -5.747843}
-  m_LocalScale: {x: 0.31988746, y: 2.4841228, z: 0.28292814}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.631, y: -0.118, z: -1.7569999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1336369580}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 547519302}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1007598383
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +1045,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1007598384}
   m_Layer: 0
-  m_Name: Root
+  m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -821,9 +1080,9 @@ GameObject:
   - component: {fileID: 1019947920}
   - component: {fileID: 1019947923}
   - component: {fileID: 1019947922}
-  - component: {fileID: 1019947921}
   - component: {fileID: 1019947924}
   - component: {fileID: 1019947925}
+  - component: {fileID: 1019947927}
   m_Layer: 0
   m_Name: Glasses
   m_TagString: Untagged
@@ -846,27 +1105,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1007598384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1019947921
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019947919}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1019947922
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -936,7 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 3
+  tag: {fileID: 11400000, guid: 5df108c067f9d2dea9be654acd6799f7, type: 2}
 --- !u!114 &1019947925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,6 +1188,155 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!114 &1019947927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019947919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b275e5f92732148048d7b77e264ac30e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Physics.Custom::Unity.Physics.Authoring.PhysicsShapeAuthoring
+  m_ForceUniqueID: 1187638425
+  m_PrefabInstanceID: 0
+  m_ShapeType: 0
+  m_PrimitiveCenter:
+    x: 0
+    y: 0
+    z: 0
+  m_PrimitiveSize:
+    x: 1
+    y: 1
+    z: 1
+  m_PrimitiveOrientation:
+    Value:
+      x: -0
+      y: 0
+      z: 0
+    RotationOrder: 4
+  m_Capsule:
+    Height: 1
+    Radius: 0.5
+    Axis: 2
+  m_Cylinder:
+    Height: 1
+    Radius: 0.5
+    Axis: 2
+  m_CylinderSideCount: 20
+  m_SphereRadius: 0.5
+  m_MinimumSkinnedVertexWeight: 0.1
+  m_ConvexHullGenerationParameters:
+    m_SimplificationTolerance: 0.015
+    m_BevelRadius: 0.05
+    m_MinimumAngle: 2.5000002
+  m_CustomMesh: {fileID: 0}
+  m_ForceUnique: 0
+  m_Material:
+    m_SupportsTemplate: 1
+    m_Template: {fileID: 0}
+    m_CollisionResponse:
+      m_Override: 0
+      m_Value: 0
+    m_DetailedStaticMeshCollision:
+      m_Override: 0
+      m_Value:
+        Value: 0
+    m_Friction:
+      m_Override: 0
+      m_Value:
+        Value: 0.5
+        CombineMode: 0
+    m_Restitution:
+      m_Override: 0
+      m_Value:
+        Value: 0
+        CombineMode: 2
+    m_BelongsToCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CollidesWithCategories:
+      m_Override: 0
+      m_Value:
+        Category00: 1
+        Category01: 1
+        Category02: 1
+        Category03: 1
+        Category04: 1
+        Category05: 1
+        Category06: 1
+        Category07: 1
+        Category08: 1
+        Category09: 1
+        Category10: 1
+        Category11: 1
+        Category12: 1
+        Category13: 1
+        Category14: 1
+        Category15: 1
+        Category16: 1
+        Category17: 1
+        Category18: 1
+        Category19: 1
+        Category20: 1
+        Category21: 1
+        Category22: 1
+        Category23: 1
+        Category24: 1
+        Category25: 1
+        Category26: 1
+        Category27: 1
+        Category28: 1
+        Category29: 1
+        Category30: 1
+        Category31: 1
+    m_CustomMaterialTags:
+      m_Override: 0
+      m_Value:
+        Tag00: 0
+        Tag01: 0
+        Tag02: 0
+        Tag03: 0
+        Tag04: 0
+        Tag05: 0
+        Tag06: 0
+        Tag07: 0
+    m_SerializedVersion: 1
+  m_SerializedVersion: 3
 --- !u!1 &1100798939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,6 +1601,7 @@ GameObject:
   - component: {fileID: 1336369577}
   - component: {fileID: 1336369581}
   - component: {fileID: 1336369582}
+  - component: {fileID: 1336369583}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -1311,8 +1699,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0.548}
   m_LocalScale: {x: 0.62522, y: 0.70843, z: 0.40102}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 993887087}
+  m_Children: []
   m_Father: {fileID: 547519302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1336369581
@@ -1327,7 +1714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  key: 0
+  tag: {fileID: 11400000, guid: 396eae5308942e2c5a06a0975df02c43, type: 2}
 --- !u!114 &1336369582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1349,6 +1736,19 @@ MonoBehaviour:
     Target1: {fileID: 0}
   Initialize:
     Target: 1
+--- !u!114 &1336369583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336369576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

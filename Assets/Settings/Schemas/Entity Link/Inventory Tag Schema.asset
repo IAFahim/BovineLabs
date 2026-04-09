@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 440095c87aa76057688288916ad04fab, type: 3}
-  m_Name: EntityLinkKeys
-  m_EditorClassIdentifier: BovineLabs.EntityLinks::BovineLabs.EntityLinks.EntityLinkKeys
-  keys:
-  - {fileID: 0}
+  m_Script: {fileID: 11500000, guid: a2b26b47c56247f687c5d05aeb37e433, type: 3}
+  m_Name: Inventory Tag Schema
+  m_EditorClassIdentifier: Bovinelabs.Timeline.Entity.Links.Authoring::Bovinelabs.Timeline.Entity.Links.Authoring.EntityLinkTagSchema
+  id: 2

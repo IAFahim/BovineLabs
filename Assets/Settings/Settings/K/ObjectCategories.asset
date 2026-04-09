@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: ObjectCategories
   m_EditorClassIdentifier: BovineLabs.Core.Extensions::BovineLabs.Core.ObjectManagement.ObjectCategories
   description: 
-  keys: []
+  keys:
+  - name: 
+    value: 0
+    component: 0

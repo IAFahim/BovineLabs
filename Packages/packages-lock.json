@@ -9,18 +9,6 @@
       },
       "hash": "d49052fed7b03c3f390a109d53051d1ec5f5d109"
     },
-    "com.bovinelabs.entity.links": {
-      "version": "file:com.bovinelabs.entity.links",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.entities": "6.5.0",
-        "com.unity.collections": "6.5.0",
-        "com.unity.burst": "1.8.11",
-        "com.unity.mathematics": "1.3.2",
-        "com.bovinelabs.core": "1.0.0"
-      }
-    },
     "com.bovinelabs.essence": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
       "depth": 0,
@@ -77,20 +65,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.unity.test-framework": "1.6.0",
-        "com.bovinelabs.timeline.instantiate": "1.0.0"
-      }
-    },
-    "com.bovinelabs.timeline.instantiate": {
-      "version": "file:com.bovinelabs.timeline.instantiate",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.entities": "6.5.0",
-        "com.unity.collections": "6.5.0",
-        "com.unity.burst": "1.8.11",
-        "com.unity.mathematics": "1.3.2",
-        "com.bovinelabs.timeline.core": "1.0.0"
+        "com.unity.test-framework": "1.6.0"
       }
     },
     "com.gitcopy.gc": {
