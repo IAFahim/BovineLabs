@@ -167,10 +167,12 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -8181516472862146780, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 993887083}
-  - key: {fileID: -6128493261918592528, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 993887083}
+  - key: {fileID: 8093092550757627359, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 993887088}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -198,6 +200,7 @@ GameObject:
   - component: {fileID: 191613262}
   - component: {fileID: 191613261}
   - component: {fileID: 191613264}
+  - component: {fileID: 191613265}
   m_Layer: 0
   m_Name: Left hand
   m_TagString: Untagged
@@ -310,11 +313,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  ids:
-  - key: 3
-    linkTransformOffset: {fileID: 0}
+  tags:
+  - key: 4
+    transform: {fileID: 191613260}
   - key: 5
-    linkTransformOffset: {fileID: 0}
+    transform: {fileID: 191613260}
+--- !u!114 &191613265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191613259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1 &328345286
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,6 +344,7 @@ GameObject:
   - component: {fileID: 328345289}
   - component: {fileID: 328345288}
   - component: {fileID: 328345291}
+  - component: {fileID: 328345292}
   m_Layer: 0
   m_Name: Right hand
   m_TagString: Untagged
@@ -441,11 +458,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  ids:
-  - key: 3
-    linkTransformOffset: {fileID: 0}
+  tags:
+  - key: 4
+    transform: {fileID: 328345287}
   - key: 6
-    linkTransformOffset: {fileID: 0}
+    transform: {fileID: 856893511}
+--- !u!114 &328345292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328345286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1 &547519298
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +619,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856893511}
+  - component: {fileID: 856893512}
   m_Layer: 0
   m_Name: Hand Tip
   m_TagString: Untagged
@@ -604,13 +635,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 856893510}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.68165255, y: -0, z: -0, w: 0.73167604}
-  m_LocalPosition: {x: 0, y: -0.48499984, z: -0.00000043079518}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.48499984, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 328345287}
-  m_LocalEulerAnglesHint: {x: -85.946, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &856893512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856893510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1 &993887083
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +723,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: fa5af53f50c4b86898ffa2d51470462a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -719,9 +763,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993887083}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.918}
-  m_LocalScale: {x: 0.2, y: 1, z: 0.2}
+  m_LocalRotation: {x: -0.68165255, y: -0, z: -0, w: 0.73167604}
+  m_LocalPosition: {x: -0.631, y: -0.23632386, z: -0.092}
+  m_LocalScale: {x: 0.20000003, y: 1, z: 0.20000005}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 547519302}
@@ -739,9 +783,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.LinkRequestAuthoring
   entityLinkLookupBufferBakeData:
-  - key: 3
+  - key: 5
     resolveRule: 1
-    assignTo: 1
+    assignTo: 0
   resolveAtStart: 1
 --- !u!1 &1007598383
 GameObject:
@@ -791,6 +835,7 @@ GameObject:
   - component: {fileID: 1019947922}
   - component: {fileID: 1019947921}
   - component: {fileID: 1019947924}
+  - component: {fileID: 1019947925}
   m_Layer: 0
   m_Name: Glasses
   m_TagString: Untagged
@@ -903,9 +948,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  ids:
-  - key: 4
-    linkTransformOffset: {fileID: 0}
+  tags:
+  - key: 3
+    transform: {fileID: 1019947920}
+--- !u!114 &1019947925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019947919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1 &1100798939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,9 +1340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  ids:
-  - key: 1
-    linkTransformOffset: {fileID: 0}
+  tags: []
 --- !u!114 &1336369582
 MonoBehaviour:
   m_ObjectHideFlags: 0

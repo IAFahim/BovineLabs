@@ -20,9 +20,9 @@ MonoBehaviour:
     value: 1
   - name: Weapon
     value: 2
-  - name: Hand
-    value: 3
   - name: Head
+    value: 3
+  - name: Hand
     value: 4
   - name: Left-Hand
     value: 5
