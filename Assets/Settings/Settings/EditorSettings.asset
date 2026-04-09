@@ -33,6 +33,10 @@ MonoBehaviour:
     Path: Assets/Settings/UI/Animations
   - Key: bl.ar.conditioneventobject
     Path: Assets/Settings/Schemas/Events/
+  - Key: bl.ar.statschemaobject
+    Path: Assets/Settings/Schemas/Stats
+  - Key: bl.ar.intrinsicschemaobject
+    Path: Assets/Settings/Schemas/Intrinsics/
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
