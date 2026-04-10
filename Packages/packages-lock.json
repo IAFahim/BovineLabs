@@ -61,7 +61,7 @@
       "hash": "06a26c7a90286dc972ace4bc8cc26eda4685b407"
     },
     "com.bovinelabs.timeline.entity.links": {
-      "version": "file:Bovinelabs.Timeline.Entity.Links",
+      "version": "file:Bovinelabs.Timeline.EntityLinks",
       "depth": 0,
       "source": "embedded",
       "dependencies": {

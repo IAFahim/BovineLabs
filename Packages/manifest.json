@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.bovinelabs.entity.links": "file:com.bovinelabs.entity.links",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
     "com.bovinelabs.reaction": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
     "com.bovinelabs.essence": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
