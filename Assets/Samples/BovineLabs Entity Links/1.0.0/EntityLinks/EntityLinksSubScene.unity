@@ -171,10 +171,8 @@ PlayableDirector:
     value: {fileID: 993887083}
   - key: {fileID: 0}
     value: {fileID: 993887083}
-  - key: {fileID: 4461326593067107879, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+  - key: {fileID: -4795396796215624092, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 993887083}
-  - key: {fileID: 4699248473348086526, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
-    value: {fileID: 547519298}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -841,6 +839,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 993887087}
   - {fileID: 1336369580}
   - {fileID: 1007598384}
   m_Father: {fileID: 0}
@@ -1033,7 +1032,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 547519302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &993887088
 MonoBehaviour:
@@ -1776,5 +1775,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1100798941}
   - {fileID: 155153276}
-  - {fileID: 993887087}
   - {fileID: 547519302}
