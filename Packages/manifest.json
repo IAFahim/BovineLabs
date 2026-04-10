@@ -5,6 +5,7 @@
     "com.bovinelabs.essence": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
     "com.bovinelabs.timeline": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
     "com.bovinelabs.timeline.core": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",
+    "com.bovinelabs.timeline.entitylinks": "https://github.com/IAFahim/Bovinelabs.Timeline.EntityLinks.git",
     "com.unity.collections": "6.6.0",
     "com.unity.entities": "6.6.0",
     "com.bovinelabs.quill": "https://github.com/IAFahim/com.bovinelabs.quill.git",
