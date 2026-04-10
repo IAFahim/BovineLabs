@@ -46,7 +46,7 @@
         "com.bovinelabs.core": "1.6.0",
         "com.unity.timeline": "1.8.11"
       },
-      "hash": "c006988a04abaa04c32d2cacff797fa90aaa40a6"
+      "hash": "ea97bbb0a5e1d6a16f4dac650d09bb3ed4ea47c2"
     },
     "com.bovinelabs.timeline.core": {
       "version": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",

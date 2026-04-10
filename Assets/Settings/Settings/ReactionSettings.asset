@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f8a5def80249169fb86f23077b8286, type: 3}
   m_Name: ReactionSettings
   m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.ReactionSettings
-  conditionEvents: []
+  conditionEvents:
+  - {fileID: 11400000, guid: 0a741c9d2622a8d2aaf56ac5e1ac9d5d, type: 2}
   enableables: []
