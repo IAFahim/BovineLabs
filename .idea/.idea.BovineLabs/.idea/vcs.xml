@@ -3,7 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/Bovinelabs.Timeline.EntityLinks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/Bovinelabs.Timeline.PlayerInputs" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.physics" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Packages/com.playerinputs" vcs="Git" />
   </component>
 </project>
