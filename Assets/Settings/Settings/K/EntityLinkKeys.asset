@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: EntityLinkKeys
   m_EditorClassIdentifier: BovineLabs.EntityLinks::BovineLabs.EntityLinks.EntityLinkKeys
   keys:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 82c8b7806cd430c0cbb4e26755d8cdee, type: 2}
+  - {fileID: 11400000, guid: 76647808ebb7b0bbb904a697f563fa51, type: 2}
