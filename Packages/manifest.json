@@ -18,6 +18,7 @@
     "com.unity.sdk.linux-x86_64": "1.0.2",
     "com.unity.test-framework": "1.7.0",
     "com.unity.toolchain.linux-x86_64-linux": "1.0.2",
-    "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#linux-patch-DotNetSdkRoslyn"
+    "com.youngwoocho02.unity-cli-connector": "https://github.com/IAFahim/unity-cli.git?path=unity-connector#linux-patch-DotNetSdkRoslyn",
+    "com.bovinelabs.timeline.group-tool": "file:com.bovinelabs.timeline.group-tool"
   }
 }

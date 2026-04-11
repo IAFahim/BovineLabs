@@ -175,6 +175,8 @@ PlayableDirector:
     value: {fileID: 993887083}
   - key: {fileID: 1533976475158955954, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 547519308}
+  - key: {fileID: 2713462620551172859, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 619819017}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -595,7 +597,7 @@ GameObject:
   - component: {fileID: 619819021}
   - component: {fileID: 619819020}
   m_Layer: 0
-  m_Name: Events
+  m_Name: Input Consumer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
