@@ -69,12 +69,13 @@
       }
     },
     "com.bovinelabs.timeline.group-tool": {
-      "version": "file:com.bovinelabs.timeline.group-tool",
+      "version": "https://github.com/IAFahim/com.bovinelabs.timeline.group-tool.git",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
         "com.unity.timeline": "1.7.6"
-      }
+      },
+      "hash": "c326a49f87956b6e42017946507f2df7a2518a09"
     },
     "com.bovinelabs.timeline.physics": {
       "version": "file:com.bovinelabs.timeline.physics",
