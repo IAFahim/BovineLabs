@@ -183,6 +183,8 @@ PlayableDirector:
     value: {fileID: 619819018}
   - key: {fileID: 8329585062532576727, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 619819018}
+  - key: {fileID: -6784736260034161606, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 993887083}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -301,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  tag: {fileID: 11400000, guid: 76647808ebb7b0bbb904a697f563fa51, type: 2}
+  entityLinkTagSchema: {fileID: 11400000, guid: 76647808ebb7b0bbb904a697f563fa51, type: 2}
 --- !u!114 &191613265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,8 +328,6 @@ GameObject:
   - component: {fileID: 328345287}
   - component: {fileID: 328345290}
   - component: {fileID: 328345289}
-  - component: {fileID: 328345291}
-  - component: {fileID: 328345292}
   m_Layer: 0
   m_Name: Right hand
   m_TagString: Untagged
@@ -408,32 +408,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 328345286}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &328345291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328345286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  tag: {fileID: 11400000, guid: e171bfe1e0df23080a0cd0d1e36236d2, type: 2}
---- !u!114 &328345292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328345286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
-  TransformUsageFlags: 2
 --- !u!1 &547519298
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,10 +519,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
   links:
   - {fileID: 547519305}
-  - {fileID: 1336369581}
   - {fileID: 1019947924}
   - {fileID: 191613264}
-  - {fileID: 328345291}
+  - {fileID: 856893512}
 --- !u!114 &547519304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Bovinelabs.Timeline.Entity.Links.Authoring::Bovinelabs.Timeline.Entity.Links.Authoring.EntityTagAuthoring
-  tag: {fileID: 11400000, guid: 82c8b7806cd430c0cbb4e26755d8cdee, type: 2}
+  entityLinkTagSchema: {fileID: 11400000, guid: 82c8b7806cd430c0cbb4e26755d8cdee, type: 2}
 --- !u!114 &547519308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,13 +826,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 856893511}
+  - component: {fileID: 856893512}
+  - component: {fileID: 856893513}
   m_Layer: 0
   m_Name: Hand Tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &856893511
 Transform:
   m_ObjectHideFlags: 0
@@ -875,6 +850,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 328345287}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &856893512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856893510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
+  entityLinkTagSchema: {fileID: 11400000, guid: e171bfe1e0df23080a0cd0d1e36236d2, type: 2}
+--- !u!114 &856893513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856893510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
 --- !u!1 &993887083
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,11 +985,11 @@ Transform:
   m_GameObject: {fileID: 993887083}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.631, y: -0.118, z: -1.7569999}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.6636066, y: -0.16656551, z: -5.747843}
+  m_LocalScale: {x: 1.599437, y: 1.4115721, z: 2.4936414}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1191323720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &993887088
 MonoBehaviour:
@@ -1002,7 +1003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
-  Owner: {fileID: 0}
+  Owner: {fileID: 1336369576}
   Source: {fileID: 0}
   Target: {fileID: 547519298}
   Custom:
@@ -1149,7 +1150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  tag: {fileID: 11400000, guid: 5df108c067f9d2dea9be654acd6799f7, type: 2}
+  entityLinkTagSchema: {fileID: 11400000, guid: 5df108c067f9d2dea9be654acd6799f7, type: 2}
 --- !u!114 &1019947925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,6 +1212,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1191323719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1191323720}
+  - component: {fileID: 1191323722}
+  - component: {fileID: 1191323721}
+  m_Layer: 0
+  m_Name: Weapon Slot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1191323720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191323719}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 993887087}
+  m_Father: {fileID: 1336369580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1191323721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191323719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce5be625b13416781e3426ee2109abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
+  TransformUsageFlags: 2
+--- !u!114 &1191323722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191323719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Bovinelabs.Timeline.EntityLinks.Authoring::Bovinelabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
+  entityLinkTagSchema: {fileID: 11400000, guid: 6b27ddd61cc53ac27aa8b2fb413538da, type: 2}
 --- !u!1 &1336369576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1286,7 @@ GameObject:
   - component: {fileID: 1336369581}
   - component: {fileID: 1336369582}
   - component: {fileID: 1336369583}
+  - component: {fileID: 1336369584}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -1301,7 +1363,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0.548}
   m_LocalScale: {x: 0.62522, y: 0.70843, z: 0.40102}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1191323720}
   m_Father: {fileID: 547519302}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1336369581
@@ -1316,7 +1379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityTagsMonoBehavior
-  tag: {fileID: 11400000, guid: 396eae5308942e2c5a06a0975df02c43, type: 2}
+  entityLinkTagSchema: {fileID: 11400000, guid: 396eae5308942e2c5a06a0975df02c43, type: 2}
 --- !u!114 &1336369582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,6 +1414,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!114 &1336369584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336369576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37ca1c30e4144cf66a5f586254dcc6fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
+  links:
+  - {fileID: 1336369581}
 --- !u!1 &1606165503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,7 +1764,7 @@ GameObject:
   - component: {fileID: 1982397286}
   - component: {fileID: 1982397287}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Physics Debug Config
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1741,6 +1818,5 @@ SceneRoots:
   - {fileID: 1100798941}
   - {fileID: 155153276}
   - {fileID: 1635407574}
-  - {fileID: 993887087}
   - {fileID: 1982397286}
   - {fileID: 547519302}
