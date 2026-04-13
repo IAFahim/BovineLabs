@@ -518,7 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
   links:
-  - {fileID: 547519305}
+  - {fileID: 1336369581}
   - {fileID: 1019947924}
   - {fileID: 191613264}
   - {fileID: 856893512}
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
   links:
-  - {fileID: 1336369581}
+  - {fileID: 1191323722}
 --- !u!1 &1606165503
 GameObject:
   m_ObjectHideFlags: 0
