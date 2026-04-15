@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.EssenceSettings
   statSchemas:
   - {fileID: 11400000, guid: 8d4eb6003a4fef5b18d84bc4a801d67f, type: 2}
+  - {fileID: 11400000, guid: 96c2a5db33e37c79cbd488ea42cee70d, type: 2}
   intrinsicSchemas: []

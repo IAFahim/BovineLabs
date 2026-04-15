@@ -185,6 +185,8 @@ PlayableDirector:
     value: {fileID: 619819018}
   - key: {fileID: -6784736260034161606, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 993887083}
+  - key: {fileID: 4873586104128568558, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
+    value: {fileID: 993887088}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &155153278
@@ -423,6 +425,7 @@ GameObject:
   - component: {fileID: 547519305}
   - component: {fileID: 547519304}
   - component: {fileID: 547519308}
+  - component: {fileID: 547519309}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -503,6 +506,7 @@ Transform:
   - {fileID: 619819019}
   - {fileID: 1336369580}
   - {fileID: 1007598384}
+  - {fileID: 1079886010}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &547519303
@@ -517,11 +521,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ca1c30e4144cf66a5f586254dcc6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
-  links:
+  entityTagAuthorings:
+  - {fileID: 547519305}
   - {fileID: 1336369581}
+  - {fileID: 1191323722}
   - {fileID: 1019947924}
   - {fileID: 191613264}
   - {fileID: 856893512}
+  allowInactive: 1
 --- !u!114 &547519304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +567,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374892803943bc04cb79933b2eeba006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Extensions.Authoring::BovineLabs.Core.Authoring.PhysicsStates.StatefulTriggerEventAuthoring
+--- !u!114 &547519309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547519298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270e1770c40e42058b335e6e20448790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityEssenceRefComponentAuthoring
+  statAuthoring: {fileID: 619819028}
 --- !u!1 &619819017
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,7 +596,7 @@ GameObject:
   - component: {fileID: 619819026}
   - component: {fileID: 619819029}
   m_Layer: 0
-  m_Name: Input Consumer
+  m_Name: Input Consumer Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1003,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
-  Owner: {fileID: 1336369576}
+  Owner: {fileID: 547519298}
   Source: {fileID: 0}
   Target: {fileID: 547519298}
   Custom:
@@ -1164,6 +1184,111 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
+--- !u!1 &1079886009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079886010}
+  - component: {fileID: 1079886014}
+  - component: {fileID: 1079886013}
+  - component: {fileID: 1079886012}
+  - component: {fileID: 1079886011}
+  m_Layer: 0
+  m_Name: Stat Copy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079886010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079886009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 547519302}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1079886011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079886009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7305cdf55c354c0eb811d408fe38ad23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.StatAuthoring
+  AddStats: 1
+  StatDefaults:
+  - Stat: {fileID: 11400000, guid: 96c2a5db33e37c79cbd488ea42cee70d, type: 2}
+    ModifyType: 0
+    Value: 2
+  StatDefaultGroups: []
+  StatsCanBeModified: 1
+  AddIntrinsics: 1
+  IntrinsicDefaults: []
+  IntrinsicDefaultGroups: []
+  Initialize:
+    CopyFrom: 3
+--- !u!114 &1079886012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079886009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e07a596c0e943ca9740dd398f53ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.InitializeStatsAuthoring
+  Source: 2
+--- !u!114 &1079886013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079886009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d1839be73e81ae4c97132df4493e93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Extensions.Authoring::BovineLabs.Core.Authoring.LifeCycle.LifeCycleAuthoring
+--- !u!114 &1079886014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079886009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
+  Owner: {fileID: 0}
+  Source: {fileID: 0}
+  Target: {fileID: 0}
+  Custom:
+    Enable: 0
+    Target0: {fileID: 0}
+    Target1: {fileID: 0}
+  Initialize:
+    Target: 1
 --- !u!1 &1100798939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1426,8 +1551,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ca1c30e4144cf66a5f586254dcc6fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.EntityLinks.Authoring::BovineLabs.EntityLinks.Authoring.EntityLinkLookupResolverAuthoring
-  links:
+  entityTagAuthorings:
+  - {fileID: 1336369581}
   - {fileID: 1191323722}
+  allowInactive: 1
 --- !u!1 &1606165503
 GameObject:
   m_ObjectHideFlags: 0
