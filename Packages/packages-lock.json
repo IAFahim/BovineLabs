@@ -78,7 +78,7 @@
       "hash": "c326a49f87956b6e42017946507f2df7a2518a09"
     },
     "com.bovinelabs.timeline.physics": {
-      "version": "file:com.bovinelabs.timeline.physics",
+      "version": "file:BovineLabs.Timeline.Physics",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
