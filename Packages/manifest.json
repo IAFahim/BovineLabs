@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.rukhanka.animation": "https://github.com/iafahim/com.rukhanka.animation.git",
     "com.bovinelabs.core": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
     "com.bovinelabs.essence": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
     "com.bovinelabs.quill": "https://github.com/IAFahim/com.bovinelabs.quill.git",
