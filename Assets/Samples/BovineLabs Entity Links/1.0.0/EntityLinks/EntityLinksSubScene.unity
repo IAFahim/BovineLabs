@@ -2325,8 +2325,8 @@ MonoBehaviour:
     Intrinsic: {fileID: 11400000, guid: edcc8c3a9d4e8d1328e7b6922fd354aa, type: 2}
     IntrinsicTarget: 1
     Event: {fileID: 11400000, guid: 0a741c9d2622a8d2aaf56ac5e1ac9d5d, type: 2}
-    GizmoSimulatedTotalTicks: 20
-    GizmoSimulatedDuration: 5
+    GizmoSimulatedTotalTicks: 100
+    GizmoSimulatedDuration: 10
 --- !u!1 &1336369576
 GameObject:
   m_ObjectHideFlags: 0
