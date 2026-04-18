@@ -1,4 +1,5 @@
 using BovineLabs.Core.Jobs;
+using BovineLabs.Core.Iterators;
 using BovineLabs.Timeline.Animation;
 using BovineLabs.Timeline.Data;
 using BovineLabs.Timeline.PlayerInputs.Data;
@@ -64,7 +65,7 @@ namespace BovineLabs.Timeline.Animation
                 AnimDB = blobDB.animations,
                 TrackDataLookup = SystemAPI.GetComponentLookup<BlendAnimationTree2DTrackData>(true),
                 MotionBufferLookup = SystemAPI.GetBufferLookup<BlendTree2DMotionData>(true),
-                PlaybackStateLookup = SystemAPI.GetComponentLookup<BlendTreePlaybackState>(),
+                PlaybackStateLookup = state.GetUnsafeComponentLookup<BlendTreePlaybackState>(),
                 FallbackOverrideLookup = SystemAPI.GetComponentLookup<TrackFallbackOverride>(true),
                 GlobalDeltaTime = SystemAPI.Time.DeltaTime,
                 ECB = ecb
@@ -136,7 +137,7 @@ namespace BovineLabs.Timeline.Animation
             [ReadOnly] public ComponentLookup<BlendAnimationTree2DTrackData> TrackDataLookup;
             [ReadOnly] public BufferLookup<BlendTree2DMotionData> MotionBufferLookup;
             [ReadOnly] public ComponentLookup<TrackFallbackOverride> FallbackOverrideLookup;
-            [NativeDisableParallelForRestriction] public ComponentLookup<BlendTreePlaybackState> PlaybackStateLookup;
+            [NativeDisableParallelForRestriction] public UnsafeComponentLookup<BlendTreePlaybackState> PlaybackStateLookup;
 
             public EntityCommandBuffer.ParallelWriter ECB;
             public float GlobalDeltaTime;
