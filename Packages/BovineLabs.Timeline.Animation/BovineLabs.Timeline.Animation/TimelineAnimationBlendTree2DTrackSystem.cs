@@ -1,6 +1,6 @@
+using BovineLabs.Core.Extensions;
 using BovineLabs.Core.Jobs;
 using BovineLabs.Core.Iterators;
-using BovineLabs.Timeline.Animation;
 using BovineLabs.Timeline.Data;
 using BovineLabs.Timeline.PlayerInputs.Data;
 using Rukhanka;
