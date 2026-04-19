@@ -6,7 +6,7 @@ Reference implementation for all BovineLabs.Timeline packages. Follow these conv
 
 - Private instance fields: `_camelCase` (`_blendImpl`, `_activeLookup`, `_entityHandle`)
 - Job struct public fields: `PascalCase` (`ActiveLookup`, `TransformLookup`, `DeltaTime`)
-- No `this.` qualifier — use `_blendImpl` not `this._blendImpl`
+- No `` qualifier — use `_blendImpl` not `_blendImpl`
 - No file header comments (`// BovineLabs.Timeline.Physics/...`)
 
 ## Unsafe vs Safe Lookups
@@ -275,7 +275,7 @@ public partial struct PhysicsVelocityTrackSystem : ISystem
 
 ## Style
 
-- Remove `this.` qualifiers
+- Remove `` qualifiers
 - Remove file-path header comments
 - Add newline at end of file
 - Early return with `if (!condition) { return; }` (brace on return)

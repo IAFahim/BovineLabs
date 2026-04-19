@@ -7,6 +7,5 @@
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Essence" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Physics" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.PlayerInputs" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Packages/com.rukhanka.animation" vcs="Git" />
   </component>
 </project>
