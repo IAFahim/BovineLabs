@@ -1,4 +1,3 @@
-using BovineLabs.Timeline.Core;
 using BovineLabs.Timeline.Data;
 using Unity.Collections;
 using Unity.Entities;
@@ -7,8 +6,8 @@ using UnityEngine;
 namespace BovineLabs.Timeline.Core
 {
     /// <summary>
-    /// Simple MonoBehaviour helper that activates all Timeline-referenced entities
-    /// on the first Update. Disables itself once triggered.
+    ///     Simple MonoBehaviour helper that activates all Timeline-referenced entities
+    ///     on the first Update. Disables itself once triggered.
     /// </summary>
     public class StartUI : MonoBehaviour
     {
