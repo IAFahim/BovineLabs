@@ -363,6 +363,11 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
+--- !u!4 &492110641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bfa42ba6d484e4e448024c9acf736ce9, type: 3}
+  m_PrefabInstance: {fileID: 933334493}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &537042899
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +401,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1288f2da12d38259bba0a73616fcefcb, type: 2}
   - {fileID: 11400000, guid: 2c3495472aaa942d7a34e8bcef68cab4, type: 2}
   - {fileID: 11400000, guid: e6898206f1287f38885779114eda45ac, type: 2}
+  - {fileID: 11400000, guid: a8e24ca3c19be0ae383aed9ca347efbd, type: 2}
 --- !u!4 &537042901
 Transform:
   m_ObjectHideFlags: 0
@@ -579,6 +585,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 0}
     value: {fileID: 0}
+  - key: {fileID: 2278332523949694069, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 1725501673}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
@@ -767,12 +775,282 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1715107373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1715107374}
+  - component: {fileID: 1715107377}
+  - component: {fileID: 1715107376}
+  - component: {fileID: 1715107375}
+  m_Layer: 0
+  m_Name: CinemachineCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1715107374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.22465804, y: 0.31661895, z: -0.07745915, w: 0.9183035}
+  m_LocalPosition: {x: -36, y: 30.4, z: -46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1715107375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineHardLookAt
+  LookAtOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1715107376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aa66f5ff2264b8595aa418518047242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Bridge.Data::BovineLabs.Bridge.Data.Cinemachine.CinemachineThirdPersonFollowDots
+  Damping: {x: 0.1, y: 0.5, z: 0.3}
+  ShoulderOffset: {x: -36, y: 30, z: -36}
+  VerticalArmLength: 0.4
+  CameraSide: 1
+  CameraDistance: 10
+  AvoidObstacles:
+    Enabled: 0
+    BelongsTo:
+      Category00: 1
+      Category01: 1
+      Category02: 1
+      Category03: 1
+      Category04: 1
+      Category05: 1
+      Category06: 1
+      Category07: 1
+      Category08: 1
+      Category09: 1
+      Category10: 1
+      Category11: 1
+      Category12: 1
+      Category13: 1
+      Category14: 1
+      Category15: 1
+      Category16: 1
+      Category17: 1
+      Category18: 1
+      Category19: 1
+      Category20: 1
+      Category21: 1
+      Category22: 1
+      Category23: 1
+      Category24: 1
+      Category25: 1
+      Category26: 1
+      Category27: 1
+      Category28: 1
+      Category29: 1
+      Category30: 1
+      Category31: 1
+    CollidesWith:
+      Category00: 1
+      Category01: 1
+      Category02: 1
+      Category03: 1
+      Category04: 1
+      Category05: 1
+      Category06: 1
+      Category07: 1
+      Category08: 1
+      Category09: 1
+      Category10: 1
+      Category11: 1
+      Category12: 1
+      Category13: 1
+      Category14: 1
+      Category15: 1
+      Category16: 1
+      Category17: 1
+      Category18: 1
+      Category19: 1
+      Category20: 1
+      Category21: 1
+      Category22: 1
+      Category23: 1
+      Category24: 1
+      Category25: 1
+      Category26: 1
+      Category27: 1
+      Category28: 1
+      Category29: 1
+      Category30: 1
+      Category31: 1
+    CameraRadius: 0.2
+    DampingIntoCollision: 0
+    DampingFromCollision: 0.5
+--- !u!114 &1715107377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 492110641}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 20
+    OrthographicSize: 10
+    NearClipPlane: 0.1
+    FarClipPlane: 100
+    Dutch: 0
+    ModeOverride: 2
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!1 &1725501671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1725501672}
+  - component: {fileID: 1725501673}
+  m_Layer: 0
+  m_Name: Time
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1725501672
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725501671}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1725501673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725501671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85898ecee7bb4f72987265982dd57ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimeScaleTargetAuthoring
+--- !u!1 &1775309408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1775309409}
+  - component: {fileID: 1775309410}
+  m_Layer: 0
+  m_Name: Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1775309409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775309408}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775309410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775309408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc355e2200c74152b7fb829f9150215e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Bridge.Authoring::BovineLabs.Bridge.Authoring.Camera.CameraMainAuthoring
+  projectionCenterOffset: {x: 0, y: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1642187691}
   - {fileID: 933334493}
   - {fileID: 1241495310}
   - {fileID: 537042901}
   - {fileID: 1416051332}
+  - {fileID: 1775309409}
+  - {fileID: 1642187691}
+  - {fileID: 1715107374}
+  - {fileID: 1725501672}
