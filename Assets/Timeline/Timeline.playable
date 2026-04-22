@@ -13,6 +13,32 @@ MonoBehaviour:
   m_Name: DirectorTimeScaleClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.DirectorTimeScaleClip
   TimeScale: 0.1
+--- !u!114 &-5756201016497073933
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b7b13e63ee48a880be0328394dae68, type: 3}
+  m_Name: TimeScaleClip
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimeScaleClip
+  timeScale: 1
+--- !u!114 &-5304372104756700006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a18c7d13092449ea8466481a9fc37c2, type: 3}
+  m_Name: WorldTimeScaleClip
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.WorldTimeScaleClip
+  timeScale: 0.1
 --- !u!114 &-4293134366758703274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,7 +212,8 @@ MonoBehaviour:
   - {fileID: 4304008739173729860}
   - {fileID: -4293134366758703274}
   - {fileID: 9021596343527273512}
-  - {fileID: 3042269043491895216}
+  - {fileID: 4399197397313646508}
+  - {fileID: 5672766414000748912}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -209,99 +236,6 @@ MonoBehaviour:
     x: 0
     y: 1
   blendDirectionComponentTarget: 0
---- !u!114 &3042269043491895216
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa5499021dd0f659fa8f4268a6f5896f, type: 3}
-  m_Name: Director Time Scale Track
-  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.DirectorTimeScaleTrack
-  m_Version: 3
-  m_AnimClip: {fileID: 0}
-  m_Locked: 0
-  m_Muted: 0
-  m_CustomPlayableFullTypename: 
-  m_Curves: {fileID: 0}
-  m_Parent: {fileID: 11400000}
-  m_Children: []
-  m_Clips:
-  - m_Version: 1
-    m_Start: 0
-    m_ClipIn: 0
-    m_Asset: {fileID: -9189357096504306475}
-    m_Duration: 1
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 3042269043491895216}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 0
-    m_BlendInDuration: -1
-    m_BlendOutDuration: -1
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: DirectorTimeScaleClip
-  m_Markers:
-    m_Objects: []
-  resetOnDeactivate: 1
 --- !u!114 &3215472544210726175
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -442,6 +376,99 @@ MonoBehaviour:
     m_Objects: []
   resetOnDeactivate: 1
   LayerIndex: 0
+--- !u!114 &4399197397313646508
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab7c9b7fa2248fea1d8a2128ffb7d3f, type: 3}
+  m_Name: Time Scale Track
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimeScaleTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 0
+    m_ClipIn: 0
+    m_Asset: {fileID: -5756201016497073933}
+    m_Duration: 1
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 4399197397313646508}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: TimeScaleClip
+  m_Markers:
+    m_Objects: []
+  resetOnDeactivate: 1
 --- !u!114 &5427651027039577481
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -458,6 +485,99 @@ MonoBehaviour:
     x: 0
     y: 0
   blendDirectionComponentTarget: 0
+--- !u!114 &5672766414000748912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f894e36935a444248820dad89ed65c78, type: 3}
+  m_Name: World Time Scale Track
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.WorldTimeScaleTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 0.2
+    m_ClipIn: 0
+    m_Asset: {fileID: -5304372104756700006}
+    m_Duration: 0.16666666666666669
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 5672766414000748912}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: WorldTimeScaleClip
+  m_Markers:
+    m_Objects: []
+  resetOnDeactivate: 1
 --- !u!114 &6261315033065379634
 MonoBehaviour:
   m_ObjectHideFlags: 1
