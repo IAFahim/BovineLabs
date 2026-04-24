@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d3ac0b546524facb9285f28eb2fdb3b, type: 3}
-  m_Name: Fire Stack
-  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.StatSchemaObject
+  m_Script: {fileID: 11500000, guid: cfbca56adf87485e93022d0e78d89e6f, type: 3}
+  m_Name: OnFireEndTick
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Conditions.ConditionEventObject
   isGlobal: 0
-  key: 3
+  customDataType: {fileID: 0}
+  key:
+    Value: 134
