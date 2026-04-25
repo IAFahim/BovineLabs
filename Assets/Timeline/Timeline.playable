@@ -563,7 +563,7 @@ MonoBehaviour:
     x: 0
     y: 1
   ReadKind: 0
-  ReadFrom: {fileID: 0}
+  ReadFrom: {fileID: 11400000, guid: 4100020e330b44ce2afeae1be3315d77, type: 2}
 --- !u!114 &5672766414000748912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -699,7 +699,7 @@ MonoBehaviour:
     x: 0.7
     y: 0.7
   ReadKind: 0
-  ReadFrom: {fileID: 0}
+  ReadFrom: {fileID: 11400000, guid: 4100020e330b44ce2afeae1be3315d77, type: 2}
 --- !u!114 &9021596343527273512
 MonoBehaviour:
   m_ObjectHideFlags: 1
