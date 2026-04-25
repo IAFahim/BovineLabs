@@ -39,7 +39,7 @@ namespace BovineLabs.Timeline.Animation
             public void Execute(
                 Entity entity,
                 ref BlendGroupTimer timer,
-                in BlendGroupFallBackForNoAnimationToProcessComponent fallbackData,
+                ref BlendGroupFallbackForNoAnimationToProcessComponent fallbackData,
                 ref DynamicBuffer<BlendGroupEntry> blendEntries,
                 ref DynamicBuffer<SmoothBlendGroupEntry> smoothEntries,
                 ref DynamicBuffer<AnimationToProcessComponent> atps)
@@ -59,13 +59,19 @@ namespace BovineLabs.Timeline.Animation
                     var found = false;
 
                     for (var j = 0; j < smoothEntries.Length; j++)
-                        if (smoothEntries[j].ClipHash == request.ClipHash)
+                        if (smoothEntries[j].ClipHash == request.ClipHash &&
+                            smoothEntries[j].LayerIndex == request.LayerIndex &&
+                            smoothEntries[j].BlendMode == request.BlendMode &&
+                            smoothEntries[j].AvatarMaskHash == request.AvatarMaskHash &&
+                            smoothEntries[j].MotionId == request.MotionId)
                         {
                             var s = smoothEntries[j];
                             s.TargetWeight = request.Weight;
                             s.NormalizedTime = request.NormalizedTime;
                             s.LayerIndex = request.LayerIndex;
                             s.BlendMode = request.BlendMode;
+                            s.AvatarMaskHash = request.AvatarMaskHash;
+                            s.MotionId = request.MotionId;
                             smoothEntries[j] = s;
                             found = true;
                             break;
@@ -79,7 +85,9 @@ namespace BovineLabs.Timeline.Animation
                             NormalizedTime = request.NormalizedTime,
                             CurrentWeight = 0f,
                             TargetWeight = request.Weight,
-                            BlendMode = request.BlendMode
+                            BlendMode = request.BlendMode,
+                            AvatarMaskHash = request.AvatarMaskHash,
+                            MotionId = request.MotionId
                         });
                 }
 
@@ -127,16 +135,29 @@ namespace BovineLabs.Timeline.Animation
                 if (fallbackWeight > 0.0001f && fallbackData.ClipHash.IsValid)
                     if (AnimDB.TryGetValue(fallbackData.ClipHash, out var fallbackClip) && fallbackClip.IsCreated)
                     {
+                        if (timer.PreviousFallbackClipHash != fallbackData.ClipHash)
+                        {
+                            timer.FallbackAccumulatedTime = 0f;
+                            timer.PreviousFallbackClipHash = fallbackData.ClipHash;
+                        }
+
                         var duration = math.max(0.001f, fallbackClip.Value.length);
                         timer.FallbackAccumulatedTime += DeltaTime / duration;
+
+                        var fallbackTime = fallbackData.PlaybackMode switch
+                        {
+                            FallbackPlaybackMode.Clamp => math.min(timer.FallbackAccumulatedTime, 1f),
+                            FallbackPlaybackMode.Hold => 1f,
+                            _ => math.frac(timer.FallbackAccumulatedTime)
+                        };
 
                         atps.Add(new AnimationToProcessComponent
                         {
                             animation = fallbackClip,
-                            time = math.frac(timer.FallbackAccumulatedTime),
+                            time = fallbackTime,
                             weight = fallbackWeight,
-                            blendMode = AnimationBlendingMode.Override,
-                            layerIndex = 0,
+                            blendMode = fallbackData.BlendMode,
+                            layerIndex = fallbackData.LayerIndex,
                             layerWeight = 1.0f,
                             motionId = 0xFFFFFFFF
                         });
@@ -159,7 +180,7 @@ namespace BovineLabs.Timeline.Animation
                             blendMode = s.BlendMode,
                             layerIndex = s.LayerIndex,
                             layerWeight = 1.0f,
-                            motionId = (uint)i
+                            motionId = s.MotionId
                         });
                     }
                 }
