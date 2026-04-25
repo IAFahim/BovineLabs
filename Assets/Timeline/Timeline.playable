@@ -232,14 +232,14 @@ MonoBehaviour:
       x: 10
       y: 10
       z: 10
-    Integral:
-      x: 2
-      y: 2
-      z: 2
     Derivative:
       x: 1
       y: 1
       z: 1
+    Integral:
+      x: 2
+      y: 2
+      z: 2
     MaxOutput: 100
   trackingTarget: 1
   targetMode: 1
@@ -262,18 +262,18 @@ MonoBehaviour:
       x: 10
       y: 10
       z: 10
-    Integral:
-      x: 2
-      y: 2
-      z: 2
     Derivative:
       x: 1
       y: 1
       z: 1
-    MaxOutput: 100
+    Integral:
+      x: 2
+      y: 2
+      z: 2
+    MaxOutput: 80
   trackingTarget: 1
   targetMode: 0
-  targetOffset: {x: 0, y: 0, z: -10}
+  targetOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-5756201016497073933
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1316,8 +1316,8 @@ MonoBehaviour:
   BlendParameter:
     x: 0.7
     y: 0.7
-  ReadKind: 0
-  ReadFrom: {fileID: 11400000, guid: 4100020e330b44ce2afeae1be3315d77, type: 2}
+  ReadKind: 2
+  ReadFrom: {fileID: 11400000, guid: 9f78876b9a0bcaf1097a466640df4bf6, type: 2}
 --- !u!114 &7800395440209663517
 MonoBehaviour:
   m_ObjectHideFlags: 1
