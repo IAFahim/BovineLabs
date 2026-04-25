@@ -68,15 +68,6 @@
         "com.rukhanka.animation": "1.0.0"
       }
     },
-    "com.bovinelabs.timeline.cm": {
-      "version": "file:BovineLabs.Timeline.CM",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.bovinelabs.timeline": "1.0.0",
-        "com.bovinelabs.bridge": "1.0.0"
-      }
-    },
     "com.bovinelabs.timeline.core": {
       "version": "file:BovineLabs.Timeline.Core",
       "depth": 0,
