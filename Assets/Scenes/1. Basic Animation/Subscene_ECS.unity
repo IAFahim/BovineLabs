@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.Animation.Authoring::BovineLabs.Timeline.Animation.Authoring.TimelineAnimationStateAuthoring
   fallbackAnimationClip: {fileID: 1827226128182048838, guid: a4b8f2deec6a99945987cfc59b1b4e54, type: 3}
+  fallbackPlaybackMode: 0
   blendInDuration: 0.25
   blendOutDuration: 0.25
 --- !u!114 &492110638
@@ -652,7 +653,7 @@ PlayableDirector:
   - key: {fileID: 7754974843889663124, guid: 88f79ac9dacb4426c80547702e2357fd, type: 2}
     value: {fileID: 0}
   - key: {fileID: 4304008739173729860, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
-    value: {fileID: 492110636}
+    value: {fileID: 1319626925}
   - key: {fileID: -4293134366758703274, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 1319626925}
   - key: {fileID: 0}
@@ -771,6 +772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.Animation.Authoring::BovineLabs.Timeline.Animation.Authoring.TimelineAnimationStateAuthoring
   fallbackAnimationClip: {fileID: 1827226128182048838, guid: a4b8f2deec6a99945987cfc59b1b4e54, type: 3}
+  fallbackPlaybackMode: 0
   blendInDuration: 0.25
   blendOutDuration: 0.25
 --- !u!114 &1319626925
