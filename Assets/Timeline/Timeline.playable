@@ -226,9 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86e1ae0f97e488f835c2b3109ccb29d, type: 3}
   m_Name: PhysicsAngularPIDClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Physics.Authoring::BovineLabs.Timeline.Physics.Authoring.PhysicsAngularPIDClip
-  trackingTarget: 1
-  targetMode: 1
-  targetRotationEuler: {x: 0, y: 0, z: 0}
   uniformAxes: 1
   tuning:
     Proportional:
@@ -244,6 +241,9 @@ MonoBehaviour:
       y: 1
       z: 1
     MaxOutput: 100
+  trackingTarget: 1
+  targetMode: 1
+  targetRotationEuler: {x: 0, y: 0, z: 0}
 --- !u!114 &-6053463774577301126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -256,9 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb463547df244d9ad791fc3cb7f975a, type: 3}
   m_Name: PhysicsLinearPIDClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Physics.Authoring::BovineLabs.Timeline.Physics.Authoring.PhysicsLinearPIDClip
-  trackingTarget: 4
-  targetMode: 0
-  targetOffset: {x: 0, y: 0, z: 10}
   uniformAxes: 1
   tuning:
     Proportional:
@@ -274,6 +271,9 @@ MonoBehaviour:
       y: 1
       z: 1
     MaxOutput: 100
+  trackingTarget: 1
+  targetMode: 0
+  targetOffset: {x: 0, y: 0, z: -10}
 --- !u!114 &-5756201016497073933
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -680,7 +680,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: -6053463774577301126}
-    m_Duration: 1
+    m_Duration: 5
     m_TimeScale: 1
     m_ParentTrack: {fileID: 293242280287195595}
     m_EaseInDuration: 0
