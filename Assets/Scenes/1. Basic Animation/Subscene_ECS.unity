@@ -1082,6 +1082,8 @@ PlayableDirector:
     value: {fileID: 1452734294}
   - key: {fileID: 714145927590769594, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 492277826}
+  - key: {fileID: -5936416930018416389, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 1387560018}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
@@ -1313,6 +1315,9 @@ MonoBehaviour:
   - Stat: {fileID: 11400000, guid: 30a899661c84c2996b99d8accd08d4b6, type: 2}
     ModifyType: 0
     Value: 100
+  - Stat: {fileID: 11400000, guid: 95a61e8c263e49dbbc6a31729d0815ce, type: 2}
+    ModifyType: 0
+    Value: 10
   StatDefaultGroups: []
   StatsCanBeModified: 1
   AddIntrinsics: 1

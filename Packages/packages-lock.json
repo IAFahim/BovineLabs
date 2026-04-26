@@ -149,8 +149,7 @@
         "com.bovinelabs.essence": "1.0.0",
         "com.bovinelabs.reaction": "1.0.0",
         "com.bovinelabs.timeline": "1.0.0",
-        "com.bovinelabs.timeline.core": "1.0.0",
-        "com.bovinelabs.timeline.entitylinks": "1.0.0"
+        "com.bovinelabs.timeline.core": "1.0.0"
       }
     },
     "com.gitcopy.gc": {
