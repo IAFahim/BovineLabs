@@ -13,7 +13,7 @@ namespace BovineLabs.Timeline.Core
             var scale3 = new float3(math.length(m.c0.xyz), math.length(m.c1.xyz), math.length(m.c2.xyz));
             var scale = scale3.x;
 
-            if (scale > 1e-6f)
+            if (math.lengthsq(scale3) > 1e-12f)
             {
                 m.c0.xyz /= scale3.x;
                 m.c1.xyz /= scale3.y;

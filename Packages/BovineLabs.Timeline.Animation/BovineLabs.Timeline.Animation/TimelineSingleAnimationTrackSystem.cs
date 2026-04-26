@@ -1,3 +1,6 @@
+using BovineLabs.Core.Extensions;
+using BovineLabs.Core.Iterators;
+using BovineLabs.Core.Jobs;
 using BovineLabs.Timeline.Data;
 using Rukhanka;
 using Unity.Burst;
@@ -14,11 +17,13 @@ namespace BovineLabs.Timeline.Animation
     public partial struct TimelineSingleAnimationTrackSystem : ISystem
     {
         private NativeParallelMultiHashMap<Entity, BlendGroupEntry> activeAnimationsMap;
+        private NativeList<Entity> uniqueKeys;
 
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             activeAnimationsMap = new NativeParallelMultiHashMap<Entity, BlendGroupEntry>(64, Allocator.Persistent);
+            uniqueKeys = new NativeList<Entity>(64, Allocator.Persistent);
             state.RequireForUpdate<BlobDatabaseSingleton>();
         }
 
@@ -27,6 +32,8 @@ namespace BovineLabs.Timeline.Animation
         {
             if (activeAnimationsMap.IsCreated)
                 activeAnimationsMap.Dispose();
+            if (uniqueKeys.IsCreated)
+                uniqueKeys.Dispose();
         }
 
         [BurstCompile]
@@ -39,20 +46,25 @@ namespace BovineLabs.Timeline.Animation
             var gatherJob = new GatherActiveClipsJob
             {
                 AnimDB = blobDB.animations,
-                ClipWeights = SystemAPI.GetComponentLookup<ClipWeight>(true),
-                TrackDataLookup = SystemAPI.GetComponentLookup<RukhankaSingleTrackData>(true),
+                ClipWeights = state.GetUnsafeComponentLookup<ClipWeight>(true),
+                TrackDataLookup = state.GetUnsafeComponentLookup<RukhankaSingleTrackData>(true),
                 ActiveAnimations = activeAnimationsMap.AsParallelWriter()
             };
 
             state.Dependency = gatherJob.ScheduleParallel(state.Dependency);
 
-            var applyJob = new ApplyAnimationsJob
+            state.Dependency = new ExtractKeysJob
             {
                 ActiveAnimations = activeAnimationsMap,
-                AnimationBuffers = SystemAPI.GetBufferLookup<BlendGroupEntry>()
-            };
+                UniqueKeys = uniqueKeys,
+            }.Schedule(state.Dependency);
 
-            state.Dependency = applyJob.Schedule(state.Dependency);
+            state.Dependency = new ApplyAnimationsJob
+            {
+                UniqueKeys = uniqueKeys,
+                ActiveAnimations = activeAnimationsMap,
+                AnimationBuffers = state.GetUnsafeBufferLookup<BlendGroupEntry>()
+            }.Schedule(uniqueKeys, 64, state.Dependency);
         }
 
         [BurstCompile]
@@ -60,8 +72,8 @@ namespace BovineLabs.Timeline.Animation
         public partial struct GatherActiveClipsJob : IJobEntity
         {
             [ReadOnly] public NativeHashMap<Hash128, BlobAssetReference<AnimationClipBlob>> AnimDB;
-            [ReadOnly] public ComponentLookup<ClipWeight> ClipWeights;
-            [ReadOnly] public ComponentLookup<RukhankaSingleTrackData> TrackDataLookup;
+            [ReadOnly] public UnsafeComponentLookup<ClipWeight> ClipWeights;
+            [ReadOnly] public UnsafeComponentLookup<RukhankaSingleTrackData> TrackDataLookup;
 
             public NativeParallelMultiHashMap<Entity, BlendGroupEntry>.ParallelWriter ActiveAnimations;
 
@@ -105,26 +117,34 @@ namespace BovineLabs.Timeline.Animation
         }
 
         [BurstCompile]
-        public struct ApplyAnimationsJob : IJob
+        private struct ExtractKeysJob : IJob
         {
             [ReadOnly] public NativeParallelMultiHashMap<Entity, BlendGroupEntry> ActiveAnimations;
-            public BufferLookup<BlendGroupEntry> AnimationBuffers;
+            public NativeList<Entity> UniqueKeys;
 
             public void Execute()
             {
-                var (uniqueKeys, uniqueCount) = ActiveAnimations.GetUniqueKeyArray(Allocator.Temp);
+                var (keys, count) = ActiveAnimations.GetUniqueKeyArray(Allocator.Temp);
+                UniqueKeys.Clear();
+                UniqueKeys.AddRange(keys.GetSubArray(0, count));
+                keys.Dispose();
+            }
+        }
 
-                for (var i = 0; i < uniqueCount; i++)
-                {
-                    var entity = uniqueKeys[i];
-                    if (AnimationBuffers.TryGetBuffer(entity, out var buffer))
-                    {
-                        foreach (var atp in ActiveAnimations.GetValuesForKey(entity)) 
-                            buffer.Add(atp);
-                    }
-                }
+        [BurstCompile]
+        private struct ApplyAnimationsJob : IJobParallelForDefer
+        {
+            [ReadOnly] public NativeList<Entity> UniqueKeys;
+            [ReadOnly] public NativeParallelMultiHashMap<Entity, BlendGroupEntry> ActiveAnimations;
+            [NativeDisableParallelForRestriction] public UnsafeBufferLookup<BlendGroupEntry> AnimationBuffers;
 
-                uniqueKeys.Dispose();
+            public void Execute(int index)
+            {
+                var entity = UniqueKeys[index];
+                if (!AnimationBuffers.TryGetBuffer(entity, out var buffer)) return;
+
+                foreach (var entry in ActiveAnimations.GetValuesForKey(entity))
+                    buffer.Add(entry);
             }
         }
     }
