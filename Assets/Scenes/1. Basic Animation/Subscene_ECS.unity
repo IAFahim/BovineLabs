@@ -1084,6 +1084,8 @@ PlayableDirector:
     value: {fileID: 492277826}
   - key: {fileID: -5936416930018416389, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 1387560018}
+  - key: {fileID: 5457701888208028253, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 1387560018}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
@@ -1682,7 +1684,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 0
+  m_GravityFactor: 1
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
