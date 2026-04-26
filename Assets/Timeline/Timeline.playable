@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835f17690be557422bb67649c1b8d98d, type: 3}
   m_Name: TimelineTimeScaleClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimelineTimeScaleClip
-  timeScale: 10000
+  timeScale: 1
   stat: {fileID: 11400000, guid: 95a61e8c263e49dbbc6a31729d0815ce, type: 2}
 --- !u!114 &-5936416930018416389
 MonoBehaviour:
