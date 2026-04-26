@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af37b22da729d95829879bc9ba980f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.PlayerInputs.Authoring::BovineLabs.Timeline.PlayerInputs.Authoring.InputConsumerAuthoring
-  PlayerId: 1
+  PlayerId: 0
 --- !u!114 &459224085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +538,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6898206f1287f38885779114eda45ac, type: 2}
   - {fileID: 11400000, guid: a8e24ca3c19be0ae383aed9ca347efbd, type: 2}
   - {fileID: 11400000, guid: 89916598b6c3ca6e5b1109a31001f189, type: 2}
+  - {fileID: 11400000, guid: eaeddac758594e621ac1c1bde8130dce, type: 2}
 --- !u!4 &537042901
 Transform:
   m_ObjectHideFlags: 0
@@ -924,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
-  entityLinkTagSchema: {fileID: 11400000, guid: 4100020e330b44ce2afeae1be3315d77, type: 2}
+  entityLinkTagSchema: {fileID: 11400000, guid: cf2c34d74403c0e47992813b36f9cd8e, type: 2}
 --- !u!4 &1319626932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 45e46922349eb5144bb396aa0f5d85f5, type: 3}

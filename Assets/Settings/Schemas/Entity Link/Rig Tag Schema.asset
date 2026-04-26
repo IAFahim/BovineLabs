@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b26b47c56247f687c5d05aeb37e433, type: 3}
   m_Name: Rig Tag Schema
   m_EditorClassIdentifier: Bovinelabs.Timeline.Entity.Links.Authoring::Bovinelabs.Timeline.Entity.Links.Authoring.EntityLinkTagSchema
-  id: 1
+  id: 7

@@ -39,6 +39,8 @@ MonoBehaviour:
     Path: Assets/Settings/Schemas/Intrinsics/
   - Key: bl.ar.musictrackdefinition
     Path: Assets/Settings/Audio
+  - Key: bl.ar.entitylinktagschema
+    Path: Assets/Settings/Schemas/EntityLinks
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
