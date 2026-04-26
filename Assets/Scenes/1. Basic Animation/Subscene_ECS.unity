@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.PlayerInputs.Authoring::BovineLabs.Timeline.PlayerInputs.Authoring.InputConsumerAuthoring
   PlayerId: 0
-  routeEventsTo: {fileID: 11400000, guid: 82c8b7806cd430c0cbb4e26755d8cdee, type: 2}
+  routeEventsTo: {fileID: 0}
 --- !u!114 &459224085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
-  sourceSchema: {fileID: 11400000, guid: 9f78876b9a0bcaf1097a466640df4bf6, type: 2}
+  Root: {fileID: 1749563370}
+  Schema: {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
+  Aliases: []
 --- !u!1 &492110633 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: bfa42ba6d484e4e448024c9acf736ce9, type: 3}
@@ -926,7 +928,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
-  sourceSchema: {fileID: 11400000, guid: cf2c34d74403c0e47992813b36f9cd8e, type: 2}
+  Root: {fileID: 1749563370}
+  Schema: {fileID: 0}
+  Aliases: []
 --- !u!4 &1319626932 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 45e46922349eb5144bb396aa0f5d85f5, type: 3}
@@ -942,11 +946,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1387560017}
   - component: {fileID: 1387560018}
-  - component: {fileID: 1387560020}
   - component: {fileID: 1387560019}
   - component: {fileID: 1387560023}
   - component: {fileID: 1387560022}
   - component: {fileID: 1387560021}
+  - component: {fileID: 1387560024}
   m_Layer: 0
   m_Name: Essence
   m_TagString: Untagged
@@ -1011,19 +1015,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Core.Authoring::BovineLabs.Core.Authoring.TransformAuthoring
   TransformUsageFlags: 2
---- !u!114 &1387560020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387560016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
-  sourceSchema: {fileID: 11400000, guid: 226b0052de3c956149bb824f68319df3, type: 2}
 --- !u!114 &1387560021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,6 +1052,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16549610bfe4458aa9389201d072bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Entities.Hybrid::Unity.Entities.Hybrid.Baking.LinkedEntityGroupAuthoring
+--- !u!114 &1387560024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387560016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efe9de47a2b428a9e9c878aafd123d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityTagAuthoring
+  Root: {fileID: 1749563370}
+  Schema: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+  Aliases: []
 --- !u!1 &1416051330
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,12 +1953,13 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16ca13c66ddcb01a5b8bd023c0398b58, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityLinkRegistryAuthoring
-  entityTagAuthorings:
-  - {fileID: 1319626929}
-  - {fileID: 459224086}
-  - {fileID: 1387560020}
-  allowInactive: 1
+  m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityLinkRootAuthoring
+  AutoCollectAnchors: 0
+  Links:
+  - Schema: {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
+    Target: {fileID: 459224086}
+  - Schema: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+    Target: {fileID: 1387560024}
 --- !u!1 &1775309408
 GameObject:
   m_ObjectHideFlags: 0

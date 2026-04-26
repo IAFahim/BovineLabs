@@ -810,6 +810,7 @@ MonoBehaviour:
   rotationMode: 2
   rotationOffset: {x: 0, y: 0, z: 0}
   assignParent: 1
+  assignParentLink: {fileID: 0}
 --- !u!114 &3742618853116167990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1068,7 +1069,7 @@ MonoBehaviour:
     x: 0
     y: 1
   ReadKind: 0
-  ReadFrom: {fileID: 11400000, guid: 4100020e330b44ce2afeae1be3315d77, type: 2}
+  ReadFrom: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
 --- !u!114 &5672766414000748912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1182,6 +1183,8 @@ MonoBehaviour:
   PositionOffsetSpace: 4
   RotationMode: 2
   RotationOffset: {x: 0, y: 0, z: 0}
+  assignParent: 0
+  assignParentLink: {fileID: 0}
 --- !u!114 &6206844060407859853
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1317,7 +1320,7 @@ MonoBehaviour:
     x: 0.7
     y: 0.7
   ReadKind: 2
-  ReadFrom: {fileID: 11400000, guid: 9f78876b9a0bcaf1097a466640df4bf6, type: 2}
+  ReadFrom: {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
 --- !u!114 &7800395440209663517
 MonoBehaviour:
   m_ObjectHideFlags: 1

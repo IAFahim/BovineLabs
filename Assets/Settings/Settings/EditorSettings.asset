@@ -43,6 +43,8 @@ MonoBehaviour:
     Path: Assets/Settings/Schemas/EntityLinks
   - Key: bl.ar.sourceschema
     Path: Assets/Settings/Schemas/EntityLinks
+  - Key: bl.ar.entitylinkschema
+    Path: Assets/Settings/Schemas/EntityLinks/
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
