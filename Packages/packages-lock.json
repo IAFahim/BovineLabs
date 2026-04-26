@@ -116,6 +116,8 @@
         "com.unity.physics": "6.5.0",
         "com.unity.timeline": "1.8.12",
         "com.bovinelabs.core": "1.6.1",
+        "com.bovinelabs.reaction": "1.0.0",
+        "com.bovinelabs.timeline.entitylinks": "1.0.0",
         "com.bovinelabs.timeline": "1.0.0",
         "com.bovinelabs.timeline.core": "1.0.0"
       }

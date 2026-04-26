@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Timeline.PlayerInputs.Authoring::BovineLabs.Timeline.PlayerInputs.Authoring.InputConsumerAuthoring
   PlayerId: 0
-  routeEventsTo: {fileID: 0}
+  routeEventsTo: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
 --- !u!114 &459224085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,6 +1086,8 @@ PlayableDirector:
     value: {fileID: 1387560018}
   - key: {fileID: 5457701888208028253, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 1387560018}
+  - key: {fileID: 4647803513463709322, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 459224084}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
