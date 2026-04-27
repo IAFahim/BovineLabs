@@ -27,24 +27,6 @@ MonoBehaviour:
     Path: Assets/Settings/Scenes/Editor
   - Key: bl.ar.assetset
     Path: Assets/Settings/Scenes/Assets
-  - Key: bl.ar.anchornamedaction
-    Path: Assets/Settings/UI/Actions
-  - Key: bl.ar.anchornavanimation
-    Path: Assets/Settings/UI/Animations
-  - Key: bl.ar.conditioneventobject
-    Path: Assets/Settings/Schemas/Events/
-  - Key: bl.ar.statschemaobject
-    Path: Assets/Settings/Schemas/Stats
-  - Key: bl.ar.intrinsicschemaobject
-    Path: Assets/Settings/Schemas/Intrinsics/
-  - Key: bl.ar.musictrackdefinition
-    Path: Assets/Settings/Audio
-  - Key: bl.ar.entitylinktagschema
-    Path: Assets/Settings/Schemas/EntityLinks
-  - Key: bl.ar.sourceschema
-    Path: Assets/Settings/Schemas/EntityLinks
-  - Key: bl.ar.entitylinkschema
-    Path: Assets/Settings/Schemas/EntityLinks/
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
