@@ -10,6 +10,8 @@
     "com.bovinelabs.reaction": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.reaction",
     "com.bovinelabs.timeline": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
     "com.bovinelabs.timeline.core": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",
+    "com.bovinelabs.hitstop": "https://github.com/IAFahim/BovineLabs.HitStop.git",
+    "com.bovinelabs.timeline.time": "https://github.com/IAFahim/BovineLabs.Timeline.Time.git",
     "com.bovinelabs.timeline.entitylinks": "https://github.com/IAFahim/BovineLabs.Timeline.EntityLinks.git",
     "com.bovinelabs.timeline.essence": "https://github.com/IAFahim/BovineLabs.Timeline.Essence.git",
     "com.bovinelabs.timeline.group-tool": "https://github.com/IAFahim/com.bovinelabs.timeline.group-tool.git",
