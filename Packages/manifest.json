@@ -11,6 +11,7 @@
     "com.bovinelabs.timeline": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.timeline",
     "com.bovinelabs.timeline.core": "https://github.com/IAFahim/com.bovinelabs.timeline.core.git",
     "com.bovinelabs.hitstop": "https://github.com/IAFahim/BovineLabs.HitStop.git",
+    "com.bovinelabs.timeline.playerinputs": "https://github.com/IAFahim/BovineLabs.Timeline.PlayerInputs.git",
     "com.bovinelabs.timeline.time": "https://github.com/IAFahim/BovineLabs.Timeline.Time.git",
     "com.bovinelabs.timeline.entitylinks": "https://github.com/IAFahim/BovineLabs.Timeline.EntityLinks.git",
     "com.bovinelabs.timeline.essence": "https://github.com/IAFahim/BovineLabs.Timeline.Essence.git",
