@@ -27,6 +27,8 @@ MonoBehaviour:
     Path: Assets/Settings/Scenes/Editor
   - Key: bl.ar.assetset
     Path: Assets/Settings/Scenes/Assets
+  - Key: bl.ar.entitylinkschema
+    Path: Assets/Settings/Schemas/EntityLinks/
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
