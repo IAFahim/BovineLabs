@@ -11,6 +11,5 @@
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Physics" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.PlayerInputs" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Time" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Packages/Bovinelabs.Timeline.Combat" vcs="Git" />
   </component>
 </project>
