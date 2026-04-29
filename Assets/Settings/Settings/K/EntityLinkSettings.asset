@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.Timeline.EntityLinks.Authoring::BovineLabs.Timeline.EntityLinks.Authoring.EntityLinkSettings
   description: 
   schemas:
-  - {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+  - {fileID: 11400000, guid: 107f0f9aa8c3327da9d3b31dc6c772b8, type: 2}
+  - {fileID: 11400000, guid: fdc917c702d570b128ea4dd26d8b6667, type: 2}
+  - {fileID: 11400000, guid: 641cab2303fadabb1ae2a42f48de41f5, type: 2}
   - {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
   - {fileID: 11400000, guid: 96bb4bf9a72b79107b9a3364ad113187, type: 2}
   - {fileID: 11400000, guid: a83fe61ae6391c5d19028cc5f30e8892, type: 2}
+  - {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+  - {fileID: 11400000, guid: 73894a8c0db0ec65d8f0111f200c61f1, type: 2}
   - {fileID: 11400000, guid: c0c683033c37a137fae122e6ee8300c9, type: 2}

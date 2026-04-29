@@ -18,6 +18,7 @@
     "com.bovinelabs.timeline.group-tool": "https://github.com/IAFahim/com.bovinelabs.timeline.group-tool.git",
     "com.gitcopy.gc": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
     "com.rukhanka.animation": "https://github.com/iafahim/com.rukhanka.animation.git",
+    "com.bovinelabs.timeline.combat": "https://github.com/IAFahim/Bovinelabs.Timeline.Combat.git",
     "com.unity.cinemachine": "3.1.6",
     "com.unity.collections": "6.6.0",
     "com.unity.entities": "6.6.0",

@@ -92,6 +92,18 @@
         "com.rukhanka.animation": "1.0.0"
       }
     },
+    "com.bovinelabs.timeline.combat": {
+      "version": "file:Bovinelabs.Timeline.Combat",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.bovinelabs.timeline": "1.0.0",
+        "com.bovinelabs.timeline.physics": "1.0.1",
+        "com.unity.entities": "6.5.0",
+        "com.unity.burst": "1.8.18",
+        "com.unity.physics": "1.0.0"
+      }
+    },
     "com.bovinelabs.timeline.core": {
       "version": "file:BovineLabs.Timeline.Core",
       "depth": 0,
