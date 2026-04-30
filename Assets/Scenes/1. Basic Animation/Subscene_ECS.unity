@@ -1744,7 +1744,7 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 0}
     value: {fileID: 0}
-  - key: {fileID: 9021596343527273512, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 1452734295}
   - key: {fileID: 0}
     value: {fileID: 1241495309}
@@ -1774,6 +1774,8 @@ PlayableDirector:
     value: {fileID: 1387560025}
   - key: {fileID: -8964421624147140571, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 1452734289}
+  - key: {fileID: 9021596343527273512, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 1452734295}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
