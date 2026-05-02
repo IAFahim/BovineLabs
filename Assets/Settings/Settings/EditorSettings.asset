@@ -29,6 +29,16 @@ MonoBehaviour:
     Path: Assets/Settings/Scenes/Assets
   - Key: bl.ar.entitylinkschema
     Path: Assets/Settings/Schemas/EntityLinks/
+  - Key: bl.ar.statschemaobject
+    Path: Assets/Settings/Schemas/Stats
+  - Key: bl.ar.intrinsicschemaobject
+    Path: Assets/Settings/Schemas/Intrinsics/
+  - Key: bl.ar.musictrackdefinition
+    Path: Assets/Settings/Audio
+  - Key: bl.ar.conditioneventobject
+    Path: Assets/Settings/Schemas/Events/
+  - Key: bl.ar.spatialmaskasset
+    Path: Assets/Settings/Schemas/Spatial/Masks
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}
