@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6538700cbbf84cd7b7b2656443cc3857, type: 3}
+  m_Name: InfluenceMapSettings
+  m_EditorClassIdentifier: BovineLabs.Timeline.Spatial.Authoring::BovineLabs.Timeline.Spatial.Authoring.InfluenceMapSettings
+  gridSize: 200
+  cellSize: 1
+  origin:
+    x: -100
+    y: -100
+  layers:
+  - mask: 1
+    blurRadius: 2
+    decayRate: 0
+    normalization: 1
+    bidirectional: 1
+  - mask: 2
+    blurRadius: 2
+    decayRate: 0
+    normalization: 1
+    bidirectional: 1
