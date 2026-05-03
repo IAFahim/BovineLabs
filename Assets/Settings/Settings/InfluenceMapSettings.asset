@@ -12,11 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6538700cbbf84cd7b7b2656443cc3857, type: 3}
   m_Name: InfluenceMapSettings
   m_EditorClassIdentifier: BovineLabs.Timeline.Spatial.Authoring::BovineLabs.Timeline.Spatial.Authoring.InfluenceMapSettings
-  gridSize: 200
-  cellSize: 1
-  origin:
-    x: -100
-    y: -100
   layers:
   - mask: 1
     blurRadius: 2
