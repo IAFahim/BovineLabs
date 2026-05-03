@@ -16,3 +16,10 @@ MonoBehaviour:
   activeMapSize: 100
   schemas:
   - {fileID: 11400000, guid: 2cc49b473e9e067e2911a87404b0b2b7, type: 2}
+  visMode: 1
+  palette: 0
+  heightScale: 0.9
+  plateThickness: 0.05
+  opacity: 0.85
+  showGrid: 0
+  showNegativeBelow: 1
