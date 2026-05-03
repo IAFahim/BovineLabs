@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 356887546}
   - component: {fileID: 356887549}
   - component: {fileID: 356887550}
+  - component: {fileID: 356887551}
   m_Layer: 0
   m_Name: Combat and Loc
   m_TagString: Untagged
@@ -580,6 +581,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb1c7553028493c9c7547a63dfafe93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Spatial.Authoring::BovineLabs.Spatial.Authoring.SpatialTargetAuthoring
+--- !u!114 &356887551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356887545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2754a85d267f495787f09dc526997ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.Spatial.Authoring::BovineLabs.Timeline.Spatial.Authoring.InfluenceTrailEmitterAuthoring
+  layer: 8
+  value: 1000000
 --- !u!1 &440108312
 GameObject:
   m_ObjectHideFlags: 0
