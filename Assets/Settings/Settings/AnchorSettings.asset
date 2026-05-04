@@ -14,19 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: BovineLabs.Anchor::BovineLabs.Anchor.AnchorSettings
   toolbarOnly: 0
   debugStyleSheets:
-  - {fileID: 4413694071827464959, guid: ee6cc08f30d6840e7af0fac7c2d2be40, type: 3}
+  - {fileID: -4733365628477956816, guid: 88be577c8659ef84788549a4ab693b73, type: 3}
   startDestination: home
   views:
   - Key: home
     Asset: {fileID: 9197481963319205126, guid: a3a68b4cf0025f2df8fabe5c1dcc8393, type: 3}
-  actions:
-  - {fileID: 11400000, guid: ada6fe19149c94541bdb21a777c77f98, type: 2}
-  - {fileID: 11400000, guid: f32a752c170762e48b3274691869aa43, type: 2}
-  - {fileID: 11400000, guid: 997fcdb6f04c97a4ab77ec871a22cfe0, type: 2}
-  - {fileID: 11400000, guid: 02787cbd8918d16429a6edaac45b2ea1, type: 2}
-  - {fileID: 11400000, guid: 9dbcb893957813149908fcc41074886f, type: 2}
-  - {fileID: 11400000, guid: 3212a12782de8bf4e845100d1c9b46d1, type: 2}
-  - {fileID: 11400000, guid: 8151824fb02b4f829b1b27b4959af628, type: 2}
-  - {fileID: 11400000, guid: 12b9861737af868458a4d19f71520602, type: 2}
-  - {fileID: 11400000, guid: edfc94b726eb340d09798dd9cf9710cc, type: 2}
+  actions: []
   animations: []

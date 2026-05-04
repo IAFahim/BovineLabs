@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <!-- Notice the data-source-type uses the full namespace (Scripts.Data.NumberViewModel) and the Assembly Name (Assembly-CSharp) -->
+    <ui:VisualElement data-source-type="Scripts.Data.NumberViewModel, Scripts.Data" style="position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center; picking-mode: ignore;">
+        
+        <!-- REMOVED the 'ui:' prefix from Bindings -->
+        <Bindings>
+            <ui:DataBinding property="style.display" data-source-path="IsVisible" converter-id="DisplayStyle" />
+        </Bindings>
+
+        <ui:Label style="font-size: 100px; color: white; -unity-font-style: bold;">
+            <!-- REMOVED the 'ui:' prefix from Bindings -->
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="Number" />
+            </Bindings>
+        </ui:Label>
+        
+    </ui:VisualElement>
+</ui:UXML>

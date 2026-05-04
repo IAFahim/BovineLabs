@@ -13,7 +13,8 @@
         "Unity.Mathematics",
         "Unity.Mathematics.Extensions",
         "Unity.Physics",
-        "Unity.Transforms"
+        "Unity.Transforms",
+        "BovineLabs.Anchor"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

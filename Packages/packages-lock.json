@@ -1,13 +1,12 @@
 {
   "dependencies": {
     "com.bovinelabs.anchor": {
-      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.anchor",
+      "version": "file:com.bovinelabs.anchor",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.bovinelabs.core": "1.6.0"
-      },
-      "hash": "f59411f79fc6edca21de5c257bfb6b61ff95dc2d"
+      }
     },
     "com.bovinelabs.bridge": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",

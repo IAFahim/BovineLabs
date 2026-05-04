@@ -18,7 +18,10 @@
         "Unity.Mathematics",
         "Unity.Mathematics.Extensions",
         "Unity.Physics",
-        "Unity.Transforms"
+        "Unity.Transforms",
+        "BovineLabs.Timeline",
+        "UnityEngine.Timeline",
+        "BovineLabs.Timeline.Data"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
