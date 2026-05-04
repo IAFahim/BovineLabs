@@ -1,20 +1,29 @@
 {
   "dependencies": {
+    "com.bovinelabs.anchor": {
+      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.anchor",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bovinelabs.core": "1.6.0"
+      },
+      "hash": "f59411f79fc6edca21de5c257bfb6b61ff95dc2d"
+    },
     "com.bovinelabs.bridge": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "052cd1878b2ddbe960fff81703bfc8d9ccf3bff5"
+      "hash": "4ece85e7cba64b54fd62c87c005a36582cdf985c"
     },
     "com.bovinelabs.core": {
-      "version": "https://gitlab.com/tertle/com.bovinelabs.core.git#1.6.1",
+      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.core",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.entities": "1.4.5"
       },
-      "hash": "4861438dde37fb01b51ca766a10fba2da1b43c2e"
+      "hash": "f59411f79fc6edca21de5c257bfb6b61ff95dc2d"
     },
     "com.bovinelabs.essence": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
@@ -24,7 +33,7 @@
         "com.bovinelabs.core": "1.4.4",
         "com.bovinelabs.reaction": "0.5.0"
       },
-      "hash": "052cd1878b2ddbe960fff81703bfc8d9ccf3bff5"
+      "hash": "4ece85e7cba64b54fd62c87c005a36582cdf985c"
     },
     "com.bovinelabs.hitstop": {
       "version": "file:BovineLabs.HitStop",
@@ -55,7 +64,7 @@
       "dependencies": {
         "com.bovinelabs.core": "1.4.6"
       },
-      "hash": "052cd1878b2ddbe960fff81703bfc8d9ccf3bff5"
+      "hash": "4ece85e7cba64b54fd62c87c005a36582cdf985c"
     },
     "com.bovinelabs.spatial": {
       "version": "file:BovineLabs.Spatial",
@@ -77,7 +86,7 @@
         "com.bovinelabs.core": "1.6.0",
         "com.unity.timeline": "1.8.11"
       },
-      "hash": "052cd1878b2ddbe960fff81703bfc8d9ccf3bff5"
+      "hash": "4ece85e7cba64b54fd62c87c005a36582cdf985c"
     },
     "com.bovinelabs.timeline.animation": {
       "version": "file:BovineLabs.Timeline.Animation",
@@ -493,7 +502,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1"
       },
-      "hash": "cf4a4a13138082a3e3f278bc11bcdc80bee269e0"
+      "hash": "886058c1bd3fd5f005cf31155fef6726260ce63c"
     },
     "com.unity.modules.animation": {
       "version": "1.0.0",
