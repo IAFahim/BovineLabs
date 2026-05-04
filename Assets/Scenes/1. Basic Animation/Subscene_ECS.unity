@@ -1794,7 +1794,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1749563369}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1241495312
 MonoBehaviour:
@@ -3144,7 +3144,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 1319626932}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -3203,7 +3203,6 @@ Transform:
   - {fileID: 160821345}
   - {fileID: 440108313}
   - {fileID: 588256446}
-  - {fileID: 1241495310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1749563370
@@ -3312,5 +3311,6 @@ SceneRoots:
   - {fileID: 1452734292}
   - {fileID: 177049565}
   - {fileID: 1398704567}
+  - {fileID: 1241495310}
   - {fileID: 1749563369}
   - {fileID: 492277831}

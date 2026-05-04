@@ -39,6 +39,10 @@ MonoBehaviour:
     Path: Assets/Settings/Schemas/Events/
   - Key: bl.ar.spatialmaskasset
     Path: Assets/Settings/Schemas/Spatial/Masks
+  - Key: bl.ar.anchoraction
+    Path: Assets/Settings/UI/Actions
+  - Key: bl.ar.anchornavanimation
+    Path: Assets/Settings/UI/Animations
   prebakeScenes: []
   startupScene: {fileID: 0}
   defaultSettingsAuthoring: {fileID: 0}

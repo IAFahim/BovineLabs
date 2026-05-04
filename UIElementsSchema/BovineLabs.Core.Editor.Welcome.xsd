@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="BovineLabs.Core.Editor.Welcome" elementFormDefault="qualified" targetNamespace="BovineLabs.Core.Editor.Welcome" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="UnityEngine.UIElements.xsd" namespace="UnityEngine.UIElements" />
+  <xs:complexType name="PackageElementType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="UnityEngine.UIElements" base="q1:VisualElementType">
+        <xs:choice />
+        <xs:attribute default="Title" name="title" type="xs:string" />
+        <xs:attribute default="Description" name="description" type="xs:string" />
+        <xs:attribute name="url" type="xs:string" />
+        <xs:attribute name="package-name" type="xs:string" />
+        <xs:attribute name="git-url" type="xs:string" />
+        <xs:attribute name="dependencies" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PackageElement" xmlns:q2="UnityEngine.UIElements" substitutionGroup="q2:VisualElement" type="tns:PackageElementType" />
+  <xs:complexType name="FeatureToggleType">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="UnityEngine.UIElements" base="q3:FoldoutType">
+        <xs:choice />
+        <xs:attribute name="define" type="xs:string" />
+        <xs:attribute default="true" name="feature-enabled" type="xs:boolean" />
+        <xs:attribute name="description" type="xs:string" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FeatureToggle" xmlns:q4="UnityEngine.UIElements" substitutionGroup="q4:Foldout" type="tns:FeatureToggleType" />
+</xs:schema>
