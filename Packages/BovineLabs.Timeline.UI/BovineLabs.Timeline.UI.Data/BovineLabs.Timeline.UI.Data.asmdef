@@ -1,0 +1,29 @@
+{
+  "name": "BovineLabs.Timeline.UI.Data",
+  "rootNamespace": "",
+  "references": [
+    "BovineLabs.Anchor",
+    "BovineLabs.Core",
+    "BovineLabs.Core.Extensions",
+    "BovineLabs.Reaction.Data",
+    "BovineLabs.Timeline",
+    "BovineLabs.Timeline.Data",
+    "Unity.AppUI",
+    "Unity.AppUI.MVVM",
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Mathematics",
+    "Unity.Transforms"
+  ],
+  "optionalUnityReferences": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

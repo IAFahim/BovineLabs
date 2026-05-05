@@ -1,0 +1,39 @@
+{
+  "name": "BovineLabs.Timeline.UI.Authoring",
+  "rootNamespace": "",
+  "references": [
+    "BovineLabs.Anchor",
+    "BovineLabs.Core",
+    "BovineLabs.Core.Authoring",
+    "BovineLabs.Core.Extensions",
+    "BovineLabs.Core.Extensions.Authoring",
+    "BovineLabs.Reaction.Authoring",
+    "BovineLabs.Reaction.Data",
+    "BovineLabs.Timeline.Authoring",
+    "BovineLabs.Timeline.Core.Authoring",
+    "BovineLabs.Timeline.Data",
+    "BovineLabs.Timeline.Instantiate",
+    "BovineLabs.Timeline.Instantiate.Authoring",
+    "BovineLabs.Timeline.UI",
+    "BovineLabs.Timeline.UI.Data",
+    "Unity.AppUI",
+    "Unity.AppUI.MVVM",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Entities.Hybrid",
+    "Unity.Timeline",
+    "Unity.Burst",
+    "BovineLabs.Timeline.EntityLinks.Authoring"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "UNITY_EDITOR"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

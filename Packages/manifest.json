@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.bovinelabs.bridge": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
     "com.bovinelabs.anchor": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.anchor",
+    "com.bovinelabs.bridge": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
     "com.bovinelabs.core": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.core",
     "com.bovinelabs.essence": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
     "com.bovinelabs.hitstop": "https://github.com/IAFahim/BovineLabs.HitStop.git",
