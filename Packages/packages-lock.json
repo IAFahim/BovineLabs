@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "com.bovinelabs.anchor": {
-      "version": "file:com.bovinelabs.anchor",
+      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.anchor",
       "depth": 0,
-      "source": "embedded",
+      "source": "git",
       "dependencies": {
         "com.bovinelabs.core": "1.6.0"
-      }
+      },
+      "hash": "41156272ba2e19896b27383c09e1f6c6e0f72d46"
     },
     "com.bovinelabs.bridge": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
@@ -218,7 +219,7 @@
       "hash": "3becba9341035dd3cabfec3e53b3025253409800"
     },
     "com.unity.burst": {
-      "version": "1.8.29",
+      "version": "1.8.28",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -454,7 +455,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.7.1",
+      "version": "1.7.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
