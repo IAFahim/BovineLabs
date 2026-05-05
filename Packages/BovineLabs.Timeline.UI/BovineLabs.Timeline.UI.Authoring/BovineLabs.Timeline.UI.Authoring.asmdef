@@ -23,7 +23,9 @@
     "Unity.Entities.Hybrid",
     "Unity.Timeline",
     "Unity.Burst",
-    "BovineLabs.Timeline.EntityLinks.Authoring"
+    "BovineLabs.Timeline.EntityLinks.Authoring",
+    "BovineLabs.Essence.Authoring",
+    "BovineLabs.Essence.Data"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

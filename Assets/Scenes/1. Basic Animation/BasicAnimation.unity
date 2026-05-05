@@ -515,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 776615289}
   - component: {fileID: 776615291}
-  - component: {fileID: 776615292}
+  - component: {fileID: 776615293}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -596,7 +596,7 @@ PanelRenderer:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_Position: 0
---- !u!114 &776615292
+--- !u!114 &776615293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -605,9 +605,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 776615288}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc983a6d777348958252f4ee682e3708, type: 3}
+  m_Script: {fileID: 11500000, guid: 79f8d8b3a35f42639801e1aee13218b0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Timeline.UI::BovineLabs.Timeline.UI.MyAnchorAppBuilder
+  m_EditorClassIdentifier: BovineLabs.Anchor::BovineLabs.Anchor.AnchorAppBuilder
   panelRenderer: {fileID: 776615291}
 --- !u!1 &963767316
 GameObject:

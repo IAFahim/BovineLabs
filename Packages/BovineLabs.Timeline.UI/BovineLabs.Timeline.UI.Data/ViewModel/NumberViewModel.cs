@@ -1,4 +1,4 @@
-namespace BovineLabs.Timeline.UI.Data
+namespace BovineLabs.Timeline.UI.Data.ViewModel
 {
     using BovineLabs.Anchor;
     using Unity.Properties;

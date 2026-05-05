@@ -1,6 +1,7 @@
 namespace BovineLabs.Timeline.UI
 {
     using BovineLabs.Anchor;
+    using BovineLabs.Timeline.UI.Data.ViewModel;
     using BovineLabs.Timeline;
     using BovineLabs.Timeline.Data;
     using BovineLabs.Timeline.UI.Data;
@@ -12,7 +13,8 @@ namespace BovineLabs.Timeline.UI
         WorldSystemFilterFlags.LocalSimulation |
         WorldSystemFilterFlags.ClientSimulation |
         WorldSystemFilterFlags.ServerSimulation |
-        WorldSystemFilterFlags.Presentation)]
+        WorldSystemFilterFlags.Presentation
+    )]
     public partial struct NumberTrackSystem : ISystem, ISystemStartStop
     {
         private UIHelper<NumberViewModel, NumberViewModel.Data> uiHelper;

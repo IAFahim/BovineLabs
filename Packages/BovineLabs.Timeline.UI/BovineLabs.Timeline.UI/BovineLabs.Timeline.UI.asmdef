@@ -23,7 +23,8 @@
     "Unity.Transforms",
     "Unity.Entities.Hybrid",
     "BovineLabs.Timeline.EntityLinks",
-    "BovineLabs.Timeline.EntityLinks.Data"
+    "BovineLabs.Timeline.EntityLinks.Data",
+    "BovineLabs.Essence.Data"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
