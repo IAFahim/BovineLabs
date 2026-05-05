@@ -15,6 +15,7 @@
     "com.bovinelabs.timeline.essence": "https://github.com/IAFahim/BovineLabs.Timeline.Essence.git",
     "com.bovinelabs.timeline.group-tool": "https://github.com/IAFahim/com.bovinelabs.timeline.group-tool.git",
     "com.bovinelabs.timeline.physics": "https://github.com/IAFahim/BovineLabs.Timeline.Physics.git",
+    "com.bovinelabs.timeline.ui": "https://github.com/IAFahim/BovineLabs.Timeline.UI.git",
     "com.bovinelabs.timeline.playerinputs": "https://github.com/IAFahim/BovineLabs.Timeline.PlayerInputs.git",
     "com.bovinelabs.timeline.time": "https://github.com/IAFahim/BovineLabs.Timeline.Time.git",
     "com.gitcopy.gc": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
