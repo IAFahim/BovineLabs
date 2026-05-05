@@ -8,6 +8,11 @@ namespace BovineLabs.Timeline.UI
     using Unity.Entities;
 
     [UpdateInGroup(typeof(TimelineComponentAnimationGroup))]
+    [WorldSystemFilter(
+        WorldSystemFilterFlags.LocalSimulation |
+        WorldSystemFilterFlags.ClientSimulation |
+        WorldSystemFilterFlags.ServerSimulation |
+        WorldSystemFilterFlags.Presentation)]
     public partial struct NumberTrackSystem : ISystem, ISystemStartStop
     {
         private UIHelper<NumberViewModel, NumberViewModel.Data> uiHelper;

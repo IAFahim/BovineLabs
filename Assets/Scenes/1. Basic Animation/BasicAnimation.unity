@@ -515,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 776615289}
   - component: {fileID: 776615291}
-  - component: {fileID: 776615290}
+  - component: {fileID: 776615292}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -538,19 +538,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &776615290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776615288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f8d8b3a35f42639801e1aee13218b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Anchor::BovineLabs.Anchor.AnchorAppBuilder
-  panelRenderer: {fileID: 776615291}
 --- !u!1931382934 &776615291
 PanelRenderer:
   m_ObjectHideFlags: 0
@@ -609,6 +596,19 @@ PanelRenderer:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_Position: 0
+--- !u!114 &776615292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776615288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc983a6d777348958252f4ee682e3708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.UI::BovineLabs.Timeline.UI.MyAnchorAppBuilder
+  panelRenderer: {fileID: 776615291}
 --- !u!1 &963767316
 GameObject:
   m_ObjectHideFlags: 0

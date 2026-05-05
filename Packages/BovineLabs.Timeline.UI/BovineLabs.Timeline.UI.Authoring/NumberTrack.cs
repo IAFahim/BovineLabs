@@ -9,7 +9,7 @@ namespace BovineLabs.Timeline.UI.Authoring
     [Serializable]
     [TrackClipType(typeof(NumberClip))]
     [TrackBindingType(typeof(GameObject))]
-    [TrackColor(0.2f, 0.6f, 0.8f)]
+    [TrackColor(1f, 1f, 1f)]
     [DisplayName("DOTS/Number Track")]
     public class NumberTrack : DOTSTrack
     {
