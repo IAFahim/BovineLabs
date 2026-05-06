@@ -22,9 +22,9 @@ namespace BovineLabs.Timeline.UI.Authoring
         {
             context.Baker.AddComponent(clipEntity, new EssenceUIComponent 
             { 
-                Stat = this.Stat != null ? this.Stat.Key : (ushort)0,
-                Intrinsic = this.Intrinsic != null ? this.Intrinsic.Key : (ushort)0,
-                Event = this.Event != null ? this.Event.Key : (ushort)0
+                Stat = this.Stat != null ? this.Stat.Key : 0,
+                Intrinsic = this.Intrinsic != null ? this.Intrinsic.Key : 0,
+                Event = this.Event != null ? this.Event.Key : 0
             });
             
             base.Bake(clipEntity, context);
