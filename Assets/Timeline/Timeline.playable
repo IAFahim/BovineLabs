@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
@@ -949,9 +949,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb458f06bc41f98dd5b0cae8cf891f, type: 3}
   m_Name: EssenceUIClip
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
-  Stat: {fileID: 11400000, guid: 4fd90e13234f435e8bac348cd151b509, type: 2}
-  Intrinsic: {fileID: 0}
-  Event: {fileID: 0}
+  Stats:
+  - {fileID: 11400000, guid: 8d4eb6003a4fef5b18d84bc4a801d67f, type: 2}
+  Intrinsics:
+  - {fileID: 11400000, guid: a2c8bd61e59f4d298796af28322b0fdb, type: 2}
+  Events: []
 --- !u!114 &-2011005884070904279
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1404,9 +1406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb458f06bc41f98dd5b0cae8cf891f, type: 3}
   m_Name: EssenceUIClip(Clone)
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
-  Stat: {fileID: 11400000, guid: 4fd90e13234f435e8bac348cd151b509, type: 2}
-  Intrinsic: {fileID: 0}
-  Event: {fileID: 0}
+  Stats: []
+  Intrinsics: []
+  Events: []
 --- !u!114 &2705104007839482283
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1569,7 +1571,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 1
+  m_Muted: 0
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}

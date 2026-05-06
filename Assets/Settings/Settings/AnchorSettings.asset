@@ -15,7 +15,7 @@ MonoBehaviour:
   toolbarOnly: 0
   debugStyleSheets:
   - {fileID: -4733365628477956816, guid: 88be577c8659ef84788549a4ab693b73, type: 3}
-  startDestination: home
+  startDestination: essence
   views:
   - Key: home
     Asset: {fileID: 9197481963319205126, guid: a3a68b4cf0025f2df8fabe5c1dcc8393, type: 3}

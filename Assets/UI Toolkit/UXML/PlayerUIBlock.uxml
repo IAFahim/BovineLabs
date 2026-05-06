@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement
+        style="background-color: rgba(0, 0, 0, 0.85); padding: 15px; margin: 10px; border-radius: 8px; width: 250px;">
+        <ui:Label text="PLAYER ESSENCE"
+                  style="color: white; font-size: 16px; -unity-font-style: bold; margin-bottom: 5px;" />
+        <ui:Label style="color: #AACCFF; font-size: 14px;">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="StatsText" />
+            </Bindings>
+        </ui:Label>
+        <ui:Label style="color: #FFAACC; font-size: 14px;">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="IntrinsicsText" />
+            </Bindings>
+        </ui:Label>
+        <ui:Label style="color: #CCFFAA; font-size: 14px; -unity-font-style: bold;">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="EventsText" />
+            </Bindings>
+        </ui:Label>
+    </ui:VisualElement>
+</ui:UXML>

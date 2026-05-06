@@ -1,39 +1,9 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:VisualElement data-source-type="BovineLabs.Timeline.UI.Data.ViewModel.EssenceUIViewModel, BovineLabs.Timeline.UI.Data" style="position: absolute; width: 100%; height: 100%; align-items: flex-start; justify-content: flex-start; padding: 20px; picking-mode: ignore;">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:bl="BovineLabs.Anchor.Elements">
+    
+    <ui:VisualElement data-source-type="BovineLabs.Timeline.UI.Data.ViewModel.EssenceUIViewModel, BovineLabs.Timeline.UI.Data" style="position: absolute; width: 100%; height: 100%; picking-mode: ignore;">
         
-        <Bindings>
-            <ui:DataBinding property="style.display" data-source-path="IsVisible" converter-id="DisplayStyle" />
-        </Bindings>
+        <!-- The GridView will automatically spawn one 'PlayerUIBlock' per active player -->
+        <bl:AnchorGridView items-source-path="Players" style="width: 100%; height: 100%; picking-mode: ignore; flex-direction: row; justify-content: center; align-items: flex-end; padding-bottom: 50px;" />
 
-        <!-- Container Box -->
-        <ui:VisualElement style="background-color: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px;">
-            <ui:Label text="Essence Data" style="color: white; font-size: 24px; -unity-font-style: bold; margin-bottom: 10px;"/>
-            
-            <!-- Stat Row -->
-            <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
-                <ui:Label text="Stat:" style="color: #AACCFF; font-size: 18px; width: 100px;"/>
-                <ui:Label style="color: white; font-size: 18px;">
-                    <Bindings><ui:DataBinding property="text" data-source-path="StatValue" /></Bindings>
-                </ui:Label>
-            </ui:VisualElement>
-
-            <!-- Intrinsic Row -->
-            <ui:VisualElement style="flex-direction: row; justify-content: space-between; margin-bottom: 5px;">
-                <ui:Label text="Intrinsic:" style="color: #FFAACC; font-size: 18px; width: 100px;"/>
-                <ui:Label style="color: white; font-size: 18px;">
-                    <Bindings><ui:DataBinding property="text" data-source-path="IntrinsicValue" /></Bindings>
-                </ui:Label>
-            </ui:VisualElement>
-
-            <!-- Event Row (Only visible if the specific Event fires THIS frame) -->
-            <ui:VisualElement style="flex-direction: row; justify-content: space-between;">
-                <Bindings><ui:DataBinding property="style.display" data-source-path="HasEvent" converter-id="DisplayStyle" /></Bindings>
-                <ui:Label text="Event Fired!" style="color: #CCFFAA; font-size: 18px; width: 100px; -unity-font-style: bold;"/>
-                <ui:Label style="color: white; font-size: 18px;">
-                    <Bindings><ui:DataBinding property="text" data-source-path="EventValue" /></Bindings>
-                </ui:Label>
-            </ui:VisualElement>
-
-        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
