@@ -358,13 +358,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 182947718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d132318fd4a94957947f32561bd4f38f, type: 3}
+  m_Script: {fileID: 11500000, guid: b8dcbda6791f5f841a9bee881a1df3ac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.Actions.ActionIntrinsicAuthoring
-  Intrinsics:
-  - Intrinsic: {fileID: 11400000, guid: 70880d92202b4294b8606bf00bf76e1f, type: 2}
-    Amount: 20
+  m_EditorClassIdentifier: BovineLabs.Reaction.Timeline.Authoring::BovineLabs.Reaction.Timeline.Authoring.ActionTimelineAuthoring
+  Timelines:
+  - Director: {fileID: 1387560026}
+    InitialTime: 0
+    DisableTimelineOnDeactivate: 0
+    ResetWhenActive: 0
+    Bindings: []
+--- !u!114 &182947724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182947718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72f40eccefaf4b1d9a64964f08d866b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.Actions.ActionStatAuthoring
+  Stats:
+  - StatSchema: {fileID: 11400000, guid: 7d4ad9a26d7e4da58c1c9b22307a58df, type: 2}
     Target: 2
+    ValueType: 0
+    Fixed:
+      ModifyType: 0
+      Value: 1000
+    Linear:
+      ModifyType: 0
+      ConditionSchemaObject: {fileID: 0}
+      FromMin: 0
+      FromMax: 0
+      ToMin: 0
+      ToMax: 0
+    Range:
+      ModifyType: 0
+      Min: 0
+      Max: 0
 --- !u!1 &217086188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,6 +1239,7 @@ GameObject:
   - component: {fileID: 1387560021}
   - component: {fileID: 1387560024}
   - component: {fileID: 1387560025}
+  - component: {fileID: 1387560026}
   m_Layer: 0
   m_Name: Essence
   m_TagString: Untagged
@@ -1342,6 +1375,25 @@ MonoBehaviour:
     Target1: {fileID: 0}
   Initialize:
     Target: 1
+--- !u!320 &1387560026
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387560016}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 52458406cffb9234ca4f3eb3ec0be3e4, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -6387078739754985433, guid: 52458406cffb9234ca4f3eb3ec0be3e4, type: 2}
+    value: {fileID: 1387560018}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1416051330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2132,6 +2184,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7931332132699542140, guid: badc33a3789882848a13c287aa09777e, type: 3}
+      propertyPath: Timelines.Array.data[0].ResetWhenActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2225,6 +2281,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8377234679884064278, guid: f176ab210b9ad794495452c3156422a6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 182947723}
+    - targetCorrespondingSourceObject: {fileID: 8377234679884064278, guid: f176ab210b9ad794495452c3156422a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 182947724}
   m_SourcePrefab: {fileID: 100100000, guid: f176ab210b9ad794495452c3156422a6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
