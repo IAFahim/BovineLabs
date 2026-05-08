@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ac892a84ab4fcfad4f0a55f02d0cda, type: 3}
+  m_Name: Movement Speed LV
+  m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.IntrinsicSchemaObject
+  isGlobal: 0
+  key:
+    Value: 75
+  defaultValue: 0
+  range: {x: 0, y: 4}
+  minStat: {fileID: 0}
+  maxStat: {fileID: 0}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfbca56adf87485e93022d0e78d89e6f, type: 3}
-  m_Name: OnInputJump
+  m_Name: OnInputDash
   m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Conditions.ConditionEventObject
   isGlobal: 0
   customDataType: {fileID: 0}
