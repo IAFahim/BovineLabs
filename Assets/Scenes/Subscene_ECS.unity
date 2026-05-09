@@ -379,24 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72f40eccefaf4b1d9a64964f08d866b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.Actions.ActionStatAuthoring
-  Stats:
-  - StatSchema: {fileID: 11400000, guid: 7d4ad9a26d7e4da58c1c9b22307a58df, type: 2}
-    Target: 2
-    ValueType: 0
-    Fixed:
-      ModifyType: 0
-      Value: 1000
-    Linear:
-      ModifyType: 0
-      ConditionSchemaObject: {fileID: 0}
-      FromMin: 0
-      FromMax: 0
-      ToMin: 0
-      ToMax: 0
-    Range:
-      ModifyType: 0
-      Min: 0
-      Max: 0
+  Stats: []
 --- !u!1 &217086188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,7 +1258,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.StatAuthoring
   AddStats: 1
-  StatDefaults: []
+  StatDefaults:
+  - Stat: {fileID: 11400000, guid: 6f4e99e86398435b9bfbba86099a8177, type: 2}
+    ModifyType: 0
+    Value: 100
   StatDefaultGroups: []
   StatsCanBeModified: 1
   AddIntrinsics: 1
@@ -1390,7 +1376,7 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -6387078739754985433, guid: 52458406cffb9234ca4f3eb3ec0be3e4, type: 2}
+  - key: {fileID: -8222758383269602793, guid: 52458406cffb9234ca4f3eb3ec0be3e4, type: 2}
     value: {fileID: 1387560018}
   m_ExposedReferences:
     m_References: []

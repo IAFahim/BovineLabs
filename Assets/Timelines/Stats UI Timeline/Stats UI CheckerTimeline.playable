@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: EssenceUIClip
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
   Stats:
-  - {fileID: 11400000, guid: 7d4ad9a26d7e4da58c1c9b22307a58df, type: 2}
+  - {fileID: 11400000, guid: 6f4e99e86398435b9bfbba86099a8177, type: 2}
   Intrinsics:
   - {fileID: 11400000, guid: a2c8bd61e59f4d298796af28322b0fdb, type: 2}
   - {fileID: 11400000, guid: 5547ac0e1895a33409eea90938b319f9, type: 2}

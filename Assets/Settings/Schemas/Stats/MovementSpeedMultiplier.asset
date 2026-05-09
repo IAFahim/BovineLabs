@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d3ac0b546524facb9285f28eb2fdb3b, type: 3}
-  m_Name: MovementSpeed
+  m_Name: MovementSpeedMultiplier
   m_EditorClassIdentifier: BovineLabs.Essence.Authoring::BovineLabs.Essence.Authoring.StatSchemaObject
   isGlobal: 0
   key: 16
