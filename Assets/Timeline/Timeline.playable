@@ -901,7 +901,25 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -2150,7 +2168,7 @@ MonoBehaviour:
   ReadFrom: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  removeStartOffset: 1
+  removeStartOffset: 0
   applyFootIK: 1
 --- !u!114 &5428497042690615115
 MonoBehaviour:
@@ -2475,7 +2493,7 @@ MonoBehaviour:
   ReadFrom: {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  removeStartOffset: 1
+  removeStartOffset: 0
   applyFootIK: 1
 --- !u!114 &7629110967774230932
 MonoBehaviour:

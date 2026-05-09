@@ -5698,7 +5698,7 @@ MonoBehaviour:
   blendOutDuration: 0.25
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  removeStartOffset: 1
+  removeStartOffset: 0
   applyFootIK: 1
 --- !u!114 &492110638
 MonoBehaviour:
@@ -6859,7 +6859,7 @@ MonoBehaviour:
   blendOutDuration: 0.25
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  removeStartOffset: 1
+  removeStartOffset: 0
   applyFootIK: 1
 --- !u!114 &1319626925
 MonoBehaviour:
