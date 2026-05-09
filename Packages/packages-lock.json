@@ -244,13 +244,12 @@
       "hash": "51bb63dccdb0ac4e40b6a8bfd17a153b1696ae11"
     },
     "com.rukhanka.animation": {
-      "version": "https://github.com/iafahim/com.rukhanka.animation.git",
+      "version": "file:com.rukhanka.animation",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.unity.entities.graphics": "1.4.16"
-      },
-      "hash": "3becba9341035dd3cabfec3e53b3025253409800"
+      }
     },
     "com.unity.burst": {
       "version": "1.8.29",
