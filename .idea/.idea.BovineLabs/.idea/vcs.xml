@@ -13,5 +13,6 @@
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Spatial" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Time" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.UI" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/com.bovinelabs.timeline.transform" vcs="Git" />
   </component>
 </project>

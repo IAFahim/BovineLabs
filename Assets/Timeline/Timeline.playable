@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe8f4c1a47442bb9ae7afe2b51766d, type: 3}
   m_Name: ScaleClip
   m_EditorClassIdentifier: BovineLabs.Timeline.Transform.Authoring::BovineLabs.Timeline.Transform.Authoring.ScaleClip
-  Scale: 2
+  Scale: {x: 1, y: 2, z: 1}
 --- !u!114 &-5756201016497073933
 MonoBehaviour:
   m_ObjectHideFlags: 1
