@@ -1089,6 +1089,99 @@ MonoBehaviour:
   m_Markers:
     m_Objects: []
   resetOnDeactivate: 1
+--- !u!114 &-3955803023947555653
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d7c51c74b325f44a1f5c0ebc34434d, type: 3}
+  m_Name: Timeline Time Scale Track
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimelineTimeScaleTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: -3004747188421574965}
+  m_Children: []
+  m_Clips:
+  - m_Version: 1
+    m_Start: 0
+    m_ClipIn: 0
+    m_Asset: {fileID: 4790979076716102730}
+    m_Duration: 1
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: -3955803023947555653}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: -1
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: TimelineTimeScaleClip
+  m_Markers:
+    m_Objects: []
+  resetOnDeactivate: 1
 --- !u!114 &-3728716721764865890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1105,6 +1198,31 @@ MonoBehaviour:
   linearVelocity: {x: 0, y: 30, z: 1}
   angularVelocity: {x: 0, y: 0, z: 0}
   space: 4
+--- !u!114 &-3004747188421574965
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0fc6f5187a81dc47999eefade6f0935, type: 3}
+  m_Name: Time Group
+  m_EditorClassIdentifier: Unity.Timeline::UnityEngine.Timeline.GroupTrack
+  m_Version: 3
+  m_AnimClip: {fileID: 0}
+  m_Locked: 0
+  m_Muted: 0
+  m_CustomPlayableFullTypename: 
+  m_Curves: {fileID: 0}
+  m_Parent: {fileID: 11400000}
+  m_Children:
+  - {fileID: 5672766414000748912}
+  - {fileID: -3955803023947555653}
+  m_Clips: []
+  m_Markers:
+    m_Objects: []
 --- !u!114 &-2681532802307113366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1512,7 +1630,6 @@ MonoBehaviour:
   - {fileID: 4304008739173729860}
   - {fileID: -4293134366758703274}
   - {fileID: 9021596343527273512}
-  - {fileID: 5672766414000748912}
   - {fileID: -1649423987052053625}
   - {fileID: 714145927590769594}
   - {fileID: 5457701888208028253}
@@ -1527,6 +1644,7 @@ MonoBehaviour:
   - {fileID: -1751968194663782901}
   - {fileID: -7634199713061766854}
   - {fileID: 6486009319765817834}
+  - {fileID: -3004747188421574965}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
@@ -2181,6 +2299,20 @@ MonoBehaviour:
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
   avatarMask: {fileID: 0}
   applyAvatarMask: 1
+--- !u!114 &4790979076716102730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835f17690be557422bb67649c1b8d98d, type: 3}
+  m_Name: TimelineTimeScaleClip
+  m_EditorClassIdentifier: BovineLabs.Timeline.Time.Authoring::BovineLabs.Timeline.Time.Authoring.TimelineTimeScaleClip
+  timeScale: 1
+  stat: {fileID: 11400000, guid: 95a61e8c263e49dbbc6a31729d0815ce, type: 2}
 --- !u!114 &5427651027039577481
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2357,7 +2489,7 @@ MonoBehaviour:
   m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
-  m_Parent: {fileID: 11400000}
+  m_Parent: {fileID: -3004747188421574965}
   m_Children: []
   m_Clips:
   - m_Version: 1

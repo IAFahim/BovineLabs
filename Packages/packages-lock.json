@@ -137,6 +137,18 @@
       },
       "hash": "c326a49f87956b6e42017946507f2df7a2518a09"
     },
+    "com.bovinelabs.timeline.parenting": {
+      "version": "file:com.bovinelabs.timeline.parenting",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.entities": "6.5.0",
+        "com.unity.collections": "6.5.0",
+        "com.unity.burst": "1.8.11",
+        "com.unity.mathematics": "1.3.2",
+        "com.bovinelabs.timeline.core": "1.0.0"
+      }
+    },
     "com.bovinelabs.timeline.physics": {
       "version": "file:BovineLabs.Timeline.Physics",
       "depth": 0,
