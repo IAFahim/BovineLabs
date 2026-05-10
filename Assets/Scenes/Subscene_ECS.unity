@@ -1272,7 +1272,7 @@ MonoBehaviour:
   - Intrinsic: {fileID: 11400000, guid: 5547ac0e1895a33409eea90938b319f9, type: 2}
     Value: 1
   - Intrinsic: {fileID: 11400000, guid: 6f39a22ef66a4880b2a2918be8962f89, type: 2}
-    Value: 1
+    Value: 2
   IntrinsicDefaultGroups: []
   Initialize:
     CopyFrom: 3
