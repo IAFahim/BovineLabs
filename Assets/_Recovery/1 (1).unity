@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 459224084}
   - component: {fileID: 459224086}
   - component: {fileID: 459224085}
-  - component: {fileID: 459224087}
   m_Layer: 0
   m_Name: Input Consumer
   m_TagString: Untagged
@@ -391,25 +390,6 @@ MonoBehaviour:
   Root: {fileID: 1749563370}
   Schemas:
   - {fileID: 11400000, guid: a31b484df79a0368a9134adf3d1c5af9, type: 2}
---- !u!320 &459224087
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 459224082}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 6bdc171a25d005e45a19301d0f0000d5, type: 2}
-  m_InitialState: 1
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: 1148838331899596532, guid: 6bdc171a25d005e45a19301d0f0000d5, type: 2}
-    value: {fileID: 459224084}
-  m_ExposedReferences:
-    m_References: []
 --- !u!1 &537042899
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +976,7 @@ MonoBehaviour:
   - Intrinsic: {fileID: 11400000, guid: 5547ac0e1895a33409eea90938b319f9, type: 2}
     Value: 1
   - Intrinsic: {fileID: 11400000, guid: 6f39a22ef66a4880b2a2918be8962f89, type: 2}
-    Value: 1
+    Value: 2
   IntrinsicDefaultGroups: []
   Initialize:
     CopyFrom: 3
