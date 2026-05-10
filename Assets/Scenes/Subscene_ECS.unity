@@ -6184,6 +6184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536106234}
   - component: {fileID: 536106233}
+  - component: {fileID: 536106235}
   m_Layer: 0
   m_Name: Movement Target
   m_TagString: Untagged
@@ -6213,12 +6214,33 @@ Transform:
   m_GameObject: {fileID: 536106232}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.67, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1749563369}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536106235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536106232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
+  Owner: {fileID: 588256445}
+  Source: {fileID: 588256445}
+  Target: {fileID: 0}
+  Custom:
+    Enable: 0
+    Target0: {fileID: 0}
+    Target1: {fileID: 0}
+  Initialize:
+    Target: 1
 --- !u!1 &537042899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6557,7 +6579,7 @@ MonoBehaviour:
   Target: {fileID: 536106232}
   Custom:
     Enable: 0
-    Target0: {fileID: 0}
+    Target0: {fileID: 536106232}
     Target1: {fileID: 0}
   Initialize:
     Target: 1
@@ -7882,6 +7904,8 @@ PlayableDirector:
     value: {fileID: 588256448}
   - key: {fileID: -3955803023947555653, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
     value: {fileID: 1387560018}
+  - key: {fileID: -4966873830450226548, guid: 6859290a3f49de0e19ca9bee321e85e9, type: 2}
+    value: {fileID: 536106235}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1241495310
@@ -10164,7 +10188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1504515830
 Transform:
   m_ObjectHideFlags: 0
