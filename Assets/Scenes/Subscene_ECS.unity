@@ -10549,8 +10549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1715107374}
   - component: {fileID: 1715107377}
-  - component: {fileID: 1715107376}
-  - component: {fileID: 1715107375}
+  - component: {fileID: 1715107379}
+  - component: {fileID: 1715107378}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -10566,114 +10566,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715107373}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.22465804, y: 0.31661895, z: -0.07745915, w: 0.9183035}
-  m_LocalPosition: {x: -36, y: 30.4, z: -46}
+  m_LocalRotation: {x: 0.3314136, y: 0.46193975, z: -0.19134173, w: 0.8001031}
+  m_LocalPosition: {x: -11.291589, y: 13.038405, z: -6.519202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1715107375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715107373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineHardLookAt
-  LookAtOffset: {x: 0, y: 0, z: 0}
---- !u!114 &1715107376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1715107373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa66f5ff2264b8595aa418518047242, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BovineLabs.Bridge.Data::BovineLabs.Bridge.Data.Cinemachine.CinemachineThirdPersonFollowDots
-  Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: -36, y: 30, z: -36}
-  VerticalArmLength: 0.4
-  CameraSide: 1
-  CameraDistance: 10
-  AvoidObstacles:
-    Enabled: 0
-    BelongsTo:
-      Category00: 1
-      Category01: 1
-      Category02: 1
-      Category03: 1
-      Category04: 1
-      Category05: 1
-      Category06: 1
-      Category07: 1
-      Category08: 1
-      Category09: 1
-      Category10: 1
-      Category11: 1
-      Category12: 1
-      Category13: 1
-      Category14: 1
-      Category15: 1
-      Category16: 1
-      Category17: 1
-      Category18: 1
-      Category19: 1
-      Category20: 1
-      Category21: 1
-      Category22: 1
-      Category23: 1
-      Category24: 1
-      Category25: 1
-      Category26: 1
-      Category27: 1
-      Category28: 1
-      Category29: 1
-      Category30: 1
-      Category31: 1
-    CollidesWith:
-      Category00: 1
-      Category01: 1
-      Category02: 1
-      Category03: 1
-      Category04: 1
-      Category05: 1
-      Category06: 1
-      Category07: 1
-      Category08: 1
-      Category09: 1
-      Category10: 1
-      Category11: 1
-      Category12: 1
-      Category13: 1
-      Category14: 1
-      Category15: 1
-      Category16: 1
-      Category17: 1
-      Category18: 1
-      Category19: 1
-      Category20: 1
-      Category21: 1
-      Category22: 1
-      Category23: 1
-      Category24: 1
-      Category25: 1
-      Category26: 1
-      Category27: 1
-      Category28: 1
-      Category29: 1
-      Category30: 1
-      Category31: 1
-    CameraRadius: 0.2
-    DampingIntoCollision: 0
-    DampingFromCollision: 0.5
 --- !u!114 &1715107377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10687,21 +10586,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
+    Enabled: 1
     m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1319626932}
-    LookAtTarget: {fileID: 0}
-    CustomLookAtTarget: 0
+    TrackingTarget: {fileID: 1749563369}
+    LookAtTarget: {fileID: 1749563369}
+    CustomLookAtTarget: 1
   Lens:
-    FieldOfView: 10
+    FieldOfView: 18
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 100
+    FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 2
     PhysicalProperties:
@@ -10717,6 +10616,38 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1715107378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineHardLookAt
+  LookAtOffset: {x: 0, y: 0, z: 0}
+--- !u!114 &1715107379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715107373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
+  TrackerSettings:
+    BindingMode: 4
+    PositionDamping: {x: 0.45, y: 0.65, z: 0.45}
+    AngularDampingMode: 0
+    RotationDamping: {x: 0, y: 0, z: 0}
+    QuaternionDamping: 0
+  FollowOffset: {x: -11.291589, y: 13.038405, z: -6.519202}
 --- !u!1 &1749563368
 GameObject:
   m_ObjectHideFlags: 0

@@ -551,9 +551,9 @@ MonoBehaviour:
   Action: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   Range: 1
   Plane: {x: 0, y: 1, z: 0}
-  Smoothing: 0
+  Smoothing: 2
   ClampRadius: 0
-  Mode: 4
+  Mode: 8
 --- !u!114 &-5304372104756700006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
-  m_Muted: 0
+  m_Muted: 1
   m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
