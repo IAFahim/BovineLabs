@@ -17,6 +17,19 @@ namespace BovineLabs.Grid.Subgoal
 
     public static class SubgoalApi
     {
+        // Diagonal offsets for each cardinal direction's corresponding diagonal
+        // When a cardinal neighbor is blocked, check if the diagonal perpendicular to it is free
+        // For dir 0 (right), check diagonal up-right (1) and down-right (7)
+        // For dir 1 (down), check diagonal down-left (6) and down-right (7) -- wait, Directions4[1] = up
+        // Let's use explicit pairs: for each cardinal d, the two diagonals that share a component
+        private static readonly int2[] DiagOffsets =
+        {
+            new int2(1, 1), new int2(1, -1),   // for right (1,0): NE and SE
+            new int2(-1, 1), new int2(1, 1),    // for up (0,1): NW and NE
+            new int2(-1, 1), new int2(-1, -1),  // for left (-1,0): NW and SW
+            new int2(-1, -1), new int2(1, -1),  // for down (0,-1): SW and SE
+        };
+
         public static SubgoalState Create(int width, int height, int maxSubgoals, int maxEdges, Allocator a)
         {
             var g = Grid2D.Create(width, height);
@@ -37,7 +50,7 @@ namespace BovineLabs.Grid.Subgoal
             s.Edges.Clear();
             s.EdgeRanges.Clear();
 
-            // Find corner subgoals: cells adjacent to obstacles that have a "turn"
+            // Find corner subgoals: free cells adjacent to an obstacle where a diagonal is also free
             for (int i = 0; i < s.Grid.Length; i++)
             {
                 if (blocked[i] != 0) continue;
@@ -50,10 +63,15 @@ namespace BovineLabs.Grid.Subgoal
                     if (!s.Grid.InBounds(np)) continue;
                     if (blocked[s.Grid.ToIndex(np)] != 0)
                     {
-                        // Check if diagonal is forced
-                        int2 diag = p + Grid2D.Directions8[d * 2];
-                        if (s.Grid.InBounds(diag) && blocked[s.Grid.ToIndex(diag)] == 0)
-                        { isCorner = true; break; }
+                        // Check both diagonals for this cardinal direction
+                        int2 d1 = p + DiagOffsets[d * 2];
+                        int2 d2 = p + DiagOffsets[d * 2 + 1];
+                        if ((s.Grid.InBounds(d1) && blocked[s.Grid.ToIndex(d1)] == 0) ||
+                            (s.Grid.InBounds(d2) && blocked[s.Grid.ToIndex(d2)] == 0))
+                        {
+                            isCorner = true;
+                            break;
+                        }
                     }
                 }
 
@@ -65,7 +83,7 @@ namespace BovineLabs.Grid.Subgoal
                 }
             }
 
-            // Add edges between visible subgoals
+            // Add edges between line-of-sight visible subgoals
             for (int i = 0; i < s.Subgoals.Length; i++)
             {
                 int edgeStart = s.Edges.Length;
@@ -88,7 +106,6 @@ namespace BovineLabs.Grid.Subgoal
 
         public static bool LineOfSight(Grid2D grid, NativeArray<byte> blocked, int2 from, int2 to)
         {
-            // Bresenham line check
             int dx = math.abs(to.x - from.x);
             int dy = math.abs(to.y - from.y);
             int sx = from.x < to.x ? 1 : -1;
@@ -110,56 +127,100 @@ namespace BovineLabs.Grid.Subgoal
         public static bool Search(ref SubgoalState s, NativeArray<byte> blocked, int start, int goal, NativeList<int> path)
         {
             path.Clear();
-            // Simplified: direct A* on grid using subgoal graph as heuristic guide
-            var g = new NativeArray<float>(s.Grid.Length, Allocator.Temp);
-            var parent = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
-            var closed = new NativeArray<byte>(s.Grid.Length, Allocator.Temp);
-            var heap = MinHeap.Create(s.Grid.Length, Allocator.Temp);
 
-            g.Fill(float.PositiveInfinity);
-            parent.Fill(-1);
-            closed.Fill((byte)0);
+            // Use subgoal graph for search: add start/goal as temporary subgoals, search the graph
+            int2 startCoord = s.Grid.ToCoord(start);
+            int2 goalCoord = s.Grid.ToCoord(goal);
 
-            g[start] = 0f;
-            heap.InsertOrDecrease(new HeapNode(start, Grid2D.HeuristicEuclidean(s.Grid.ToCoord(start), s.Grid.ToCoord(goal))));
+            // Direct line-of-sight check first
+            if (LineOfSight(s.Grid, blocked, startCoord, goalCoord))
+            {
+                path.Add(start);
+                path.Add(goal);
+                return true;
+            }
+
+            // Build temporary node list: existing subgoals + start + goal
+            int n = s.Subgoals.Length;
+            int startNode = n;
+            int goalNode = n + 1;
+            int totalNodes = n + 2;
+
+            var gArr = new NativeArray<float>(totalNodes, Allocator.Temp);
+            var parentArr = new NativeArray<int>(totalNodes, Allocator.Temp);
+            var closedArr = new NativeArray<byte>(totalNodes, Allocator.Temp);
+            gArr.Fill(float.PositiveInfinity);
+            parentArr.Fill(-1);
+            closedArr.Fill((byte)0);
+
+            var heap = MinHeap.Create(totalNodes, Allocator.Temp);
+            gArr[startNode] = 0f;
+            heap.InsertOrDecrease(new HeapNode(startNode, Grid2D.HeuristicEuclidean(startCoord, goalCoord)));
+
+            // Get position array (subgoal coords + start + goal)
+            var positions = new NativeArray<int2>(totalNodes, Allocator.Temp);
+            for (int i = 0; i < n; i++)
+                positions[i] = s.Grid.ToCoord(s.Subgoals[i]);
+            positions[startNode] = startCoord;
+            positions[goalNode] = goalCoord;
 
             while (!heap.IsEmpty)
             {
                 int u = heap.Pop().Id;
-                if (u == goal)
+                if (u == goalNode)
                 {
-                    // Extract path
-                    int cur = goal;
-                    while (cur >= 0) { path.Add(cur); cur = parent[cur]; }
+                    // Extract path through subgoal graph
+                    var tempPath = new NativeList<int>(Allocator.Temp);
+                    int cur = goalNode;
+                    while (cur >= 0)
+                    {
+                        if (cur < n) tempPath.Add(s.Subgoals[cur]);
+                        else if (cur == startNode) tempPath.Add(start);
+                        cur = parentArr[cur];
+                    }
                     // Reverse
-                    for (int i = 0; i < path.Length / 2; i++)
-                    { int tmp = path[i]; path[i] = path[path.Length - 1 - i]; path[path.Length - 1 - i] = tmp; }
+                    for (int i = tempPath.Length - 1; i >= 0; i--)
+                        path.Add(tempPath[i]);
+                    tempPath.Dispose();
                     break;
                 }
 
-                closed[u] = 1;
-                int2 up = s.Grid.ToCoord(u);
+                closedArr[u] = 1;
 
-                for (int d = 0; d < 8; d++)
+                // Expand: check visibility to all other nodes
+                for (int v = 0; v < totalNodes; v++)
                 {
-                    int2 np = up + Grid2D.Directions8[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    if (blocked[ni] != 0 || closed[ni] != 0) continue;
+                    if (v == u || closedArr[v] != 0) continue;
 
-                    float cost = (d < 4) ? 1f : 1.414f;
-                    float newG = g[u] + cost;
-                    if (newG < g[ni])
+                    // Check visibility (skip for same-node edges in the graph)
+                    bool visible = false;
+                    if (u < n && v < n)
                     {
-                        g[ni] = newG;
-                        parent[ni] = u;
-                        float f = newG + Grid2D.HeuristicEuclidean(s.Grid.ToCoord(ni), s.Grid.ToCoord(goal));
-                        heap.InsertOrDecrease(new HeapNode(ni, f));
+                        // Check if edge exists in precomputed graph
+                        // (simplified: just check line of sight)
+                        visible = true; // edges already computed in Build
+                    }
+                    else
+                    {
+                        visible = true; // temporary nodes
+                    }
+
+                    if (!visible) continue;
+                    if (!LineOfSight(s.Grid, blocked, positions[u], positions[v])) continue;
+
+                    float cost = math.length(new float2(positions[v].x - positions[u].x, positions[v].y - positions[u].y));
+                    float newG = gArr[u] + cost;
+                    if (newG < gArr[v])
+                    {
+                        gArr[v] = newG;
+                        parentArr[v] = u;
+                        float f = newG + Grid2D.HeuristicEuclidean(positions[v], goalCoord);
+                        heap.InsertOrDecrease(new HeapNode(v, f));
                     }
                 }
             }
 
-            g.Dispose(); parent.Dispose(); closed.Dispose(); heap.Dispose();
+            gArr.Dispose(); parentArr.Dispose(); closedArr.Dispose(); heap.Dispose(); positions.Dispose();
             return path.Length > 0;
         }
 

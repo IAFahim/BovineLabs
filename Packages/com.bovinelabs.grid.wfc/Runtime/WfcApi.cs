@@ -92,8 +92,9 @@ namespace BovineLabs.Grid.Wfc
                     for (int cp = 0; cp < s.PatternCount && cp < 64; cp++)
                     {
                         if ((cellPossible & (1UL << cp)) == 0) continue;
-                        // cp can go to cell, so neighbor in direction d can be anything compatible with cp in opposite direction
-                        int oppDir = d ^ 1;
+                        // cp is at cell in direction d from neighbor.
+                        // For neighbor to be compatible, it must be compatible with cp in the opposite direction.
+                        int oppDir = (d + 2) % 4;
                         neighborPossible |= s.Compatibility[cp * 4 + oppDir];
                     }
 
@@ -103,7 +104,6 @@ namespace BovineLabs.Grid.Wfc
                     if (restricted != s.PossibleBits[ni])
                     {
                         s.PossibleBits[ni] = restricted;
-                        // Recount entropy
                         int count = 0;
                         for (int i = 0; i < s.PatternCount && i < 64; i++)
                             if ((restricted & (1UL << i)) != 0) count++;
@@ -130,9 +130,8 @@ namespace BovineLabs.Grid.Wfc
                     if (s.Entropy[i] < bestEntropy) { bestEntropy = s.Entropy[i]; bestCell = i; }
                 }
 
-                if (bestCell < 0) break; // all collapsed or contradiction
+                if (bestCell < 0) break;
 
-                // Choose random pattern
                 ulong possible = s.PossibleBits[bestCell];
                 int count = 0;
                 for (int i = 0; i < s.PatternCount && i < 64; i++)
@@ -154,7 +153,6 @@ namespace BovineLabs.Grid.Wfc
                 if (!Propagate(ref s)) return false;
             }
 
-            // Decode output
             for (int i = 0; i < s.Grid.Length; i++)
             {
                 ulong bits = s.PossibleBits[i];

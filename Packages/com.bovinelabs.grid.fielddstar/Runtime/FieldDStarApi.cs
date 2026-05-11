@@ -7,6 +7,7 @@ namespace BovineLabs.Grid.FieldDStar
     public struct FieldDStarState
     {
         public Grid2D Grid;
+        public int Goal;
         public NativeArray<float> G;
         public NativeArray<float> RHS;
         public NativeArray<float2> Flow;
@@ -38,6 +39,7 @@ namespace BovineLabs.Grid.FieldDStar
 
         public static void SetGoal(ref FieldDStarState s, int goal)
         {
+            s.Goal = goal;
             s.RHS[goal] = 0f;
             s.Heap.InsertOrDecrease(new HeapNode(goal, 0f));
         }
@@ -72,7 +74,8 @@ namespace BovineLabs.Grid.FieldDStar
 
         private static void UpdateRHS(ref FieldDStarState s, NativeArray<float> cost, int cell)
         {
-            if (float.IsPositiveInfinity(s.RHS[cell]) && float.IsPositiveInfinity(s.G[cell])) return;
+            // Goal's RHS is always 0 — never overwrite
+            if (cell == s.Goal) return;
 
             float bestRHS = float.PositiveInfinity;
             int2 p = s.Grid.ToCoord(cell);
@@ -83,6 +86,7 @@ namespace BovineLabs.Grid.FieldDStar
                 if (!s.Grid.InBounds(np)) continue;
                 int ni = s.Grid.ToIndex(np);
                 float c = (d < 4) ? 1f : 1.414f;
+                if (cost.Length > 0) c *= (cost[cell] + cost[ni]) * 0.5f;
                 float val = s.G[ni] + c;
                 if (val < bestRHS) bestRHS = val;
             }
@@ -108,13 +112,16 @@ namespace BovineLabs.Grid.FieldDStar
                     int2 np = p + Grid2D.Directions8[d];
                     if (!s.Grid.InBounds(np)) continue;
                     int ni = s.Grid.ToIndex(np);
-                    float2 dir = new float2(Grid2D.Directions8[d].x, Grid2D.Directions8[d].y);
-                    float weight = s.G[ni];
-                    grad += dir * weight;
+
+                    // Finite-difference gradient of G: direction from high G to low G
+                    float2 dir = math.normalize(new float2(Grid2D.Directions8[d].x, Grid2D.Directions8[d].y));
+                    float diff = s.G[i] - s.G[ni]; // positive means ni is better (lower G)
+                    grad += dir * diff;
                 }
 
                 float len = math.length(grad);
-                s.Flow[i] = len > 0f ? -grad / len : float2.zero;
+                // Flow points toward lower G (toward goal)
+                s.Flow[i] = len > 0f ? grad / len : float2.zero;
             }
         }
 

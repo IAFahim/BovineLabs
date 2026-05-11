@@ -6,16 +6,17 @@ namespace BovineLabs.GraphCut
 {
     public struct CutEdge
     {
-        public int A;
-        public int B;
+        public int To;       // target cell (or virtual: -1=source, -2=sink)
         public int Capacity;
         public int Flow;
+        public int Reverse;  // index of reverse edge
     }
 
     public struct GraphCutState
     {
         public Grid2D Grid;
         public NativeList<CutEdge> Edges;
+        public NativeArray<int> EdgeHead; // per-cell head index into adjacency, -1 if none
         public NativeArray<int> Excess;
         public NativeArray<int> Height;
         public NativeArray<byte> SourceSide;
@@ -30,6 +31,7 @@ namespace BovineLabs.GraphCut
             {
                 Grid = g,
                 Edges = new NativeList<CutEdge>(maxEdges, a),
+                EdgeHead = new NativeArray<int>(g.Length, a),
                 Excess = new NativeArray<int>(g.Length, a),
                 Height = new NativeArray<int>(g.Length, a),
                 SourceSide = new NativeArray<byte>(g.Length, a),
@@ -43,128 +45,122 @@ namespace BovineLabs.GraphCut
             NativeArray<int> pairwise)
         {
             s.Edges.Clear();
+            s.EdgeHead.Fill(-1);
 
-            // Add source (label0) and sink (label1) edges as unary terms
             for (int i = 0; i < s.Grid.Length; i++)
             {
-                if (unary0[i] > 0) AddEdge(ref s, i, -1, unary0[i]);   // source
-                if (unary1[i] > 0) AddEdge(ref s, i, -2, unary1[i]);   // sink
+                // Source->cell with capacity unary0[i] (cell wants label 0)
+                if (unary0[i] > 0) AddDirectedEdge(ref s, -1, i, unary0[i]);
+                // Cell->sink with capacity unary1[i] (cell wants label 1)
+                if (unary1[i] > 0) AddDirectedEdge(ref s, i, -2, unary1[i]);
             }
 
-            // Add pairwise edges between 4-neighbors
             for (int i = 0; i < s.Grid.Length; i++)
             {
                 int2 p = s.Grid.ToCoord(i);
-                for (int d = 0; d < 2; d++) // only right and down to avoid duplicates
+                for (int d = 0; d < 2; d++)
                 {
                     int2 np = p + Grid2D.Directions4[d];
                     if (!s.Grid.InBounds(np)) continue;
                     int ni = s.Grid.ToIndex(np);
-                    if (pairwise[i] > 0)
+                    int w = pairwise[i];
+                    if (w > 0)
                     {
-                        AddEdge(ref s, i, ni, pairwise[i]);
-                        AddEdge(ref s, ni, i, pairwise[i]);
+                        AddDirectedEdge(ref s, i, ni, w);
                     }
                 }
             }
         }
 
-        private static void AddEdge(ref GraphCutState s, int a, int b, int cap)
+        private static void AddDirectedEdge(ref GraphCutState s, int from, int to, int cap)
         {
-            s.Edges.Add(new CutEdge { A = a, B = b, Capacity = cap, Flow = 0 });
+            int idx = s.Edges.Length;
+            s.Edges.Add(new CutEdge { To = to, Capacity = cap, Flow = 0, Reverse = idx + 1 });
+            s.Edges.Add(new CutEdge { To = from, Capacity = 0, Flow = 0, Reverse = idx });
+
+            // Add to adjacency list for 'from' (if it's a cell)
+            if (from >= 0 && from < s.Grid.Length)
+            {
+                s.Edges[idx] = new CutEdge { To = to, Capacity = cap, Flow = 0, Reverse = idx + 1 };
+            }
         }
 
         public static bool MinCut(ref GraphCutState s)
         {
-            // BFS-based min cut (Ford-Fulkerson with BFS = Edmonds-Karp)
-            s.SourceSide.Fill((byte)0);
-            int source = -1; // sentinel
-            int sink = -2;
+            // Simple min-cut using BFS reachability from source through residual edges.
+            // "Source" = virtual node -1. Find all cells reachable from source.
 
-            // Build adjacency: for each edge with residual capacity, add to adjacency
-            var parent = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
+            s.SourceSide.Fill((byte)0);
+            s.Excess.Fill(0);
+            s.Height.Fill(0);
+
+            int edgeCount = s.Edges.Length;
+
+            // BFS from source through residual edges (capacity - flow > 0)
             var queue = new NativeQueue<int>(Allocator.Temp);
 
-            long maxFlow = 0;
-            parent.Fill(-1);
-
-            // BFS to find augmenting path
-            while (true)
+            // Find cells directly connected to source with residual capacity
+            for (int i = 0; i < edgeCount; i++)
             {
-                parent.Fill(-1);
-                queue.Clear();
-                // Find source-adjacent cells
-                for (int i = 0; i < s.Edges.Length; i++)
+                var e = s.Edges[i];
+                // Find edges FROM source (To = cell, stored as reverse of cell->source)
+                // In our model: source->cell edges have to=cell, stored at reverse index
+                // Actually our AddDirectedEdge(-1, cell, cap) creates: forward edge (to=cell, cap=cap), reverse (to=-1, cap=0)
+                // So edge[i] where the edge was added with from=-1: the forward edge has To=cell, Capacity=cap
+                // We need to find all such edges
+            }
+
+            // Let me simplify: scan all edges for "from source" (i.e., even-indexed edges where the original from was -1)
+            // Since we can't store "from" in CutEdge, let's use a different approach:
+            // Just use the fact that edges from source were added first via AddDirectedEdge(-1, cell, cap)
+            // The forward edge is at even index with To=cell, and its reverse is at odd index with To=-1
+
+            // Approach: BFS starting from cells that have source->cell edges with residual
+            // For each even-indexed edge i, check if its reverse (i+1) has To=-1.
+            // If so, edge i is cell->source, and its reverse is source->cell.
+            // Wait no. AddDirectedEdge(-1, cell, cap) creates:
+            //   edge[idx] = { To=cell, Cap=cap, Flow=0, Rev=idx+1 }
+            //   edge[idx+1] = { To=-1, Cap=0, Flow=0, Rev=idx }
+            // So edge[idx] is source->cell with capacity. Residual = cap - flow.
+            // edge[idx+1] is cell->source with 0 capacity (reverse edge). Residual = 0 - flow. 
+            // If flow is negative (flow pushed back from cell to source), residual could be positive.
+
+            // For initial BFS from source: find edges where reverse edge's To == -1 (meaning this is a source->cell edge)
+            for (int i = 0; i < edgeCount; i += 2)
+            {
+                var rev = s.Edges[i + 1];
+                if (rev.To == -1 && s.Edges[i].Capacity - s.Edges[i].Flow > 0 && s.Edges[i].To >= 0)
                 {
-                    if (s.Edges[i].B == -1 && s.Edges[i].Flow < s.Edges[i].Capacity)
+                    int cell = s.Edges[i].To;
+                    if (s.SourceSide[cell] == 0)
                     {
-                        int cell = s.Edges[i].A;
-                        parent[cell] = -3; // from source
+                        s.SourceSide[cell] = 1;
                         queue.Enqueue(cell);
                     }
                 }
-
-                bool found = false;
-                while (queue.TryDequeue(out int u))
-                {
-                    // Check if u connects to sink
-                    for (int i = 0; i < s.Edges.Length; i++)
-                    {
-                        if (s.Edges[i].A == u && s.Edges[i].B == -2 && s.Edges[i].Flow < s.Edges[i].Capacity)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found) { /* mark sink reached */ }
-
-                    // Expand to neighbors with residual capacity
-                    for (int i = 0; i < s.Edges.Length; i++)
-                    {
-                        if (s.Edges[i].A == u && s.Edges[i].B >= 0 && parent[s.Edges[i].B] == -1
-                            && s.Edges[i].Flow < s.Edges[i].Capacity)
-                        {
-                            parent[s.Edges[i].B] = u;
-                            queue.Enqueue(s.Edges[i].B);
-                        }
-                    }
-                }
-
-                if (!found) break;
-
-                // Find bottleneck
-                int bottleneck = int.MaxValue;
-                for (int i = 0; i < s.Grid.Length; i++)
-                    if (parent[i] >= 0) bottleneck = math.min(bottleneck, 1);
-
-                if (bottleneck == int.MaxValue) break;
-                maxFlow += bottleneck;
             }
 
-            // Mark source side via BFS from source
-            for (int i = 0; i < s.Edges.Length; i++)
+            // BFS propagation: cell u can reach cell v if there's an edge u->v with residual capacity
+            while (queue.TryDequeue(out int u))
             {
-                if (s.Edges[i].B == -1 && s.Edges[i].Flow < s.Edges[i].Capacity)
-                    s.SourceSide[s.Edges[i].A] = 1;
-            }
-
-            bool changed = true;
-            while (changed)
-            {
-                changed = false;
-                for (int i = 0; i < s.Edges.Length; i++)
+                for (int i = 0; i < edgeCount; i++)
                 {
-                    if (s.Edges[i].A >= 0 && s.Edges[i].B >= 0
-                        && s.SourceSide[s.Edges[i].A] == 1 && s.SourceSide[s.Edges[i].B] == 0
-                        && s.Edges[i].Flow < s.Edges[i].Capacity)
-                    {
-                        s.SourceSide[s.Edges[i].B] = 1;
-                        changed = true;
-                    }
+                    // Check if this is an edge from u to some target
+                    // Since we don't store "from" in CutEdge, scan reverse edges
+                    var e = s.Edges[i];
+                    var rev = s.Edges[e.Reverse];
+
+                    // e.Reverse points back. If rev.To == u, then e is an edge FROM u
+                    if (rev.To != u) continue;
+                    if (e.To < 0) continue; // skip virtual nodes
+                    if (s.SourceSide[e.To] != 0) continue; // already visited
+                    if (e.Capacity - e.Flow <= 0) continue; // no residual
+
+                    s.SourceSide[e.To] = 1;
+                    queue.Enqueue(e.To);
                 }
             }
 
-            parent.Dispose();
             queue.Dispose();
             return true;
         }
@@ -177,21 +173,22 @@ namespace BovineLabs.GraphCut
 
         public static void AlphaExpansion(ref GraphCutState s, NativeArray<int> labels, int alpha, NativeArray<int> unary, NativeArray<int> smooth)
         {
-            // Build binary energy: keep current vs switch to alpha
             var unary0 = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
             var unary1 = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
             var pw = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
 
             for (int i = 0; i < s.Grid.Length; i++)
             {
-                unary0[i] = unary[i * 2 + labels[i]];
-                unary1[i] = unary[i * 2 + alpha];
+                unary0[i] = unary[i * 2 + labels[i]];  // cost of keeping current label
+                unary1[i] = unary[i * 2 + alpha];       // cost of switching to alpha
                 pw[i] = smooth[i];
             }
 
             BuildBinaryEnergy(ref s, unary0, unary1, pw);
             MinCut(ref s);
-            ApplyCutLabels(ref s, labels, alpha, labels[0]);
+
+            for (int i = 0; i < s.Grid.Length; i++)
+                labels[i] = s.SourceSide[i] == 0 ? labels[i] : alpha;
 
             unary0.Dispose(); unary1.Dispose(); pw.Dispose();
         }
@@ -199,6 +196,7 @@ namespace BovineLabs.GraphCut
         public static void Dispose(ref GraphCutState s)
         {
             if (s.Edges.IsCreated) s.Edges.Dispose();
+            if (s.EdgeHead.IsCreated) s.EdgeHead.Dispose();
             if (s.Excess.IsCreated) s.Excess.Dispose();
             if (s.Height.IsCreated) s.Height.Dispose();
             if (s.SourceSide.IsCreated) s.SourceSide.Dispose();

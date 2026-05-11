@@ -50,14 +50,11 @@ namespace BovineLabs.Grid.Rsr
                     int idx = s.Grid.ToIndex(x, y);
                     if (blocked[idx] != 0 || used[idx] != 0) continue;
 
-                    // Find maximal empty rectangle from (x,y)
-                    int maxW = 1, maxH = 1;
-
-                    // Expand width
+                    int maxW = 1;
                     while (x + maxW < s.Grid.Width)
                     {
                         bool allFree = true;
-                        for (int dy = 0; dy < maxH; dy++)
+                        for (int dy = 0; dy < 1; dy++)
                         {
                             if (blocked[s.Grid.ToIndex(x + maxW, y + dy)] != 0 || used[s.Grid.ToIndex(x + maxW, y + dy)] != 0)
                             { allFree = false; break; }
@@ -66,7 +63,7 @@ namespace BovineLabs.Grid.Rsr
                         maxW++;
                     }
 
-                    // Try expanding height
+                    int maxH = 1;
                     while (y + maxH < s.Grid.Height)
                     {
                         bool allFree = true;
@@ -79,7 +76,6 @@ namespace BovineLabs.Grid.Rsr
                         maxH++;
                     }
 
-                    // Mark cells as used
                     for (int dy = 0; dy < maxH; dy++)
                         for (int dx = 0; dx < maxW; dx++)
                             used[s.Grid.ToIndex(x + dx, y + dy)] = 1;
@@ -87,19 +83,17 @@ namespace BovineLabs.Grid.Rsr
                     int rectId = s.Rects.Length;
                     int perimOffset = s.PerimeterCells.Length;
 
-                    // Add perimeter cells (border of rectangle)
                     for (int dx = 0; dx < maxW; dx++)
                     {
                         AddPerimeter(ref s, x + dx, y);
-                        AddPerimeter(ref s, x + dx, y + maxH - 1);
+                        if (maxH > 1) AddPerimeter(ref s, x + dx, y + maxH - 1);
                     }
                     for (int dy = 1; dy < maxH - 1; dy++)
                     {
                         AddPerimeter(ref s, x, y + dy);
-                        AddPerimeter(ref s, x + maxW - 1, y + dy);
+                        if (maxW > 1) AddPerimeter(ref s, x + maxW - 1, y + dy);
                     }
 
-                    // Mark all cells
                     for (int dy = 0; dy < maxH; dy++)
                         for (int dx = 0; dx < maxW; dx++)
                             s.RectOfCell[s.Grid.ToIndex(x + dx, y + dy)] = rectId;
@@ -114,20 +108,20 @@ namespace BovineLabs.Grid.Rsr
                 }
             }
 
-            // Handle blocked cells as single-cell "rects"
             for (int i = 0; i < s.Grid.Length; i++)
             {
                 if (blocked[i] != 0) continue;
                 if (s.RectOfCell[i] >= 0) continue;
-
                 int rectId = s.Rects.Length;
                 s.RectOfCell[i] = rectId;
+                int perimOffset = s.PerimeterCells.Length;
+                AddPerimeter(ref s, s.Grid.ToCoord(i).x, s.Grid.ToCoord(i).y);
                 s.Rects.Add(new RsrRect
                 {
                     Min = s.Grid.ToCoord(i),
                     Max = s.Grid.ToCoord(i),
-                    PerimeterOffset = s.PerimeterCells.Length,
-                    PerimeterCount = 0,
+                    PerimeterOffset = perimOffset,
+                    PerimeterCount = 1,
                 });
             }
 
@@ -139,17 +133,38 @@ namespace BovineLabs.Grid.Rsr
             s.PerimeterCells.Add(s.Grid.ToIndex(x, y));
         }
 
-        public static void GetSuccessors(ref RsrState s, int cell, NativeList<int> successors)
+        public static void GetSuccessors(ref RsrState s, int cell, NativeArray<byte> blocked, NativeList<int> successors)
         {
             successors.Clear();
-            int2 p = s.Grid.ToCoord(cell);
+            int rectId = s.RectOfCell[cell];
+            if (rectId < 0 || rectId >= s.Rects.Length) return;
 
-            // Direct neighbors
-            for (int d = 0; d < 4; d++)
+            var rect = s.Rects[rectId];
+            int2 p = s.Grid.ToCoord(cell);
+            bool onPerimeter = (p.x == rect.Min.x || p.x == rect.Max.x || p.y == rect.Min.y || p.y == rect.Max.y);
+
+            if (!onPerimeter)
             {
-                int2 np = p + Grid2D.Directions4[d];
-                if (s.Grid.InBounds(np))
-                    successors.Add(s.Grid.ToIndex(np));
+                for (int i = 0; i < rect.PerimeterCount; i++)
+                    successors.Add(s.PerimeterCells[rect.PerimeterOffset + i]);
+            }
+            else
+            {
+                for (int i = 0; i < rect.PerimeterCount; i++)
+                {
+                    int perimCell = s.PerimeterCells[rect.PerimeterOffset + i];
+                    if (perimCell == cell) continue;
+                    successors.Add(perimCell);
+                }
+                for (int d = 0; d < 4; d++)
+                {
+                    int2 np = p + Grid2D.Directions4[d];
+                    if (!s.Grid.InBounds(np)) continue;
+                    int ni = s.Grid.ToIndex(np);
+                    if (blocked[ni] != 0) continue;
+                    if (s.RectOfCell[ni] != rectId)
+                        successors.Add(ni);
+                }
             }
         }
 

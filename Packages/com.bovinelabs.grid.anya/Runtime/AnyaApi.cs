@@ -4,21 +4,13 @@ using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Anya
 {
-    public struct AnyaNode
-    {
-        public int2 Root;
-        public int Row;
-        public int XMin;
-        public int XMax;
-        public float G;
-        public float F;
-        public int Parent;
-    }
-
+    /// <summary>
+    /// Any-angle pathfinding using Theta* algorithm with line-of-sight optimization.
+    /// Uses A* on grid with lazy line-of-sight checks to parent's parent for path shortening.
+    /// </summary>
     public struct AnyaState
     {
         public Grid2D Grid;
-        public NativeList<AnyaNode> Nodes;
         public MinHeap Heap;
     }
 
@@ -30,15 +22,8 @@ namespace BovineLabs.Grid.Anya
             return new AnyaState
             {
                 Grid = g,
-                Nodes = new NativeList<AnyaNode>(maxNodes, a),
                 Heap = MinHeap.Create(maxNodes, a),
             };
-        }
-
-        public static void Clear(ref AnyaState s)
-        {
-            s.Nodes.Clear();
-            s.Heap.Clear();
         }
 
         public static bool Search(
@@ -48,12 +33,15 @@ namespace BovineLabs.Grid.Anya
             int2 goal,
             NativeList<int2> path)
         {
-            Clear(ref s);
             path.Clear();
+            s.Heap.Clear();
 
-            if (blocked[s.Grid.ToIndex(start)] != 0 || blocked[s.Grid.ToIndex(goal)] != 0) return false;
+            if (!s.Grid.InBounds(start) || !s.Grid.InBounds(goal)) return false;
+            int si = s.Grid.ToIndex(start);
+            int gi = s.Grid.ToIndex(goal);
+            if (blocked[si] != 0 || blocked[gi] != 0) return false;
 
-            // Simplified any-angle: direct line check first
+            // Direct line-of-sight check first
             if (LineOfSight(s.Grid, blocked, start, goal))
             {
                 path.Add(start);
@@ -61,7 +49,7 @@ namespace BovineLabs.Grid.Anya
                 return true;
             }
 
-            // A* on grid cells with any-angle line-of-sight optimization
+            // Theta*: A* with any-angle optimization
             var g = new NativeArray<float>(s.Grid.Length, Allocator.Temp);
             var parent = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
             var closed = new NativeArray<byte>(s.Grid.Length, Allocator.Temp);
@@ -69,8 +57,6 @@ namespace BovineLabs.Grid.Anya
             parent.Fill(-1);
             closed.Fill((byte)0);
 
-            int si = s.Grid.ToIndex(start);
-            int gi = s.Grid.ToIndex(goal);
             g[si] = 0f;
             s.Heap.InsertOrDecrease(new HeapNode(si, Grid2D.HeuristicEuclidean(start, goal)));
 
@@ -82,7 +68,6 @@ namespace BovineLabs.Grid.Anya
                     // Extract path
                     int cur = gi;
                     while (cur >= 0) { path.Add(s.Grid.ToCoord(cur)); cur = parent[cur]; }
-                    // Reverse
                     for (int i = 0; i < path.Length / 2; i++)
                     {
                         var tmp = path[i]; path[i] = path[path.Length - 1 - i]; path[path.Length - 1 - i] = tmp;
@@ -91,26 +76,7 @@ namespace BovineLabs.Grid.Anya
                 }
 
                 closed[u] = 1;
-
-                // Try line-of-sight from parent's parent (any-angle optimization)
-                if (parent[u] >= 0)
-                {
-                    int grandparent = parent[parent[u]];
-                    if (grandparent >= 0)
-                    {
-                        int2 gpCoord = s.Grid.ToCoord(grandparent);
-                        int2 uCoord = s.Grid.ToCoord(u);
-                        if (LineOfSight(s.Grid, blocked, gpCoord, uCoord))
-                        {
-                            float newG = g[grandparent] + math.length(new float2(uCoord.x - gpCoord.x, uCoord.y - gpCoord.y));
-                            if (newG < g[u])
-                            {
-                                g[u] = newG;
-                                parent[u] = grandparent;
-                            }
-                        }
-                    }
-                }
+                int2 uCoord = s.Grid.ToCoord(u);
 
                 int2 up = s.Grid.ToCoord(u);
                 for (int d = 0; d < 8; d++)
@@ -121,6 +87,24 @@ namespace BovineLabs.Grid.Anya
                     if (blocked[ni] != 0 || closed[ni] != 0) continue;
 
                     float cost = (d < 4) ? 1f : 1.414f;
+
+                    // Theta* optimization: try line-of-sight from parent[u] to neighbor
+                    if (parent[u] >= 0)
+                    {
+                        int2 parentCoord = s.Grid.ToCoord(parent[u]);
+                        float parentG = g[parent[u]];
+                        float losCost = math.length(new float2(np.x - parentCoord.x, np.y - parentCoord.y));
+
+                        if (LineOfSight(s.Grid, blocked, parentCoord, np) && parentG + losCost < g[ni])
+                        {
+                            g[ni] = parentG + losCost;
+                            parent[ni] = parent[u];
+                            float f = g[ni] + Grid2D.HeuristicEuclidean(np, goal);
+                            s.Heap.InsertOrDecrease(new HeapNode(ni, f));
+                            continue;
+                        }
+                    }
+
                     float newG = g[u] + cost;
                     if (newG < g[ni])
                     {
@@ -152,7 +136,6 @@ namespace BovineLabs.Grid.Anya
                 int e2 = 2 * err;
                 if (e2 > -dy) { err -= dy; x += sx; }
                 if (e2 < dx) { err += dx; y += sy; }
-                // Check we don't go OOB
                 if (x < 0 || y < 0 || x >= grid.Width || y >= grid.Height) return false;
             }
             return true;
@@ -160,7 +143,6 @@ namespace BovineLabs.Grid.Anya
 
         public static void Dispose(ref AnyaState s)
         {
-            if (s.Nodes.IsCreated) s.Nodes.Dispose();
             if (s.Heap.IsCreated) s.Heap.Dispose();
         }
     }

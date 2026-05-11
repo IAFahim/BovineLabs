@@ -6,24 +6,22 @@ namespace BovineLabs.Grid.Cbs
 {
     public struct AgentTask { public int Start; public int Goal; }
 
-    public struct CbsConstraint { public int Agent; public int Cell; public int CellB; public int Time; public byte IsEdge; }
+    public struct CbsConstraint { public int Agent; public int Cell; public int Time; }
 
-    public struct CbsNode { public int ConstraintOffset; public int ConstraintCount; public int PathOffset; public int PathCount; public int Cost; public int Parent; }
+    public struct CbsNode { public int ConstraintOffset; public int ConstraintCount; public float Cost; }
 
     public struct CbsState
     {
         public Grid2D Grid;
         public NativeList<CbsNode> Nodes;
         public NativeList<CbsConstraint> Constraints;
-        public NativeList<int> FlatPaths;
-        public NativeList<RangeI> AgentPathRanges;
+        public NativeList<int> FlatPaths;      // all paths concatenated
+        public NativeList<int> PathLengths;    // length of each agent's path
         public MinHeap Heap;
     }
 
     public static class CbsApi
     {
-        private const int MaxConstraints = 1000;
-
         public static CbsState Create(int width, int height, int maxNodes, Allocator a)
         {
             var g = Grid2D.Create(width, height);
@@ -31,81 +29,185 @@ namespace BovineLabs.Grid.Cbs
             {
                 Grid = g,
                 Nodes = new NativeList<CbsNode>(maxNodes, a),
-                Constraints = new NativeList<CbsConstraint>(MaxConstraints, a),
+                Constraints = new NativeList<CbsConstraint>(maxNodes * 10, a),
                 FlatPaths = new NativeList<int>(maxNodes * 20, a),
-                AgentPathRanges = new NativeList<RangeI>(maxNodes, a),
+                PathLengths = new NativeList<int>(maxNodes, a),
                 Heap = MinHeap.Create(maxNodes, a),
             };
         }
-
-
 
         public static bool Solve(
             ref CbsState s,
             NativeArray<byte> blocked,
             NativeArray<AgentTask> agents,
-            NativeList<int> solutionFlatPaths,
-            NativeList<RangeI> solutionRanges)
+            NativeList<int> flatPaths,
+            NativeList<int> pathLengths)
         {
             s.Nodes.Clear();
             s.Constraints.Clear();
             s.FlatPaths.Clear();
-            s.AgentPathRanges.Clear();
+            s.PathLengths.Clear();
             s.Heap.Clear();
-            solutionFlatPaths.Clear();
-            solutionRanges.Clear();
+            flatPaths.Clear();
+            pathLengths.Clear();
 
-            // Plan each agent independently with A*
             int agentCount = agents.Length;
-            var pathLens = new NativeArray<int>(agentCount, Allocator.Temp);
+            if (agentCount == 0) return true;
 
-            int totalCost = 0;
+            // Plan each agent independently
+            float totalCost = 0;
+            bool allFound = true;
+            var agentPaths = new NativeList<int>[agentCount];
+
             for (int a = 0; a < agentCount; a++)
             {
-                int pathStart = s.FlatPaths.Length;
-                if (AStar(ref s, blocked, agents[a].Start, agents[a].Goal))
+                var path = new NativeList<int>(Allocator.Temp);
+                var constraints = new NativeList<CbsConstraint>(Allocator.Temp);
+                if (!AStar(ref s, blocked, agents[a].Start, agents[a].Goal, constraints, path))
                 {
-                    // Path was written to a temp, for now just store start/goal
-                    s.FlatPaths.Add(agents[a].Start);
-                    s.FlatPaths.Add(agents[a].Goal);
-                    pathLens[a] = 2;
-                    totalCost += 2;
+                    allFound = false;
+                    path.Dispose();
+                    constraints.Dispose();
+                    // Clean up already allocated
+                    for (int j = 0; j < a; j++) agentPaths[j].Dispose();
+                    constraints.Dispose();
+                    return false;
+                }
+                constraints.Dispose();
+                agentPaths[a] = path;
+                totalCost += path.Length - 1;
+            }
+
+            // Check for vertex conflicts
+            int conflictAgentA = -1, conflictAgentB = -1, conflictCell = -1, conflictTime = -1;
+            for (int a = 0; a < agentCount && conflictAgentA < 0; a++)
+            {
+                for (int b = a + 1; b < agentCount && conflictAgentA < 0; b++)
+                {
+                    int maxT = math.min(agentPaths[a].Length, agentPaths[b].Length);
+                    for (int t = 0; t < maxT; t++)
+                    {
+                        if (agentPaths[a][t] == agentPaths[b][t])
+                        {
+                            conflictAgentA = a;
+                            conflictAgentB = b;
+                            conflictCell = agentPaths[a][t];
+                            conflictTime = t;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (conflictAgentA < 0)
+            {
+                // No conflicts — copy paths to output
+                for (int a = 0; a < agentCount; a++)
+                {
+                    for (int i = 0; i < agentPaths[a].Length; i++)
+                        flatPaths.Add(agentPaths[a][i]);
+                    pathLengths.Add(agentPaths[a].Length);
+                    agentPaths[a].Dispose();
+                }
+                return true;
+            }
+
+            // Simple conflict resolution: replan one conflicting agent with constraint
+            // Replan agent B avoiding the conflict cell at the conflict time
+            for (int a = 0; a < agentCount; a++)
+            {
+                var path = agentPaths[a];
+                if (a == conflictAgentB)
+                {
+                    // Replan with constraint
+                    var newPath = new NativeList<int>(Allocator.Temp);
+                    var constraints = new NativeList<CbsConstraint>(Allocator.Temp);
+                    constraints.Add(new CbsConstraint { Agent = a, Cell = conflictCell, Time = conflictTime });
+                    if (!AStar(ref s, blocked, agents[a].Start, agents[a].Goal, constraints, newPath))
+                    {
+                        // Can't resolve — use original
+                        for (int i = 0; i < path.Length; i++) flatPaths.Add(path[i]);
+                        pathLengths.Add(path.Length);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < newPath.Length; i++) flatPaths.Add(newPath[i]);
+                        pathLengths.Add(newPath.Length);
+                        newPath.Dispose();
+                    }
+                    constraints.Dispose();
                 }
                 else
                 {
-                    pathLens.Dispose();
-                    return false;
+                    for (int i = 0; i < path.Length; i++) flatPaths.Add(path[i]);
+                    pathLengths.Add(path.Length);
                 }
-
-                s.AgentPathRanges.Add(new RangeI(pathStart, pathLens[a]));
+                path.Dispose();
             }
 
-            // Check for conflicts
-            // Simplified: no conflict detection in this stub, return direct paths
-            for (int i = 0; i < s.FlatPaths.Length; i++)
-                solutionFlatPaths.Add(s.FlatPaths[i]);
-            for (int i = 0; i < s.AgentPathRanges.Length; i++)
-                solutionRanges.Add(s.AgentPathRanges[i]);
-
-            pathLens.Dispose();
             return true;
         }
 
-        private static bool AStar(ref CbsState s, NativeArray<byte> blocked, int start, int goal)
+        public static bool AStar(ref CbsState s, NativeArray<byte> blocked, int start, int goal,
+            NativeList<CbsConstraint> constraints, NativeList<int> path)
         {
+            path.Clear();
             if (blocked[start] != 0 || blocked[goal] != 0) return false;
-            return true; // simplified - actual A* would go here
-        }
 
-        public static bool FindFirstConflict(
-            NativeList<int> flatPaths,
-            NativeList<RangeI> ranges,
-            out CbsConstraint conflictA,
-            out CbsConstraint conflictB)
-        {
-            conflictA = default;
-            conflictB = default;
-            return false;
+            var g = new NativeArray<float>(s.Grid.Length, Allocator.Temp);
+            var parent = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
+            var closed = new NativeArray<byte>(s.Grid.Length, Allocator.Temp);
+            g.Fill(float.PositiveInfinity);
+            parent.Fill(-1);
+            closed.Fill((byte)0);
+
+            g[start] = 0f;
+            var heap = MinHeap.Create(s.Grid.Length, Allocator.Temp);
+            heap.InsertOrDecrease(new HeapNode(start, Grid2D.HeuristicManhattan(s.Grid.ToCoord(start), s.Grid.ToCoord(goal))));
+
+            while (!heap.IsEmpty)
+            {
+                int u = heap.Pop().Id;
+                if (u == goal)
+                {
+                    int cur = goal;
+                    while (cur >= 0) { path.Add(cur); cur = parent[cur]; }
+                    for (int i = 0; i < path.Length / 2; i++)
+                    { int tmp = path[i]; path[i] = path[path.Length - 1 - i]; path[path.Length - 1 - i] = tmp; }
+                    break;
+                }
+
+                closed[u] = 1;
+                int2 up = s.Grid.ToCoord(u);
+
+                for (int d = 0; d < 4; d++)
+                {
+                    int2 np = up + Grid2D.Directions4[d];
+                    if (!s.Grid.InBounds(np)) continue;
+                    int ni = s.Grid.ToIndex(np);
+                    if (blocked[ni] != 0 || closed[ni] != 0) continue;
+
+                    bool constrained = false;
+                    for (int c = 0; c < constraints.Length; c++)
+                    {
+                        if (constraints[c].Cell == ni && constraints[c].Time == (int)g[u] + 1)
+                        { constrained = true; break; }
+                    }
+                    if (constrained) continue;
+
+                    float newG = g[u] + 1f;
+                    if (newG < g[ni])
+                    {
+                        g[ni] = newG;
+                        parent[ni] = u;
+                        float f = newG + Grid2D.HeuristicManhattan(s.Grid.ToCoord(ni), s.Grid.ToCoord(goal));
+                        heap.InsertOrDecrease(new HeapNode(ni, f));
+                    }
+                }
+            }
+
+            g.Dispose(); parent.Dispose(); closed.Dispose(); heap.Dispose();
+            return path.Length > 0;
         }
 
         public static void Dispose(ref CbsState s)
@@ -113,7 +215,7 @@ namespace BovineLabs.Grid.Cbs
             if (s.Nodes.IsCreated) s.Nodes.Dispose();
             if (s.Constraints.IsCreated) s.Constraints.Dispose();
             if (s.FlatPaths.IsCreated) s.FlatPaths.Dispose();
-            if (s.AgentPathRanges.IsCreated) s.AgentPathRanges.Dispose();
+            if (s.PathLengths.IsCreated) s.PathLengths.Dispose();
             if (s.Heap.IsCreated) s.Heap.Dispose();
         }
     }

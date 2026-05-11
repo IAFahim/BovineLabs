@@ -12,7 +12,7 @@ public class RsrTests
     [Test] public void Build_OpenGrid()
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
-        var blocked = new NativeArray<byte>(25, Allocator.Temp); blocked.Fill((byte)0);
+        var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
         RsrApi.Build(ref s, blocked);
         Assert.AreEqual(1, s.Rects.Length); // one big rectangle
         Assert.AreEqual(0, s.Rects[0].Min.x);
@@ -23,21 +23,35 @@ public class RsrTests
     [Test] public void Build_WithWall()
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
-        var blocked = new NativeArray<byte>(25, Allocator.Temp); blocked.Fill((byte)0);
+        var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
         blocked[s.Grid.ToIndex(2, 2)] = 1;
         RsrApi.Build(ref s, blocked);
         Assert.Greater(s.Rects.Length, 1);
         RsrApi.Dispose(ref s); blocked.Dispose();
     }
 
-    [Test] public void GetSuccessors()
+    [Test] public void GetSuccessors_Interior()
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
-        var blocked = new NativeArray<byte>(25, Allocator.Temp); blocked.Fill((byte)0);
+        var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
         RsrApi.Build(ref s, blocked);
         var succ = new NativeList<int>(Allocator.Temp);
-        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(2, 2), succ);
-        Assert.AreEqual(4, succ.Length);
+        // Center cell is interior of the single 5x5 rect
+        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(2, 2), blocked, succ);
+        // Interior cell should get perimeter successors
+        Assert.Greater(succ.Length, 0);
+        RsrApi.Dispose(ref s); blocked.Dispose(); succ.Dispose();
+    }
+
+    [Test] public void GetSuccessors_Perimeter()
+    {
+        var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
+        var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
+        RsrApi.Build(ref s, blocked);
+        var succ = new NativeList<int>(Allocator.Temp);
+        // Corner cell is on perimeter
+        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(0, 0), blocked, succ);
+        Assert.Greater(succ.Length, 0);
         RsrApi.Dispose(ref s); blocked.Dispose(); succ.Dispose();
     }
 

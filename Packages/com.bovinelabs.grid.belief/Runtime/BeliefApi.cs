@@ -55,18 +55,19 @@ namespace BovineLabs.Grid.Belief
                         if (!s.Grid.InBounds(np)) continue;
                         int neighbor = s.Grid.ToIndex(np);
 
-                        // Compute message from cell to neighbor
-                        // msg(label_v) = min over label_u: unary(u,l_u) + sum incoming except from v + pairwise(l_u, l_v)
+                        // Compute message from cell to neighbor in direction dir
+                        int oppDir = (dir + 2) % 4;
+
                         for (int lv = 0; lv < L; lv++)
                         {
                             float best = float.PositiveInfinity;
                             for (int lu = 0; lu < L; lu++)
                             {
                                 float cost = s.Unary[cell * L + lu];
-                                // Sum messages from other directions
+                                // Sum messages from other directions (not from the neighbor we're sending to)
                                 for (int od = 0; od < 4; od++)
                                 {
-                                    if (od == (dir ^ 1)) continue; // skip message from target direction (opposite)
+                                    if (od == oppDir) continue; // skip message from target direction
                                     int2 op = p + Grid2D.Directions4[od];
                                     if (s.Grid.InBounds(op))
                                         cost += s.Messages[cell * 4 * L + od * L + lu];
@@ -74,17 +75,16 @@ namespace BovineLabs.Grid.Belief
                                 cost += pairwise[lu * L + lv];
                                 if (cost < best) best = cost;
                             }
-                            // Normalize to prevent overflow
                             s.Scratch[lv] = best;
                         }
 
-                        // Find min for normalization
+                        // Normalize to prevent overflow
                         float minVal = float.PositiveInfinity;
                         for (int lv = 0; lv < L; lv++)
                             if (s.Scratch[lv] < minVal) minVal = s.Scratch[lv];
 
-                        // Write normalized message
-                        int msgIdx = neighbor * 4 * L + (dir ^ 1) * L;
+                        // Write message into neighbor's incoming slot for the opposite direction
+                        int msgIdx = neighbor * 4 * L + oppDir * L;
                         for (int lv = 0; lv < L; lv++)
                             s.Messages[msgIdx + lv] = s.Scratch[lv] - minVal;
                     }

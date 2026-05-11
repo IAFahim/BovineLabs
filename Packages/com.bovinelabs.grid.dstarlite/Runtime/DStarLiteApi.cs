@@ -4,7 +4,6 @@ using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.DStarLite
 {
-    /// <summary>D* Lite: incremental replanning after cost changes.</summary>
     public struct DStarLiteState
     {
         public Grid2D Grid;
@@ -34,7 +33,7 @@ namespace BovineLabs.Grid.DStarLite
             };
         }
 
-        public static void Initialize(ref DStarLiteState s, int start, int goal)
+        public static void Initialize(ref DStarLiteState s, int start, int goal, NativeArray<byte> blocked)
         {
             s.Start = start;
             s.Goal = goal;
@@ -44,6 +43,8 @@ namespace BovineLabs.Grid.DStarLite
             s.G.Fill(float.PositiveInfinity);
             s.RHS.Fill(float.PositiveInfinity);
             s.Parent.Fill(-1);
+
+            if (blocked[goal] != 0) return; // goal blocked → no path possible
 
             s.RHS[goal] = 0f;
             var key = CalculateKey(ref s, goal);
@@ -90,7 +91,6 @@ namespace BovineLabs.Grid.DStarLite
                 else if (s.G[uid] > s.RHS[uid])
                 {
                     s.G[uid] = s.RHS[uid];
-                    // Update successors (all neighbors)
                     UpdateSuccessors(ref s, blocked, cost, uid);
                 }
                 else
@@ -107,8 +107,8 @@ namespace BovineLabs.Grid.DStarLite
         public static void ExtractPath(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, NativeList<int> path)
         {
             path.Clear();
-
             if (s.RHS[s.Start] >= float.PositiveInfinity) return;
+            if (blocked[s.Start] != 0) return;
 
             int current = s.Start;
             path.Add(current);
@@ -129,7 +129,7 @@ namespace BovineLabs.Grid.DStarLite
                     int ni = s.Grid.ToIndex(np);
                     if (blocked[ni] != 0) continue;
 
-                    float edgeCost = GetEdgeCost(cost, current, ni, blocked);
+                    float edgeCost = GetEdgeCost(s.Grid.Width, cost, current, ni, blocked);
                     float total = edgeCost + s.G[ni];
                     if (total < bestCost || (total == bestCost && s.G[ni] < bestG))
                     {
@@ -155,7 +155,6 @@ namespace BovineLabs.Grid.DStarLite
             if (s.Parent.IsCreated) s.Parent.Dispose();
         }
 
-        // Key = [min(g, rhs) + h(start, u) + km, min(g, rhs)]
         private static float2 CalculateKey(ref DStarLiteState s, int cell)
         {
             float minGRhs = math.min(s.G[cell], s.RHS[cell]);
@@ -176,7 +175,7 @@ namespace BovineLabs.Grid.DStarLite
                     int ni = s.Grid.ToIndex(np);
                     if (blocked[ni] != 0) continue;
 
-                    float edgeCost = GetEdgeCost(cost, cell, ni, blocked);
+                    float edgeCost = GetEdgeCost(s.Grid.Width, cost, cell, ni, blocked);
                     float candidate = edgeCost + s.G[ni];
                     if (candidate < minRhs)
                     {
@@ -185,13 +184,6 @@ namespace BovineLabs.Grid.DStarLite
                     }
                 }
                 s.RHS[cell] = minRhs;
-            }
-
-            // Remove from open if present
-            if (s.InOpen[cell] != 0)
-            {
-                // Can't remove efficiently, just mark invalid — but our heap doesn't support remove.
-                // We'll just re-insert with new key (handled by InsertOrDecrease)
             }
 
             if (s.G[cell] != s.RHS[cell])
@@ -219,16 +211,17 @@ namespace BovineLabs.Grid.DStarLite
             }
         }
 
-        private static float GetEdgeCost(NativeArray<float> cost, int from, int to, NativeArray<byte> blocked)
+        private static float GetEdgeCost(int gridWidth, NativeArray<float> cost, int from, int to, NativeArray<byte> blocked)
         {
             if (blocked[to] != 0) return float.PositiveInfinity;
             if (cost.Length > 0)
                 return (cost[from] + cost[to]) * 0.5f;
-            // Simple: cardinal=1, diagonal=1.414
+
+            // Determine cardinal vs diagonal from index difference
             int diff = math.abs(from - to);
-            // For a width-W grid, cardinal neighbors differ by 1 or W, diagonal by W±1
-            // We don't know width here, so just use heuristic
-            return 1f;
+            if (diff == 1 || diff == gridWidth)
+                return 1f; // cardinal
+            return 1.414f; // diagonal
         }
 
         private static bool LessOrEqual(float k0a, float k1a, float k0b, float k1b)

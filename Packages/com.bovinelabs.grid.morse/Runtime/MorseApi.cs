@@ -66,7 +66,7 @@ namespace BovineLabs.Grid.Morse
 
                 if (!hasLower && !hasUpper)
                 {
-                    // Flat plateau
+                    // Flat plateau — could be saddle-like, skip for now
                 }
                 else if (!hasLower)
                 {
@@ -82,25 +82,61 @@ namespace BovineLabs.Grid.Morse
         public static void TraceManifolds(ref MorseState s)
         {
             s.Component.Fill(-1);
+
             for (int i = 0; i < s.Grid.Length; i++)
             {
+                if (s.Component[i] >= 0) continue;
+
                 int cur = i;
-                while (s.Descending[cur] >= 0)
+                int steps = 0;
+                int maxSteps = s.Grid.Length;
+
+                // Follow descending gradient to a minimum
+                while (s.Descending[cur] >= 0 && steps < maxSteps)
+                {
+                    int next = s.Descending[cur];
+                    if (s.Component[next] >= 0)
+                    {
+                        // Already traced — inherit component
+                        cur = s.Component[next];
+                        break;
+                    }
+                    cur = next;
+                    steps++;
+                }
+
+                // cur is now a minimum (or traced cell) — assign component
+                int component = cur;
+
+                // Re-walk to set component for all visited cells
+                cur = i;
+                steps = 0;
+                var visited = new NativeList<int>(Allocator.Temp);
+                while (s.Component[cur] < 0 && steps < maxSteps)
+                {
+                    visited.Add(cur);
+                    if (s.Descending[cur] < 0) break;
                     cur = s.Descending[cur];
-                s.Component[i] = cur;
+                    steps++;
+                }
+                if (s.Component[cur] >= 0) component = s.Component[cur];
+                for (int v = 0; v < visited.Length; v++)
+                    s.Component[visited[v]] = component;
+                if (s.Component[cur] < 0) s.Component[cur] = component;
+
+                visited.Dispose();
             }
         }
 
         public static void PairByPersistence(ref MorseState s, NativeArray<float> scalar)
         {
+            // Sort critical points by persistence potential: pair maxima with their descending minimum
             for (int i = 0; i < s.Critical.Length; i++)
             {
                 if (s.Critical[i].Pair >= 0) continue;
-                if (s.Critical[i].Type != 2) continue; // max
+                if (s.Critical[i].Type != 2) continue; // only pair maxima
 
-                // Find closest saddle by following descending path
                 int cur = s.Critical[i].Cell;
-                float persistence = 0f;
                 int steps = 0;
                 while (s.Descending[cur] >= 0 && steps < s.Grid.Length)
                 {
@@ -108,7 +144,7 @@ namespace BovineLabs.Grid.Morse
                     steps++;
                 }
 
-                persistence = math.abs(scalar[s.Critical[i].Cell] - scalar[cur]);
+                float persistence = math.abs(scalar[s.Critical[i].Cell] - scalar[cur]);
                 s.Critical[i] = new CriticalPoint
                 {
                     Cell = s.Critical[i].Cell,
@@ -120,13 +156,21 @@ namespace BovineLabs.Grid.Morse
             }
         }
 
-        public static void Simplify(ref MorseState s, float threshold)
+        public static void Simplify(ref MorseState s, NativeArray<float> scalar, float threshold)
         {
+            // Remove critical points with persistence below threshold by redirecting gradient
             for (int i = 0; i < s.Critical.Length; i++)
             {
-                if (s.Critical[i].Persistence < threshold)
+                if (s.Critical[i].Persistence < threshold && s.Critical[i].Persistence > 0)
                 {
-                    // Cancel this pair
+                    // Cancel this pair: redirect descending from the critical point to its pair's descending
+                    int cell = s.Critical[i].Cell;
+                    int pair = s.Critical[i].Pair;
+                    if (pair >= 0 && pair < s.Grid.Length)
+                    {
+                        // Point the critical cell to its pair's descent
+                        s.Descending[cell] = s.Descending[pair];
+                    }
                 }
             }
         }
