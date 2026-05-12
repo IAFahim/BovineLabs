@@ -1,0 +1,32 @@
+{
+  "name": "BovineLabs.Quill.Grid.Editor",
+  "rootNamespace": "",
+  "references": [
+    "BovineLabs.Core",
+    "BovineLabs.Core.Editor",
+    "BovineLabs.Core.Extensions",
+    "BovineLabs.Core.Extensions.Editor",
+    "BovineLabs.Quill",
+    "BovineLabs.Quill.Authoring",
+    "BovineLabs.Quill.Editor",
+    "BovineLabs.Quill.Grid",
+    "BovineLabs.Quill.Grid.Authoring",
+    "BovineLabs.Quill.Grid.Data",
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Mathematics"
+  ],
+  "optionalUnityReferences": [],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

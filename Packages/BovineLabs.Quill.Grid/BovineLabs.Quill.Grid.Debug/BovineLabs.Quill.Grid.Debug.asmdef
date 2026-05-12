@@ -1,0 +1,24 @@
+{
+  "name": "BovineLabs.Quill.Grid.Debug",
+  "rootNamespace": "",
+  "references": [
+    "BovineLabs.Core",
+    "BovineLabs.Quill",
+    "BovineLabs.Quill.Grid",
+    "Unity.Collections",
+    "Unity.Entities",
+    "Unity.Mathematics",
+    "BovineLabs.Grid",
+    "FireAlt.BLinq",
+    "BovineLabs.Quill.Grid.Data"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
