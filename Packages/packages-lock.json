@@ -269,13 +269,6 @@
         "com.bovinelabs.timeline.core": "1.0.0"
       }
     },
-    "com.firealt.blinq": {
-      "version": "https://github.com/Fire-Aalt/BLinq.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "fe405bca43b483ad83aaf0d3fb7efac2df7e6861"
-    },
     "com.gitcopy.gc": {
       "version": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
       "depth": 0,
