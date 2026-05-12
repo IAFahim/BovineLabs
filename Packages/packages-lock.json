@@ -35,6 +35,16 @@
       },
       "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
     },
+    "com.bovinelabs.grid": {
+      "version": "https://github.com/IAFahim/com.bovinelabs.grid.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.collections": "2.0.0",
+        "com.unity.mathematics": "1.0.0"
+      },
+      "hash": "a09c68103ebba5104b7a3dc385056a8f1b5467e1"
+    },
     "com.bovinelabs.hitstop": {
       "version": "file:BovineLabs.HitStop",
       "depth": 0,

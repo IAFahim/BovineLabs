@@ -21,6 +21,7 @@
     "com.firealt.blinq": "https://github.com/Fire-Aalt/BLinq.git",
     "com.gitcopy.gc": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
     "com.rukhanka.animation": "https://github.com/iafahim/com.rukhanka.animation.git",
+    "com.bovinelabs.grid": "https://github.com/IAFahim/com.bovinelabs.grid.git",
     "com.unity.cinemachine": "3.1.6",
     "com.unity.collections": "6.6.0",
     "com.unity.dt.app-ui": "2.2.0-pre.8",
