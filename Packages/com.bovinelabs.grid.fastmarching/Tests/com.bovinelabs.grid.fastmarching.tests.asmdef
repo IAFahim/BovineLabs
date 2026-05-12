@@ -1,14 +1,22 @@
 {
-  "name": "com.bovinelabs.grid.fastmarching.tests",
-  "rootNamespace": "",
-  "references": ["com.bovinelabs.grid", "com.bovinelabs.grid.fastmarching"],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": true,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "com.bovinelabs.grid.fastmarching.tests",
+    "rootNamespace": "",
+    "references": [
+        "com.bovinelabs.grid",
+        "com.bovinelabs.grid.fastmarching",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

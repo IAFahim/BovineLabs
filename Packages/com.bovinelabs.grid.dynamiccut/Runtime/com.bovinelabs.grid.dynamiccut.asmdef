@@ -1,14 +1,20 @@
 {
-  "name": "com.bovinelabs.grid.dynamiccut",
-  "rootNamespace": "BovineLabs.Grid.DynamicCut",
-  "references": ["com.bovinelabs.grid"],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": true,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "com.bovinelabs.grid.dynamiccut",
+    "rootNamespace": "BovineLabs.Grid.DynamicCut",
+    "references": [
+        "com.bovinelabs.grid",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Mathematics",
+        "com.bovinelabs.grid.graphcut"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

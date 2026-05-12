@@ -1,14 +1,19 @@
 {
-  "name": "com.bovinelabs.grid.continuum",
-  "rootNamespace": "BovineLabs.Grid.Continuum",
-  "references": ["com.bovinelabs.grid"],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": true,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "com.bovinelabs.grid.continuum",
+    "rootNamespace": "BovineLabs.Grid.Continuum",
+    "references": [
+        "com.bovinelabs.grid",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Mathematics"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
