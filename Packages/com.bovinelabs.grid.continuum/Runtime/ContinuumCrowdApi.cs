@@ -1,9 +1,14 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Continuum
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct ContinuumCrowdState
     {
         public Grid2D Grid;
@@ -14,7 +19,8 @@ namespace BovineLabs.Grid.Continuum
         public NativeArray<float> Divergence;
     }
 
-    public static class ContinuumCrowdApi
+    [BurstCompile]
+    public unsafe static class ContinuumCrowdApi
     {
         public static ContinuumCrowdState Create(int width, int height, Allocator a)
         {
@@ -30,65 +36,79 @@ namespace BovineLabs.Grid.Continuum
             };
         }
 
+        [BurstCompile]
         public static void ClearDensity(ref ContinuumCrowdState s)
         {
-            s.Density.Fill(0f);
-            s.Divergence.Fill(0f);
+            float* density = (float*)s.Density.GetUnsafePtr();
+            float* div = (float*)s.Divergence.GetUnsafePtr();
+            int len = s.Grid.Length;
+            for (int i = 0; i < len; i++) { density[i] = 0f; div[i] = 0f; }
         }
 
+        [BurstCompile]
         public static void SplatAgents(ref ContinuumCrowdState s, NativeArray<float2> positions)
         {
+            float* density = (float*)s.Density.GetUnsafePtr();
+            float2* pos = (float2*)positions.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
             for (int i = 0; i < positions.Length; i++)
             {
-                int2 cell = (int2)math.floor(positions[i]);
-                if (s.Grid.InBounds(cell))
-                    s.Density[s.Grid.ToIndex(cell)] += 1f;
+                int cx = (int)math.floor(pos[i].x);
+                int cy = (int)math.floor(pos[i].y);
+                if (cx >= 0 && cx < w && cy >= 0 && cy < h)
+                    density[cy * w + cx] += 1f;
             }
         }
 
+        [BurstCompile]
         public static void SolvePotential(ref ContinuumCrowdState s, NativeArray<byte> blocked, int goal, int iterations)
         {
-            s.Potential.Fill(float.PositiveInfinity);
+            float* pot = (float*)s.Potential.GetUnsafePtr();
+            float* spd = (float*)s.Speed.GetUnsafePtr();
+            float* dens = (float*)s.Density.GetUnsafePtr();
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
 
-            // Compute speed from density
-            for (int i = 0; i < s.Grid.Length; i++)
+            for (int i = 0; i < len; i++) pot[i] = float.PositiveInfinity;
+
+            for (int i = 0; i < len; i++)
             {
-                if (blocked[i] == 1) { s.Speed[i] = 0f; continue; }
-                float congestion = 1f + s.Density[i] * 0.1f;
-                s.Speed[i] = 1f / congestion;
+                if (blk[i] == 1) { spd[i] = 0f; continue; }
+                spd[i] = 1f / (1f + dens[i] * 0.1f);
             }
 
-            s.Potential[goal] = 0f;
+            pot[goal] = 0f;
 
-            // Gauss-Seidel Fast Sweeping (simplified)
             for (int iter = 0; iter < iterations; iter++)
             {
-                // Forward sweep
-                for (int y = 0; y < s.Grid.Height; y++)
-                    for (int x = 0; x < s.Grid.Width; x++)
-                        RelaxCell(ref s, blocked, x, y);
+                for (int y = 0; y < h; y++)
+                    for (int x = 0; x < w; x++)
+                        RelaxCellCore(pot, blk, spd, x, y, w, h);
 
-                // Backward sweep
-                for (int y = s.Grid.Height - 1; y >= 0; y--)
-                    for (int x = s.Grid.Width - 1; x >= 0; x--)
-                        RelaxCell(ref s, blocked, x, y);
+                for (int y = h - 1; y >= 0; y--)
+                    for (int x = w - 1; x >= 0; x--)
+                        RelaxCellCore(pot, blk, spd, x, y, w, h);
             }
         }
 
-        private static void RelaxCell(ref ContinuumCrowdState s, NativeArray<byte> blocked, int x, int y)
+        private static void RelaxCellCore(float* pot, byte* blk, float* spd, int x, int y, int w, int h)
         {
-            int idx = s.Grid.ToIndex(x, y);
-            if (blocked[idx] == 1) return;
-            if (s.Speed[idx] <= 0f) return;
+            int idx = y * w + x;
+            if (blk[idx] == 1) return;
+            float sp = spd[idx];
+            if (Hint.Unlikely(sp <= 0f)) return;
 
-            float invSpeed = 1f / s.Speed[idx];
+            float invSpeed = 1f / sp;
             float tx = float.PositiveInfinity;
             float ty = float.PositiveInfinity;
 
-            if (x > 0) tx = math.min(tx, s.Potential[s.Grid.ToIndex(x - 1, y)]);
-            if (x < s.Grid.Width - 1) tx = math.min(tx, s.Potential[s.Grid.ToIndex(x + 1, y)]);
-            if (y > 0) ty = math.min(ty, s.Potential[s.Grid.ToIndex(x, y - 1)]);
-            if (y < s.Grid.Height - 1) ty = math.min(ty, s.Potential[s.Grid.ToIndex(x, y + 1)]);
+            if (x > 0) { float v = pot[idx - 1]; if (v < tx) tx = v; }
+            if (x < w - 1) { float v = pot[idx + 1]; if (v < tx) tx = v; }
+            if (y > 0) { float v = pot[idx - w]; if (v < ty) ty = v; }
+            if (y < h - 1) { float v = pot[idx + w]; if (v < ty) ty = v; }
 
             float tNew;
             if (float.IsPositiveInfinity(tx)) tNew = ty + invSpeed;
@@ -96,50 +116,61 @@ namespace BovineLabs.Grid.Continuum
             else
             {
                 float diff = math.abs(tx - ty);
-                if (diff < invSpeed)
-                    tNew = (tx + ty + math.sqrt(2f * invSpeed * invSpeed - diff * diff)) * 0.5f;
-                else
-                    tNew = math.min(tx, ty) + invSpeed;
+                tNew = diff < invSpeed
+                    ? (tx + ty + math.sqrt(2f * invSpeed * invSpeed - diff * diff)) * 0.5f
+                    : math.min(tx, ty) + invSpeed;
             }
 
-            if (tNew < s.Potential[idx])
-                s.Potential[idx] = tNew;
+            if (tNew < pot[idx]) pot[idx] = tNew;
         }
 
+        [BurstCompile]
         public static void BuildFlow(ref ContinuumCrowdState s)
         {
-            for (int i = 0; i < s.Grid.Length; i++)
+            float* pot = (float*)s.Potential.GetUnsafePtr();
+            float2* flow = (float2*)s.Flow.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+
+            for (int i = 0; i < len; i++)
             {
-                int2 p = s.Grid.ToCoord(i);
+                int x = i % w;
+                int y = i / w;
                 float2 grad = float2.zero;
 
-                if (p.x > 0 && p.x < s.Grid.Width - 1)
-                    grad.x = (s.Potential[s.Grid.ToIndex(p.x + 1, p.y)] - s.Potential[s.Grid.ToIndex(p.x - 1, p.y)]) * 0.5f;
-                else if (p.x > 0)
-                    grad.x = s.Potential[i] - s.Potential[s.Grid.ToIndex(p.x - 1, p.y)];
-                else if (p.x < s.Grid.Width - 1)
-                    grad.x = s.Potential[s.Grid.ToIndex(p.x + 1, p.y)] - s.Potential[i];
+                if (x > 0 && x < w - 1)
+                    grad.x = (pot[i + 1] - pot[i - 1]) * 0.5f;
+                else if (x > 0)
+                    grad.x = pot[i] - pot[i - 1];
+                else if (x < w - 1)
+                    grad.x = pot[i + 1] - pot[i];
 
-                if (p.y > 0 && p.y < s.Grid.Height - 1)
-                    grad.y = (s.Potential[s.Grid.ToIndex(p.x, p.y + 1)] - s.Potential[s.Grid.ToIndex(p.x, p.y - 1)]) * 0.5f;
-                else if (p.y > 0)
-                    grad.y = s.Potential[i] - s.Potential[s.Grid.ToIndex(p.x, p.y - 1)];
-                else if (p.y < s.Grid.Height - 1)
-                    grad.y = s.Potential[s.Grid.ToIndex(p.x, p.y + 1)] - s.Potential[i];
+                if (y > 0 && y < h - 1)
+                    grad.y = (pot[i + w] - pot[i - w]) * 0.5f;
+                else if (y > 0)
+                    grad.y = pot[i] - pot[i - w];
+                else if (y < h - 1)
+                    grad.y = pot[i + w] - pot[i];
 
-                float len = math.length(grad);
-                s.Flow[i] = len > 0f ? -grad / len : float2.zero;
+                float lenSq = math.lengthsq(grad);
+                flow[i] = lenSq > 0f ? -grad * math.rsqrt(lenSq) : float2.zero;
             }
         }
 
+        [BurstCompile]
         public static void AdvectAgents(ref ContinuumCrowdState s, NativeArray<float2> positions, float dt)
         {
+            float2* flow = (float2*)s.Flow.GetUnsafePtr();
+            float2* pos = (float2*)positions.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
             for (int i = 0; i < positions.Length; i++)
             {
-                int2 cell = (int2)math.floor(positions[i]);
-                if (!s.Grid.InBounds(cell)) continue;
-                int idx = s.Grid.ToIndex(cell);
-                positions[i] += s.Flow[idx] * dt;
+                int cx = (int)math.floor(pos[i].x);
+                int cy = (int)math.floor(pos[i].y);
+                if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue;
+                pos[i] += flow[cy * w + cx] * dt;
             }
         }
 

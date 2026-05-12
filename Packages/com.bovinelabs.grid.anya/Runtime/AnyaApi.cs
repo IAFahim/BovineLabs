@@ -48,8 +48,8 @@ namespace BovineLabs.Grid.Anya
         public static bool Search(
             ref AnyaState s,
             in NativeArray<byte> blocked,
-            int2 start,
-            int2 goal,
+            ref int2 start,
+            ref int2 goal,
             ref NativeList<int2> path)
         {
             path.Clear();
@@ -88,30 +88,31 @@ namespace BovineLabs.Grid.Anya
 
                 if (u->Interval.Y == goal.y && u->Interval.Contains(goal.x))
                 {
-                    if (LineOfSight(in s.Grid, blockedPtr, new int2((int)math.round(u->Root.x), (int)math.round(u->Root.y)), goal))
+                    int2 rootP = new int2((int)math.round(u->Root.x), (int)math.round(u->Root.y));
+                    if (LineOfSight(in s.Grid, blockedPtr, ref rootP, ref goal))
                     {
-                        ExtractPath(in s.Pool, uIdx, goal, ref path);
+                        ExtractPath(in s.Pool, uIdx, ref goal, ref path);
                         return true;
                     }
                 }
                 
-                Expand(ref s, uIdx, blockedPtr, goal);
+                Expand(ref s, uIdx, blockedPtr, ref goal);
             }
 
             return false;
         }
 
         [BurstCompile]
-        private static void Expand(ref AnyaState s, int uIdx, [NoAlias] byte* blocked, int2 goal)
+        private static void Expand(ref AnyaState s, int uIdx, [NoAlias] byte* blocked, ref int2 goal)
         {
             AnyaNode* u = s.Pool.Ptr + uIdx;
             
-            if (u->Interval.Y >= u->Root.y) ExpandNextRow(ref s, uIdx, 1, blocked, goal);
-            if (u->Interval.Y <= u->Root.y) ExpandNextRow(ref s, uIdx, -1, blocked, goal);
+            if (u->Interval.Y >= u->Root.y) ExpandNextRow(ref s, uIdx, 1, blocked, ref goal);
+            if (u->Interval.Y <= u->Root.y) ExpandNextRow(ref s, uIdx, -1, blocked, ref goal);
         }
 
         [BurstCompile]
-        private static void ExpandNextRow(ref AnyaState s, int uIdx, int dy, [NoAlias] byte* blocked, int2 goal)
+        private static void ExpandNextRow(ref AnyaState s, int uIdx, int dy, [NoAlias] byte* blocked, ref int2 goal)
         {
             AnyaNode* u = s.Pool.Ptr + uIdx;
             int nextY = u->Interval.Y + dy;
@@ -156,19 +157,19 @@ namespace BovineLabs.Grid.Anya
                 {
                     if (currentL >= 0)
                     {
-                        AddSuccessor(ref s, uIdx, nextY, math.max(projL, currentL), math.min(projR, x), goal);
+                        AddSuccessor(ref s, uIdx, nextY, math.max(projL, currentL), math.min(projR, x), ref goal);
                         currentL = -1;
                     }
                 }
             }
             if (currentL >= 0)
             {
-                AddSuccessor(ref s, uIdx, nextY, math.max(projL, currentL), math.min(projR, xMax), goal);
+                AddSuccessor(ref s, uIdx, nextY, math.max(projL, currentL), math.min(projR, xMax), ref goal);
             }
         }
 
         [BurstCompile]
-        private static void AddSuccessor(ref AnyaState s, int parentIdx, int y, float xl, float xr, int2 goal)
+        private static void AddSuccessor(ref AnyaState s, int parentIdx, int y, float xl, float xr, ref int2 goal)
         {
             if (xl >= xr) return;
             
@@ -191,7 +192,7 @@ namespace BovineLabs.Grid.Anya
         }
 
         [BurstCompile]
-        private static void ExtractPath(in UnsafeList<AnyaNode> pool, int nodeIdx, int2 goal, ref NativeList<int2> path)
+        private static void ExtractPath(in UnsafeList<AnyaNode> pool, int nodeIdx, ref int2 goal, ref NativeList<int2> path)
         {
             path.Add(goal);
             int cur = nodeIdx;
@@ -211,7 +212,7 @@ namespace BovineLabs.Grid.Anya
         }
 
         [BurstCompile]
-        public static bool LineOfSight(in Grid2D grid, [NoAlias] byte* blocked, int2 from, int2 to)
+        public static bool LineOfSight(in Grid2D grid, [NoAlias] byte* blocked, ref int2 from, ref int2 to)
         {
             int dx = math.abs(to.x - from.x);
             int dy = math.abs(to.y - from.y);

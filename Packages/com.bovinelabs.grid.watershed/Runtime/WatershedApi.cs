@@ -1,18 +1,24 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Watershed
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct WatershedState
     {
         public Grid2D Grid;
         public NativeArray<int> Label;
-        public NativeArray<byte> State; // 0 unvisited, 1 in queue, 2 done
+        public NativeArray<byte> State;
         public MinHeap Heap;
     }
 
-    public static class WatershedApi
+    [BurstCompile]
+    public unsafe static class WatershedApi
     {
         public static WatershedState Create(int width, int height, Allocator a)
         {
@@ -26,77 +32,66 @@ namespace BovineLabs.Grid.Watershed
             };
         }
 
+        [BurstCompile]
         public static int FindMinima(ref WatershedState s, NativeArray<float> height)
         {
-            s.Label.Fill(-1);
-            s.State.Fill((byte)0);
+            int* label = (int*)s.Label.GetUnsafePtr();
+            byte* st = (byte*)s.State.GetUnsafePtr();
+            float* ht = (float*)height.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+
+            for (int i = 0; i < len; i++) { label[i] = -1; st[i] = 0; }
             s.Heap.Clear();
 
             int labelCount = 0;
-            var stack = new NativeList<int>(s.Grid.Length, Allocator.Temp);
+            var stack = new UnsafeList<int>(len, Allocator.Temp);
 
-            for (int i = 0; i < s.Grid.Length; i++)
+            for (int i = 0; i < len; i++)
             {
-                if (s.State[i] != 0) continue;
-                if (height[i] <= 0f) continue; // skip blocked/zero
+                if (st[i] != 0) continue;
+                if (ht[i] <= 0f) continue;
 
-                // Check if local minimum
-                int2 p = s.Grid.ToCoord(i);
+                int x = i % w;
+                int y = i / w;
                 bool isMin = true;
-                for (int d = 0; d < 4; d++)
-                {
-                    int2 np = p + Grid2D.Directions4[d];
-                    if (s.Grid.InBounds(np) && height[s.Grid.ToIndex(np)] < height[i])
-                    { isMin = false; break; }
-                }
+                if (x > 0 && ht[i - 1] < ht[i]) isMin = false;
+                if (isMin && x + 1 < w && ht[i + 1] < ht[i]) isMin = false;
+                if (isMin && y > 0 && ht[i - w] < ht[i]) isMin = false;
+                if (isMin && y + 1 < h && ht[i + w] < ht[i]) isMin = false;
 
                 if (!isMin) continue;
 
-                // Flood-fill plateau
                 stack.Clear();
                 stack.Add(i);
-                s.State[i] = 2;
-                float h = height[i];
+                st[i] = 2;
+                float hv = ht[i];
 
                 for (int si = 0; si < stack.Length; si++)
                 {
-                    int ci = stack[si];
-                    int2 cp = s.Grid.ToCoord(ci);
-                    for (int d = 0; d < 4; d++)
-                    {
-                        int2 np = cp + Grid2D.Directions4[d];
-                        if (!s.Grid.InBounds(np)) continue;
-                        int ni = s.Grid.ToIndex(np);
-                        if (s.State[ni] != 0) continue;
-                        if (math.abs(height[ni] - h) < 0.0001f)
-                        {
-                            s.State[ni] = 2;
-                            stack.Add(ni);
-                        }
-                    }
+                    int ci = stack.Ptr[si];
+                    int cx = ci % w;
+                    int cy = ci / w;
+                    if (cx > 0 && st[ci - 1] == 0 && math.abs(ht[ci - 1] - hv) < 0.0001f) { st[ci - 1] = 2; stack.Add(ci - 1); }
+                    if (cx + 1 < w && st[ci + 1] == 0 && math.abs(ht[ci + 1] - hv) < 0.0001f) { st[ci + 1] = 2; stack.Add(ci + 1); }
+                    if (cy > 0 && st[ci - w] == 0 && math.abs(ht[ci - w] - hv) < 0.0001f) { st[ci - w] = 2; stack.Add(ci - w); }
+                    if (cy + 1 < h && st[ci + w] == 0 && math.abs(ht[ci + w] - hv) < 0.0001f) { st[ci + w] = 2; stack.Add(ci + w); }
                 }
 
-                // Assign label
-                int label = labelCount++;
+                int lbl = labelCount++;
                 for (int si = 0; si < stack.Length; si++)
-                    s.Label[stack[si]] = label;
+                    label[stack.Ptr[si]] = lbl;
 
-                // Push boundary neighbors into heap
                 for (int si = 0; si < stack.Length; si++)
                 {
-                    int2 cp = s.Grid.ToCoord(stack[si]);
-                    for (int d = 0; d < 4; d++)
-                    {
-                        int2 np = cp + Grid2D.Directions4[d];
-                        if (!s.Grid.InBounds(np)) continue;
-                        int ni = s.Grid.ToIndex(np);
-                        if (s.State[ni] == 0 && s.Label[ni] == -1)
-                        {
-                            s.State[ni] = 1;
-                            s.Label[ni] = label;
-                            s.Heap.InsertOrDecrease(new HeapNode(ni, height[ni]));
-                        }
-                    }
+                    int ci = stack.Ptr[si];
+                    int cx = ci % w;
+                    int cy = ci / w;
+                    if (cx > 0 && st[ci - 1] == 0 && label[ci - 1] == -1) { st[ci - 1] = 1; label[ci - 1] = lbl; s.Heap.InsertOrDecrease(new HeapNode(ci - 1, ht[ci - 1])); }
+                    if (cx + 1 < w && st[ci + 1] == 0 && label[ci + 1] == -1) { st[ci + 1] = 1; label[ci + 1] = lbl; s.Heap.InsertOrDecrease(new HeapNode(ci + 1, ht[ci + 1])); }
+                    if (cy > 0 && st[ci - w] == 0 && label[ci - w] == -1) { st[ci - w] = 1; label[ci - w] = lbl; s.Heap.InsertOrDecrease(new HeapNode(ci - w, ht[ci - w])); }
+                    if (cy + 1 < h && st[ci + w] == 0 && label[ci + w] == -1) { st[ci + w] = 1; label[ci + w] = lbl; s.Heap.InsertOrDecrease(new HeapNode(ci + w, ht[ci + w])); }
                 }
             }
 
@@ -104,52 +99,67 @@ namespace BovineLabs.Grid.Watershed
             return labelCount;
         }
 
+        [BurstCompile]
         public static void Flood(ref WatershedState s, NativeArray<float> height)
         {
+            int* label = (int*)s.Label.GetUnsafePtr();
+            byte* st = (byte*)s.State.GetUnsafePtr();
+            float* ht = (float*)height.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+
             while (!s.Heap.IsEmpty)
             {
                 int u = s.Heap.Pop().Id;
-                s.State[u] = 2;
+                st[u] = 2;
+                int ux = u % w;
+                int uy = u / w;
+                int lblU = label[u];
 
-                int2 up = s.Grid.ToCoord(u);
-                for (int d = 0; d < 4; d++)
-                {
-                    int2 np = up + Grid2D.Directions4[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    if (s.State[ni] == 2) continue;
-
-                    if (s.Label[ni] == -1)
-                        s.Label[ni] = s.Label[u];
-                    else if (s.Label[ni] != s.Label[u])
-                        s.Label[ni] = -2; // watershed line
-
-                    if (s.State[ni] == 0)
-                    {
-                        s.State[ni] = 1;
-                        s.Heap.InsertOrDecrease(new HeapNode(ni, height[ni]));
-                    }
-                }
+                if (ux > 0) FloodNeighbor(label, st, ht, w, h, u - 1, lblU, s);
+                if (ux + 1 < w) FloodNeighbor(label, st, ht, w, h, u + 1, lblU, s);
+                if (uy > 0) FloodNeighbor(label, st, ht, w, h, u - w, lblU, s);
+                if (uy + 1 < h) FloodNeighbor(label, st, ht, w, h, u + w, lblU, s);
             }
         }
 
+        private static void FloodNeighbor(int* label, byte* st, float* ht, int w, int h, int ni, int lblU, WatershedState s)
+        {
+            if (st[ni] == 2) return;
+            if (label[ni] == -1) label[ni] = lblU;
+            else if (label[ni] != lblU) label[ni] = -2;
+            if (st[ni] == 0)
+            {
+                st[ni] = 1;
+                s.Heap.InsertOrDecrease(new HeapNode(ni, ht[ni]));
+            }
+        }
+
+        [BurstCompile]
         public static void ExtractBoundaries(ref WatershedState s, NativeArray<byte> boundary)
         {
-            boundary.Fill((byte)0);
-            for (int i = 0; i < s.Grid.Length; i++)
-            {
-                if (s.Label[i] == -2) { boundary[i] = 1; continue; }
-                if (s.Label[i] < 0) continue;
+            int* label = (int*)s.Label.GetUnsafePtr();
+            byte* bnd = (byte*)boundary.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
 
-                int2 p = s.Grid.ToCoord(i);
-                for (int d = 0; d < 4; d++)
-                {
-                    int2 np = p + Grid2D.Directions4[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    if (s.Label[ni] >= 0 && s.Label[ni] != s.Label[i])
-                    { boundary[i] = 1; break; }
-                }
+            for (int i = 0; i < len; i++) bnd[i] = 0;
+
+            for (int i = 0; i < len; i++)
+            {
+                if (label[i] == -2) { bnd[i] = 1; continue; }
+                if (label[i] < 0) continue;
+
+                int x = i % w;
+                int y = i / w;
+                int li = label[i];
+                bool isBorder = false;
+                if (x > 0 && label[i - 1] >= 0 && label[i - 1] != li) isBorder = true;
+                if (!isBorder && x + 1 < w && label[i + 1] >= 0 && label[i + 1] != li) isBorder = true;
+                if (!isBorder && y > 0 && label[i - w] >= 0 && label[i - w] != li) isBorder = true;
+                if (!isBorder && y + 1 < h && label[i + w] >= 0 && label[i + w] != li) isBorder = true;
+                if (isBorder) bnd[i] = 1;
             }
         }
 

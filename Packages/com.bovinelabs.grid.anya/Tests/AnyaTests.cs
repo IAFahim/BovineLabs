@@ -14,7 +14,7 @@ public class AnyaTests
         var s = AnyaApi.Create(10, 10, 1000, Allocator.Temp);
         var blocked = new NativeArray<byte>(100, Allocator.Temp); blocked.Fill((byte)0);
         var path = new NativeList<int2>(Allocator.Temp);
-        Assert.IsTrue(AnyaApi.Search(ref s, blocked, new int2(0, 0), new int2(5, 0), ref path));
+        { int2 startV=new int2(0, 0); int2 goalV=new int2(5, 0); Assert.IsTrue(AnyaApi.Search(ref s, blocked, ref startV, ref goalV, ref path)); }
         Assert.AreEqual(new int2(0, 0), path[0]);
         Assert.AreEqual(new int2(5, 0), path[path.Length - 1]);
         AnyaApi.Dispose(ref s); blocked.Dispose(); path.Dispose();
@@ -25,7 +25,7 @@ public class AnyaTests
         var s = AnyaApi.Create(10, 10, 1000, Allocator.Temp);
         var blocked = new NativeArray<byte>(100, Allocator.Temp); blocked.Fill((byte)0); blocked[0] = 1;
         var path = new NativeList<int2>(Allocator.Temp);
-        Assert.IsFalse(AnyaApi.Search(ref s, blocked, new int2(0, 0), new int2(5, 5), ref path));
+        { int2 startV=new int2(0, 0); int2 goalV=new int2(5, 5); Assert.IsFalse(AnyaApi.Search(ref s, blocked, ref startV, ref goalV, ref path)); }
         AnyaApi.Dispose(ref s); blocked.Dispose(); path.Dispose();
     }
 
@@ -36,7 +36,7 @@ public class AnyaTests
         // Wall with gap
         for (int y = 0; y < 8; y++) blocked[s.Grid.ToIndex(5, y)] = 1;
         var path = new NativeList<int2>(Allocator.Temp);
-        Assert.IsTrue(AnyaApi.Search(ref s, blocked, new int2(0, 0), new int2(9, 9), ref path));
+        { int2 startV=new int2(0, 0); int2 goalV=new int2(9, 9); Assert.IsTrue(AnyaApi.Search(ref s, blocked, ref startV, ref goalV, ref path)); }
         AnyaApi.Dispose(ref s); blocked.Dispose(); path.Dispose();
     }
 

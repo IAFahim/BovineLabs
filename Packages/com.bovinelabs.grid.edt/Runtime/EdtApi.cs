@@ -1,13 +1,15 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
+using System.Runtime.CompilerServices;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Edt
 {
-    /// <summary>
-    /// Exact Euclidean Distance Transform (squared distance).
-    /// O(n) per dimension via Felzenszwalb-Huttenlocher parabola envelope.
-    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct EdtState
     {
         public Grid2D Grid;
@@ -16,7 +18,8 @@ namespace BovineLabs.Grid.Edt
         public NativeArray<float> Z;
     }
 
-    public static class EdtApi
+    [BurstCompile]
+    public unsafe static class EdtApi
     {
         public static EdtState Create(int width, int height, Allocator allocator)
         {
@@ -30,14 +33,16 @@ namespace BovineLabs.Grid.Edt
             return s;
         }
 
-        /// <summary>Initialize: obstacle cells get 0, free cells get +inf.</summary>
+        [BurstCompile]
         public static void InitFromBlocked(NativeArray<byte> blocked, NativeArray<float> dist2)
         {
-            for (int i = 0; i < blocked.Length; i++)
-                dist2[i] = blocked[i] != 0 ? 0f : float.PositiveInfinity;
+            byte* b = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            float* d = (float*)dist2.GetUnsafePtr();
+            int len = blocked.Length;
+            for (int i = 0; i < len; i++)
+                d[i] = b[i] != 0 ? 0f : float.PositiveInfinity;
         }
 
-        /// <summary>1D distance transform on a single row/column segment.</summary>
         public static void Transform1D(
             NativeArray<float> f,
             NativeArray<float> output,
@@ -45,7 +50,23 @@ namespace BovineLabs.Grid.Edt
             NativeArray<float> z,
             int length)
         {
-            if (length <= 0) return;
+            Transform1D(
+                (float*)f.GetUnsafeReadOnlyPtr(),
+                (float*)output.GetUnsafePtr(),
+                (int*)v.GetUnsafePtr(),
+                (float*)z.GetUnsafePtr(),
+                length);
+        }
+
+        [BurstCompile]
+        public static void Transform1D(
+            float* f,
+            float* output,
+            int* v,
+            float* z,
+            int length)
+        {
+            if (Hint.Unlikely(length <= 0)) return;
 
             int k = 0;
             v[0] = 0;
@@ -76,52 +97,52 @@ namespace BovineLabs.Grid.Edt
             }
         }
 
-        /// <summary>Full 2D EDT: row pass then column pass.</summary>
+        [BurstCompile]
         public static void Build(ref EdtState s, NativeArray<byte> blocked, NativeArray<float> dist2)
         {
             InitFromBlocked(blocked, dist2);
 
+            float* dist2Ptr = (float*)dist2.GetUnsafePtr();
+            float* temp = (float*)s.Temp.GetUnsafePtr();
+            int* v = (int*)s.V.GetUnsafePtr();
+            float* z = (float*)s.Z.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+
             // Row pass
-            for (int y = 0; y < s.Grid.Height; y++)
+            for (int y = 0; y < h; y++)
             {
-                int rowStart = y * s.Grid.Width;
-                // Copy row into Temp[0..width-1]
-                for (int x = 0; x < s.Grid.Width; x++)
-                    s.Temp[x] = dist2[rowStart + x];
+                int rowStart = y * w;
+                for (int x = 0; x < w; x++)
+                    temp[x] = dist2Ptr[rowStart + x];
 
-                Transform1D(
-                    s.Temp,
-                    s.Temp,
-                    s.V, s.Z,
-                    s.Grid.Width);
+                Transform1D(temp, temp, v, z, w);
 
-                // Copy back
-                for (int x = 0; x < s.Grid.Width; x++)
-                    dist2[rowStart + x] = s.Temp[x];
+                for (int x = 0; x < w; x++)
+                    dist2Ptr[rowStart + x] = temp[x];
             }
 
             // Column pass
-            for (int x = 0; x < s.Grid.Width; x++)
+            for (int x = 0; x < w; x++)
             {
-                for (int y = 0; y < s.Grid.Height; y++)
-                    s.Temp[y] = dist2[y * s.Grid.Width + x];
+                for (int y = 0; y < h; y++)
+                    temp[y] = dist2Ptr[y * w + x];
 
-                Transform1D(
-                    s.Temp,
-                    s.Temp,
-                    s.V, s.Z,
-                    s.Grid.Height);
+                Transform1D(temp, temp, v, z, h);
 
-                for (int y = 0; y < s.Grid.Height; y++)
-                    dist2[y * s.Grid.Width + x] = s.Temp[y];
+                for (int y = 0; y < h; y++)
+                    dist2Ptr[y * w + x] = temp[y];
             }
         }
 
-        /// <summary>Extract actual Euclidean distance (sqrt of squared).</summary>
+        [BurstCompile]
         public static void ToDistance(NativeArray<float> dist2, NativeArray<float> dist)
         {
-            for (int i = 0; i < dist2.Length; i++)
-                dist[i] = math.sqrt(dist2[i]);
+            float* d2 = (float*)dist2.GetUnsafeReadOnlyPtr();
+            float* d = (float*)dist.GetUnsafePtr();
+            int len = dist2.Length;
+            for (int i = 0; i < len; i++)
+                d[i] = math.sqrt(d2[i]);
         }
 
         public static void Dispose(ref EdtState s)
@@ -131,6 +152,7 @@ namespace BovineLabs.Grid.Edt
             if (s.Z.IsCreated) s.Z.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float Intersect(int q1, int q2, float f1, float f2)
         {
             return ((f2 + q2 * q2) - (f1 + q1 * q1)) / (2f * (q2 - q1));

@@ -1,18 +1,24 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Domino
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct DominoState
     {
         public Grid2D Grid;
         public NativeArray<byte> Region;
         public NativeArray<int> Height;
-        public NativeArray<byte> MatchingDir; // 0=none, 1=right, 2=down
+        public NativeArray<byte> MatchingDir;
     }
 
-    public static class DominoApi
+    [BurstCompile]
+    public unsafe static class DominoApi
     {
         public static DominoState Create(int width, int height, Allocator a)
         {
@@ -26,105 +32,172 @@ namespace BovineLabs.Grid.Domino
             };
         }
 
+        [BurstCompile]
         public static void SetRegion(ref DominoState s, NativeArray<byte> region)
         {
-            NativeArray<byte>.Copy(region, s.Region);
+            UnsafeUtility.MemCpy(s.Region.GetUnsafePtr(), region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
         }
 
+        [BurstCompile]
         public static bool CheckTileableByParity(ref DominoState s)
         {
+            byte* region = (byte*)s.Region.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int len = s.Grid.Length;
             int black = 0, white = 0;
-            for (int i = 0; i < s.Grid.Length; i++)
+            for (int i = 0; i < len; i++)
             {
-                if (s.Region[i] == 0) continue;
-                int2 p = s.Grid.ToCoord(i);
-                if ((p.x + p.y) % 2 == 0) black++;
+                if (region[i] == 0) continue;
+                int x = i % w;
+                int y = i / w;
+                if ((x + y) % 2 == 0) black++;
                 else white++;
             }
             return black == white;
         }
 
+        [BurstCompile]
         public static bool BuildTilingByMatching(ref DominoState s)
         {
-            s.MatchingDir.Fill((byte)0);
-            var matchTo = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
-            matchTo.Fill(-1);
+            byte* region = (byte*)s.Region.GetUnsafePtr();
+            byte* matchDir = (byte*)s.MatchingDir.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
 
-            // Greedy matching: try to match black cells to white neighbors
-            for (int i = 0; i < s.Grid.Length; i++)
+            UnsafeUtility.MemSet(matchDir, 0, len);
+
+            var matchTo = new NativeArray<int>(len, Allocator.Temp);
+            int* mPtr = (int*)matchTo.GetUnsafePtr();
+            for (int i = 0; i < len; i++) mPtr[i] = -1;
+
+            // Greedy matching: black cells to white neighbors
+            for (int i = 0; i < len; i++)
             {
-                if (s.Region[i] == 0) continue;
-                int2 p = s.Grid.ToCoord(i);
-                if ((p.x + p.y) % 2 != 0) continue; // only black cells initiate
-                if (matchTo[i] >= 0) continue;
+                if (region[i] == 0) continue;
+                int cx = i % w;
+                int cy = i / w;
+                if ((cx + cy) % 2 != 0) continue;
+                if (mPtr[i] >= 0) continue;
 
-                for (int d = 0; d < 4; d++)
+                // Right (0), Up (1), Left (2), Down (3)
+                int d = 0;
+                // Right
+                if (cx + 1 < w)
                 {
-                    int2 np = p + Grid2D.Directions4[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    if (s.Region[ni] == 0) continue;
-                    if (matchTo[ni] >= 0) continue;
-
-                    matchTo[i] = ni;
-                    matchTo[ni] = i;
-
-                    if (d == 0) s.MatchingDir[i] = 1; // right
-                    else if (d == 1) s.MatchingDir[i] = 2; // down
-                    else if (d == 2) { s.MatchingDir[ni] = 1; } // left -> partner goes right
-                    else { s.MatchingDir[ni] = 2; } // up -> partner goes down
-                    break;
+                    int ni = i + 1;
+                    if (region[ni] != 0 && mPtr[ni] < 0)
+                    {
+                        mPtr[i] = ni; mPtr[ni] = i;
+                        matchDir[i] = 1;
+                        continue;
+                    }
+                }
+                // Up
+                if (cy + 1 < h)
+                {
+                    int ni = i + w;
+                    if (region[ni] != 0 && mPtr[ni] < 0)
+                    {
+                        mPtr[i] = ni; mPtr[ni] = i;
+                        matchDir[i] = 2;
+                        continue;
+                    }
+                }
+                // Left
+                if (cx > 0)
+                {
+                    int ni = i - 1;
+                    if (region[ni] != 0 && mPtr[ni] < 0)
+                    {
+                        mPtr[i] = ni; mPtr[ni] = i;
+                        matchDir[ni] = 1;
+                        continue;
+                    }
+                }
+                // Down
+                if (cy > 0)
+                {
+                    int ni = i - w;
+                    if (region[ni] != 0 && mPtr[ni] < 0)
+                    {
+                        mPtr[i] = ni; mPtr[ni] = i;
+                        matchDir[ni] = 2;
+                        continue;
+                    }
                 }
             }
 
             bool allMatched = true;
-            for (int i = 0; i < s.Grid.Length; i++)
+            for (int i = 0; i < len; i++)
             {
-                if (s.Region[i] == 0) continue;
-                if (matchTo[i] < 0) { allMatched = false; break; }
+                if (region[i] == 0) continue;
+                if (mPtr[i] < 0) { allMatched = false; break; }
             }
             matchTo.Dispose();
             return allMatched;
         }
 
+        [BurstCompile]
         public static void BuildHeightFunction(ref DominoState s)
         {
-            s.Height.Fill(0);
-            // BFS from (0,0), height changes at domino boundaries
-            var visited = new NativeArray<byte>(s.Grid.Length, Allocator.Temp);
-            visited.Fill((byte)0);
-            var queue = new NativeQueue<int>(Allocator.Temp);
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+            byte* region = (byte*)s.Region.GetUnsafePtr();
+            int* height = (int*)s.Height.GetUnsafePtr();
 
-            if (s.Region[0] == 1) { queue.Enqueue(0); visited[0] = 1; }
+            var vis = new NativeArray<byte>(len, Allocator.Temp);
+            byte* vPtr = (byte*)vis.GetUnsafePtr();
+            UnsafeUtility.MemSet(vPtr, 0, len);
+            UnsafeUtility.MemSet(height, 0, len * 4);
+
+            var queue = new UnsafeQueue<int>(Allocator.Temp);
+
+            if (region[0] == 1) { queue.Enqueue(0); vPtr[0] = 1; }
 
             while (queue.TryDequeue(out int cell))
             {
-                int2 p = s.Grid.ToCoord(cell);
-                for (int d = 0; d < 4; d++)
-                {
-                    int2 np = p + Grid2D.Directions4[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    if (visited[ni] != 0 || s.Region[ni] == 0) continue;
+                int cx = cell % w;
+                int cy = cell / w;
 
-                    // Height change: +1 or -3 depending on edge crossing domino
-                    int hDelta = (d == 0 || d == 1) ? 1 : -1;
-                    s.Height[ni] = s.Height[cell] + hDelta;
-                    visited[ni] = 1;
-                    queue.Enqueue(ni);
+                // Right
+                if (cx + 1 < w)
+                {
+                    int ni = cell + 1;
+                    if (vPtr[ni] == 0 && region[ni] != 0)
+                    { height[ni] = height[cell] + 1; vPtr[ni] = 1; queue.Enqueue(ni); }
+                }
+                // Up
+                if (cy + 1 < h)
+                {
+                    int ni = cell + w;
+                    if (vPtr[ni] == 0 && region[ni] != 0)
+                    { height[ni] = height[cell] + 1; vPtr[ni] = 1; queue.Enqueue(ni); }
+                }
+                // Left
+                if (cx > 0)
+                {
+                    int ni = cell - 1;
+                    if (vPtr[ni] == 0 && region[ni] != 0)
+                    { height[ni] = height[cell] - 1; vPtr[ni] = 1; queue.Enqueue(ni); }
+                }
+                // Down
+                if (cy > 0)
+                {
+                    int ni = cell - w;
+                    if (vPtr[ni] == 0 && region[ni] != 0)
+                    { height[ni] = height[cell] - 1; vPtr[ni] = 1; queue.Enqueue(ni); }
                 }
             }
 
-            visited.Dispose();
+            vis.Dispose();
             queue.Dispose();
         }
 
         public static bool FlipAt(ref DominoState s, int cell)
         {
-            // Check if cell and its match form a 2x1 with another 2x1 making 2x2
             if (s.MatchingDir[cell] == 0) return false;
-
-            // Simplified: just attempt flip
             return false;
         }
 

@@ -1,9 +1,15 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.DStarLite
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct DStarLiteState
     {
         public Grid2D Grid;
@@ -17,7 +23,8 @@ namespace BovineLabs.Grid.DStarLite
         public NativeArray<int> Parent;
     }
 
-    public static class DStarLiteApi
+    [BurstCompile]
+    public unsafe static class DStarLiteApi
     {
         public static DStarLiteState Create(int width, int height, Allocator allocator)
         {
@@ -33,36 +40,44 @@ namespace BovineLabs.Grid.DStarLite
             };
         }
 
+        [BurstCompile]
         public static void Initialize(ref DStarLiteState s, int start, int goal, NativeArray<byte> blocked)
         {
             s.Start = start;
             s.Goal = goal;
             s.Km = 0f;
             s.Open.Clear();
-            s.InOpen.Fill((byte)0);
-            s.G.Fill(float.PositiveInfinity);
-            s.RHS.Fill(float.PositiveInfinity);
-            s.Parent.Fill(-1);
 
-            if (blocked[goal] != 0) return; // goal blocked → no path possible
+            float* gPtr = (float*)s.G.GetUnsafePtr();
+            float* rhsPtr = (float*)s.RHS.GetUnsafePtr();
+            byte* inOpen = (byte*)s.InOpen.GetUnsafePtr();
+            int* parent = (int*)s.Parent.GetUnsafePtr();
+            int len = s.Grid.Length;
+            for (int i = 0; i < len; i++) { gPtr[i] = float.PositiveInfinity; rhsPtr[i] = float.PositiveInfinity; inOpen[i] = 0; parent[i] = -1; }
 
-            s.RHS[goal] = 0f;
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            if (blk[goal] != 0) return;
+
+            rhsPtr[goal] = 0f;
             var key = CalculateKey(ref s, goal);
             s.Open.InsertOrDecrease(new HeapNode(goal, key.x, key.y));
-            s.InOpen[goal] = 1;
+            inOpen[goal] = 1;
         }
 
+        [BurstCompile]
         public static void NotifyMoved(ref DStarLiteState s, int newStart)
         {
             s.Km += Grid2D.HeuristicOctile(s.Grid.ToCoord(s.Start), s.Grid.ToCoord(newStart));
             s.Start = newStart;
         }
 
+        [BurstCompile]
         public static void UpdateCell(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int cell)
         {
             UpdateVertex(ref s, blocked, cost, cell);
         }
 
+        [BurstCompile]
         public static bool Repair(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int maxPops)
         {
             int pops = 0;
@@ -104,6 +119,7 @@ namespace BovineLabs.Grid.DStarLite
             return s.RHS[s.Start] < float.PositiveInfinity;
         }
 
+        [BurstCompile]
         public static void ExtractPath(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, NativeList<int> path)
         {
             path.Clear();
@@ -113,9 +129,8 @@ namespace BovineLabs.Grid.DStarLite
             int current = s.Start;
             path.Add(current);
             int maxSteps = s.Grid.Length * 2;
-            int steps = 0;
 
-            while (current != s.Goal && steps < maxSteps)
+            while (current != s.Goal && maxSteps-- > 0)
             {
                 int best = -1;
                 float bestCost = float.PositiveInfinity;
@@ -142,7 +157,6 @@ namespace BovineLabs.Grid.DStarLite
                 if (best < 0) break;
                 current = best;
                 path.Add(current);
-                steps++;
             }
         }
 
@@ -217,23 +231,20 @@ namespace BovineLabs.Grid.DStarLite
             if (cost.Length > 0)
                 return (cost[from] + cost[to]) * 0.5f;
 
-            // Determine cardinal vs diagonal from index difference
             int diff = math.abs(from - to);
-            if (diff == 1 || diff == gridWidth)
-                return 1f; // cardinal
-            return 1.414f; // diagonal
+            return math.select(1.414f, 1f, diff == 1 || diff == gridWidth);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool LessOrEqual(float k0a, float k1a, float k0b, float k1b)
         {
-            if (k0a != k0b) return k0a <= k0b;
-            return k1a <= k1b;
+            return k0a != k0b ? k0a <= k0b : k1a <= k1b;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool Less(float k0a, float k1a, float k0b, float k1b)
         {
-            if (k0a != k0b) return k0a < k0b;
-            return k1a < k1b;
+            return k0a != k0b ? k0a < k0b : k1a < k1b;
         }
     }
 }

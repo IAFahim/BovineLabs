@@ -1,24 +1,31 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Cftp
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct CftpUpdate
     {
         public int Cell;
         public uint RandomBits;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
     public struct CftpState
     {
         public Grid2D Grid;
         public NativeArray<byte> Low;
         public NativeArray<byte> High;
-        public NativeList<CftpUpdate> Updates;
+        public UnsafeList<CftpUpdate> Updates;
     }
 
-    public static class CftpApi
+    [BurstCompile]
+    public unsafe static class CftpApi
     {
         public static CftpState Create(int width, int height, int maxUpdates, Allocator a)
         {
@@ -28,22 +35,35 @@ namespace BovineLabs.Grid.Cftp
                 Grid = g,
                 Low = new NativeArray<byte>(g.Length, a),
                 High = new NativeArray<byte>(g.Length, a),
-                Updates = new NativeList<CftpUpdate>(maxUpdates, a),
+                Updates = new UnsafeList<CftpUpdate>(maxUpdates, a),
             };
         }
 
+        [BurstCompile]
         public static void InitializeExtremes(ref CftpState s)
         {
-            s.Low.Fill((byte)0);   // all-dead (bottom of lattice)
-            s.High.Fill((byte)1);  // all-alive (top of lattice)
+            byte* low = (byte*)s.Low.GetUnsafePtr();
+            byte* high = (byte*)s.High.GetUnsafePtr();
+            int len = s.Grid.Length;
+            for (int i = 0; i < len; i++)
+            {
+                low[i] = 0;
+                high[i] = 1;
+            }
         }
 
+        [BurstCompile]
         public static void GeneratePastUpdates(ref CftpState s, ref Unity.Mathematics.Random rng, int count)
         {
             s.Updates.Clear();
+            int len = s.Grid.Length;
+            int total = count * len;
+            if (s.Updates.Capacity < total)
+                s.Updates.SetCapacity(total);
+
             for (int t = 0; t < count; t++)
             {
-                for (int i = 0; i < s.Grid.Length; i++)
+                for (int i = 0; i < len; i++)
                 {
                     s.Updates.Add(new CftpUpdate
                     {
@@ -54,54 +74,52 @@ namespace BovineLabs.Grid.Cftp
             }
         }
 
-        /// <summary>
-        /// Apply monotone coupling: both chains receive the SAME random bit.
-        /// A cell becomes alive if bit=1 and at least 2 neighbors are alive (birth/survival).
-        /// Dead stays dead if bit=0 or fewer than 2 alive neighbors.
-        /// This preserves the monotone order: if Low[i] <= High[i] before, it holds after.
-        /// </summary>
+        [BurstCompile]
         public static void Replay(ref CftpState s)
         {
             InitializeExtremes(ref s);
+
+            byte* low = (byte*)s.Low.GetUnsafePtr();
+            byte* high = (byte*)s.High.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
 
             for (int i = 0; i < s.Updates.Length; i++)
             {
                 var u = s.Updates[i];
                 byte bit = (byte)(u.RandomBits & 1);
+                int cell = u.Cell;
+                int cx = cell % w;
+                int cy = cell / w;
 
-                // Count alive neighbors for low and high chains
-                int2 p = s.Grid.ToCoord(u.Cell);
-                int lowNeighbors = 0, highNeighbors = 0;
-                for (int d = 0; d < 4; d++)
-                {
-                    int2 np = p + Grid2D.Directions4[d];
-                    if (!s.Grid.InBounds(np)) continue;
-                    int ni = s.Grid.ToIndex(np);
-                    lowNeighbors += s.Low[ni];
-                    highNeighbors += s.High[ni];
-                }
+                int lowN = 0, highN = 0;
+                // Right
+                if (cx + 1 < w) { lowN += low[cell + 1]; highN += high[cell + 1]; }
+                // Up
+                if (cy + 1 < h) { lowN += low[cell + w]; highN += high[cell + w]; }
+                // Left
+                if (cx > 0) { lowN += low[cell - 1]; highN += high[cell - 1]; }
+                // Down
+                if (cy > 0) { lowN += low[cell - w]; highN += high[cell - w]; }
 
-                // Monotone transition: same random bit for both chains
-                // Alive if bit=1 AND enough neighbors alive
-                // Low chain: uses low neighbor count (fewer alive → harder to become alive)
-                s.Low[u.Cell] = (byte)((bit == 1 && lowNeighbors >= 2) ? 1 : 0);
-                // High chain: uses high neighbor count (more alive → easier to become alive)
-                s.High[u.Cell] = (byte)((bit == 1 && highNeighbors >= 2) ? 1 : 0);
-
-                // Monotonicity preserved: Low[u.Cell] <= High[u.Cell] because lowNeighbors <= highNeighbors
+                low[cell] = (byte)((bit & math.select(0, 1, lowN >= 2)) & 1);
+                high[cell] = (byte)((bit & math.select(0, 1, highN >= 2)) & 1);
             }
         }
 
+        [BurstCompile]
         public static bool Coalesced(ref CftpState s)
         {
-            for (int i = 0; i < s.Grid.Length; i++)
-            {
-                if (s.Low[i] != s.High[i])
-                    return false;
-            }
+            byte* low = (byte*)s.Low.GetUnsafePtr();
+            byte* high = (byte*)s.High.GetUnsafePtr();
+            int len = s.Grid.Length;
+            for (int i = 0; i < len; i++)
+                if (low[i] != high[i]) return false;
             return true;
         }
 
+        [BurstCompile]
         public static bool SampleExact(ref CftpState s, ref Unity.Mathematics.Random rng, NativeArray<byte> sample)
         {
             for (int attempt = 0; attempt < 20; attempt++)
@@ -110,7 +128,7 @@ namespace BovineLabs.Grid.Cftp
                 Replay(ref s);
                 if (Coalesced(ref s))
                 {
-                    NativeArray<byte>.Copy(s.Low, sample);
+                    UnsafeUtility.MemCpy(sample.GetUnsafePtr(), s.Low.GetUnsafeReadOnlyPtr(), s.Grid.Length);
                     return true;
                 }
             }
@@ -121,7 +139,7 @@ namespace BovineLabs.Grid.Cftp
         {
             if (s.Low.IsCreated) s.Low.Dispose();
             if (s.High.IsCreated) s.High.Dispose();
-            if (s.Updates.IsCreated) s.Updates.Dispose();
+            s.Updates.Dispose();
         }
     }
 }

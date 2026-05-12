@@ -1,19 +1,27 @@
+using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Cpd
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct CpdRun { public int Source; public int TargetMin; public int TargetMax; public byte FirstMove; }
 
+    [StructLayout(LayoutKind.Sequential)]
     public struct CpdState
     {
         public Grid2D Grid;
-        public NativeList<CpdRun> Runs;
+        public UnsafeList<CpdRun> Runs;
         public NativeArray<RangeI> SourceRuns;
     }
 
-    public static class CpdApi
+    [BurstCompile]
+    public unsafe static class CpdApi
     {
         public static CpdState Create(int width, int height, int maxRuns, Allocator a)
         {
@@ -21,116 +29,125 @@ namespace BovineLabs.Grid.Cpd
             return new CpdState
             {
                 Grid = g,
-                Runs = new NativeList<CpdRun>(maxRuns, a),
+                Runs = new UnsafeList<CpdRun>(maxRuns, a),
                 SourceRuns = new NativeArray<RangeI>(g.Length, a),
             };
         }
 
+        [BurstCompile]
         public static void Build(ref CpdState s, NativeArray<byte> blocked)
         {
             s.Runs.Clear();
-            var firstMove = new NativeArray<byte>(s.Grid.Length, Allocator.Temp);
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
 
-            for (int source = 0; source < s.Grid.Length; source++)
+            var firstMove = new NativeArray<byte>(len, Allocator.Temp);
+            byte* fm = (byte*)firstMove.GetUnsafePtr();
+            var dist = new NativeArray<float>(len, Allocator.Temp);
+            var parent = new NativeArray<int>(len, Allocator.Temp);
+            var queue = new UnsafeQueue<int>(Allocator.Temp);
+
+            for (int source = 0; source < len; source++)
             {
-                if (blocked[source] != 0)
+                if (blk[source] != 0)
                 {
                     s.SourceRuns[source] = new RangeI(0, 0);
                     continue;
                 }
 
                 int runStart = s.Runs.Length;
+                float* d = (float*)dist.GetUnsafePtr();
+                int* p = (int*)parent.GetUnsafePtr();
+                for (int i = 0; i < len; i++) { d[i] = float.PositiveInfinity; p[i] = -1; }
+                d[source] = 0f;
 
-                // BFS from source to find first move for every target
-                var dist = new NativeArray<float>(s.Grid.Length, Allocator.Temp);
-                var parent = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
-                dist.Fill(float.PositiveInfinity);
-                parent.Fill(-1);
-                dist[source] = 0f;
-
-                var queue = new NativeQueue<int>(Allocator.Temp);
+                queue.Clear();
                 queue.Enqueue(source);
 
                 while (queue.TryDequeue(out int u))
                 {
-                    int2 up = s.Grid.ToCoord(u);
-                    for (int d = 0; d < 4; d++)
-                    {
-                        int2 np = up + Grid2D.Directions4[d];
-                        if (!s.Grid.InBounds(np)) continue;
-                        int ni = s.Grid.ToIndex(np);
-                        if (blocked[ni] != 0 || dist[ni] <= dist[u] + 1f) continue;
-                        dist[ni] = dist[u] + 1f;
-                        parent[ni] = u;
-                        queue.Enqueue(ni);
-                    }
+                    int ux = u % w;
+                    int uy = u / w;
+                    float du = d[u];
+                    // Right, Up, Left, Down
+                    if (ux + 1 < w) TryRelax(blk, d, p, queue, u, u + 1, du);
+                    if (uy + 1 < h) TryRelax(blk, d, p, queue, u, u + w, du);
+                    if (ux > 0) TryRelax(blk, d, p, queue, u, u - 1, du);
+                    if (uy > 0) TryRelax(blk, d, p, queue, u, u - w, du);
                 }
 
-                // Compute first move for each reachable target
-                firstMove.Fill((byte)255);
-                for (int target = 0; target < s.Grid.Length; target++)
+                for (int i = 0; i < len; i++) fm[i] = 255;
+
+                for (int target = 0; target < len; target++)
                 {
-                    if (target == source || float.IsPositiveInfinity(dist[target])) continue;
-                    // Trace back to find first move
+                    if (target == source || float.IsPositiveInfinity(d[target])) continue;
                     int cur = target;
-                    while (parent[cur] != source && parent[cur] >= 0)
-                        cur = parent[cur];
-                    if (parent[cur] == source)
+                    while (p[cur] != source && p[cur] >= 0) cur = p[cur];
+                    if (p[cur] == source)
                     {
                         int2 diff = s.Grid.ToCoord(cur) - s.Grid.ToCoord(source);
-                        for (int d = 0; d < 4; d++)
+                        for (int dd = 0; dd < 4; dd++)
                         {
-                            if (Grid2D.Directions4[d].Equals(diff))
-                            { firstMove[target] = (byte)d; break; }
+                            if (Grid2D.Directions4[dd].Equals(diff)) { fm[target] = (byte)dd; break; }
                         }
                     }
                 }
 
-                // Compress into runs
                 byte currentMove = 255;
                 int runTargetMin = -1;
-                for (int target = 0; target < s.Grid.Length; target++)
+                for (int target = 0; target < len; target++)
                 {
-                    if (firstMove[target] == 255) continue;
-                    if (firstMove[target] != currentMove)
+                    if (fm[target] == 255) continue;
+                    if (fm[target] != currentMove)
                     {
                         if (currentMove != 255)
                             s.Runs.Add(new CpdRun { Source = source, TargetMin = runTargetMin, TargetMax = target - 1, FirstMove = currentMove });
-                        currentMove = firstMove[target];
+                        currentMove = fm[target];
                         runTargetMin = target;
                     }
                 }
                 if (currentMove != 255)
-                    s.Runs.Add(new CpdRun { Source = source, TargetMin = runTargetMin, TargetMax = s.Grid.Length - 1, FirstMove = currentMove });
+                    s.Runs.Add(new CpdRun { Source = source, TargetMin = runTargetMin, TargetMax = len - 1, FirstMove = currentMove });
 
                 s.SourceRuns[source] = new RangeI(runStart, s.Runs.Length - runStart);
-
-                dist.Dispose();
-                parent.Dispose();
-                queue.Dispose();
             }
 
             firstMove.Dispose();
+            dist.Dispose();
+            parent.Dispose();
+            queue.Dispose();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void TryRelax(byte* blk, float* d, int* p, UnsafeQueue<int> q, int u, int ni, float du)
+        {
+            if (blk[ni] != 0) return;
+            float nd = du + 1f;
+            if (nd < d[ni]) { d[ni] = nd; p[ni] = u; q.Enqueue(ni); }
+        }
+
+        [BurstCompile]
         public static bool TryGetFirstMove(ref CpdState s, int source, int target, out byte move)
         {
             move = 255;
-            if (source < 0 || source >= s.Grid.Length) return false;
+            if (Hint.Unlikely((uint)source >= (uint)s.Grid.Length)) return false;
 
             var range = s.SourceRuns[source];
+            CpdRun* runs = (CpdRun*)s.Runs.Ptr;
             for (int i = range.Offset; i < range.Offset + range.Count; i++)
             {
-                var run = s.Runs[i];
-                if (target >= run.TargetMin && target <= run.TargetMax)
+                if (target >= runs[i].TargetMin && target <= runs[i].TargetMax)
                 {
-                    move = run.FirstMove;
+                    move = runs[i].FirstMove;
                     return true;
                 }
             }
             return false;
         }
 
+        [BurstCompile]
         public static void ExtractPath(ref CpdState s, int source, int target, NativeList<int> path)
         {
             path.Clear();
@@ -141,16 +158,16 @@ namespace BovineLabs.Grid.Cpd
             while (cur != target && maxSteps-- > 0)
             {
                 if (!TryGetFirstMove(ref s, cur, target, out byte move)) break;
-                int2 p = s.Grid.ToCoord(cur) + Grid2D.Directions4[move];
-                if (!s.Grid.InBounds(p)) break;
-                cur = s.Grid.ToIndex(p);
+                int2 p2 = s.Grid.ToCoord(cur) + Grid2D.Directions4[move];
+                if (!s.Grid.InBounds(p2)) break;
+                cur = s.Grid.ToIndex(p2);
                 path.Add(cur);
             }
         }
 
         public static void Dispose(ref CpdState s)
         {
-            if (s.Runs.IsCreated) s.Runs.Dispose();
+            s.Runs.Dispose();
             if (s.SourceRuns.IsCreated) s.SourceRuns.Dispose();
         }
     }

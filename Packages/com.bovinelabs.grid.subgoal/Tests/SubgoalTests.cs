@@ -51,9 +51,9 @@ public class SubgoalTests
         var g = Grid2D.Create(10, 10);
         var blocked = new NativeArray<byte>(100, Allocator.Temp); blocked.Fill((byte)0);
         byte* blockedPtr = (byte*)blocked.GetUnsafeReadOnlyPtr();
-        Assert.IsTrue(SubgoalApi.LineOfSight(in g, blockedPtr, new int2(0, 0), new int2(5, 0)));
+        { int2 a=new int2(0, 0); int2 b=new int2(5, 0); Assert.IsTrue(SubgoalApi.LineOfSight(in g, blockedPtr, ref a, ref b)); }
         blocked[g.ToIndex(3, 0)] = 1;
-        Assert.IsFalse(SubgoalApi.LineOfSight(in g, blockedPtr, new int2(0, 0), new int2(5, 0)));
+        { int2 a=new int2(0, 0); int2 b=new int2(5, 0); Assert.IsFalse(SubgoalApi.LineOfSight(in g, blockedPtr, ref a, ref b)); }
         blocked.Dispose();
     }
 

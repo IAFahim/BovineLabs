@@ -1,18 +1,24 @@
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.FastMarching
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct FastMarchingState
     {
         public Grid2D Grid;
         public NativeArray<float> T;
-        public NativeArray<byte> State; // 0 far, 1 trial, 2 accepted
+        public NativeArray<byte> State;
         public MinHeap Heap;
     }
 
-    public static class FastMarchingApi
+    [BurstCompile]
+    public unsafe static class FastMarchingApi
     {
         public static FastMarchingState Create(int width, int height, Allocator a)
         {
@@ -26,118 +32,121 @@ namespace BovineLabs.Grid.FastMarching
             };
         }
 
+        [BurstCompile]
         public static void InitializeSources(ref FastMarchingState s, NativeArray<int> sources)
         {
-            s.T.Fill(float.PositiveInfinity);
-            s.State.Fill((byte)0);
+            float* t = (float*)s.T.GetUnsafePtr();
+            byte* st = (byte*)s.State.GetUnsafePtr();
+            int len = s.Grid.Length;
+            for (int i = 0; i < len; i++) { t[i] = float.PositiveInfinity; st[i] = 0; }
             s.Heap.Clear();
 
+            int* src = (int*)sources.GetUnsafeReadOnlyPtr();
             for (int i = 0; i < sources.Length; i++)
             {
-                int src = sources[i];
-                s.T[src] = 0f;
-                s.State[src] = 1;
-                s.Heap.InsertOrDecrease(new HeapNode(src, 0f));
+                t[src[i]] = 0f;
+                st[src[i]] = 1;
+                s.Heap.InsertOrDecrease(new HeapNode(src[i], 0f));
             }
         }
 
+        [BurstCompile]
         public static bool PropagateStep(ref FastMarchingState s, NativeArray<float> speed)
         {
             if (s.Heap.IsEmpty) return false;
 
             int u = s.Heap.Pop().Id;
-            s.State[u] = 2; // accepted
+            s.State[u] = 2;
 
-            int2 up = s.Grid.ToCoord(u);
-            for (int d = 0; d < 4; d++)
-            {
-                int2 np = up + Grid2D.Directions4[d];
-                if (!s.Grid.InBounds(np)) continue;
-                int ni = s.Grid.ToIndex(np);
-                if (s.State[ni] == 2) continue; // already accepted
+            float* t = (float*)s.T.GetUnsafePtr();
+            byte* st = (byte*)s.State.GetUnsafePtr();
+            float* spd = (float*)speed.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int ux = u % w;
+            int uy = u / w;
 
-                float tNew = SolveEikonal(ref s, speed, np);
-                if (tNew < s.T[ni])
-                {
-                    s.T[ni] = tNew;
-                    s.State[ni] = 1;
-                    s.Heap.InsertOrDecrease(new HeapNode(ni, tNew));
-                }
-            }
+            // Right
+            if (ux + 1 < w) TryAccept(t, st, spd, w, h, u + 1, s);
+            // Up
+            if (uy + 1 < h) TryAccept(t, st, spd, w, h, u + w, s);
+            // Left
+            if (ux > 0) TryAccept(t, st, spd, w, h, u - 1, s);
+            // Down
+            if (uy > 0) TryAccept(t, st, spd, w, h, u - w, s);
 
             return !s.Heap.IsEmpty;
         }
 
+        private static void TryAccept(float* t, byte* st, float* spd, int w, int h, int ni, FastMarchingState s)
+        {
+            if (st[ni] == 2) return;
+            float tNew = SolveEikonal(t, st, spd, w, h, ni);
+            if (tNew < t[ni])
+            {
+                t[ni] = tNew;
+                st[ni] = 1;
+                s.Heap.InsertOrDecrease(new HeapNode(ni, tNew));
+            }
+        }
+
+        [BurstCompile]
         public static void PropagateAll(ref FastMarchingState s, NativeArray<float> speed)
         {
             while (PropagateStep(ref s, speed)) { }
         }
 
-        private static float SolveEikonal(ref FastMarchingState s, NativeArray<float> speed, int2 p)
+        private static float SolveEikonal(float* t, byte* st, float* spd, int w, int h, int idx)
         {
-            int idx = s.Grid.ToIndex(p);
-            float sp = speed[idx];
-            if (sp <= 0f) return float.PositiveInfinity;
+            float sp = spd[idx];
+            if (Hint.Unlikely(sp <= 0f)) return float.PositiveInfinity;
+
+            int px = idx % w;
+            int py = idx / w;
 
             float tx = float.PositiveInfinity;
             float ty = float.PositiveInfinity;
 
-            // Check x neighbors
-            int2 px1 = new int2(p.x - 1, p.y);
-            int2 px2 = new int2(p.x + 1, p.y);
-            if (s.Grid.InBounds(px1) && s.State[s.Grid.ToIndex(px1)] == 2)
-                tx = math.min(tx, s.T[s.Grid.ToIndex(px1)]);
-            if (s.Grid.InBounds(px2) && s.State[s.Grid.ToIndex(px2)] == 2)
-                tx = math.min(tx, s.T[s.Grid.ToIndex(px2)]);
-
-            // Check y neighbors
-            int2 py1 = new int2(p.x, p.y - 1);
-            int2 py2 = new int2(p.x, p.y + 1);
-            if (s.Grid.InBounds(py1) && s.State[s.Grid.ToIndex(py1)] == 2)
-                ty = math.min(ty, s.T[s.Grid.ToIndex(py1)]);
-            if (s.Grid.InBounds(py2) && s.State[s.Grid.ToIndex(py2)] == 2)
-                ty = math.min(ty, s.T[s.Grid.ToIndex(py2)]);
+            if (px > 0 && st[idx - 1] == 2) { float v = t[idx - 1]; if (v < tx) tx = v; }
+            if (px + 1 < w && st[idx + 1] == 2) { float v = t[idx + 1]; if (v < tx) tx = v; }
+            if (py > 0 && st[idx - w] == 2) { float v = t[idx - w]; if (v < ty) ty = v; }
+            if (py + 1 < h && st[idx + w] == 2) { float v = t[idx + w]; if (v < ty) ty = v; }
 
             float invSpeed = 1f / sp;
-
-            // Quadratic solve: (t - tx)^2 + (t - ty)^2 = invSpeed^2
             if (float.IsPositiveInfinity(tx)) return ty + invSpeed;
             if (float.IsPositiveInfinity(ty)) return tx + invSpeed;
 
             float diff = math.abs(tx - ty);
-            if (diff < invSpeed)
-            {
-                float t = (tx + ty + math.sqrt(2f * invSpeed * invSpeed - diff * diff)) * 0.5f;
-                return t;
-            }
-
-            return math.min(tx, ty) + invSpeed;
+            return diff < invSpeed
+                ? (tx + ty + math.sqrt(2f * invSpeed * invSpeed - diff * diff)) * 0.5f
+                : math.min(tx, ty) + invSpeed;
         }
 
+        [BurstCompile]
         public static void BuildGradientFlow(ref FastMarchingState s, NativeArray<float2> flow)
         {
-            for (int i = 0; i < s.Grid.Length; i++)
+            float* t = (float*)s.T.GetUnsafePtr();
+            float2* fl = (float2*)flow.GetUnsafePtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+
+            for (int i = 0; i < len; i++)
             {
-                int2 p = s.Grid.ToCoord(i);
+                int x = i % w;
+                int y = i / w;
                 float2 grad = float2.zero;
 
-                // Central differences
-                if (p.x > 0 && p.x < s.Grid.Width - 1)
-                    grad.x = (s.T[s.Grid.ToIndex(p.x + 1, p.y)] - s.T[s.Grid.ToIndex(p.x - 1, p.y)]) * 0.5f;
-                else if (p.x > 0)
-                    grad.x = s.T[i] - s.T[s.Grid.ToIndex(p.x - 1, p.y)];
-                else if (p.x < s.Grid.Width - 1)
-                    grad.x = s.T[s.Grid.ToIndex(p.x + 1, p.y)] - s.T[i];
+                if (x > 0 && x < w - 1) grad.x = (t[i + 1] - t[i - 1]) * 0.5f;
+                else if (x > 0) grad.x = t[i] - t[i - 1];
+                else if (x < w - 1) grad.x = t[i + 1] - t[i];
 
-                if (p.y > 0 && p.y < s.Grid.Height - 1)
-                    grad.y = (s.T[s.Grid.ToIndex(p.x, p.y + 1)] - s.T[s.Grid.ToIndex(p.x, p.y - 1)]) * 0.5f;
-                else if (p.y > 0)
-                    grad.y = s.T[i] - s.T[s.Grid.ToIndex(p.x, p.y - 1)];
-                else if (p.y < s.Grid.Height - 1)
-                    grad.y = s.T[s.Grid.ToIndex(p.x, p.y + 1)] - s.T[i];
+                if (y > 0 && y < h - 1) grad.y = (t[i + w] - t[i - w]) * 0.5f;
+                else if (y > 0) grad.y = t[i] - t[i - w];
+                else if (y < h - 1) grad.y = t[i + w] - t[i];
 
-                float len = math.length(grad);
-                flow[i] = len > 0f ? -grad / len : float2.zero;
+                float lenSq = math.lengthsq(grad);
+                fl[i] = lenSq > 0f ? -grad * math.rsqrt(lenSq) : float2.zero;
             }
         }
 

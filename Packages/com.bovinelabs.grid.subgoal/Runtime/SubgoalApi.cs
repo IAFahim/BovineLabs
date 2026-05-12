@@ -110,7 +110,7 @@ namespace BovineLabs.Grid.Subgoal
                 {
                     if (i == j) continue;
                     int2 pj = s.Grid.ToCoord(s.Subgoals[j]);
-                    if (LineOfSight(in s.Grid, blockedPtr, pi, pj))
+                    if (LineOfSight(in s.Grid, blockedPtr, ref pi, ref pj))
                     {
                         s.Edges.Add(new SubgoalEdge { To = j, Cost = math.distance(pi, pj) });
                     }
@@ -131,7 +131,7 @@ namespace BovineLabs.Grid.Subgoal
             int2 goalCoord = s.Grid.ToCoord(goal);
             byte* blockedPtr = (byte*)blocked.GetUnsafeReadOnlyPtr();
 
-            if (LineOfSight(in s.Grid, blockedPtr, startCoord, goalCoord))
+            if (LineOfSight(in s.Grid, blockedPtr, ref startCoord, ref goalCoord))
             {
                 path.Add(start);
                 path.Add(goal);
@@ -171,10 +171,10 @@ namespace BovineLabs.Grid.Subgoal
                     for (int v = 0; v < n; v++)
                     {
                         int2 pv = s.Grid.ToCoord(s.Subgoals[v]);
-                        if (LineOfSight(in s.Grid, blockedPtr, pu, pv))
+                        if (LineOfSight(in s.Grid, blockedPtr, ref pu, ref pv))
                             TryRelax(v, pu, pv, u, ref gArr, ref parentArr, ref heap, goalCoord);
                     }
-                    if (LineOfSight(in s.Grid, blockedPtr, pu, goalCoord))
+                    if (LineOfSight(in s.Grid, blockedPtr, ref pu, ref goalCoord))
                         TryRelax(goalNode, pu, goalCoord, u, ref gArr, ref parentArr, ref heap, goalCoord);
                 }
                 else if (u < n)
@@ -187,7 +187,7 @@ namespace BovineLabs.Grid.Subgoal
                         int2 pv = s.Grid.ToCoord(s.Subgoals[edge.To]);
                         TryRelax(edge.To, pu, pv, u, ref gArr, ref parentArr, ref heap, goalCoord);
                     }
-                    if (LineOfSight(in s.Grid, blockedPtr, pu, goalCoord))
+                    if (LineOfSight(in s.Grid, blockedPtr, ref pu, ref goalCoord))
                         TryRelax(goalNode, pu, goalCoord, u, ref gArr, ref parentArr, ref heap, goalCoord);
                 }
             }
@@ -224,7 +224,7 @@ namespace BovineLabs.Grid.Subgoal
         }
 
         [BurstCompile]
-        public static bool LineOfSight(in Grid2D grid, byte* blocked, int2 from, int2 to)
+        public static bool LineOfSight(in Grid2D grid, byte* blocked, ref int2 from, ref int2 to)
         {
             int dx = math.abs(to.x - from.x);
             int dy = math.abs(to.y - from.y);

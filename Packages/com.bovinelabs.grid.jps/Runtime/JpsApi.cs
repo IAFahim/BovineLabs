@@ -1,9 +1,15 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Mathematics;
 using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.Jps
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct JpsState
     {
         public Grid2D Grid;
@@ -13,7 +19,8 @@ namespace BovineLabs.Grid.Jps
         public MinHeap Open;
     }
 
-    public static class JpsApi
+    [BurstCompile]
+    public unsafe static class JpsApi
     {
         public static JpsState Create(int width, int height, Allocator allocator)
         {
@@ -28,25 +35,32 @@ namespace BovineLabs.Grid.Jps
             };
         }
 
+        [BurstCompile]
         public static bool Search(ref JpsState s, NativeArray<byte> blocked, int start, int goal, NativeList<int> path)
         {
             path.Clear();
-            s.G.Fill(float.PositiveInfinity);
-            s.Parent.Fill(-1);
-            s.Closed.Fill((byte)0);
+            float* g = (float*)s.G.GetUnsafePtr();
+            int* parent = (int*)s.Parent.GetUnsafePtr();
+            byte* closed = (byte*)s.Closed.GetUnsafePtr();
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+
+            for (int i = 0; i < len; i++) { g[i] = float.PositiveInfinity; parent[i] = -1; closed[i] = 0; }
             s.Open.Clear();
 
-            if (blocked[start] != 0 || blocked[goal] != 0) return false;
+            if (blk[start] != 0 || blk[goal] != 0) return false;
             if (start == goal) { path.Add(start); return true; }
 
-            s.G[start] = 0f;
-            s.Open.InsertOrDecrease(new HeapNode(start, Heuristic(s, start, goal)));
+            g[start] = 0f;
+            s.Open.InsertOrDecrease(new HeapNode(start, Octile(0, 0, s.Grid.ToCoord(start), s.Grid.ToCoord(goal))));
 
             while (!s.Open.IsEmpty)
             {
                 HeapNode current = s.Open.Pop();
                 int cid = current.Id;
-                s.Closed[cid] = 1;
+                closed[cid] = 1;
 
                 if (cid == goal)
                 {
@@ -56,22 +70,19 @@ namespace BovineLabs.Grid.Jps
 
                 int2 cp = s.Grid.ToCoord(cid);
 
-                // Identify successors
                 for (int d = 0; d < 8; d++)
                 {
                     int2 dir = Grid2D.Directions8[d];
-                    if (Jump(s, blocked, cp, dir, goal, out int jumpIdx))
+                    if (Jump(blk, w, h, cp, dir, goal, out int jumpIdx))
                     {
-                        if (s.Closed[jumpIdx] != 0) continue;
-
+                        if (closed[jumpIdx] != 0) continue;
                         int2 jp = s.Grid.ToCoord(jumpIdx);
-                        float cost = s.G[cid] + Grid2D.HeuristicOctile(cp, jp);
-
-                        if (cost < s.G[jumpIdx])
+                        float cost = g[cid] + Octile(0, 0, cp, jp);
+                        if (cost < g[jumpIdx])
                         {
-                            s.G[jumpIdx] = cost;
-                            s.Parent[jumpIdx] = cid;
-                            float f = cost + Heuristic(s, jumpIdx, goal);
+                            g[jumpIdx] = cost;
+                            parent[jumpIdx] = cid;
+                            float f = cost + Octile(0, 0, jp, s.Grid.ToCoord(goal));
                             s.Open.InsertOrDecrease(new HeapNode(jumpIdx, f));
                         }
                     }
@@ -83,46 +94,33 @@ namespace BovineLabs.Grid.Jps
 
         public static bool Jump(in JpsState s, NativeArray<byte> blocked, int2 pos, int2 dir, int goal, out int jumpIdx)
         {
-            jumpIdx = -1;
-            int2 next = pos + dir;
-
-            if (!s.Grid.InBounds(next) || blocked[s.Grid.ToIndex(next)] != 0)
-                return false;
-
-            int nIdx = s.Grid.ToIndex(next);
-
-            if (nIdx == goal)
-            {
-                jumpIdx = nIdx;
-                return true;
-            }
-
-            // Forced neighbor check
-            if (HasForcedNeighbor(s, blocked, next, dir))
-            {
-                jumpIdx = nIdx;
-                return true;
-            }
-
-            // Diagonal: recurse both cardinal components first
-            if (dir.x != 0 && dir.y != 0)
-            {
-                if (Jump(s, blocked, next, new int2(dir.x, 0), goal, out _))
-                {
-                    jumpIdx = nIdx;
-                    return true;
-                }
-                if (Jump(s, blocked, next, new int2(0, dir.y), goal, out _))
-                {
-                    jumpIdx = nIdx;
-                    return true;
-                }
-            }
-
-            // Continue straight
-            return Jump(s, blocked, next, dir, goal, out jumpIdx);
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            return Jump(blk, s.Grid.Width, s.Grid.Height, pos, dir, goal, out jumpIdx);
         }
 
+        private static bool Jump(byte* blk, int w, int h, int2 pos, int2 dir, int goal, out int jumpIdx)
+        {
+            jumpIdx = -1;
+            int nx = pos.x + dir.x;
+            int ny = pos.y + dir.y;
+
+            if ((uint)nx >= (uint)w || (uint)ny >= (uint)h) return false;
+            int nIdx = ny * w + nx;
+            if (blk[nIdx] != 0) return false;
+
+            if (nIdx == goal) { jumpIdx = nIdx; return true; }
+            if (HasForcedNeighbor(blk, w, h, nx, ny, dir)) { jumpIdx = nIdx; return true; }
+
+            if (dir.x != 0 && dir.y != 0)
+            {
+                if (Jump(blk, w, h, new int2(nx, ny), new int2(dir.x, 0), goal, out _)) { jumpIdx = nIdx; return true; }
+                if (Jump(blk, w, h, new int2(nx, ny), new int2(0, dir.y), goal, out _)) { jumpIdx = nIdx; return true; }
+            }
+
+            return Jump(blk, w, h, new int2(nx, ny), dir, goal, out jumpIdx);
+        }
+
+        [BurstCompile]
         public static void ExtractPath(NativeArray<int> parent, int goal, int start, NativeList<int> path)
         {
             path.Clear();
@@ -131,17 +129,13 @@ namespace BovineLabs.Grid.Jps
             {
                 path.Add(current);
                 current = parent[current];
-                if (current < 0) return; // broken path
+                if (current < 0) return;
             }
             path.Add(start);
 
-            // Reverse in-place
-            for (int i = 0, j = path.Length - 1; i < j; i++, j--)
-            {
-                int tmp = path[i];
-                path[i] = path[j];
-                path[j] = tmp;
-            }
+            int* p = (int*)path.GetUnsafePtr();
+            int lo = 0, hi = path.Length - 1;
+            while (lo < hi) { int tmp = p[lo]; p[lo] = p[hi]; p[hi] = tmp; lo++; hi--; }
         }
 
         public static void Dispose(ref JpsState s)
@@ -152,70 +146,56 @@ namespace BovineLabs.Grid.Jps
             s.Open.Dispose();
         }
 
-        private static float Heuristic(in JpsState s, int a, int b)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static float Octile(int _, int __, int2 a, int2 b)
         {
-            return Grid2D.HeuristicOctile(s.Grid.ToCoord(a), s.Grid.ToCoord(b));
+            int2 d = math.abs(a - b);
+            return math.max(d.x, d.y) + 0.4142135f * math.min(d.x, d.y);
         }
 
-        private static bool HasForcedNeighbor(in JpsState s, NativeArray<byte> blocked, int2 pos, int2 dir)
+        private static bool HasForcedNeighbor(byte* blk, int w, int h, int px, int py, int2 dir)
         {
             if (dir.x != 0 && dir.y != 0)
             {
-                // Diagonal: check for forced neighbors
-                // Moving (dx, dy), forced if perpendicular is blocked
-                int2 perpA = new int2(-dir.x, 0);
-                int2 perpB = new int2(0, -dir.y);
-
-                int2 nA = pos + perpA;
-                int2 nB = pos + perpB;
-
-                if (s.Grid.InBounds(nA) && blocked[s.Grid.ToIndex(nA)] != 0)
+                int nAx = px - dir.x, nAy = py;
+                if ((uint)nAx < (uint)w && blk[nAy * w + nAx] != 0)
                 {
-                    int2 forced = pos + perpA + new int2(0, dir.y);
-                    if (s.Grid.InBounds(forced) && blocked[s.Grid.ToIndex(forced)] == 0)
-                        return true;
+                    int fx = nAx, fy = py + dir.y;
+                    if ((uint)fx < (uint)w && (uint)fy < (uint)h && blk[fy * w + fx] == 0) return true;
                 }
-
-                if (s.Grid.InBounds(nB) && blocked[s.Grid.ToIndex(nB)] != 0)
+                int nBx = px, nBy = py - dir.y;
+                if ((uint)nBy < (uint)h && blk[nBy * w + nBx] != 0)
                 {
-                    int2 forced = pos + perpB + new int2(dir.x, 0);
-                    if (s.Grid.InBounds(forced) && blocked[s.Grid.ToIndex(forced)] == 0)
-                        return true;
+                    int fx = px + dir.x, fy = nBy;
+                    if ((uint)fx < (uint)w && (uint)fy < (uint)h && blk[fy * w + fx] == 0) return true;
+                }
+            }
+            else if (dir.x != 0)
+            {
+                for (int dy = -1; dy <= 1; dy += 2)
+                {
+                    int wy = py + dy;
+                    if ((uint)wy >= (uint)h) continue;
+                    if (blk[wy * w + px] != 0)
+                    {
+                        int fx = px + dir.x;
+                        if ((uint)fx < (uint)w && blk[wy * w + fx] == 0) return true;
+                    }
                 }
             }
             else
             {
-                // Cardinal: check for forced neighbors
-                if (dir.x != 0)
+                for (int dx = -1; dx <= 1; dx += 2)
                 {
-                    // Horizontal movement
-                    for (int dy = -1; dy <= 1; dy += 2)
+                    int wx = px + dx;
+                    if ((uint)wx >= (uint)w) continue;
+                    if (blk[py * w + wx] != 0)
                     {
-                        int2 wall = pos + new int2(0, dy);
-                        if (s.Grid.InBounds(wall) && blocked[s.Grid.ToIndex(wall)] != 0)
-                        {
-                            int2 forced = wall + new int2(dir.x, 0);
-                            if (s.Grid.InBounds(forced) && blocked[s.Grid.ToIndex(forced)] == 0)
-                                return true;
-                        }
-                    }
-                }
-                else
-                {
-                    // Vertical movement
-                    for (int dx = -1; dx <= 1; dx += 2)
-                    {
-                        int2 wall = pos + new int2(dx, 0);
-                        if (s.Grid.InBounds(wall) && blocked[s.Grid.ToIndex(wall)] != 0)
-                        {
-                            int2 forced = wall + new int2(0, dir.y);
-                            if (s.Grid.InBounds(forced) && blocked[s.Grid.ToIndex(forced)] == 0)
-                                return true;
-                        }
+                        int fy = py + dir.y;
+                        if ((uint)fy < (uint)h && blk[fy * w + wx] == 0) return true;
                     }
                 }
             }
-
             return false;
         }
     }

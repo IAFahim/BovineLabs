@@ -53,7 +53,7 @@ namespace BovineLabs.Grid.Hashlife
                 ChildSE = 0,
                 Hash = 0,
             };
-            InternNode(ref s, node, out int id);
+            InternNode(ref s, ref node, out int id);
             return id;
         }
 
@@ -70,12 +70,12 @@ namespace BovineLabs.Grid.Hashlife
                 ChildSE = se,
                 Hash = 0,
             };
-            InternNode(ref s, node, out int id);
+            InternNode(ref s, ref node, out int id);
             return id;
         }
 
         [BurstCompile]
-        private static bool InternNode(ref HashlifeState s, HashlifeNode node, out int id)
+        private static bool InternNode(ref HashlifeState s, ref HashlifeNode node, out int id)
         {
             ulong h = Hash(node);
             node.Hash = h;
