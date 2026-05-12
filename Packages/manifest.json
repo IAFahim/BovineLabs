@@ -34,6 +34,9 @@
         "com.bovinelabs.grid.thinning": "file:com.bovinelabs.grid.thinning",
         "com.bovinelabs.grid.watershed": "file:com.bovinelabs.grid.watershed",
         "com.bovinelabs.grid.wfc": "file:com.bovinelabs.grid.wfc",
-        "com.bovinelabs.grid.wilson": "file:com.bovinelabs.grid.wilson"
+        "com.bovinelabs.grid.wilson": "file:com.bovinelabs.grid.wilson",
+        "com.bovinelabs.grid.mesha": "file:com.bovinelabs.grid.mesha",
+        "com.bovinelabs.grid.ehl": "file:com.bovinelabs.grid.ehl",
+        "com.bovinelabs.grid.wavestar": "file:com.bovinelabs.grid.wavestar"
     }
 }

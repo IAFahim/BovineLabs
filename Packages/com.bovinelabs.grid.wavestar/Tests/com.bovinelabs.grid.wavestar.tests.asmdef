@@ -1,0 +1,24 @@
+{
+  "name": "BovineLabs.Grid.Wavestar.Tests",
+  "rootNamespace": "BovineLabs.Grid.Wavestar.Tests",
+  "references": [
+    "com.bovinelabs.grid",
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics",
+    "BovineLabs.Grid.Wavestar"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

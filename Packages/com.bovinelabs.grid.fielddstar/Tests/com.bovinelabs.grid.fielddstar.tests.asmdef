@@ -1,21 +1,14 @@
 {
   "name": "com.bovinelabs.grid.fielddstar.tests",
   "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "com.bovinelabs.grid.fielddstar",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid", "com.bovinelabs.grid.fielddstar"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
   "overrideReferences": false,
   "precompiledReferences": [],
   "autoReferenced": true,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
   "versionDefines": [],
   "noEngineReferences": false
 }

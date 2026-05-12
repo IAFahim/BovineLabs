@@ -1,12 +1,7 @@
 {
   "name": "com.bovinelabs.grid.dynamiccut",
   "rootNamespace": "BovineLabs.Grid.DynamicCut",
-  "references": [
-    "com.bovinelabs.grid",
-    "com.bovinelabs.grid.graphcut",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

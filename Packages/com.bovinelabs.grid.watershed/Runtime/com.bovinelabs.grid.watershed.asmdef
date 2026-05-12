@@ -1,11 +1,7 @@
 {
   "name": "com.bovinelabs.grid.watershed",
   "rootNamespace": "BovineLabs.Grid.Watershed",
-  "references": [
-    "com.bovinelabs.grid",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

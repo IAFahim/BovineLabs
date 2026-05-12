@@ -1,0 +1,24 @@
+{
+  "name": "com.bovinelabs.grid.ehl.tests",
+  "rootNamespace": "BovineLabs.Grid.EHL.Tests",
+  "references": [
+    "com.bovinelabs.grid",
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics",
+    "com.bovinelabs.grid.ehl"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": true,
+  "precompiledReferences": ["nunit.framework.dll"],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

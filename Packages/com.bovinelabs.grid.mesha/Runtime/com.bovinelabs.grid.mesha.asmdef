@@ -1,0 +1,17 @@
+{
+  "name": "com.bovinelabs.grid.mesha",
+  "rootNamespace": "BovineLabs.Grid.MeshA",
+  "references": [
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics","com.bovinelabs.grid"],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

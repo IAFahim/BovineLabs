@@ -1,11 +1,7 @@
 {
   "name": "com.bovinelabs.grid.sandpile",
-  "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "rootNamespace": "BovineLabs.Grid.Sandpile",
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

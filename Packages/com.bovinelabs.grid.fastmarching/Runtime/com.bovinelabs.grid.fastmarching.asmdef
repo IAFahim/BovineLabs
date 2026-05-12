@@ -1,11 +1,7 @@
 {
   "name": "com.bovinelabs.grid.fastmarching",
   "rootNamespace": "BovineLabs.Grid.FastMarching",
-  "references": [
-    "com.bovinelabs.grid",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

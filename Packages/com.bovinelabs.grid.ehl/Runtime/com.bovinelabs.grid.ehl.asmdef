@@ -1,0 +1,19 @@
+{
+  "name": "com.bovinelabs.grid.ehl",
+  "rootNamespace": "BovineLabs.Grid.EHL",
+  "references": [
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics",
+    "com.bovinelabs.grid"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

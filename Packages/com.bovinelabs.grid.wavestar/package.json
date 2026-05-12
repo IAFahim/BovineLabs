@@ -1,0 +1,13 @@
+{
+  "name": "com.bovinelabs.grid.wavestar",
+  "displayName": "BovineLabs Grid Wavestar",
+  "version": "0.1.0",
+  "unity": "2022.3",
+  "description": "Wavestar (Multi-Resolution Theta*) pathfinding using Burst and NativeCollections. Implements the RSS 2025 algorithm for any-angle pathfinding on multi-resolution octree-based grids.",
+  "dependencies": {
+    "com.bovinelabs.grid": "0.1.0",
+    "com.unity.collections": "2.1.4",
+    "com.unity.mathematics": "1.2.6",
+    "com.unity.burst": "1.8.4"
+  }
+}

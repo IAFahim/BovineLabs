@@ -1,11 +1,7 @@
 {
   "name": "com.bovinelabs.grid.jps",
-  "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "rootNamespace": "BovineLabs.Grid.Jps",
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

@@ -1,21 +1,14 @@
 {
   "name": "com.bovinelabs.grid.hashlife.tests",
   "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "com.bovinelabs.grid.hashlife",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid", "com.bovinelabs.grid.hashlife"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
   "overrideReferences": false,
   "precompiledReferences": [],
   "autoReferenced": true,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
   "versionDefines": [],
   "noEngineReferences": false
 }

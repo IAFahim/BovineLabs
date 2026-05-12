@@ -1,21 +1,14 @@
 {
   "name": "com.bovinelabs.grid.morse.tests",
   "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "com.bovinelabs.grid.morse",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid", "com.bovinelabs.grid.morse"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
   "overrideReferences": false,
   "precompiledReferences": [],
   "autoReferenced": true,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
   "versionDefines": [],
   "noEngineReferences": false
 }

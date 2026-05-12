@@ -1,11 +1,7 @@
 {
   "name": "com.bovinelabs.grid.edt",
-  "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "rootNamespace": "BovineLabs.Grid.Edt",
+  "references": ["com.bovinelabs.grid"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,

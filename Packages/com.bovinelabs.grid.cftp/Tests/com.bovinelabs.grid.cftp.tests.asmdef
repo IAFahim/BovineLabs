@@ -1,21 +1,14 @@
 {
   "name": "com.bovinelabs.grid.cftp.tests",
   "rootNamespace": "",
-  "references": [
-    "com.bovinelabs.grid",
-    "com.bovinelabs.grid.cftp",
-    "Unity.Collections",
-    "Unity.Mathematics"
-  ],
+  "references": ["com.bovinelabs.grid", "com.bovinelabs.grid.cftp"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
   "overrideReferences": false,
   "precompiledReferences": [],
   "autoReferenced": true,
-  "defineConstraints": [
-    "UNITY_INCLUDE_TESTS"
-  ],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
   "versionDefines": [],
   "noEngineReferences": false
 }

@@ -1,7 +1,11 @@
 {
   "name": "com.bovinelabs.grid",
   "rootNamespace": "BovineLabs.Grid",
-  "references": ["Unity.Collections", "Unity.Mathematics"],
+  "references": [
+    "Unity.Burst",
+    "Unity.Collections",
+    "Unity.Mathematics"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
