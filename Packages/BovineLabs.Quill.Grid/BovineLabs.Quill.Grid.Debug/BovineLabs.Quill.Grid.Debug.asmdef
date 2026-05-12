@@ -8,17 +8,24 @@
     "Unity.Collections",
     "Unity.Entities",
     "Unity.Mathematics",
-    "BovineLabs.Grid",
+    "Unity.Entities.Hybrid",
+    "com.bovinelabs.grid",
     "FireAlt.BLinq",
-    "BovineLabs.Quill.Grid.Data"
+    "BovineLabs.Quill.Grid.Data",
+    "Unity.Burst",
+    "Unity.Transforms"
   ],
-  "includePlatforms": [],
+  "includePlatforms": [
+    "Editor"
+  ],
   "excludePlatforms": [],
   "allowUnsafeCode": true,
   "overrideReferences": false,
   "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_EDITOR || BL_DEBUG"
+  ],
   "versionDefines": [],
   "noEngineReferences": false
 }

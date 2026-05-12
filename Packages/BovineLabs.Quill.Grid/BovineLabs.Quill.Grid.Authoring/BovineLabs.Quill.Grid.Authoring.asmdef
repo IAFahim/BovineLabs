@@ -7,8 +7,6 @@
     "BovineLabs.Core.Extensions",
     "BovineLabs.Core.Extensions.Authoring",
     "BovineLabs.Quill",
-    "BovineLabs.Quill.Authoring",
-    "BovineLabs.Quill.Grid",
     "BovineLabs.Quill.Grid.Data",
     "Unity.Collections",
     "Unity.Entities",
