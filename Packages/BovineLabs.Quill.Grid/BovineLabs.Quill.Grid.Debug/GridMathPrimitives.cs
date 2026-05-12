@@ -1,5 +1,4 @@
 using BovineLabs.Grid;
-using FireAlt.BLinq;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -120,41 +119,7 @@ namespace BovineLabs.Quill.Grid.Debug
             str.Append(frac);
         }
     }
-
-    public static class GridBLinqPrimitives
-    {
-        public static GridCellVisualState ComputeNextState(
-            this IndexTuple<GridCellVisualState> item,
-            in GridVisualizerConfig config,
-            in GridVisualizerInput input,
-            float3 origin,
-            float dt)
-        {
-            var grid = Grid2D.Create(config.Size.x, config.Size.y);
-            int2 xy = grid.ToCoord(item.Index);
-
-            GridMathPrimitives.TryGetLocalPosition(xy, config.Size, config.BlockSize, config.Spacing,
-                out float3 localPos);
-            float3 worldPos = origin + localPos;
-
-            GridVisualPrimitives.TryCalculateHoverTarget(
-                worldPos,
-                input.HoverWorldPosition,
-                input.IsHovering,
-                config.HoverRadius,
-                config.HoverDepth,
-                config.DefaultColor,
-                config.HoverColor,
-                out float targetDepth,
-                out float4 targetColor);
-
-            GridVisualPrimitives.TryStepState(in item.Item, targetDepth, targetColor, dt, config.TransitionSpeed,
-                out GridCellVisualState next);
-
-            return next;
-        }
-    }
-
+    
     public static class GridVisualizerMath
     {
         public static int ToIndex(int2 cell, int width) =>
