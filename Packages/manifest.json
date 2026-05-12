@@ -15,9 +15,10 @@
     "com.bovinelabs.timeline.essence": "https://github.com/IAFahim/BovineLabs.Timeline.Essence.git",
     "com.bovinelabs.timeline.group-tool": "https://github.com/IAFahim/com.bovinelabs.timeline.group-tool.git",
     "com.bovinelabs.timeline.physics": "https://github.com/IAFahim/BovineLabs.Timeline.Physics.git",
-    "com.bovinelabs.timeline.ui": "https://github.com/IAFahim/BovineLabs.Timeline.UI.git",
     "com.bovinelabs.timeline.playerinputs": "https://github.com/IAFahim/BovineLabs.Timeline.PlayerInputs.git",
     "com.bovinelabs.timeline.time": "https://github.com/IAFahim/BovineLabs.Timeline.Time.git",
+    "com.bovinelabs.timeline.ui": "https://github.com/IAFahim/BovineLabs.Timeline.UI.git",
+    "com.firealt.blinq": "https://github.com/Fire-Aalt/BLinq.git",
     "com.gitcopy.gc": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
     "com.rukhanka.animation": "https://github.com/iafahim/com.rukhanka.animation.git",
     "com.unity.cinemachine": "3.1.6",
@@ -29,11 +30,11 @@
     "com.unity.inputsystem": "1.19.0",
     "com.unity.physics": "6.6.0",
     "com.unity.render-pipelines.universal": "17.6.0",
-    "com.unity.modules.terrainphysics": "1.0.0",
     "com.unity.sdk.linux-x86_64": "1.0.2",
     "com.unity.test-framework": "1.7.1",
     "com.unity.toolchain.linux-x86_64-linux": "1.0.2",
     "com.unity.ugui": "2.5.0",
-    "com.youngwoocho02.unity-cli-connector": "https://github.com/youngwoocho02/unity-cli.git?path=unity-connector"
+    "com.youngwoocho02.unity-cli-connector": "https://github.com/youngwoocho02/unity-cli.git?path=unity-connector",
+    "com.unity.modules.terrainphysics": "1.0.0"
   }
 }

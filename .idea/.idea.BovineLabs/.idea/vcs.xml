@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.HitStop" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Quill.Grid" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Spatial" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Animation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Packages/BovineLabs.Timeline.Core" vcs="Git" />
