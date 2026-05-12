@@ -14,7 +14,7 @@ namespace BovineLabs.Grid.Wfc
         public NativeArray<ulong> PossibleBits;
         public NativeArray<int> Entropy;
         public NativeArray<ulong> Compatibility; // pattern * 4 + dir -> bitset of compatible patterns
-        public NativeQueue<int> Queue;
+        public UnsafeQueue<int> Queue;
     }
 
     [BurstCompile]
@@ -30,7 +30,7 @@ namespace BovineLabs.Grid.Wfc
                 PossibleBits = new NativeArray<ulong>(g.Length, a),
                 Entropy = new NativeArray<int>(g.Length, a),
                 Compatibility = new NativeArray<ulong>(patternCount * 4, a),
-                Queue = new NativeQueue<int>(a),
+                Queue = new UnsafeQueue<int>(a),
             };
         }
 
