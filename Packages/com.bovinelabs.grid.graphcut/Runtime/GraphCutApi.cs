@@ -91,7 +91,7 @@ namespace BovineLabs.GraphCut
                 // Only 2 directions to avoid double-counting
                 for (int d = 0; d < 2; d++)
                 {
-                    int2 offset = Grid2D.Directions4[d];
+                    int2 offset = Grid2D.Dir4(d);
                     int nx = x + offset.x;
                     int ny = y + offset.y;
                     if (Hint.Likely(nx >= 0 && ny >= 0 && nx < width && ny < height))

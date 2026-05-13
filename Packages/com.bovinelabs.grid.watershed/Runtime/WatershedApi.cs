@@ -33,7 +33,7 @@ namespace BovineLabs.Grid.Watershed
         }
 
         [BurstCompile]
-        public static int FindMinima(ref WatershedState s, NativeArray<float> height)
+        public static int FindMinima(ref WatershedState s, in NativeArray<float> height)
         {
             int* label = (int*)s.Label.GetUnsafePtr();
             byte* st = (byte*)s.State.GetUnsafePtr();
@@ -100,7 +100,7 @@ namespace BovineLabs.Grid.Watershed
         }
 
         [BurstCompile]
-        public static void Flood(ref WatershedState s, NativeArray<float> height)
+        public static void Flood(ref WatershedState s, in NativeArray<float> height)
         {
             int* label = (int*)s.Label.GetUnsafePtr();
             byte* st = (byte*)s.State.GetUnsafePtr();
@@ -136,7 +136,7 @@ namespace BovineLabs.Grid.Watershed
         }
 
         [BurstCompile]
-        public static void ExtractBoundaries(ref WatershedState s, NativeArray<byte> boundary)
+        public static void ExtractBoundaries(ref WatershedState s, ref NativeArray<byte> boundary)
         {
             int* label = (int*)s.Label.GetUnsafePtr();
             byte* bnd = (byte*)boundary.GetUnsafePtr();

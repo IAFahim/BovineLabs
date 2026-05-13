@@ -120,7 +120,7 @@ namespace BovineLabs.Grid.Cftp
         }
 
         [BurstCompile]
-        public static bool SampleExact(ref CftpState s, ref Unity.Mathematics.Random rng, NativeArray<byte> sample)
+        public static bool SampleExact(ref CftpState s, ref Unity.Mathematics.Random rng, ref NativeArray<byte> sample)
         {
             for (int attempt = 0; attempt < 20; attempt++)
             {

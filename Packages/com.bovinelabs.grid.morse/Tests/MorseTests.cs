@@ -17,7 +17,7 @@ public class MorseTests
         for (int y = 0; y < 5; y++)
             for (int x = 0; x < 5; x++)
                 scalar[s.Grid.ToIndex(x, y)] = y;
-        MorseApi.BuildGradient(ref s, scalar);
+        MorseApi.BuildGradient(ref s, in scalar);
         Assert.Greater(s.Critical.Length, 0);
         MorseApi.Dispose(ref s); scalar.Dispose();
     }
@@ -29,7 +29,7 @@ public class MorseTests
         for (int y = 0; y < 5; y++)
             for (int x = 0; x < 5; x++)
                 scalar[s.Grid.ToIndex(x, y)] = y;
-        MorseApi.BuildGradient(ref s, scalar);
+        MorseApi.BuildGradient(ref s, in scalar);
         MorseApi.TraceManifolds(ref s);
         // All cells should have a component
         for (int i = 0; i < s.Grid.Length; i++)

@@ -42,7 +42,7 @@ namespace BovineLabs.Grid.Rsr
         }
 
         [BurstCompile]
-        public static void Build(ref RsrState s, NativeArray<byte> blocked)
+        public static void Build(ref RsrState s, in NativeArray<byte> blocked)
         {
             byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             int* roc = (int*)s.RectOfCell.GetUnsafePtr();
@@ -137,7 +137,7 @@ namespace BovineLabs.Grid.Rsr
         }
 
         [BurstCompile]
-        public static void GetSuccessors(ref RsrState s, int cell, NativeArray<byte> blocked, NativeList<int> successors)
+        public static void GetSuccessors(ref RsrState s, int cell, in NativeArray<byte> blocked, ref NativeList<int> successors)
         {
             successors.Clear();
             int rectId = s.RectOfCell[cell];

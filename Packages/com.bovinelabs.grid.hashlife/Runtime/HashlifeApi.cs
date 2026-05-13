@@ -119,35 +119,20 @@ namespace BovineLabs.Grid.Hashlife
                 return result;
             }
 
-            // Recursive case: 9 sub-nodes construction
-            int nw = node.ChildNW, ne = node.ChildNE, sw = node.ChildSW, se = node.ChildSE;
-            HashlifeNode nwN = nodes[nw], neN = nodes[ne], swN = nodes[sw], seN = nodes[se];
+            // Recursive case: 9 overlapping level-(k-1) nodes
+            HashlifeNode nNW = nodes[node.ChildNW], nNE = nodes[node.ChildNE], nSW = nodes[node.ChildSW], nSE = nodes[node.ChildSE];
 
-            // 9 level-(k-1) nodes
-            int n11 = nwN.ChildNW; int n12 = nwN.ChildNE; int n13 = neN.ChildNW; int n14 = neN.ChildNE;
-            int n21 = nwN.ChildSW; int n22 = nwN.ChildSE; int n23 = neN.ChildSW; int n24 = neN.ChildSE;
-            int n31 = swN.ChildNW; int n32 = swN.ChildNE; int n33 = seN.ChildNW; int n34 = seN.ChildNE;
-            int n41 = swN.ChildSW; int n42 = swN.ChildSE; int n43 = seN.ChildSW; int n44 = seN.ChildSE;
+            int m00 = node.ChildNW;
+            int m10 = MakeNode(ref s, nNW.ChildNE, nNE.ChildNW, nNW.ChildSE, nNE.ChildSW);
+            int m20 = node.ChildNE;
+            int m01 = MakeNode(ref s, nNW.ChildSW, nNW.ChildSE, nSW.ChildNW, nSW.ChildNE);
+            int m11 = MakeNode(ref s, nNW.ChildSE, nNE.ChildSW, nSW.ChildNE, nSE.ChildNW);
+            int m21 = MakeNode(ref s, nNE.ChildSW, nNE.ChildSE, nSE.ChildNW, nSE.ChildNE);
+            int m02 = node.ChildSW;
+            int m12 = MakeNode(ref s, nSW.ChildNE, nSE.ChildNW, nSW.ChildSE, nSE.ChildNE);
+            int m22 = node.ChildSE;
 
-            // 9 overlapping level-(k-1) nodes
-            int m00 = nw;
-            int m10 = MakeNode(ref s, nwN.ChildNE, neN.ChildNW, nwN.ChildSE, neN.ChildSW);
-            int m20 = ne;
-            int m01 = MakeNode(ref s, nwN.ChildSW, nwN.ChildSE, swN.ChildNW, swN.ChildNE);
-            int m11 = MakeNode(ref s, nwN.ChildSE, neN.ChildSW, swN.ChildNE, seN.ChildNW);
-            int m21 = MakeNode(ref s, neN.ChildSW, neN.ChildSE, seN.ChildNW, seN.ChildNE);
-            int m02 = sw;
-            int m12 = MakeNode(ref s, swN.ChildNE, seN.ChildNW, swN.ChildSE, seN.ChildNE);
-            int m22 = se;
-
-            // 4 level-(k-2) result nodes
-            int rNW = GetResult(ref s, m00);
-            int rNE = GetResult(ref s, m10); // Wait, this is not quite right.
-            // Full 9-node algorithm is more involved. Let's implement the standard one.
-            
-            // Re-fetch pointers as MakeNode might have reallocated (if using NativeList, but we use UnsafeList)
-            // UnsafeList doesn't auto-resize unless we tell it to or it hits capacity.
-            
+            // 9 level-(k-2) result nodes
             int c00 = GetResult(ref s, m00);
             int c10 = GetResult(ref s, m10);
             int c20 = GetResult(ref s, m20);
@@ -158,12 +143,19 @@ namespace BovineLabs.Grid.Hashlife
             int c12 = GetResult(ref s, m12);
             int c22 = GetResult(ref s, m22);
 
-            int finalNW = GetResult(ref s, MakeNode(ref s, c00, c10, c01, c11));
-            int finalNE = GetResult(ref s, MakeNode(ref s, c10, c20, c11, c21));
-            int finalSW = GetResult(ref s, MakeNode(ref s, c01, c11, c02, c12));
-            int finalSE = GetResult(ref s, MakeNode(ref s, c11, c21, c12, c22));
+            // 4 level-(k-1) nodes combined from level-(k-2) results
+            int n00 = MakeNode(ref s, c00, c10, c01, c11);
+            int n10 = MakeNode(ref s, c10, c20, c11, c21);
+            int n01 = MakeNode(ref s, c01, c11, c02, c12);
+            int n11 = MakeNode(ref s, c11, c21, c12, c22);
 
-            int final = MakeNode(ref s, finalNW, finalNE, finalSW, finalSE);
+            // Final level-(k-1) result
+            int final = MakeNode(ref s,
+                GetResult(ref s, n00),
+                GetResult(ref s, n10),
+                GetResult(ref s, n01),
+                GetResult(ref s, n11));
+
             s.ResultCache[(ulong)nodeIdx] = final;
             return final;
         }

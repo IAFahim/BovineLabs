@@ -75,7 +75,7 @@ namespace BovineLabs.Grid.FieldDStar
 
             for (int d = 0; d < 8; d++)
             {
-                int2 np = p + Grid2D.Directions8[d];
+                int2 np = p + Grid2D.Dir8(d);
                 if (Hint.Likely(np.x >= 0 && np.y >= 0 && np.x < width && np.y < height))
                     UpdateRHS(ref s, in cost, np.y * width + np.x);
             }
@@ -98,8 +98,8 @@ namespace BovineLabs.Grid.FieldDStar
 
             for (int i = 0; i < 8; i++)
             {
-                int2 n1 = p + Grid2D.Directions8[i];
-                int2 n2 = p + Grid2D.Directions8[(i + 1) % 8];
+                int2 n1 = p + Grid2D.Dir8(i);
+                int2 n2 = p + Grid2D.Dir8((i + 1) % 8);
 
                 if (Hint.Likely(n1.x >= 0 && n1.y >= 0 && n1.x < width && n1.y < height &&
                                 n2.x >= 0 && n2.y >= 0 && n2.x < width && n2.y < height))
@@ -173,7 +173,7 @@ namespace BovineLabs.Grid.FieldDStar
 
                 for (int d = 0; d < 8; d++)
                 {
-                    int2 offset = Grid2D.Directions8[d];
+                    int2 offset = Grid2D.Dir8(d);
                     int nx = x + offset.x;
                     int ny = y + offset.y;
 

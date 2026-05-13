@@ -62,7 +62,7 @@ public class WilsonTests
         WilsonApi.Initialize(ref s, 0);
         WilsonApi.BuildTree(ref s, ref rng);
         var walls = new NativeArray<byte>(9, Allocator.Temp);
-        WilsonApi.ExtractMazeWalls(ref s, walls);
+        WilsonApi.ExtractMazeWalls(ref s, ref walls);
         // At least some cells should be marked
         bool hasPassage = false;
         for (int i = 0; i < walls.Length; i++) if (walls[i] == 0) hasPassage = true;

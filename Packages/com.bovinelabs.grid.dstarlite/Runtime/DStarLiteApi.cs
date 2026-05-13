@@ -41,7 +41,7 @@ namespace BovineLabs.Grid.DStarLite
         }
 
         [BurstCompile]
-        public static void Initialize(ref DStarLiteState s, int start, int goal, NativeArray<byte> blocked)
+        public static void Initialize(ref DStarLiteState s, int start, int goal, in NativeArray<byte> blocked)
         {
             s.Start = start;
             s.Goal = goal;
@@ -72,13 +72,13 @@ namespace BovineLabs.Grid.DStarLite
         }
 
         [BurstCompile]
-        public static void UpdateCell(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int cell)
+        public static void UpdateCell(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost, int cell)
         {
-            UpdateVertex(ref s, blocked, cost, cell);
+            UpdateVertex(ref s, in blocked, in cost, cell);
         }
 
         [BurstCompile]
-        public static bool Repair(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int maxPops)
+        public static bool Repair(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost, int maxPops)
         {
             int pops = 0;
             while (!s.Open.IsEmpty && pops < maxPops)
@@ -106,13 +106,13 @@ namespace BovineLabs.Grid.DStarLite
                 else if (s.G[uid] > s.RHS[uid])
                 {
                     s.G[uid] = s.RHS[uid];
-                    UpdateSuccessors(ref s, blocked, cost, uid);
+                    UpdateSuccessors(ref s, in blocked, in cost, uid);
                 }
                 else
                 {
                     s.G[uid] = float.PositiveInfinity;
-                    UpdateVertex(ref s, blocked, cost, uid);
-                    UpdateSuccessors(ref s, blocked, cost, uid);
+                    UpdateVertex(ref s, in blocked, in cost, uid);
+                    UpdateSuccessors(ref s, in blocked, in cost, uid);
                 }
             }
 
@@ -120,7 +120,7 @@ namespace BovineLabs.Grid.DStarLite
         }
 
         [BurstCompile]
-        public static void ExtractPath(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, NativeList<int> path)
+        public static void ExtractPath(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost, ref NativeList<int> path)
         {
             path.Clear();
             if (s.RHS[s.Start] >= float.PositiveInfinity) return;
@@ -139,12 +139,12 @@ namespace BovineLabs.Grid.DStarLite
                 int2 cp = s.Grid.ToCoord(current);
                 for (int d = 0; d < 8; d++)
                 {
-                    int2 np = cp + Grid2D.Directions8[d];
+                    int2 np = cp + Grid2D.Dir8(d);
                     if (!s.Grid.InBounds(np)) continue;
                     int ni = s.Grid.ToIndex(np);
                     if (blocked[ni] != 0) continue;
 
-                    float edgeCost = GetEdgeCost(s.Grid.Width, cost, current, ni, blocked);
+                    float edgeCost = GetEdgeCost(s.Grid.Width, in cost, current, ni, in blocked);
                     float total = edgeCost + s.G[ni];
                     if (total < bestCost || (total == bestCost && s.G[ni] < bestG))
                     {
@@ -176,7 +176,7 @@ namespace BovineLabs.Grid.DStarLite
             return new float2(minGRhs + h + s.Km, minGRhs);
         }
 
-        private static void UpdateVertex(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int cell)
+        private static void UpdateVertex(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost, int cell)
         {
             if (cell != s.Goal)
             {
@@ -184,12 +184,12 @@ namespace BovineLabs.Grid.DStarLite
                 int2 cp = s.Grid.ToCoord(cell);
                 for (int d = 0; d < 8; d++)
                 {
-                    int2 np = cp + Grid2D.Directions8[d];
+                    int2 np = cp + Grid2D.Dir8(d);
                     if (!s.Grid.InBounds(np)) continue;
                     int ni = s.Grid.ToIndex(np);
                     if (blocked[ni] != 0) continue;
 
-                    float edgeCost = GetEdgeCost(s.Grid.Width, cost, cell, ni, blocked);
+                    float edgeCost = GetEdgeCost(s.Grid.Width, in cost, cell, ni, in blocked);
                     float candidate = edgeCost + s.G[ni];
                     if (candidate < minRhs)
                     {
@@ -212,20 +212,20 @@ namespace BovineLabs.Grid.DStarLite
             }
         }
 
-        private static void UpdateSuccessors(ref DStarLiteState s, NativeArray<byte> blocked, NativeArray<float> cost, int cell)
+        private static void UpdateSuccessors(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost, int cell)
         {
             int2 cp = s.Grid.ToCoord(cell);
             for (int d = 0; d < 8; d++)
             {
-                int2 np = cp + Grid2D.Directions8[d];
+                int2 np = cp + Grid2D.Dir8(d);
                 if (!s.Grid.InBounds(np)) continue;
                 int ni = s.Grid.ToIndex(np);
                 if (blocked[ni] != 0) continue;
-                UpdateVertex(ref s, blocked, cost, ni);
+                UpdateVertex(ref s, in blocked, in cost, ni);
             }
         }
 
-        private static float GetEdgeCost(int gridWidth, NativeArray<float> cost, int from, int to, NativeArray<byte> blocked)
+        private static float GetEdgeCost(int gridWidth, in NativeArray<float> cost, int from, int to, in NativeArray<byte> blocked)
         {
             if (blocked[to] != 0) return float.PositiveInfinity;
             if (cost.Length > 0)

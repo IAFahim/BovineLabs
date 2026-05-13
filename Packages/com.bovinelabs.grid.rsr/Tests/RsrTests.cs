@@ -13,7 +13,7 @@ public class RsrTests
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
         var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
-        RsrApi.Build(ref s, blocked);
+        RsrApi.Build(ref s, in blocked);
         Assert.AreEqual(1, s.Rects.Length); // one big rectangle
         Assert.AreEqual(0, s.Rects[0].Min.x);
         Assert.AreEqual(4, s.Rects[0].Max.x);
@@ -25,7 +25,7 @@ public class RsrTests
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
         var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
         blocked[s.Grid.ToIndex(2, 2)] = 1;
-        RsrApi.Build(ref s, blocked);
+        RsrApi.Build(ref s, in blocked);
         Assert.Greater(s.Rects.Length, 1);
         RsrApi.Dispose(ref s); blocked.Dispose();
     }
@@ -34,10 +34,10 @@ public class RsrTests
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
         var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
-        RsrApi.Build(ref s, blocked);
+        RsrApi.Build(ref s, in blocked);
         var succ = new NativeList<int>(Allocator.Temp);
         // Center cell is interior of the single 5x5 rect
-        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(2, 2), blocked, succ);
+        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(2, 2), in blocked, ref succ);
         // Interior cell should get perimeter successors
         Assert.Greater(succ.Length, 0);
         RsrApi.Dispose(ref s); blocked.Dispose(); succ.Dispose();
@@ -47,10 +47,10 @@ public class RsrTests
     {
         var s = RsrApi.Create(5, 5, 100, Allocator.Temp);
         var blocked = new NativeArray<byte>(25, Allocator.Temp); for (int i = 0; i < blocked.Length; i++) blocked[i] = 0;
-        RsrApi.Build(ref s, blocked);
+        RsrApi.Build(ref s, in blocked);
         var succ = new NativeList<int>(Allocator.Temp);
         // Corner cell is on perimeter
-        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(0, 0), blocked, succ);
+        RsrApi.GetSuccessors(ref s, s.Grid.ToIndex(0, 0), in blocked, ref succ);
         Assert.Greater(succ.Length, 0);
         RsrApi.Dispose(ref s); blocked.Dispose(); succ.Dispose();
     }

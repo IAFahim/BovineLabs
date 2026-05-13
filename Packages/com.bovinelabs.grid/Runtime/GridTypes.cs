@@ -131,7 +131,7 @@ namespace BovineLabs.Grid
 
             for (int d = 0; d < 4; d++)
             {
-                int2 n = p + Grid2D.Directions4[d];
+                int2 n = p + Grid2D.Dir4(d);
                 if (grid.InBounds(n))
                 {
                     int ni = grid.ToIndex(n);
@@ -151,7 +151,7 @@ namespace BovineLabs.Grid
 
             for (int d = 0; d < 8; d++)
             {
-                int2 n = p + Grid2D.Directions8[d];
+                int2 n = p + Grid2D.Dir8(d);
                 if (grid.InBounds(n))
                 {
                     int ni = grid.ToIndex(n);

@@ -105,7 +105,7 @@ namespace BovineLabs.Grid.Wilson
         }
 
         [BurstCompile]
-        public static void ExtractMazeWalls(ref WilsonState s, NativeArray<byte> walls)
+        public static void ExtractMazeWalls(ref WilsonState s, ref NativeArray<byte> walls)
         {
             byte* wPtr = (byte*)walls.GetUnsafePtr();
             int* parent = (int*)s.Parent.GetUnsafePtr();

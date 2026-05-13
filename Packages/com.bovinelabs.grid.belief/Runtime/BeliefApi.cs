@@ -70,7 +70,7 @@ namespace BovineLabs.Grid.Belief
 
                     for (int dir = 0; dir < 4; dir++)
                     {
-                        int2 offset = Grid2D.Directions4[dir];
+                        int2 offset = Grid2D.Dir4(dir);
                         int nx = x + offset.x;
                         int ny = y + offset.y;
 
@@ -91,7 +91,7 @@ namespace BovineLabs.Grid.Belief
                                 for (int od = 0; od < 4; od++)
                                 {
                                     if (od == oppDir) continue;
-                                    int2 oOffset = Grid2D.Directions4[od];
+                                    int2 oOffset = Grid2D.Dir4(od);
                                     int ox = x + oOffset.x;
                                     int oy = y + oOffset.y;
                                     

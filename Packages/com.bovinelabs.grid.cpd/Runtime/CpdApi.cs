@@ -35,7 +35,7 @@ namespace BovineLabs.Grid.Cpd
         }
 
         [BurstCompile]
-        public static void Build(ref CpdState s, NativeArray<byte> blocked)
+        public static void Build(ref CpdState s, in NativeArray<byte> blocked)
         {
             s.Runs.Clear();
             byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
@@ -90,7 +90,7 @@ namespace BovineLabs.Grid.Cpd
                         int2 diff = s.Grid.ToCoord(cur) - s.Grid.ToCoord(source);
                         for (int dd = 0; dd < 4; dd++)
                         {
-                            if (Grid2D.Directions4[dd].Equals(diff)) { fm[target] = (byte)dd; break; }
+                            if (Grid2D.Dir4(dd).Equals(diff)) { fm[target] = (byte)dd; break; }
                         }
                     }
                 }
@@ -148,7 +148,7 @@ namespace BovineLabs.Grid.Cpd
         }
 
         [BurstCompile]
-        public static void ExtractPath(ref CpdState s, int source, int target, NativeList<int> path)
+        public static void ExtractPath(ref CpdState s, int source, int target, ref NativeList<int> path)
         {
             path.Clear();
             int cur = source;
@@ -158,7 +158,7 @@ namespace BovineLabs.Grid.Cpd
             while (cur != target && maxSteps-- > 0)
             {
                 if (!TryGetFirstMove(ref s, cur, target, out byte move)) break;
-                int2 p2 = s.Grid.ToCoord(cur) + Grid2D.Directions4[move];
+                int2 p2 = s.Grid.ToCoord(cur) + Grid2D.Dir4(move);
                 if (!s.Grid.InBounds(p2)) break;
                 cur = s.Grid.ToIndex(p2);
                 path.Add(cur);

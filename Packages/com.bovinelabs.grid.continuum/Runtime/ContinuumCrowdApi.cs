@@ -46,7 +46,7 @@ namespace BovineLabs.Grid.Continuum
         }
 
         [BurstCompile]
-        public static void SplatAgents(ref ContinuumCrowdState s, NativeArray<float2> positions)
+        public static void SplatAgents(ref ContinuumCrowdState s, in NativeArray<float2> positions)
         {
             float* density = (float*)s.Density.GetUnsafePtr();
             float2* pos = (float2*)positions.GetUnsafeReadOnlyPtr();
@@ -62,7 +62,7 @@ namespace BovineLabs.Grid.Continuum
         }
 
         [BurstCompile]
-        public static void SolvePotential(ref ContinuumCrowdState s, NativeArray<byte> blocked, int goal, int iterations)
+        public static void SolvePotential(ref ContinuumCrowdState s, in NativeArray<byte> blocked, int goal, int iterations)
         {
             float* pot = (float*)s.Potential.GetUnsafePtr();
             float* spd = (float*)s.Speed.GetUnsafePtr();
@@ -159,7 +159,7 @@ namespace BovineLabs.Grid.Continuum
         }
 
         [BurstCompile]
-        public static void AdvectAgents(ref ContinuumCrowdState s, NativeArray<float2> positions, float dt)
+        public static void AdvectAgents(ref ContinuumCrowdState s, ref NativeArray<float2> positions, float dt)
         {
             float2* flow = (float2*)s.Flow.GetUnsafePtr();
             float2* pos = (float2*)positions.GetUnsafePtr();

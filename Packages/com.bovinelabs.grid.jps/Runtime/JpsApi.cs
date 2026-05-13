@@ -36,7 +36,7 @@ namespace BovineLabs.Grid.Jps
         }
 
         [BurstCompile]
-        public static bool Search(ref JpsState s, NativeArray<byte> blocked, int start, int goal, NativeList<int> path)
+        public static bool Search(ref JpsState s, in NativeArray<byte> blocked, int start, int goal, ref NativeList<int> path)
         {
             path.Clear();
             float* g = (float*)s.G.GetUnsafePtr();
@@ -64,7 +64,7 @@ namespace BovineLabs.Grid.Jps
 
                 if (cid == goal)
                 {
-                    ExtractPath(s.Parent, goal, start, path);
+                    ExtractPath(in s.Parent, goal, start, ref path);
                     return true;
                 }
 
@@ -72,7 +72,7 @@ namespace BovineLabs.Grid.Jps
 
                 for (int d = 0; d < 8; d++)
                 {
-                    int2 dir = Grid2D.Directions8[d];
+                    int2 dir = Grid2D.Dir8(d);
                     if (Jump(blk, w, h, cp, dir, goal, out int jumpIdx))
                     {
                         if (closed[jumpIdx] != 0) continue;
@@ -92,7 +92,7 @@ namespace BovineLabs.Grid.Jps
             return false;
         }
 
-        public static bool Jump(in JpsState s, NativeArray<byte> blocked, int2 pos, int2 dir, int goal, out int jumpIdx)
+        public static bool Jump(in JpsState s, in NativeArray<byte> blocked, int2 pos, int2 dir, int goal, out int jumpIdx)
         {
             byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             return Jump(blk, s.Grid.Width, s.Grid.Height, pos, dir, goal, out jumpIdx);
@@ -121,7 +121,7 @@ namespace BovineLabs.Grid.Jps
         }
 
         [BurstCompile]
-        public static void ExtractPath(NativeArray<int> parent, int goal, int start, NativeList<int> path)
+        public static void ExtractPath(in NativeArray<int> parent, int goal, int start, ref NativeList<int> path)
         {
             path.Clear();
             int current = goal;

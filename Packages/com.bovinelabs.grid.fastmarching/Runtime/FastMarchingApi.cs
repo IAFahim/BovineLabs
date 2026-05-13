@@ -33,7 +33,7 @@ namespace BovineLabs.Grid.FastMarching
         }
 
         [BurstCompile]
-        public static void InitializeSources(ref FastMarchingState s, NativeArray<int> sources)
+        public static void InitializeSources(ref FastMarchingState s, in NativeArray<int> sources)
         {
             float* t = (float*)s.T.GetUnsafePtr();
             byte* st = (byte*)s.State.GetUnsafePtr();
@@ -51,7 +51,7 @@ namespace BovineLabs.Grid.FastMarching
         }
 
         [BurstCompile]
-        public static bool PropagateStep(ref FastMarchingState s, NativeArray<float> speed)
+        public static bool PropagateStep(ref FastMarchingState s, in NativeArray<float> speed)
         {
             if (s.Heap.IsEmpty) return false;
 
@@ -67,18 +67,18 @@ namespace BovineLabs.Grid.FastMarching
             int uy = u / w;
 
             // Right
-            if (ux + 1 < w) TryAccept(t, st, spd, w, h, u + 1, s);
+            if (ux + 1 < w) TryAccept(t, st, spd, w, h, u + 1, ref s);
             // Up
-            if (uy + 1 < h) TryAccept(t, st, spd, w, h, u + w, s);
+            if (uy + 1 < h) TryAccept(t, st, spd, w, h, u + w, ref s);
             // Left
-            if (ux > 0) TryAccept(t, st, spd, w, h, u - 1, s);
+            if (ux > 0) TryAccept(t, st, spd, w, h, u - 1, ref s);
             // Down
-            if (uy > 0) TryAccept(t, st, spd, w, h, u - w, s);
+            if (uy > 0) TryAccept(t, st, spd, w, h, u - w, ref s);
 
             return !s.Heap.IsEmpty;
         }
 
-        private static void TryAccept(float* t, byte* st, float* spd, int w, int h, int ni, FastMarchingState s)
+        private static void TryAccept(float* t, byte* st, float* spd, int w, int h, int ni, ref FastMarchingState s)
         {
             if (st[ni] == 2) return;
             float tNew = SolveEikonal(t, st, spd, w, h, ni);
@@ -91,9 +91,9 @@ namespace BovineLabs.Grid.FastMarching
         }
 
         [BurstCompile]
-        public static void PropagateAll(ref FastMarchingState s, NativeArray<float> speed)
+        public static void PropagateAll(ref FastMarchingState s, in NativeArray<float> speed)
         {
-            while (PropagateStep(ref s, speed)) { }
+            while (PropagateStep(ref s, in speed)) { }
         }
 
         private static float SolveEikonal(float* t, byte* st, float* spd, int w, int h, int idx)
@@ -123,7 +123,7 @@ namespace BovineLabs.Grid.FastMarching
         }
 
         [BurstCompile]
-        public static void BuildGradientFlow(ref FastMarchingState s, NativeArray<float2> flow)
+        public static void BuildGradientFlow(ref FastMarchingState s, ref NativeArray<float2> flow)
         {
             float* t = (float*)s.T.GetUnsafePtr();
             float2* fl = (float2*)flow.GetUnsafePtr();

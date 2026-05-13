@@ -5,7 +5,7 @@
 # Make sure Unity Editor is closed before running this script
 
 UNITY_EDITOR="/home/l/Unity/Hub/Editor/6000.5.0b1/Editor/Unity"
-PROJECT_PATH="/home/l/Github/BovineLabs"
+PROJECT_PATH="$(pwd)"
 TEST_RESULTS="TestResults.xml"
 
 echo "=========================================="

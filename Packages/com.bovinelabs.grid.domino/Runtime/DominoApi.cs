@@ -33,7 +33,7 @@ namespace BovineLabs.Grid.Domino
         }
 
         [BurstCompile]
-        public static void SetRegion(ref DominoState s, NativeArray<byte> region)
+        public static void SetRegion(ref DominoState s, in NativeArray<byte> region)
         {
             UnsafeUtility.MemCpy(s.Region.GetUnsafePtr(), region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
         }

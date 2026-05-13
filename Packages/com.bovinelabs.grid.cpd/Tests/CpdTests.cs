@@ -13,7 +13,7 @@ public class CpdTests
     {
         var s = CpdApi.Create(3, 3, 1000, Allocator.Temp);
         var blocked = new NativeArray<byte>(9, Allocator.Temp); blocked.Fill((byte)0);
-        CpdApi.Build(ref s, blocked);
+        CpdApi.Build(ref s, in blocked);
         Assert.Greater(s.Runs.Length, 0);
         CpdApi.Dispose(ref s); blocked.Dispose();
     }
@@ -22,7 +22,7 @@ public class CpdTests
     {
         var s = CpdApi.Create(3, 3, 1000, Allocator.Temp);
         var blocked = new NativeArray<byte>(9, Allocator.Temp); blocked.Fill((byte)0);
-        CpdApi.Build(ref s, blocked);
+        CpdApi.Build(ref s, in blocked);
         Assert.IsTrue(CpdApi.TryGetFirstMove(ref s, 0, 8, out byte move));
         Assert.Less(move, 4);
         CpdApi.Dispose(ref s); blocked.Dispose();
@@ -32,9 +32,9 @@ public class CpdTests
     {
         var s = CpdApi.Create(3, 3, 1000, Allocator.Temp);
         var blocked = new NativeArray<byte>(9, Allocator.Temp); blocked.Fill((byte)0);
-        CpdApi.Build(ref s, blocked);
+        CpdApi.Build(ref s, in blocked);
         var path = new NativeList<int>(Allocator.Temp);
-        CpdApi.ExtractPath(ref s, 0, 8, path);
+        CpdApi.ExtractPath(ref s, 0, 8, ref path);
         Assert.Greater(path.Length, 0);
         Assert.AreEqual(0, path[0]);
         Assert.AreEqual(8, path[path.Length - 1]);

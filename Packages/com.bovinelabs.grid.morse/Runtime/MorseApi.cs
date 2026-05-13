@@ -45,7 +45,7 @@ namespace BovineLabs.Grid.Morse
         }
 
         [BurstCompile]
-        public static void BuildGradient(ref MorseState s, NativeArray<float> scalar)
+        public static void BuildGradient(ref MorseState s, in NativeArray<float> scalar)
         {
             s.Critical.Clear();
             float* sc = (float*)scalar.GetUnsafeReadOnlyPtr();
@@ -130,7 +130,7 @@ namespace BovineLabs.Grid.Morse
         }
 
         [BurstCompile]
-        public static void PairByPersistence(ref MorseState s, NativeArray<float> scalar)
+        public static void PairByPersistence(ref MorseState s, in NativeArray<float> scalar)
         {
             float* sc = (float*)scalar.GetUnsafeReadOnlyPtr();
             int* desc = (int*)s.Descending.GetUnsafePtr();
@@ -152,7 +152,7 @@ namespace BovineLabs.Grid.Morse
         }
 
         [BurstCompile]
-        public static void Simplify(ref MorseState s, NativeArray<float> scalar, float threshold)
+        public static void Simplify(ref MorseState s, in NativeArray<float> scalar, float threshold)
         {
             int* desc = (int*)s.Descending.GetUnsafePtr();
             CriticalPoint* crit = (CriticalPoint*)s.Critical.Ptr;

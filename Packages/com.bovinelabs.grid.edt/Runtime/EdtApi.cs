@@ -34,7 +34,7 @@ namespace BovineLabs.Grid.Edt
         }
 
         [BurstCompile]
-        public static void InitFromBlocked(NativeArray<byte> blocked, NativeArray<float> dist2)
+        public static void InitFromBlocked(in NativeArray<byte> blocked, ref NativeArray<float> dist2)
         {
             byte* b = (byte*)blocked.GetUnsafeReadOnlyPtr();
             float* d = (float*)dist2.GetUnsafePtr();
@@ -44,10 +44,10 @@ namespace BovineLabs.Grid.Edt
         }
 
         public static void Transform1D(
-            NativeArray<float> f,
-            NativeArray<float> output,
-            NativeArray<int> v,
-            NativeArray<float> z,
+            in NativeArray<float> f,
+            ref NativeArray<float> output,
+            ref NativeArray<int> v,
+            ref NativeArray<float> z,
             int length)
         {
             Transform1D(
@@ -98,9 +98,9 @@ namespace BovineLabs.Grid.Edt
         }
 
         [BurstCompile]
-        public static void Build(ref EdtState s, NativeArray<byte> blocked, NativeArray<float> dist2)
+        public static void Build(ref EdtState s, in NativeArray<byte> blocked, ref NativeArray<float> dist2)
         {
-            InitFromBlocked(blocked, dist2);
+            InitFromBlocked(in blocked, ref dist2);
 
             float* dist2Ptr = (float*)dist2.GetUnsafePtr();
             float* temp = (float*)s.Temp.GetUnsafePtr();
@@ -136,7 +136,7 @@ namespace BovineLabs.Grid.Edt
         }
 
         [BurstCompile]
-        public static void ToDistance(NativeArray<float> dist2, NativeArray<float> dist)
+        public static void ToDistance(in NativeArray<float> dist2, ref NativeArray<float> dist)
         {
             float* d2 = (float*)dist2.GetUnsafeReadOnlyPtr();
             float* d = (float*)dist.GetUnsafePtr();

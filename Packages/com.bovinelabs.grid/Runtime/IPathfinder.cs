@@ -18,6 +18,7 @@ namespace BovineLabs.Grid
     /// Min-heap priority queue for A*-style searches.
     /// Stores integer node IDs with float priorities.
     /// </summary>
+    [Obsolete("Use MinHeap from BovineLabs.Grid instead — it uses raw pointers and is Burst-optimized.")]
     public struct NativeMinHeap : IDisposable
     {
         private NativeArray<float> priorities;
@@ -29,6 +30,7 @@ namespace BovineLabs.Grid
 
         public NativeMinHeap(int initialCapacity, Allocator allocator)
         {
+            resizeAllocator = allocator;
             capacity = initialCapacity;
             priorities = new NativeArray<float>(capacity, allocator);
             ids = new NativeArray<int>(capacity, allocator);
@@ -116,13 +118,15 @@ namespace BovineLabs.Grid
             nodeToHeap[ids[b]] = b;
         }
 
+        private Allocator resizeAllocator;
+
         private void Resize()
         {
             int newCap = capacity * 2;
-            var newP = new NativeArray<float>(newCap, Allocator.Temp);
-            var newIds = new NativeArray<int>(newCap, Allocator.Temp);
-            var newH2N = new NativeArray<int>(newCap, Allocator.Temp);
-            var newN2H = new NativeArray<int>(newCap, Allocator.Temp);
+            var newP = new NativeArray<float>(newCap, resizeAllocator);
+            var newIds = new NativeArray<int>(newCap, resizeAllocator);
+            var newH2N = new NativeArray<int>(newCap, resizeAllocator);
+            var newN2H = new NativeArray<int>(newCap, resizeAllocator);
             NativeArray<float>.Copy(priorities, newP, count);
             NativeArray<int>.Copy(ids, newIds, count);
             NativeArray<int>.Copy(heapToNode, newH2N, count);

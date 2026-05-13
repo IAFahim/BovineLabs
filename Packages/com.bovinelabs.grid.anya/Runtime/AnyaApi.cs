@@ -127,7 +127,18 @@ namespace BovineLabs.Grid.Anya
             float projL, projR;
             if (Hint.Unlikely(math.abs(h1) < 0.001f))
             {
-                projL = 0; projR = width;
+                // Root is on the same row as the interval.
+                // If it's the start node (XL=XR=Rx), we can see the entire next row (clipping happens below).
+                // If it's a corner node, we can only see into the quadrant that is "opened up".
+                if (math.abs(u->Interval.XL - u->Root.x) < 0.001f && math.abs(u->Interval.XR - u->Root.x) < 0.001f)
+                {
+                    projL = 0; projR = width;
+                }
+                else
+                {
+                    projL = (u->Interval.XL < u->Root.x - 0.001f) ? 0 : u->Root.x;
+                    projR = (u->Interval.XR > u->Root.x + 0.001f) ? width : u->Root.x;
+                }
             }
             else
             {

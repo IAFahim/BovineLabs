@@ -15,6 +15,7 @@ namespace BovineLabs.Grid.Wfc
         public NativeArray<int> Entropy;
         public NativeArray<ulong> Compatibility; // pattern * 4 + dir -> bitset of compatible patterns
         public UnsafeQueue<int> Queue;
+        public NativeArray<byte> Dirty; // set when entropy changes during propagation
     }
 
     [BurstCompile]
@@ -22,6 +23,8 @@ namespace BovineLabs.Grid.Wfc
     {
         public static WfcState Create(int width, int height, int patternCount, Allocator a)
         {
+            if (patternCount > 64 || patternCount < 1)
+                throw new System.ArgumentException($"patternCount must be 1..64, got {patternCount}", nameof(patternCount));
             var g = Grid2D.Create(width, height);
             return new WfcState
             {
@@ -31,6 +34,7 @@ namespace BovineLabs.Grid.Wfc
                 Entropy = new NativeArray<int>(g.Length, a),
                 Compatibility = new NativeArray<ulong>(patternCount * 4, a),
                 Queue = new UnsafeQueue<int>(a),
+                Dirty = new NativeArray<byte>(g.Length, a),
             };
         }
 
@@ -69,7 +73,7 @@ namespace BovineLabs.Grid.Wfc
 
                     for (int d = 0; d < 4; d++)
                     {
-                        int2 offset = Grid2D.Directions4[d];
+                        int2 offset = Grid2D.Dir4(d);
                         int nx = x + offset.x;
                         int ny = y + offset.y;
                         if (Hint.Unlikely(nx < 0 || ny < 0 || nx >= sampleWidth || ny >= sampleHeight)) continue;
@@ -100,6 +104,7 @@ namespace BovineLabs.Grid.Wfc
             ulong* possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
             int* entropyPtr = (int*)s.Entropy.GetUnsafePtr();
             ulong* compatibilityPtr = (ulong*)s.Compatibility.GetUnsafeReadOnlyPtr();
+            byte* dirtyPtr = (byte*)s.Dirty.GetUnsafePtr();
 
             while (s.Queue.TryDequeue(out int cell))
             {
@@ -109,7 +114,7 @@ namespace BovineLabs.Grid.Wfc
 
                 for (int d = 0; d < 4; d++)
                 {
-                    int2 offset = Grid2D.Directions4[d];
+                    int2 offset = Grid2D.Dir4(d);
                     int nx = x + offset.x;
                     int ny = y + offset.y;
                     if (Hint.Unlikely(nx < 0 || ny < 0 || nx >= width || ny >= height)) continue;
@@ -134,6 +139,7 @@ namespace BovineLabs.Grid.Wfc
                     {
                         possiblePtr[ni] = restricted;
                         entropyPtr[ni] = math.countbits(restricted);
+                        dirtyPtr[ni] = 1;
                         s.Queue.Enqueue(ni);
                     }
                 }
@@ -150,21 +156,21 @@ namespace BovineLabs.Grid.Wfc
             ulong* possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
             int* outputPtr = (int*)output.GetUnsafePtr();
 
-            while (true)
-            {
-                int bestCell = -1;
-                int bestEntropy = int.MaxValue;
-                for (int i = 0; i < len; i++)
-                {
-                    int e = entropyPtr[i];
-                    if (e <= 1) continue;
-                    if (e < bestEntropy) { bestEntropy = e; bestCell = i; }
-                }
+            // Build min-entropy heap
+            var heap = MinHeap.Create(len, Allocator.Temp);
+            for (int i = 0; i < len; i++)
+                if (entropyPtr[i] > 1)
+                    heap.InsertOrDecrease(new HeapNode(i, entropyPtr[i]));
 
-                if (bestCell < 0) break;
+            while (!heap.IsEmpty)
+            {
+                int bestCell = heap.Pop().Id;
+                int e = entropyPtr[bestCell];
+                if (e <= 1) continue;           // already collapsed
+                if (possiblePtr[bestCell] == 0UL) continue; // contradiction
 
                 ulong possible = possiblePtr[bestCell];
-                int count = entropyPtr[bestCell];
+                int count = e;
 
                 int chosen = rng.NextInt(0, count);
                 int pattern = -1;
@@ -176,13 +182,24 @@ namespace BovineLabs.Grid.Wfc
                 }
 
                 Observe(ref s, bestCell, pattern);
-                if (!Propagate(ref s)) return false;
+                if (!Propagate(ref s)) { heap.Dispose(); return false; }
+
+                // Re-heap only cells whose entropy changed during propagation
+                byte* dirtyPtr = (byte*)s.Dirty.GetUnsafePtr();
+                for (int i = 0; i < len; i++)
+                {
+                    if (dirtyPtr[i] != 0)
+                    {
+                        dirtyPtr[i] = 0;
+                        if (entropyPtr[i] > 1)
+                            heap.InsertOrDecrease(new HeapNode(i, entropyPtr[i]));
+                    }
+                }
             }
+            heap.Dispose();
 
             for (int i = 0; i < len; i++)
-            {
                 outputPtr[i] = math.tzcnt(possiblePtr[i]);
-            }
             return true;
         }
 

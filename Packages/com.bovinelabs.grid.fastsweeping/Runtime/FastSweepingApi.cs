@@ -29,7 +29,7 @@ namespace BovineLabs.Grid.FastSweeping
         }
 
         [BurstCompile]
-        public static void Initialize(ref FastSweepingState s, NativeArray<int> sources)
+        public static void Initialize(ref FastSweepingState s, in NativeArray<int> sources)
         {
             float* t = (float*)s.T.GetUnsafePtr();
             int len = s.Grid.Length;
@@ -39,7 +39,7 @@ namespace BovineLabs.Grid.FastSweeping
         }
 
         [BurstCompile]
-        public static void SweepAllDirections(ref FastSweepingState s, NativeArray<float> speed, int rounds)
+        public static void SweepAllDirections(ref FastSweepingState s, in NativeArray<float> speed, int rounds)
         {
             float* t = (float*)s.T.GetUnsafePtr();
             float* sp = (float*)speed.GetUnsafePtr();
@@ -97,7 +97,7 @@ namespace BovineLabs.Grid.FastSweeping
         }
 
         [BurstCompile]
-        public static void RelaxCell(FastSweepingState s, NativeArray<float> speed, int cell)
+        public static void RelaxCell(in FastSweepingState s, in NativeArray<float> speed, int cell)
         {
             float* t = (float*)s.T.GetUnsafePtr();
             float* sp = (float*)speed.GetUnsafePtr();

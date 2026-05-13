@@ -53,21 +53,39 @@ namespace BovineLabs.Grid
             return (uint)p.x < (uint)Width && (uint)p.y < (uint)Height;
         }
 
-        /// <summary>4-connected neighbor offsets (right, down, left, up).</summary>
-        public static readonly int2[] Directions4 =
-        {
-            new int2(1, 0),
-            new int2(0, 1),
-            new int2(-1, 0),
-            new int2(0, -1),
-        };
+        // Burst-compatible direction constants — use inlined instead of managed arrays.
+        // Right, Down, Left, Up
+        public const int Dir4Count = 4;
+        // E, SE, S, SW, W, NW, N, NE
+        public const int Dir8Count = 8;
 
-        /// <summary>8-connected neighbor offsets.</summary>
-        public static readonly int2[] Directions8 =
+        /// <summary>4-connected neighbor offsets (right, down, left, up). Burst-compatible via fixed struct fields.</summary>
+        public static int2 Dir4(int d)
         {
-            new int2(1, 0), new int2(1, 1), new int2(0, 1), new int2(-1, 1),
-            new int2(-1, 0), new int2(-1, -1), new int2(0, -1), new int2(1, -1),
-        };
+            switch (d)
+            {
+                case 0: return new int2(1, 0);
+                case 1: return new int2(0, 1);
+                case 2: return new int2(-1, 0);
+                default: return new int2(0, -1);
+            }
+        }
+
+        /// <summary>8-connected neighbor offsets. Burst-compatible via fixed struct fields.</summary>
+        public static int2 Dir8(int d)
+        {
+            switch (d)
+            {
+                case 0: return new int2(1, 0);
+                case 1: return new int2(1, 1);
+                case 2: return new int2(0, 1);
+                case 3: return new int2(-1, 1);
+                case 4: return new int2(-1, 0);
+                case 5: return new int2(-1, -1);
+                case 6: return new int2(0, -1);
+                default: return new int2(1, -1);
+            }
+        }
 
         /// <summary>Manhattan distance between two cells.</summary>
         public static float HeuristicManhattan(int2 a, int2 b)

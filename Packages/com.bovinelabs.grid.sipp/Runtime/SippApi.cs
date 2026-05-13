@@ -20,7 +20,7 @@ namespace BovineLabs.Grid.Sipp
         public NativeArray<RangeI> CellIntervals;
         public UnsafeList<SippNode> Nodes;
         public MinHeap Heap;
-        public NativeArray<float> BestTime; // per interval index
+        public UnsafeList<float> BestTime; // per interval index
         public UnsafeList<DynamicObstacle> Obstacles;
     }
 
@@ -37,7 +37,7 @@ namespace BovineLabs.Grid.Sipp
                 CellIntervals = new NativeArray<RangeI>(g.Length, a),
                 Nodes = new UnsafeList<SippNode>(maxNodes, a),
                 Heap = MinHeap.Create(maxNodes, a),
-                BestTime = new NativeArray<float>(maxIntervals, a),
+                BestTime = new UnsafeList<float>(maxIntervals, a),
                 Obstacles = new UnsafeList<DynamicObstacle>(maxIntervals, a),
             };
         }
@@ -104,13 +104,11 @@ namespace BovineLabs.Grid.Sipp
             if (Hint.Unlikely(blockedPtr[start] != 0 || blockedPtr[goal] != 0)) return false;
 
             // Resize BestTime to match current Intervals count
-            if (s.BestTime.Length < s.Intervals.Length)
-            {
-                // This shouldn't happen if maxIntervals was set correctly, 
-                // but let's assume it's pre-allocated enough.
-            }
-            s.BestTime.Fill(float.PositiveInfinity);
-            float* bestTimePtr = (float*)s.BestTime.GetUnsafePtr();
+            int intervalCount = s.Intervals.Length;
+            if (s.BestTime.Capacity < intervalCount) s.BestTime.SetCapacity(intervalCount);
+            s.BestTime.Resize(intervalCount);
+            float* bestTimePtr = s.BestTime.Ptr;
+            for (int i = 0; i < intervalCount; i++) bestTimePtr[i] = float.PositiveInfinity;
 
             // Find valid starting interval
             RangeI startRange = s.CellIntervals[start];
@@ -151,7 +149,7 @@ namespace BovineLabs.Grid.Sipp
                 int2 p = s.Grid.ToCoord(node.Cell);
                 for (int d = 0; d < 4; d++)
                 {
-                    int2 np = p + Grid2D.Directions4[d];
+                    int2 np = p + Grid2D.Dir4(d);
                     if (Hint.Unlikely(np.x < 0 || np.y < 0 || np.x >= width || np.y >= height)) continue;
                     int ni = np.y * width + np.x;
                     if (Hint.Unlikely(blockedPtr[ni] != 0)) continue;

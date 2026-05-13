@@ -66,7 +66,7 @@ namespace BovineLabs.Grid.Subgoal
 
                 for (int d = 0; d < 4; d++)
                 {
-                    int2 np = p + Grid2D.Directions4[d];
+                    int2 np = p + Grid2D.Dir4(d);
                     if (Hint.Unlikely(np.x < 0 || np.y < 0 || np.x >= width || np.y >= height)) continue;
                     
                     if (blockedPtr[np.y * width + np.x] != 0)

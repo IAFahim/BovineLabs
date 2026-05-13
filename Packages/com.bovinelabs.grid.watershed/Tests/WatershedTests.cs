@@ -18,7 +18,7 @@ public class WatershedTests
         height[s.Grid.ToIndex(3, 3)] = 0f;
         // Lower everything around minima to separate them
         for (int i = 0; i < 25; i++) if (i != s.Grid.ToIndex(1,1) && i != s.Grid.ToIndex(3,3)) height[i] = 10f;
-        int count = WatershedApi.FindMinima(ref s, height);
+        int count = WatershedApi.FindMinima(ref s, in height);
         Assert.GreaterOrEqual(count, 1);
         WatershedApi.Dispose(ref s); height.Dispose();
     }
@@ -29,7 +29,7 @@ public class WatershedTests
         var height = new NativeArray<float>(9, Allocator.Temp);
         height.Fill(5f);
         height[4] = 0f; // center minimum
-        int count = WatershedApi.FindMinima(ref s, height);
+        int count = WatershedApi.FindMinima(ref s, in height);
         Assert.AreEqual(1, count);
         Assert.AreEqual(0, s.Label[4]); // first basin label
         WatershedApi.Dispose(ref s); height.Dispose();
@@ -42,8 +42,8 @@ public class WatershedTests
         height.Fill(10f);
         height[s.Grid.ToIndex(0, 0)] = 0f;
         height[s.Grid.ToIndex(4, 4)] = 0f;
-        WatershedApi.FindMinima(ref s, height);
-        WatershedApi.Flood(ref s, height);
+        WatershedApi.FindMinima(ref s, in height);
+        WatershedApi.Flood(ref s, in height);
         // Both minima should have valid labels
         Assert.GreaterOrEqual(s.Label[0], 0);
         Assert.GreaterOrEqual(s.Label[24], 0);
@@ -58,9 +58,9 @@ public class WatershedTests
         height.Fill(10f);
         height[0] = 0f;
         height[24] = 0f;
-        WatershedApi.FindMinima(ref s, height);
-        WatershedApi.Flood(ref s, height);
-        WatershedApi.ExtractBoundaries(ref s, boundary);
+        WatershedApi.FindMinima(ref s, in height);
+        WatershedApi.Flood(ref s, in height);
+        WatershedApi.ExtractBoundaries(ref s, ref boundary);
         // Should have some labeled cells
         int labeled = 0;
         for (int i = 0; i < 25; i++) if (s.Label[i] >= 0) labeled++;

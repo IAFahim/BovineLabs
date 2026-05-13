@@ -219,9 +219,10 @@ namespace BovineLabs.Grid.Cbs
             path.Clear();
             int gridLen = s.Grid.Length;
             int width = s.Grid.Width;
+            int timeHorizon = math.max(100, gridLen);
 
-            var g = new NativeArray<float>(gridLen * 50, Allocator.Temp);
-            var parent = new NativeArray<int>(gridLen * 50, Allocator.Temp);
+            var g = new NativeArray<float>(gridLen * timeHorizon, Allocator.Temp);
+            var parent = new NativeArray<int>(gridLen * timeHorizon, Allocator.Temp);
             g.Fill(float.PositiveInfinity);
             parent.Fill(-1);
 
@@ -229,7 +230,7 @@ namespace BovineLabs.Grid.Cbs
             int* parentPtr = (int*)parent.GetUnsafePtr();
 
             gPtr[start] = 0f;
-            var heap = MinHeap.Create(gridLen * 50, Allocator.Temp);
+            var heap = MinHeap.Create(gridLen * timeHorizon, Allocator.Temp);
             heap.InsertOrDecrease(new HeapNode(start, Grid2D.HeuristicManhattan(s.Grid.ToCoord(start), s.Grid.ToCoord(goal))));
 
             while (!heap.IsEmpty)
@@ -249,11 +250,11 @@ namespace BovineLabs.Grid.Cbs
 
                 int2 up = s.Grid.ToCoord(u);
                 int nextTime = time + 1;
-                if (Hint.Unlikely(nextTime >= 50)) continue;
+                if (Hint.Unlikely(nextTime >= timeHorizon)) continue;
 
                 for (int d = -1; d < 4; d++)
                 {
-                    int2 np = (d == -1) ? up : up + Grid2D.Directions4[d];
+                    int2 np = (d == -1) ? up : up + Grid2D.Dir4(d);
                     if (Hint.Unlikely(np.x < 0 || np.y < 0 || np.x >= width || np.y >= s.Grid.Height)) continue;
                     
                     int ni = np.y * width + np.x;

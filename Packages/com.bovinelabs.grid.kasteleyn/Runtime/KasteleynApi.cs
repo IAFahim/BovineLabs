@@ -39,7 +39,7 @@ namespace BovineLabs.Grid.Kasteleyn
         }
 
         [BurstCompile]
-        public static void SetRegion(ref KasteleynState s, NativeArray<byte> region)
+        public static void SetRegion(ref KasteleynState s, in NativeArray<byte> region)
         {
             UnsafeUtility.MemCpy(s.Region.GetUnsafePtr(), region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
         }
@@ -116,7 +116,6 @@ namespace BovineLabs.Grid.Kasteleyn
             count = 0.0;
             if (s.VertexCount == 0) return false;
             if (s.VertexCount % 2 != 0) return true;
-            if (s.VertexCount > 20) return false;
 
             int n = s.VertexCount;
             var mat = new NativeArray<double>(n * n, Allocator.Temp);

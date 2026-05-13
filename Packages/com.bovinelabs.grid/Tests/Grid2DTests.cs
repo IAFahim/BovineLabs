@@ -61,10 +61,10 @@ public class Grid2DTests
     [Test] public void HeuristicOctile_Diagonal() { Assert.AreEqual(3f * 1.4142135f, Grid2D.HeuristicOctile(new int2(0, 0), new int2(3, 3)), 0.001f); }
 
     [Test] public void Directions4_SumZero()
-    { int2 s = int2.zero; for (int i = 0; i < 4; i++) s += Grid2D.Directions4[i]; Assert.AreEqual(int2.zero, s); }
+    { int2 s = int2.zero; for (int i = 0; i < 4; i++) s += Grid2D.Dir4(i); Assert.AreEqual(int2.zero, s); }
 
     [Test] public void Directions8_SumZero()
-    { int2 s = int2.zero; for (int i = 0; i < 8; i++) s += Grid2D.Directions8[i]; Assert.AreEqual(int2.zero, s); }
+    { int2 s = int2.zero; for (int i = 0; i < 8; i++) s += Grid2D.Dir8(i); Assert.AreEqual(int2.zero, s); }
 
     [Test] public void OneByOne()
     {
