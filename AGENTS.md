@@ -204,7 +204,105 @@ $LOGCOMPACT --input TestLog.log --stdout
 
 ---
 
-## 8. Test Assembly Setup (asmdef)
+## 8. Algorithm Architecture: The State-API Pattern
+
+Every algorithm follows a strict two-part structure:
+
+1. **State Struct (`XState`)** — unmanaged, `[StructLayout(LayoutKind.Sequential)]`, contains all collections (`NativeArray`, `UnsafeList`, `MinHeap`, etc.).
+2. **API Class (`XApi`)** — `public unsafe static class`, `[BurstCompile]`, contains only static methods that take `ref XState`.
+
+### Required Lifecycle Methods
+
+| Method | Purpose |
+|---|---|
+| `TryCreate(width, height, maxNodes, Allocator, out XState)` | Allocate all memory |
+| `TryExecute(ref XState, ...)` or `TrySearch` / `TryStep` / `TryIterate` | Core algorithm |
+| `Dispose(ref XState)` | Free all memory. Must be double-dispose safe (`if (X.IsCreated) X.Dispose()`) |
+
+### Steppable Pattern (for visualization)
+
+Some algorithms support frame-by-frame execution. Split into:
+- `TryInitialize(ref XState, ...)` — sets up start/goal, clears heaps
+- `TryStep(ref XState, ...)` — one expansion per call, returns `true` while running
+
+Existing examples: `FastMarchingApi.TryPropagateStep`, `FieldDStarApi.TryStep`.
+
+Algorithms that need this refactoring: `AnyaApi` (monolithic while loop → `TryInitSearch` + `TryStepSearch`), `WfcApi` (→ `TryObserveStep` + `TryPropagateStep`), `CbsApi` (nested A* in constraint tree → separate high-level/low-level steppers).
+
+### Skeleton Template
+
+```csharp
+using System.Runtime.InteropServices;
+using Unity.Burst;
+using Unity.Burst.CompilerServices;
+using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.Mathematics;
+using BovineLabs.Grid;
+
+namespace BovineLabs.Grid.MyAlgo
+{
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MyAlgoState
+    {
+        public Grid2D Grid;
+        public NativeArray<float> Costs;
+        public UnsafeList<int> Path;
+    }
+
+    [BurstCompile]
+    public unsafe static class MyAlgoApi
+    {
+        public static bool TryCreate(int width, int height, Allocator a, out MyAlgoState s)
+        {
+            s = default;
+            if (!Grid2D.TryCreate(width, height, out var g)) return false;
+            s = new MyAlgoState
+            {
+                Grid = g,
+                Costs = new NativeArray<float>(g.Length, a),
+                Path = new UnsafeList<int>(g.Length, a),
+            };
+            return true;
+        }
+
+        [BurstCompile]
+        public static bool TryExecute(ref MyAlgoState s, in NativeArray<byte> blocked)
+        {
+            int w = s.Grid.Width;
+            int h = s.Grid.Height;
+            int len = s.Grid.Length;
+            float* costs = (float*)s.Costs.GetUnsafePtr();
+            byte* blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            // Core logic with pointers, math.*, Hint.Likely/Unlikely
+            return true;
+        }
+
+        public static void Dispose(ref MyAlgoState s)
+        {
+            if (s.Costs.IsCreated) s.Costs.Dispose();
+            if (s.Path.IsCreated) s.Path.Dispose();
+        }
+    }
+}
+```
+
+### Bitwise Packing (from BovineLabs.Recast)
+
+Pack multiple values into single ints/uints to save memory:
+```csharp
+public uint SMin
+{
+    get => this.packedData & ((1u << 13) - 1);
+    set => this.packedData = (this.packedData & ~((1u << 13) - 1)) | (value & ((1u << 13) - 1));
+}
+```
+
+Use `ulong` as 64-bit masks (WFC states). Use `math.tzcnt()`, `math.countbits()` for fast state resolution. Avoid modulo in tight loops — use bitwise AND for power-of-2 divisors: `(dir + 1) & 0x3` instead of `(dir + 1) % 4`.
+
+---
+
+## 9. Test Assembly Setup (asmdef)
 
 Test assemblies that aren't discovered by the runner always have asmdef issues. The working template:
 
