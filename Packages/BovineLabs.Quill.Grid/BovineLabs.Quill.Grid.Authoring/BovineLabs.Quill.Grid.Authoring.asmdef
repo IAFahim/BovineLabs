@@ -22,6 +22,32 @@
   "defineConstraints": [
     "UNITY_EDITOR"
   ],
-  "versionDefines": [],
+  "versionDefines": [
+    {
+      "name": "com.bovinelabs.grid.anya",
+      "expression": "0.1.0",
+      "define": "BL_GRID_ANYA"
+    },
+    {
+      "name": "com.bovinelabs.grid.belief",
+      "expression": "0.1.0",
+      "define": "BL_GRID_BELIEF"
+    },
+    {
+      "name": "com.bovinelabs.grid.cbs",
+      "expression": "0.1.0",
+      "define": "BL_GRID_CBS"
+    },
+    {
+      "name": "com.bovinelabs.grid.fastmarching",
+      "expression": "0.1.0",
+      "define": "BL_GRID_FASTMARCHING"
+    },
+    {
+      "name": "com.bovinelabs.grid.edt",
+      "expression": "0.1.0",
+      "define": "BL_GRID_EDT"
+    }
+  ],
   "noEngineReferences": false
 }

@@ -5,7 +5,6 @@
     "BovineLabs.Core",
     "BovineLabs.Core.Extensions",
     "BovineLabs.Quill",
-    "BovineLabs.Quill.Grid",
     "BovineLabs.Quill.Grid.Data",
     "BovineLabs.Testing",
     "Unity.Burst",

@@ -4,16 +4,13 @@
   "references": [
     "BovineLabs.Core",
     "BovineLabs.Quill",
-    "BovineLabs.Quill.Grid",
     "Unity.Collections",
     "Unity.Entities",
     "Unity.Mathematics",
     "Unity.Entities.Hybrid",
     "com.bovinelabs.grid",
-    "FireAlt.BLinq",
     "BovineLabs.Quill.Grid.Data",
-    "Unity.Burst",
-    "Unity.Transforms"
+    "Unity.Burst"
   ],
   "includePlatforms": [
     "Editor"
@@ -26,6 +23,32 @@
   "defineConstraints": [
     "UNITY_EDITOR || BL_DEBUG"
   ],
-  "versionDefines": [],
+  "versionDefines": [
+    {
+      "name": "com.bovinelabs.grid.anya",
+      "expression": "0.1.0",
+      "define": "BL_GRID_ANYA"
+    },
+    {
+      "name": "com.bovinelabs.grid.belief",
+      "expression": "0.1.0",
+      "define": "BL_GRID_BELIEF"
+    },
+    {
+      "name": "com.bovinelabs.grid.cbs",
+      "expression": "0.1.0",
+      "define": "BL_GRID_CBS"
+    },
+    {
+      "name": "com.bovinelabs.grid.fastmarching",
+      "expression": "0.1.0",
+      "define": "BL_GRID_FASTMARCHING"
+    },
+    {
+      "name": "com.bovinelabs.grid.edt",
+      "expression": "0.1.0",
+      "define": "BL_GRID_EDT"
+    }
+  ],
   "noEngineReferences": false
 }
