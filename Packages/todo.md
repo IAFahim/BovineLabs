@@ -25,6 +25,12 @@
 - [x] **CBS steppable** — `TryInitSolve` + `TryStepSolve` + `TryExtractSolution`. Monolithic `TrySolve` preserved as backward-compatible wrapper. Steppable state: `SolveComplete`, `AgentCount`, `SolutionNode`.
 - [x] **EDT ScheduleParallel** — `TryBuildScheduled` returns `JobHandle` pipeline: `EdtRowJob.ScheduleParallel` → `EdtColJob.ScheduleParallel` with proper dependency chaining. `TryBuildParallel` convenience wrapper completes inline. `TryBuild` (sequential) unchanged.
 - [x] **Continuum crowd optimization** — `TrySolvePotential` Gauss-Seidel sweeps flattened to 1D running `idx++`/`idx--` pointer increments. `RelaxCell` accepts precomputed index. `TryBuildFlow` flattened to 1D with running `idx++`. All neighbor reads via `pot[idx±1]`/`pot[idx±w]` — zero division/index math in inner loops.
+- [x] **DStarLite pointer optimization** — All `s.G`/`s.RHS`/`s.InOpen`/`s.Parent` accesses in `TryRepair`, `TryExtractPath`, `CalculateKey`, `TryUpdateVertex`, `TryUpdateSuccessors` replaced with pre-extracted `float*`/`byte*`/`int*` pointers. Zero NativeArray indexing in hot loops.
+- [x] **RSR pointer optimization** — `TryGetSuccessors` extracts `RectOfCell` pointer once; neighbor lookups via `roc[idx]` instead of `s.RectOfCell[idx]`.
+- [x] **Subgoal pointer optimization** — `TryRelax` and `ExtractPath` take `float*`/`int*` raw pointers instead of `NativeArray<float/int>` refs. Eliminates safety handle overhead in A* inner loop.
 
 ## Future
-(none — all tasks complete)
+- [ ] Verify all changes compile and 145+ tests pass in Unity
+- [ ] Profile: benchmark Anya steppable vs monolithic, WFC observe-step throughput, CBS step latency
+- [ ] HashLife: evaluate replacing `NativeParallelHashMap<ulong,int>` with custom open-addressing flat hash for Intern/ResultCache
+- [ ] Subgoal: TryRelax inner loop could use SoA layout (gArr + parent as parallel arrays already, but subgoals Ptr access is still random)
