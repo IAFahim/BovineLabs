@@ -21,7 +21,7 @@ namespace BovineLabs.Grid.Anya
     public struct AnyaState
     {
         public Grid2D Grid;
-        public MinHeap Heap;
+        public DoubleMinHeap Heap;
         public UnsafeList<AnyaNode> Pool;
         public NativeArray<double> RootGCost;
     }
@@ -33,7 +33,7 @@ namespace BovineLabs.Grid.Anya
 
         public static bool TryCreate(int width, int height, int maxNodes, Allocator a, out AnyaState result)
         {
-            if (!Grid2D.TryCreate(width, height, out var g) || !MinHeap.TryCreate(maxNodes, a, out var heap))
+            if (!Grid2D.TryCreate(width, height, out var g) || !DoubleMinHeap.TryCreate(maxNodes, a, out var heap))
             {
                 result = default;
                 return false;
@@ -131,8 +131,8 @@ namespace BovineLabs.Grid.Anya
                 int cellY = math.min(u.y, ny);
                 if (cellY < 0 || cellY >= h) continue;
 
-                int startX = math.max(0, (int)math.floor(pL));
-                int endX = math.min(w - 1, (int)math.ceil(pR));
+                int startX = math.isinf(pL) ? 0 : math.max(0, (int)math.floor(pL));
+                int endX = math.isinf(pR) ? w - 1 : math.min(w - 1, (int)math.ceil(pR));
 
                 for (int x = startX; x <= endX; x++)
                 {
@@ -214,19 +214,51 @@ namespace BovineLabs.Grid.Anya
             return true;
         }
 
+        private static bool NodeEquals(in AnyaNode a, double L, double R, int y, double2 root)
+        {
+            return a.y == y
+                && math.abs(a.L - L) < EPS
+                && math.abs(a.R - R) < EPS
+                && math.abs(a.Root.x - root.x) < EPS
+                && math.abs(a.Root.y - root.y) < EPS;
+        }
+
         private static void PushNode(ref AnyaState s, double L, double R, int y, int dy, double2 root, double rootG, int parent, int2 goal)
         {
-            if (s.Pool.Length >= s.Pool.Capacity) return;
+            if (R - L <= EPS) return;
 
-            double xInt = goal.x;
+            // Linear scan for duplicate
+            for (int i = 0; i < s.Pool.Length; i++)
+            {
+                if (NodeEquals(s.Pool[i], L, R, y, root))
+                {
+                    if (s.Pool[i].RootG <= rootG + EPS) return;
+                    s.Pool[i] = new AnyaNode
+                    {
+                        L = L, R = R, y = y, dy = dy, Root = root, RootG = rootG, Parent = parent,
+                    };
+                    double xInt = goal.x;
+                    if (goal.y != root.y)
+                    {
+                        double ratio = (y - root.y) / (goal.y - root.y);
+                        xInt = root.x + (goal.x - root.x) * ratio;
+                    }
+                    double xOpt = math.max(L, math.min(R, xInt));
+                    double f = rootG + math.distance(root, new double2(xOpt, y)) + math.distance(new double2(xOpt, y), new double2(goal.x, goal.y));
+                    s.Heap.TryInsertOrDecrease(new DoubleHeapNode(i, f));
+                    return;
+                }
+            }
+
+            double xInt2 = goal.x;
             if (goal.y != root.y)
             {
                 double ratio = (y - root.y) / (goal.y - root.y);
-                xInt = root.x + (goal.x - root.x) * ratio;
+                xInt2 = root.x + (goal.x - root.x) * ratio;
             }
 
-            double xOpt = math.max(L, math.min(R, xInt));
-            double f = rootG + math.distance(root, new double2(xOpt, y)) + math.distance(new double2(xOpt, y), new double2(goal.x, goal.y));
+            double xOpt2 = math.max(L, math.min(R, xInt2));
+            double f2 = rootG + math.distance(root, new double2(xOpt2, y)) + math.distance(new double2(xOpt2, y), new double2(goal.x, goal.y));
 
             int idx = s.Pool.Length;
             s.Pool.Add(new AnyaNode
@@ -239,7 +271,7 @@ namespace BovineLabs.Grid.Anya
                 RootG = rootG,
                 Parent = parent,
             });
-            s.Heap.TryInsertOrDecrease(new HeapNode(idx, (float)f));
+            s.Heap.TryInsertOrDecrease(new DoubleHeapNode(idx, f2));
         }
 
         private static bool IsEdgePassable(int x, int y, int w, int h, byte* blk)
@@ -249,26 +281,66 @@ namespace BovineLabs.Grid.Anya
             return below || above;
         }
 
+        /// <summary>
+        /// Amanatides &amp; Woo fast voxel traversal for line-of-sight.
+        /// Traverses all grid cells that the line segment from→to passes through,
+        /// returning false if any blocked cell is hit.
+        /// </summary>
         [BurstCompile]
         public static bool LineOfSight(int w, int h, [NoAlias] byte* blk, int2 from, int2 to)
         {
-            int dx = math.abs(to.x - from.x);
-            int dy = math.abs(to.y - from.y);
-            int sx = from.x < to.x ? 1 : -1;
-            int sy = from.y < to.y ? 1 : -1;
-            int err = dx - dy;
-            int x = from.x, y = from.y;
+            // Same start/end: just check one cell
+            if (from.x == to.x && from.y == to.y)
+                return from.x >= 0 && from.y >= 0 && from.x < w && from.y < h && blk[from.y * w + from.x] == 0;
+
+            double dx = to.x - from.x;
+            double dy = to.y - from.y;
+            double absDx = math.abs(dx);
+            double absDy = math.abs(dy);
+
+            int stepX = dx > 0 ? 1 : dx < 0 ? -1 : 0;
+            int stepY = dy > 0 ? 1 : dy < 0 ? -1 : 0;
+
+            // How far along the ray we must move for each component to cross a cell boundary
+            double tMaxX, tMaxY;
+            double tDeltaX = absDx > 1e-12 ? 1.0 / absDx : double.PositiveInfinity;
+            double tDeltaY = absDy > 1e-12 ? 1.0 / absDy : double.PositiveInfinity;
+
+            // Offset to the next cell boundary
+            if (stepX > 0) tMaxX = (math.floor(from.x) + 1.0 - from.x) * tDeltaX;
+            else if (stepX < 0) tMaxX = (from.x - math.floor(from.x)) * tDeltaX;
+            else tMaxX = double.PositiveInfinity;
+
+            if (stepY > 0) tMaxY = (math.floor(from.y) + 1.0 - from.y) * tDeltaY;
+            else if (stepY < 0) tMaxY = (from.y - math.floor(from.y)) * tDeltaY;
+            else tMaxY = double.PositiveInfinity;
+
+            int x = from.x;
+            int y = from.y;
+
+            // Check start cell
+            if (x < 0 || y < 0 || x >= w || y >= h) return false;
+            if (blk[y * w + x] != 0) return false;
 
             while (true)
             {
+                if (x == to.x && y == to.y) return true;
+
+                // Step to next voxel
+                if (tMaxX < tMaxY)
+                {
+                    if (tMaxX > 1.0) { x = to.x; y = to.y; }
+                    else { x += stepX; tMaxX += tDeltaX; }
+                }
+                else
+                {
+                    if (tMaxY > 1.0) { x = to.x; y = to.y; }
+                    else { y += stepY; tMaxY += tDeltaY; }
+                }
+
                 if (x < 0 || y < 0 || x >= w || y >= h) return false;
                 if (blk[y * w + x] != 0) return false;
-                if (x == to.x && y == to.y) break;
-                int e2 = 2 * err;
-                if (e2 > -dy) { err -= dy; x += sx; }
-                if (e2 < dx) { err += dx; y += sy; }
             }
-            return true;
         }
 
         private static void ExtractPath(in UnsafeList<AnyaNode> pool, int nodeIdx, int2 goal, ref NativeList<int2> path)

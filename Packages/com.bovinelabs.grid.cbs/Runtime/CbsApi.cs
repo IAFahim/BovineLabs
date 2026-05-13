@@ -9,7 +9,11 @@ namespace BovineLabs.Grid.Cbs
 {
     public struct AgentTask { public int Start; public int Goal; }
 
-    public struct CbsConstraint { public int Agent; public int Cell; public int Time; }
+    /// <summary>
+    /// Supports both vertex constraints (CellFrom == -1: agent cannot occupy Cell at Time)
+    /// and edge constraints (CellFrom >= 0: agent cannot traverse edge CellFrom→Cell at Time).
+    /// </summary>
+    public struct CbsConstraint { public int Agent; public int Cell; public int CellFrom; public int Time; }
 
     public struct CbsNode
     {
@@ -95,14 +99,25 @@ namespace BovineLabs.Grid.Cbs
                 int PIdx = heapNode.Id;
                 CbsNode P = s.Nodes[PIdx];
 
-                if (!FindConflict(in s, in P, agentCount, out int a1, out int a2, out int cell, out int t))
+                if (!FindConflict(in s, in P, agentCount, out int a1, out int a2, out int conflictType, out int cell, out int cellFrom, out int cellTo, out int t))
                 {
                     ExtractResult(in s, in P, agentCount, ref resultFlatPaths, ref resultPathLengths);
                     return true;
                 }
 
-                if (!TryExpandChild(ref s, PIdx, a1, cell, t, blockedPtr, agentsPtr, agentCount)) return false;
-                if (!TryExpandChild(ref s, PIdx, a2, cell, t, blockedPtr, agentsPtr, agentCount)) return false;
+                if (conflictType == 0)
+                {
+                    // Vertex conflict: constrain each agent from occupying cell at time t
+                    if (!TryExpandChild(ref s, PIdx, a1, new CbsConstraint { Agent = a1, Cell = cell, CellFrom = -1, Time = t }, blockedPtr, agentsPtr, agentCount)) return false;
+                    if (!TryExpandChild(ref s, PIdx, a2, new CbsConstraint { Agent = a2, Cell = cell, CellFrom = -1, Time = t }, blockedPtr, agentsPtr, agentCount)) return false;
+                }
+                else
+                {
+                    // Edge/swap conflict: constrain each agent from traversing the conflicting edge
+                    // Agent a1 moved cellFrom→cellTo at time t; Agent a2 moved cellTo→cellFrom at time t
+                    if (!TryExpandChild(ref s, PIdx, a1, new CbsConstraint { Agent = a1, Cell = cellTo, CellFrom = cellFrom, Time = t }, blockedPtr, agentsPtr, agentCount)) return false;
+                    if (!TryExpandChild(ref s, PIdx, a2, new CbsConstraint { Agent = a2, Cell = cellFrom, CellFrom = cellTo, Time = t }, blockedPtr, agentsPtr, agentCount)) return false;
+                }
             }
 
             return false;
@@ -139,10 +154,10 @@ namespace BovineLabs.Grid.Cbs
 
                 if (Hint.Unlikely(s.FlatPaths.Length + path.Length > s.FlatPaths.Capacity)) { path.Dispose(); nodeConstraints.Dispose(); return false; }
                 for (int i = 0; i < path.Length; i++) s.FlatPaths.Add(path[i]);
-                
+
                 if (Hint.Unlikely(s.PathLengths.Length >= s.PathLengths.Capacity)) { path.Dispose(); nodeConstraints.Dispose(); return false; }
                 s.PathLengths.Add(path.Length);
-                
+
                 node.Cost += (path.Length - 1);
                 path.Dispose();
             }
@@ -151,10 +166,15 @@ namespace BovineLabs.Grid.Cbs
             return true;
         }
 
+        /// <summary>
+        /// Detects vertex and edge conflicts between all agent pairs.
+        /// conflictType: 0 = vertex (two agents at same cell at same time), 1 = edge (swap conflict).
+        /// </summary>
         [BurstCompile]
-        private static bool FindConflict(in CbsState s, in CbsNode node, int agentCount, out int a1, out int a2, out int cell, out int t)
+        private static bool FindConflict(in CbsState s, in CbsNode node, int agentCount,
+            out int a1, out int a2, out int conflictType, out int cell, out int cellFrom, out int cellTo, out int t)
         {
-            a1 = a2 = cell = t = -1;
+            a1 = a2 = conflictType = cell = cellFrom = cellTo = t = -1;
             int* pathLengthsPtr = s.PathLengths.Ptr + node.LengthOffset;
 
             for (int i = 0; i < agentCount; i++)
@@ -168,24 +188,30 @@ namespace BovineLabs.Grid.Cbs
                     {
                         int cellI_t = GetCellAtTime(in s, in node, i, time);
                         int cellJ_t = GetCellAtTime(in s, in node, j, time);
+
+                        // Vertex conflict: both agents at same cell at same time
                         if (cellI_t == cellJ_t)
                         {
-                            a1 = i;
-                            a2 = j;
+                            a1 = i; a2 = j;
+                            conflictType = 0;
                             cell = cellI_t;
+                            cellFrom = cellTo = -1;
                             t = time;
                             return true;
                         }
 
+                        // Edge/swap conflict: agents swap positions
                         if (time + 1 < maxT)
                         {
                             int cellI_next = GetCellAtTime(in s, in node, i, time + 1);
                             int cellJ_next = GetCellAtTime(in s, in node, j, time + 1);
                             if (cellI_t == cellJ_next && cellI_next == cellJ_t)
                             {
-                                a1 = i;
-                                a2 = j;
-                                cell = cellI_t;
+                                a1 = i; a2 = j;
+                                conflictType = 1;
+                                cell = -1;
+                                cellFrom = cellI_t;
+                                cellTo = cellI_next;
                                 t = time + 1;
                                 return true;
                             }
@@ -208,7 +234,7 @@ namespace BovineLabs.Grid.Cbs
         }
 
         [BurstCompile]
-        private static bool TryExpandChild(ref CbsState s, int parentIdx, int agent, int cell, int time, byte* blocked, AgentTask* agents, int agentCount)
+        private static bool TryExpandChild(ref CbsState s, int parentIdx, int agent, CbsConstraint constraint, byte* blocked, AgentTask* agents, int agentCount)
         {
             if (Hint.Unlikely(s.Constraints.Length >= s.Constraints.Capacity)) return false;
 
@@ -218,7 +244,7 @@ namespace BovineLabs.Grid.Cbs
                 ConstraintCount = 1,
                 Parent = parentIdx
             };
-            s.Constraints.Add(new CbsConstraint { Agent = agent, Cell = cell, Time = time });
+            s.Constraints.Add(constraint);
 
             if (PlanNode(ref s, ref child, blocked, agents, agentCount))
             {
@@ -306,8 +332,20 @@ namespace BovineLabs.Grid.Cbs
                     for (int c = 0; c < constraints.Length; c++)
                     {
                         var cons = constraints[c];
-                        if (cons.Agent == agentId && cons.Cell == ni && cons.Time == nextTime)
-                        { constrained = true; break; }
+                        if (cons.Agent != agentId) continue;
+
+                        if (cons.CellFrom < 0)
+                        {
+                            // Vertex constraint: agent cannot occupy cons.Cell at cons.Time
+                            if (cons.Cell == ni && cons.Time == nextTime)
+                            { constrained = true; break; }
+                        }
+                        else
+                        {
+                            // Edge constraint: agent cannot traverse cons.CellFrom → cons.Cell at cons.Time
+                            if (cons.Cell == ni && cons.CellFrom == u && cons.Time == nextTime)
+                            { constrained = true; break; }
+                        }
                     }
                     if (constrained) continue;
 

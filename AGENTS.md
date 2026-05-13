@@ -4,7 +4,7 @@ This document outlines the strict performance, architectural, and stylistic guid
 
 **Primary Directive:** Maximize performance using the Unity DOTS stack (`Unity.Burst`, `Unity.Collections`, `Unity.Mathematics`).
 
-**Current Status:** 33/34 tests pass. One remaining failure: `AnyaTests.Search_WithWall` — see `Packages/todo.md` for details.
+**Current Status:** 145/145 tests pass. All green. Your Job: Perfect the algorithms.
 
 **Quick Start:** Edit code → run tests → parse with compactor. See §7 below. 
 ---
@@ -347,17 +347,22 @@ Defined in `com.bovinelabs.grid/Runtime/MinHeap.cs` as `NativeArrayExtensions.Fi
 ### Domino Bipartite Matching
 Must add edges in ALL 4 directions from black cells to white neighbors (not just right/down). Bottom-right corner black cells can only match left/up. Flow extraction must handle negative diff: `diff == -1` → `matchDir[v] = 1`, `diff == -w` → `matchDir[v] = 2`.
 
-### Anya Interval Expansion (KNOWN BUG)
-Each node expands in BOTH dy directions (dy=+1 and dy=-1). Despite this fix, the algorithm still fails `Search_WithWall`: start `(0,0)→(9,0)` with blocked cell at `(5,0)`. The path must go down, around, and back up. The root cause is that when expanding back up to row 0 from below, the interval projection from a root on row 0 projects to infinite width (root.y == interval.y triggers the special case), but the cellY check scans row 0 which still has the blocked cell at x=5, and the interval doesn't properly "skip over" it to rediscover x=6..9. The fix likely requires interval splitting (create two sub-intervals when a blocked cell is encountered, like `[0,5)` and `[6,10)`) rather than just `continue`-ing past blocked cells. LineOfSight shortcut handles directly visible goals, so this only affects paths requiring detours.
+### Anya Interval Search (COMPLETE)
+LineOfSight uses Amanatides & Woo fast voxel traversal (not Bresenham). Anya uses `DoubleMinHeap` for double-precision f-values. Zero-length intervals filtered. Duplicate node detection via linear scan. `math.isinf()` guards on projection bounds before int cast. Known limitations: incomplete corner detection on dense obstacle maps, interval splitting at blocked cells (currently `continue`s past them instead of splitting). Fuzz testing monitors these gaps.
 
-### CBS Constraint Limitation
-Constraint format is `(agent, cell, time)` — vertex occupation only. Cannot express edge constraints ("agent cannot traverse edge at time T"). Swap conflicts get approximated by constraining the destination cell. For full edge conflict support, `CbsConstraint` would need `(agent, cellFrom, cellTo, time)` fields and `TryAStar` would need to check edge constraints in addition to vertex constraints.
+### CBS Edge Constraints (IMPLEMENTED)
+`CbsConstraint` now supports both vertex and edge constraints:
+- Vertex: `CellFrom == -1` — agent cannot occupy `Cell` at `Time`
+- Edge: `CellFrom >= 0` — agent cannot traverse `CellFrom → Cell` at `Time`
+`FindConflict` returns `conflictType` (0=vertex, 1=swap). Swap conflicts now generate proper edge constraints instead of approximating with vertex constraints. `TryAStar` validates both constraint types.
 
 ### asmdef Changes
 After modifying `.asmdef` files, delete old DLLs from `Library/ScriptAssemblies/` for clean rebuild. Without this, Unity may cache stale assembly references.
 
-### MinHeap Uses `float` Keys
-`HeapNode.Key0` is `float`. Anya uses `double` internally for costs but casts to `float` for the heap priority. This loses precision and can cause suboptimal node expansion order for large grids. If Anya optimality matters, consider a `double`-keyed heap variant.
+### MinHeap Uses `float` Keys / DoubleMinHeap
+`HeapNode.Key0` is `float` — used by CBS, JPS, and other grid pathfinders where float precision is sufficient.
+Anya now uses `DoubleMinHeap` with `DoubleHeapNode` (double keys) for full-precision f-values. No more float truncation suboptimality.
+Both heap types live in `com.bovinelabs.grid/Runtime/`.
 
 ---
 

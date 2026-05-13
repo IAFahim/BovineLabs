@@ -303,6 +303,12 @@
         "com.unity.mathematics": "1.0.0"
       }
     },
+    "com.bovinelabs.shattered.unit.tests": {
+      "version": "file:shattered-unit-tests",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.28",
       "depth": 1,

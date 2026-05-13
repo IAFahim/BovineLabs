@@ -1,7 +1,7 @@
 # Pathfinding & Grid Algorithms - TODO
 
 ## In Progress
-- [ ] **Anya interval search** — `Search_WithWall` fails: start `(0,0)→(9,0)` with blocked cell at `(5,0)`. The bidirectional expansion (dy=+1/-1) was added but the algorithm still can't route around obstacles that require going down then back up to the same row. Root cause: when expanding from row N back to row 0, the interval projection and cell scanning logic doesn't properly rediscover cells past the obstacle. Needs deeper fix to the projection/interval-splitting logic or a fallback to grid-based pathfinding for these cases.
+(none currently)
 
 ## Done
 - [x] **CBS** — Edge swap conflicts, goal-wait conflicts, multi-agent bottleneck tests all passing
@@ -10,9 +10,14 @@
 - [x] **Belief** — Message buffer clearing per iteration, consensus chain test, ghost belief test
 - [x] **Test asmdef** — All 5 test assemblies use correct template (Editor platform, overrideReferences, nunit.framework.dll)
 - [x] **Anya** — LineOfSight shortcut, bidirectional expansion, Euclidean cost test, corner test
+- [x] **Anya Search_WithWall** — Fixed: `(int)math.ceil(double.PositiveInfinity)` overflow guard, zero-length interval filter, duplicate node detection
+- [x] **Anya precision** — `DoubleMinHeap` + `DoubleHeapNode` with `double` keys; AnyaApi now uses full double-precision f-values eliminating float-truncation suboptimality
+- [x] **Anya NoBlockedTraversal** — Replaced Bresenham LoS with Amanatides & Woo fast voxel traversal (epsilon-robust)
+- [x] **CBS edge constraints** — `CbsConstraint` upgraded to `(Agent, Cell, CellFrom, Time)` format. Vertex constraints: `CellFrom == -1`. Edge constraints: `CellFrom >= 0`. `FindConflict` returns `conflictType` (0=vertex, 1=swap). `TryAStar` validates both. Test: `AStar_EdgeConstraint`
+- [x] **Fuzz** — `PathfinderFuzzTests` in `shattered-unit-tests` package. 7 test configurations × 10-20 trials each. Random xorshift grids at varying densities. Validates path start/goal correctness, cross-validates JPS/Anya reachability, monitors Anya optimality gaps. 145 total tests all pass.
 
 ## Future
-- [ ] **Fuzz** — Pathfinder equivalence (A* vs JPS vs Anya) on random grids
-- [ ] **Anya NoBlockedTraversal** — Line-segment intersection check against blocked cells
-- [ ] **CBS edge constraints** — Upgrade `CbsConstraint` to support `(agent, cellFrom, cellTo, time)` for proper edge conflict resolution
-- [ ] **Anya precision** — Replace `float` f-values in MinHeap with `double` for better Anya optimality
+- [ ] **Anya completeness** — Interval splitting at blocked cells (create `[L,x)` and `[x+1,R)` sub-intervals instead of `continue`-ing past blocked cells). Will close remaining Anya reachability gaps found by fuzz testing.
+- [ ] **Anya optimality** — Fix corner detection to handle all wall configurations. Currently misses some corners causing suboptimal paths on dense obstacle maps.
+- [ ] **MeshA hash map elimination** — Strip `NativeHashMap` from MeshAStarJob, replace with flat arrays + bit-packed closed set
+- [ ] **EHL SIMD Jaccard** — Replace iterative overlap computation with `math.countbits()` SIMD bitmasks
