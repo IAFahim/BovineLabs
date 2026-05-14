@@ -137,8 +137,9 @@ namespace BovineLabs.Grid
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool Less(DoubleHeapNode a, DoubleHeapNode b)
         {
-            if (a.Key0 != b.Key0) return a.Key0 < b.Key0;
-            return a.Key1 < b.Key1;
+            int c = a.Key0.CompareTo(b.Key0);
+            if (c!= 0) return c < 0;
+            return a.Key1.CompareTo(b.Key1) < 0;
         }
 
         public void Dispose()
@@ -151,5 +152,21 @@ namespace BovineLabs.Grid
                 Positions = null;
             }
         }
+        
+        public bool TryUpdate(DoubleHeapNode node)
+        {
+            if ((uint)node.Id >= (uint)Capacity) return false;
+            var pos = Positions[node.Id];
+            if (pos < 0) return false;
+
+            var old = Data[pos];
+            Data[pos] = node;
+            if (Less(node, old)) SiftUp(pos);
+            else if (Less(old, node)) SiftDown(pos);
+            return true;
+        }
+
+        public bool Contains(int id) => (uint)id < (uint)Capacity && Positions[id] >= 0;
+        public DoubleHeapNode Peek() => Data[0];
     }
 }

@@ -1,1 +1,80 @@
-status=passed total=11 passed=11 failed=0 skipped=0 inconclusive=0 duration=0.0446316
+status=failed total=219 passed=210 failed=8 skipped=1 inconclusive=0 duration=0.2714921
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_AnyAngle_ShorterThanGridConstrained
+message:
+Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_AnyAngle_ShorterThanGridConstrained () [0x00035] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:181
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EmptyGrid_PathFound
+message:
+Path should be found on empty grid
+  Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EmptyGrid_PathFound () [0x00035] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:117
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EmptyGrid_StraightLine
+message:
+Path should be found
+  Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EmptyGrid_StraightLine () [0x00035] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:138
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EpsilonZero_OptimalPath
+message:
+Path should be found
+  Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_EpsilonZero_OptimalPath () [0x00035] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:233
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_NoPath_ReturnsFalse
+message:
+Unhandled log message: '[Exception] InvalidOperationException: Jobs can only create Temp memory'. Use UnityEngine.TestTools.LogAssert.Expect
+stack:
+Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle.CreateHandle (Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle& safety, Unity.Collections.Allocator allocator) (at /home/bokken/build/output/unity/unity/Runtime/Export/Jobs/AtomicSafetyHandle.bindings.cs:291)
+Unity.Collections.NativeArray`1[T].Allocate (System.Int32 length, Unity.Collections.Allocator allocator, Unity.Collections.MemoryLabel label, Unity.Collections.NativeArray`1[T]& array) (at /home/bokken/build/output/unity/unity/Runtime/Export/NativeArray/NativeArray.cs:159)
+Unity.Collections.NativeArray`1[T]..ctor (System.Int32 length, Unity.Collections.Allocator allocator, Unity.Collections.NativeArrayOptions options) (at /home/bokken/build/output/unity/unity/Runtime/Export/NativeArray/NativeArray.cs:69)
+Unity.Collections.CollectionHelper.CreateNativeArray[T] (System.Int32 length, Unity.Collections.AllocatorManager+AllocatorHandle allocator, Unity.Collections.NativeArrayOptions options) (at ./Library/PackageCache/com.unity.collections@3cc22108e977/Unity.Collections/CollectionHelper.cs:364)
+Unity.Collections.LowLevel.Unsafe.UnsafeParallelHashMap`2[TKey,TValue].GetKeyArray (Unity.Collections.AllocatorManager+AllocatorHandle allocator) (at ./Library/PackageCache/com.unity.collections@3cc22108e977/Unity.Collections/UnsafeParallelHashMap.cs:1363)
+Unity.Collections.NativeParallelHashMap`2[TKey,TValue].GetKeyArray (Unity.Collections.AllocatorManager+AllocatorHandle allocator) (at ./Library/PackageCache/com.unity.collections@3cc22108e977/Unity.Collections/NativeParallelHashMap.cs:359)
+BovineLabs.Grid.Wavestar.WavestarPathExtractorJob.FindGoalSubvolume (BovineLabs.Grid.Wavestar.SubvolumeData& goalData) (at ./Packages/com.bovinelabs.grid.wavestar/Runtime/WavestarPathExtractor.cs:106)
+BovineLabs.Grid.Wavestar.WavestarPathExtractorJob.Execute () (at ./Packages/com.bovinelabs.grid.wavestar/Runtime/WavestarPathExtractor.cs:30)
+Unity.Jobs.IJobExtensions+JobStruct`1[T].Execute (T& data, System.IntPtr additionalPtr, System.IntPtr bufferRangePatchData, Unity.Jobs.LowLevel.Unsafe.JobRanges& ranges, System.Int32 jobIndex) (at /home/bokken/build/output/unity/unity/Runtime/Jobs/Managed/IJob.cs:61)
+Unity.Jobs.JobHandle:ScheduleBatchedJobsAndComplete(JobHandle&)
+Unity.Jobs.JobHandle:Complete() (at /home/bokken/build/output/unity/unity/Runtime/Jobs/ScriptBindings/JobHandle.bindings.cs:26)
+BovineLabs.Grid.Wavestar.WavestarPathExtractor:TryExtract(NativeParallelHashMap`2, int3, int3, NativeArray`1, Int32, Int32, Int32, NativeList`1&, Single&) (at ./Packages/com.bovinelabs.grid.wavestar/Runtime/WavestarPathExtractor.cs:250)
+BovineLabs.Grid.Wavestar.Tests.WavestarTests:RunWavestar(NativeArray`1, int3, int3, Single, Int32, Int32, Int32, Boolean&, Single&) (at ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:96)
+BovineLabs.Grid.Wavestar.Tests.WavestarTests:Wavestar_NoPath_ReturnsFalse() (at ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:286)
+System.Reflection.MethodBase:Invoke(Object, Object[])
+NUnit.Framework.Internal.Reflect:InvokeMethod(MethodInfo, Object, Object[])
+NUnit.Framework.Internal.MethodWrapper:Invoke(Object, Object[])
+NUnit.Framework.Internal.Commands.TestMethodCommand:RunNonAsyncTestMethod(ITestExecutionContext)
+NUnit.Framework.Internal.Commands.TestMethodCommand:RunTestMethod(ITestExecutionContext)
+NUnit.Framework.Internal.Commands.TestMethodCommand:Execute(ITestExecutionContext)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions() (at /home/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:403)
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_PathReconstruction_ValidWaypoints
+message:
+Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_PathReconstruction_ValidWaypoints () [0x00035] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:250
+
+FAIL BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_StartEqualsGoal_TrivialPath
+message:
+Path from start to itself should be found
+  Expected: True
+  But was:  False
+stack:
+at BovineLabs.Grid.Wavestar.Tests.WavestarTests.Wavestar_StartEqualsGoal_TrivialPath () [0x00033] in ./Packages/com.bovinelabs.grid.wavestar/Tests/WavestarTests.cs:302
+
+FAIL BeliefTests.ClearMessages
+message:
+Expected: 0.0d +/- 0.0010000000474974513d
+  But was:  5.0d
+stack:
+at BeliefTests.ClearMessages () [0x00043] in ./Packages/com.bovinelabs.grid.belief/Tests/BeliefTests.cs:23
