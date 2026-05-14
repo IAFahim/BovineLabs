@@ -32,4 +32,12 @@ public class FieldDStarTests
         FieldDStarApi.Dispose(ref s);
         cost.Dispose();
     }
+
+    [Test]
+    public void Dispose_Double()
+    {
+        Assert.IsTrue(FieldDStarApi.TryCreate(5, 5, Allocator.Temp, out var s));
+        FieldDStarApi.Dispose(ref s);
+        FieldDStarApi.Dispose(ref s);
+    }
 }

@@ -174,12 +174,17 @@ namespace BovineLabs.Grid.Anya
                 var ny = u.y + dir;
                 if (ny < 0 || ny > h) continue;
 
+                var cellY = math.min(u.y, ny);
+                if (cellY < 0 || cellY >= h) continue;
+
+                ExpandCorners(ref s, in u, uIdx, dir, cellY, ny, w, h, blk, goal);
+
                 var pL = u.L;
                 var pR = u.R;
                 if (u.Root.y != u.y)
                 {
                     var forwardDir = u.y > u.Root.y ? 1 : -1;
-                    if (dir != forwardDir) continue; // Only expand intervals away from root
+                    if (dir != forwardDir) continue;
 
                     var ratio = (ny - u.Root.y) / (u.y - u.Root.y);
                     pL = u.Root.x + (u.L - u.Root.x) * ratio;
@@ -201,9 +206,6 @@ namespace BovineLabs.Grid.Anya
                         pR = double.PositiveInfinity;
                     }
                 }
-
-                var cellY = math.min(u.y, ny);
-                if (cellY < 0 || cellY >= h) continue;
 
                 var projStart = math.isinf(pL) ? 0 : math.max(0, (int)math.floor(pL));
                 var projEnd = math.isinf(pR) ? w - 1 : math.min(w - 1, (int)math.ceil(pR));
@@ -248,8 +250,6 @@ namespace BovineLabs.Grid.Anya
                     PushNode(ref s, oL, oR, ny, u.dy, u.Root, u.RootG, uIdx, goal);
                     x = runEnd + 1;
                 }
-
-                ExpandCorners(ref s, in u, uIdx, dir, cellY, ny, w, h, blk, goal);
             }
 
             return false;

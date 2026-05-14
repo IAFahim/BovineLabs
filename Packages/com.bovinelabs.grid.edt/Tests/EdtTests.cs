@@ -6,6 +6,14 @@ using Unity.Collections;
 public class EdtTests
 {
     [Test]
+    public void Create_Dimensions()
+    {
+        Assert.IsTrue(EdtApi.TryCreate(10, 10, Allocator.Temp, out var s));
+        Assert.AreEqual(100, s.Grid.Length);
+        EdtApi.Dispose(ref s);
+    }
+
+    [Test]
     public void Init_ObstacleIsZero()
     {
         var b = new NativeArray<byte>(new byte[] { 1, 0, 0 }, Allocator.Temp);

@@ -111,6 +111,32 @@ public class AnyaTests
     }
 
     [Test]
+    public void Search_FullyBlocked_NoPath()
+    {
+        Assert.IsTrue(AnyaApi.TryCreate(5, 5, 1000, Allocator.Temp, out var s));
+        var blocked = new NativeArray<byte>(25, Allocator.Temp);
+        blocked.Fill((byte)1);
+        var path = new NativeList<int2>(Allocator.Temp);
+        int2 startV = new int2(0, 0);
+        int2 goalV = new int2(4, 4);
+        Assert.IsFalse(AnyaApi.TrySearch(ref s, blocked, ref startV, ref goalV, ref path));
+        AnyaApi.Dispose(ref s); blocked.Dispose(); path.Dispose();
+    }
+
+    [Test]
+    public void Search_OutOfBounds_NoPath()
+    {
+        Assert.IsTrue(AnyaApi.TryCreate(5, 5, 1000, Allocator.Temp, out var s));
+        var blocked = new NativeArray<byte>(25, Allocator.Temp);
+        blocked.Fill((byte)0);
+        var path = new NativeList<int2>(Allocator.Temp);
+        int2 startV = new int2(-1, 0);
+        int2 goalV = new int2(4, 4);
+        Assert.IsFalse(AnyaApi.TrySearch(ref s, blocked, ref startV, ref goalV, ref path));
+        AnyaApi.Dispose(ref s); blocked.Dispose(); path.Dispose();
+    }
+
+    [Test]
     public void Dispose_Double()
     {
         Assert.IsTrue(AnyaApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));

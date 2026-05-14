@@ -49,13 +49,27 @@ namespace BovineLabs.Grid.Jps
         public static bool TrySearch(ref JpsState s, in NativeArray<byte> blocked, int start, int goal,
             ref NativeList<int> path)
         {
-            path.Clear();
+            if (!TryInitSearch(ref s, in blocked, start, goal)) return false;
+            if (start == goal) { path.Add(start); return true; }
+            if (s.Open.IsEmpty) return false;
+
+            var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
+            var w = s.Grid.Width;
+            var h = s.Grid.Height;
+
+            while (!s.Open.IsEmpty)
+                if (TryStepSearch(ref s, blk, w, h, start, goal, ref path)) break;
+
+            return path.Length > 0;
+        }
+
+        [BurstCompile]
+        public static bool TryInitSearch(ref JpsState s, in NativeArray<byte> blocked, int start, int goal)
+        {
             var g = (float*)s.G.GetUnsafePtr();
             var parent = (int*)s.Parent.GetUnsafePtr();
             var closed = (byte*)s.Closed.GetUnsafePtr();
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
-            var w = s.Grid.Width;
-            var h = s.Grid.Height;
             var len = s.Grid.Length;
 
             for (var i = 0; i < len; i++)
@@ -68,44 +82,47 @@ namespace BovineLabs.Grid.Jps
             s.Open.Clear();
 
             if (blk[start] != 0 || blk[goal] != 0) return false;
-            if (start == goal)
-            {
-                path.Add(start);
-                return true;
-            }
+            if (start == goal) return true;
 
             g[start] = 0f;
             s.Open.TryInsertOrDecrease(new HeapNode(start, Octile(0, 0, s.Grid.ToCoord(start), s.Grid.ToCoord(goal))));
+            return true;
+        }
 
-            while (!s.Open.IsEmpty)
+        [BurstCompile]
+        public static bool TryStepSearch(ref JpsState s, byte* blk, int w, int h, int start, int goal, ref NativeList<int> path)
+        {
+            if (s.Open.IsEmpty) return true;
+            if (!s.Open.TryPop(out var current)) return true;
+
+            var g = (float*)s.G.GetUnsafePtr();
+            var parent = (int*)s.Parent.GetUnsafePtr();
+            var closed = (byte*)s.Closed.GetUnsafePtr();
+            var cid = current.Id;
+            closed[cid] = 1;
+
+            if (cid == goal)
             {
-                if (!s.Open.TryPop(out var current)) return false;
-                var cid = current.Id;
-                closed[cid] = 1;
+                TryExtractPath(in s.Parent, goal, start, ref path);
+                return true;
+            }
 
-                if (cid == goal)
+            var cp = s.Grid.ToCoord(cid);
+
+            for (var d = 0; d < 8; d++)
+            {
+                var dir = Grid2D.Dir8(d);
+                if (TryJump(blk, w, h, cp, dir, goal, out var jumpIdx))
                 {
-                    TryExtractPath(in s.Parent, goal, start, ref path);
-                    return true;
-                }
-
-                var cp = s.Grid.ToCoord(cid);
-
-                for (var d = 0; d < 8; d++)
-                {
-                    var dir = Grid2D.Dir8(d);
-                    if (TryJump(blk, w, h, cp, dir, goal, out var jumpIdx))
+                    if (closed[jumpIdx] != 0) continue;
+                    var jp = s.Grid.ToCoord(jumpIdx);
+                    var cost = g[cid] + Octile(0, 0, cp, jp);
+                    if (cost < g[jumpIdx])
                     {
-                        if (closed[jumpIdx] != 0) continue;
-                        var jp = s.Grid.ToCoord(jumpIdx);
-                        var cost = g[cid] + Octile(0, 0, cp, jp);
-                        if (cost < g[jumpIdx])
-                        {
-                            g[jumpIdx] = cost;
-                            parent[jumpIdx] = cid;
-                            var f = cost + Octile(0, 0, jp, s.Grid.ToCoord(goal));
-                            s.Open.TryInsertOrDecrease(new HeapNode(jumpIdx, f));
-                        }
+                        g[jumpIdx] = cost;
+                        parent[jumpIdx] = cid;
+                        var f = cost + Octile(0, 0, jp, s.Grid.ToCoord(goal));
+                        s.Open.TryInsertOrDecrease(new HeapNode(jumpIdx, f));
                     }
                 }
             }
@@ -169,10 +186,11 @@ namespace BovineLabs.Grid.Jps
             {
                 path.Add(current);
                 current = parent[current];
-                if (current < 0) return false;
+                if (current < 0) break;
             }
 
-            path.Add(start);
+            if (current == start)
+                path.Add(start);
 
             var p = path.GetUnsafePtr();
             int lo = 0, hi = path.Length - 1;

@@ -220,11 +220,32 @@ public class JpsTests
     }
 
     [Test]
+    public void Create_Dimensions()
+    {
+        Assert.IsTrue(JpsApi.TryCreate(10, 10, Allocator.Temp, out var s));
+        Assert.AreEqual(100, s.Grid.Length);
+        JpsApi.Dispose(ref s);
+    }
+
+    [Test]
     public void Dispose_Double()
     {
         Assert.IsTrue(JpsApi.TryCreate(5, 5, Allocator.Temp, out var s));
         JpsApi.Dispose(ref s);
         JpsApi.Dispose(ref s);
+    }
+
+    [Test]
+    public void FullyBlocked_NoPath()
+    {
+        Assert.IsTrue(JpsApi.TryCreate(5, 5, Allocator.Temp, out var s));
+        var b = new NativeArray<byte>(25, Allocator.Temp);
+        var p = new NativeList<int>(Allocator.Temp);
+        b.Fill((byte)1);
+        Assert.IsFalse(JpsApi.TrySearch(ref s, in b, 0, 24, ref p));
+        JpsApi.Dispose(ref s);
+        b.Dispose();
+        p.Dispose();
     }
 
     [Test]

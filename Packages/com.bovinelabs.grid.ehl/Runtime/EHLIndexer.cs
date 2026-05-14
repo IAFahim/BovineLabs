@@ -82,14 +82,14 @@ namespace BovineLabs.Grid.EHL
                 CellSize = (mapMax - mapMin) / new float2(gridDims.x, gridDims.y),
                 Cells = new NativeArray<GridCell>(cells.AsArray(), Allocator.Persistent),
                 ViaLabels = new NativeArray<ViaLabel>(viaLabels.AsArray(), Allocator.Persistent),
-                ConvexVertices = convexVertices,
-                ObstacleEdges = obstacleEdges,
-                AdjOffsets = adjOffsets,
-                AdjCounts = adjCounts,
-                AdjEdges = adjEdges,
-                HubOffsets = hubOffsets,
-                HubCounts = hubCounts,
-                HubLabels = hubLabels,
+                ConvexVertices = new NativeArray<ConvexVertex>(convexVertices, Allocator.Persistent),
+                ObstacleEdges = new NativeArray<ObstacleEdge>(obstacleEdges, Allocator.Persistent),
+                AdjOffsets = new NativeArray<int>(adjOffsets, Allocator.Persistent),
+                AdjCounts = new NativeArray<int>(adjCounts, Allocator.Persistent),
+                AdjEdges = new NativeArray<AdjEdge>(adjEdges, Allocator.Persistent),
+                HubOffsets = new NativeArray<int>(hubOffsets, Allocator.Persistent),
+                HubCounts = new NativeArray<int>(hubCounts, Allocator.Persistent),
+                HubLabels = new NativeArray<VisibilityLabel>(hubLabels, Allocator.Persistent),
                 SuccessorMap = successorMap
             };
 

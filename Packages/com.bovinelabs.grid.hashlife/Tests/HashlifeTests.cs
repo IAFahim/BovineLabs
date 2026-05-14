@@ -5,6 +5,23 @@ using Unity.Collections;
 public class HashlifeTests
 {
     [Test]
+    public void Create_Dimensions()
+    {
+        Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
+        Assert.IsTrue(s.Nodes.IsCreated);
+        Assert.IsTrue(s.Intern.IsCreated);
+        HashlifeApi.Dispose(ref s);
+    }
+
+    [Test]
+    public void Dispose_Double()
+    {
+        Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
+        HashlifeApi.Dispose(ref s);
+        HashlifeApi.Dispose(ref s);
+    }
+
+    [Test]
     public void Create_Leaves()
     {
         Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.Burst;
 using Unity.Burst.CompilerServices;
 using Unity.Collections;
@@ -147,6 +148,7 @@ namespace BovineLabs.Grid
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SiftUp(int i)
         {
             while (i > 0)
@@ -158,6 +160,7 @@ namespace BovineLabs.Grid
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SiftDown(int i)
         {
             while (true)
@@ -175,6 +178,7 @@ namespace BovineLabs.Grid
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Swap(int a, int b)
         {
             var tmp = Data[a];
@@ -184,6 +188,7 @@ namespace BovineLabs.Grid
             Positions[Data[b].Id] = b;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool Less(HeapNode a, HeapNode b)
         {
             if (a.Key0 != b.Key0) return a.Key0 < b.Key0;
