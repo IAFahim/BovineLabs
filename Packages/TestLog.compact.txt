@@ -1,0 +1,631 @@
+status=compile_failed compile_errors=210
+
+ERROR Packages/com.bovinelabs.grid.belief/Runtime/BeliefApi.cs(134,57): error CS0266: Cannot implicitly convert type 'float' to 'int'. An explicit conversion exists (are you missing a cast?)
+assembly=com.bovinelabs.grid.belief.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(331,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(337,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,42): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,54): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,46): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,58): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,35): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(46,51): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(64,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(66,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(83,22): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(84,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(92,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(97,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(112,38): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(122,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(144,26): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(162,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(164,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(165,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(331,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(337,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,42): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,54): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,46): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,58): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.ehl.dll
+
+ERROR Packages/com.bovinelabs.grid.belief/Runtime/BeliefApi.cs(134,57): error CS0266: Cannot implicitly convert type 'float' to 'int'. An explicit conversion exists (are you missing a cast?)
+assembly=com.bovinelabs.grid.belief.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,35): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(46,51): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(64,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(66,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(83,22): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(84,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(92,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(97,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(112,38): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(122,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(144,26): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(162,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(164,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(165,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(323,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(324,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(325,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(326,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(331,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(337,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,42): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(344,54): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,46): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(345,58): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(348,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.ehl/Runtime/EHLIndexer.cs(349,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.belief/Runtime/BeliefApi.cs(134,57): error CS0266: Cannot implicitly convert type 'float' to 'int'. An explicit conversion exists (are you missing a cast?)
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,37): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(36,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(38,30): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,35): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,29): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(42,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(46,51): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(47,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(48,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(53,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(54,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,36): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(55,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(64,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(66,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(83,22): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(84,17): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(92,28): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(97,31): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(112,38): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(116,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(117,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,40): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(118,21): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(122,34): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(144,26): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(162,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(164,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(165,25): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(177,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(178,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,32): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
+
+ERROR Packages/com.bovinelabs.grid.mesha/Runtime/MeshAStar.cs(179,13): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+assembly=com.bovinelabs.grid.mesha.dll
