@@ -9,14 +9,15 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Continuum
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct ContinuumCrowdState
+    public unsafe struct ContinuumCrowdState
     {
         public Grid2D Grid;
-        public NativeArray<float> Density;
-        public NativeArray<float> Speed;
-        public NativeArray<float> Potential;
-        public NativeArray<float2> Flow;
-        public NativeArray<float> Divergence;
+        public float* Density;
+        public float* Speed;
+        public float* Potential;
+        public float2* Flow;
+        public float* Divergence;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -32,12 +33,13 @@ namespace BovineLabs.Grid.Continuum
 
             result = new ContinuumCrowdState
             {
+                Allocator = a,
                 Grid = g,
-                Density = new NativeArray<float>(g.Length, a),
-                Speed = new NativeArray<float>(g.Length, a),
-                Potential = new NativeArray<float>(g.Length, a),
-                Flow = new NativeArray<float2>(g.Length, a),
-                Divergence = new NativeArray<float>(g.Length, a)
+                Density = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                Speed = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                Potential = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                Flow = (float2*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float2), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float2>(), g.Length),
+                Divergence = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length)
             };
             return true;
         }
@@ -45,8 +47,8 @@ namespace BovineLabs.Grid.Continuum
         [BurstCompile]
         public static void ClearDensity(ref ContinuumCrowdState s)
         {
-            var density = (float*)s.Density.GetUnsafePtr();
-            var div = (float*)s.Divergence.GetUnsafePtr();
+            var density = s.Density;
+            var div = s.Divergence;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
             {
@@ -58,7 +60,7 @@ namespace BovineLabs.Grid.Continuum
         [BurstCompile]
         public static void SplatAgents(ref ContinuumCrowdState s, in NativeArray<float2> positions)
         {
-            var density = (float*)s.Density.GetUnsafePtr();
+            var density = s.Density;
             var pos = (float2*)positions.GetUnsafeReadOnlyPtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -81,9 +83,9 @@ namespace BovineLabs.Grid.Continuum
             var h = s.Grid.Height;
             var len = s.Grid.Length;
 
-            var pot = (float*)s.Potential.GetUnsafePtr();
-            var spd = (float*)s.Speed.GetUnsafePtr();
-            var dens = (float*)s.Density.GetUnsafePtr();
+            var pot = s.Potential;
+            var spd = s.Speed;
+            var dens = s.Density;
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
 
             for (var i = 0; i < len; i++)
@@ -187,8 +189,8 @@ namespace BovineLabs.Grid.Continuum
             var h = s.Grid.Height;
             var len = s.Grid.Length;
 
-            var pot = (float*)s.Potential.GetUnsafePtr();
-            var flow = (float2*)s.Flow.GetUnsafePtr();
+            var pot = s.Potential;
+            var flow = s.Flow;
 
             var idx = 0;
             for (var y = 0; y < h; y++)
@@ -222,7 +224,7 @@ namespace BovineLabs.Grid.Continuum
         [BurstCompile]
         public static void AdvectAgents(ref ContinuumCrowdState s, ref NativeArray<float2> positions, float dt)
         {
-            var flow = (float2*)s.Flow.GetUnsafePtr();
+            var flow = s.Flow;
             var pos = (float2*)positions.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -237,11 +239,11 @@ namespace BovineLabs.Grid.Continuum
 
         public static void Dispose(ref ContinuumCrowdState s)
         {
-            if (s.Density.IsCreated) s.Density.Dispose();
-            if (s.Speed.IsCreated) s.Speed.Dispose();
-            if (s.Potential.IsCreated) s.Potential.Dispose();
-            if (s.Flow.IsCreated) s.Flow.Dispose();
-            if (s.Divergence.IsCreated) s.Divergence.Dispose();
+            if (s.Density != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Density); s.Density = null; }
+            if (s.Speed != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Speed); s.Speed = null; }
+            if (s.Potential != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Potential); s.Potential = null; }
+            if (s.Flow != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Flow); s.Flow = null; }
+            if (s.Divergence != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Divergence); s.Divergence = null; }
         }
     }
 }

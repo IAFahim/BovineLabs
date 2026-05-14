@@ -7,7 +7,7 @@ using Unity.Mathematics;
 public class AnyaTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(AnyaApi.TryCreate(10, 10, 100, Allocator.Temp, out var s));
         Assert.AreEqual(100, s.Grid.Length);
@@ -15,7 +15,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_DirectLine()
+    public unsafe void Search_DirectLine()
     {
         Assert.IsTrue(AnyaApi.TryCreate(10, 10, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -34,7 +34,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_BlockedGoal()
+    public unsafe void Search_BlockedGoal()
     {
         Assert.IsTrue(AnyaApi.TryCreate(10, 10, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -52,7 +52,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_WithWall()
+    public unsafe void Search_WithWall()
     {
         Assert.IsTrue(AnyaApi.TryCreate(10, 10, 10000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -70,7 +70,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_EuclideanCost_OpenGrid()
+    public unsafe void Search_EuclideanCost_OpenGrid()
     {
         Assert.IsTrue(AnyaApi.TryCreate(10, 10, 4000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -93,7 +93,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_CornerHugging()
+    public unsafe void Search_CornerHugging()
     {
         Assert.IsTrue(AnyaApi.TryCreate(5, 5, 4000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -111,7 +111,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_FullyBlocked_NoPath()
+    public unsafe void Search_FullyBlocked_NoPath()
     {
         Assert.IsTrue(AnyaApi.TryCreate(5, 5, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -124,7 +124,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Search_OutOfBounds_NoPath()
+    public unsafe void Search_OutOfBounds_NoPath()
     {
         Assert.IsTrue(AnyaApi.TryCreate(5, 5, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -137,7 +137,7 @@ public class AnyaTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(AnyaApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         AnyaApi.Dispose(ref s);

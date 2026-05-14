@@ -6,7 +6,7 @@ using Unity.Collections;
 public class GraphCutTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(GraphCutApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -14,7 +14,7 @@ public class GraphCutTests
     }
 
     [Test]
-    public void Solve_Small()
+    public unsafe void Solve_Small()
     {
         Assert.IsTrue(GraphCutApi.TryCreate(2, 1, 10, Allocator.Temp, out var s));
         Assert.IsTrue(GraphCutApi.TrySolve(ref s, 0, 1));
@@ -22,7 +22,7 @@ public class GraphCutTests
     }
 
     [Test]
-    public void Bottleneck_FlowIsMinCut()
+    public unsafe void Bottleneck_FlowIsMinCut()
     {
         Assert.IsTrue(GraphCutApi.TryCreate(3, 1, 50, Allocator.Temp, out var s));
         var u0 = new NativeArray<int>(3, Allocator.Temp);
@@ -49,7 +49,7 @@ public class GraphCutTests
     }
 
     [Test]
-    public void GridPartition_SymmetricCut()
+    public unsafe void GridPartition_SymmetricCut()
     {
         Assert.IsTrue(GraphCutApi.TryCreate(10, 10, 2000, Allocator.Temp, out var s));
         var u0 = new NativeArray<int>(100, Allocator.Temp);
@@ -78,7 +78,7 @@ public class GraphCutTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(GraphCutApi.TryCreate(3, 3, 20, Allocator.Temp, out var s));
         GraphCutApi.Dispose(ref s);

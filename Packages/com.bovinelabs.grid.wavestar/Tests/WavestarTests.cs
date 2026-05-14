@@ -5,7 +5,7 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Wavestar.Tests
 {
     [TestFixture]
-    public class WavestarTests
+    public unsafe class WavestarTests
     {
         private const int GridSize = 20;
         private const int GridSizeY = 1;
@@ -108,7 +108,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_EmptyGrid_PathFound()
+        public unsafe void Wavestar_EmptyGrid_PathFound()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(1, 0, 1), new int3(18, 0, 18), 0f,
@@ -129,7 +129,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_EmptyGrid_StraightLine()
+        public unsafe void Wavestar_EmptyGrid_StraightLine()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(2, 0, 2), new int3(17, 0, 17), 0f,
@@ -147,7 +147,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
 
         [Test]
         [Ignore("TODO: multi-resolution refinement near obstacles needs tuning")]
-        public void Wavestar_WithObstacles_PathAvoidsThem()
+        public unsafe void Wavestar_WithObstacles_PathAvoidsThem()
         {
             var grid = CreateGridWithWall(10, 5);
             var path = RunWavestar(grid, new int3(2, 0, 2), new int3(15, 0, 15), 0.1f,
@@ -172,7 +172,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_AnyAngle_ShorterThanGridConstrained()
+        public unsafe void Wavestar_AnyAngle_ShorterThanGridConstrained()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(1, 0, 1), new int3(18, 0, 18), 0f,
@@ -202,7 +202,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_MultiResolution_RefinesNearObstacles()
+        public unsafe void Wavestar_MultiResolution_RefinesNearObstacles()
         {
             var grid = CreateGridWithBlock();
             Assert.IsTrue(WavestarBuilder.TryBuild(grid, GridSize, GridSizeY, GridSize, 3, out var traversable,
@@ -224,7 +224,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_EpsilonZero_OptimalPath()
+        public unsafe void Wavestar_EpsilonZero_OptimalPath()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(1, 0, 1), new int3(18, 0, 18), 0f,
@@ -241,7 +241,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_PathReconstruction_ValidWaypoints()
+        public unsafe void Wavestar_PathReconstruction_ValidWaypoints()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(0, 0, 0), new int3(19, 0, 19), 0f,
@@ -276,7 +276,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_NoPath_ReturnsFalse()
+        public unsafe void Wavestar_NoPath_ReturnsFalse()
         {
             var total = GridSize * GridSize;
             var grid = new NativeArray<int>(total, Allocator.Persistent);
@@ -293,7 +293,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void Wavestar_StartEqualsGoal_TrivialPath()
+        public unsafe void Wavestar_StartEqualsGoal_TrivialPath()
         {
             var grid = CreateEmptyGrid();
             var path = RunWavestar(grid, new int3(5, 0, 5), new int3(5, 0, 5), 0f,
@@ -307,7 +307,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void OctreeIndex_MortonCode_Roundtrip()
+        public unsafe void OctreeIndex_MortonCode_Roundtrip()
         {
             var idx = new OctreeIndex(5, 0, 7, 2);
             var morton = idx.MortonCode;
@@ -320,7 +320,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void OctreeIndex_Contains_PointInsideSubvolume()
+        public unsafe void OctreeIndex_Contains_PointInsideSubvolume()
         {
             var sv = new OctreeIndex(2, 0, 3, 1);
             Assert.IsTrue(sv.Contains(new int3(4, 0, 6)), "Should contain min corner");
@@ -330,7 +330,7 @@ namespace BovineLabs.Grid.Wavestar.Tests
         }
 
         [Test]
-        public void OctreeIndex_ParentChild_Relationship()
+        public unsafe void OctreeIndex_ParentChild_Relationship()
         {
             var child = new OctreeIndex(3, 0, 5, 0);
             var parent = child.Parent;

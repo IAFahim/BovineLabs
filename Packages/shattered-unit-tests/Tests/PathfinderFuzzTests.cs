@@ -84,43 +84,43 @@ public class PathfinderFuzzTests
 
 
     [Test]
-    public void Fuzz_OpenGrid_10x10()
+    public unsafe void Fuzz_OpenGrid_10x10()
     {
         RunFuzzBatch(10, 10, 0.0f, 10, 12345);
     }
 
     [Test]
-    public void Fuzz_SparseObstacles_10x10()
+    public unsafe void Fuzz_SparseObstacles_10x10()
     {
         RunFuzzBatch(10, 10, 0.1f, 20, 54321);
     }
 
     [Test]
-    public void Fuzz_MediumObstacles_15x15()
+    public unsafe void Fuzz_MediumObstacles_15x15()
     {
         RunFuzzBatch(15, 15, 0.2f, 15, 99999);
     }
 
     [Test]
-    public void Fuzz_DenseObstacles_20x10()
+    public unsafe void Fuzz_DenseObstacles_20x10()
     {
         RunFuzzBatch(20, 10, 0.25f, 15, 77777);
     }
 
     [Test]
-    public void Fuzz_CorridorMap_20x5()
+    public unsafe void Fuzz_CorridorMap_20x5()
     {
         RunFuzzBatch(20, 5, 0.15f, 10, 31415);
     }
 
     [Test]
-    public void Fuzz_MazeLike_8x8()
+    public unsafe void Fuzz_MazeLike_8x8()
     {
         RunFuzzBatch(8, 8, 0.3f, 20, 27182);
     }
 
     [Test]
-    public void Fuzz_OpenGrid_5x5()
+    public unsafe void Fuzz_OpenGrid_5x5()
     {
         RunFuzzBatch(5, 5, 0.0f, 10, 42);
     }

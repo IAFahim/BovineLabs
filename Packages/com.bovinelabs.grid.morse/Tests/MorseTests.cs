@@ -5,7 +5,7 @@ using Unity.Collections;
 public class MorseTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(MorseApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -13,7 +13,7 @@ public class MorseTests
     }
 
     [Test]
-    public void BuildGradient_Simple()
+    public unsafe void BuildGradient_Simple()
     {
         Assert.IsTrue(MorseApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var scalar = new NativeArray<float>(25, Allocator.Temp);
@@ -28,7 +28,7 @@ public class MorseTests
     }
 
     [Test]
-    public void TraceManifolds()
+    public unsafe void TraceManifolds()
     {
         Assert.IsTrue(MorseApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var scalar = new NativeArray<float>(25, Allocator.Temp);
@@ -45,7 +45,7 @@ public class MorseTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(MorseApi.TryCreate(3, 3, 10, Allocator.Temp, out var s));
         MorseApi.Dispose(ref s);

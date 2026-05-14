@@ -7,12 +7,13 @@ using Unity.Collections.LowLevel.Unsafe;
 namespace BovineLabs.Grid.Sandpile
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct SandpileState
+    public unsafe struct SandpileState
     {
         public Grid2D Grid;
-        public NativeArray<int> Grains;
+        public int* Grains;
         public UnsafeQueue<int> Queue;
-        public NativeArray<byte> InQueue;
+        public byte* InQueue;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -28,10 +29,11 @@ namespace BovineLabs.Grid.Sandpile
 
             result = new SandpileState
             {
+                Allocator = allocator,
                 Grid = g,
-                Grains = new NativeArray<int>(g.Length, allocator),
+                Grains = (int*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
                 Queue = new UnsafeQueue<int>(allocator),
-                InQueue = new NativeArray<byte>(g.Length, allocator)
+                InQueue = (byte*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length)
             };
             return true;
         }
@@ -39,8 +41,8 @@ namespace BovineLabs.Grid.Sandpile
         [BurstCompile]
         public static void Clear(ref SandpileState s)
         {
-            var grains = (int*)s.Grains.GetUnsafePtr();
-            var inQueue = (byte*)s.InQueue.GetUnsafePtr();
+            var grains = s.Grains;
+            var inQueue = s.InQueue;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
             {
@@ -54,8 +56,8 @@ namespace BovineLabs.Grid.Sandpile
         [BurstCompile]
         public static void AddGrains(ref SandpileState s, int cell, int amount)
         {
-            var grains = (int*)s.Grains.GetUnsafePtr();
-            var inQueue = (byte*)s.InQueue.GetUnsafePtr();
+            var grains = s.Grains;
+            var inQueue = s.InQueue;
             grains[cell] += amount;
             if (Hint.Likely(grains[cell] >= 4) && inQueue[cell] == 0)
             {
@@ -69,8 +71,8 @@ namespace BovineLabs.Grid.Sandpile
         {
             if (!s.Queue.TryDequeue(out var cell)) return false;
 
-            var grains = (int*)s.Grains.GetUnsafePtr();
-            var inQueue = (byte*)s.InQueue.GetUnsafePtr();
+            var grains = s.Grains;
+            var inQueue = s.InQueue;
             inQueue[cell] = 0;
 
             var w = s.Grid.Width;
@@ -145,7 +147,7 @@ namespace BovineLabs.Grid.Sandpile
         [BurstCompile]
         public static bool IsStable(ref SandpileState s)
         {
-            var grains = (int*)s.Grains.GetUnsafePtr();
+            var grains = s.Grains;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
                 if (grains[i] >= 4)
@@ -155,9 +157,9 @@ namespace BovineLabs.Grid.Sandpile
 
         public static void Dispose(ref SandpileState s)
         {
-            if (s.Grains.IsCreated) s.Grains.Dispose();
+            if (s.Grains != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Grains); s.Grains = null; }
             if (s.Queue.IsCreated) s.Queue.Dispose();
-            if (s.InQueue.IsCreated) s.InQueue.Dispose();
+            if (s.InQueue != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.InQueue); s.InQueue = null; }
         }
     }
 }

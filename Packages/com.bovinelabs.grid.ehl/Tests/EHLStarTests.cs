@@ -126,7 +126,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void VisibilityGraph_ConvexVerticesFound()
+        public unsafe void VisibilityGraph_ConvexVerticesFound()
         {
             var index = BuildTestIndex();
             Assert.IsTrue(index.ConvexVertices.Length > 0, "Should find convex vertices from rectangular obstacles");
@@ -135,7 +135,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void VisibilityGraph_EdgesCorrect()
+        public unsafe void VisibilityGraph_EdgesCorrect()
         {
             var index = BuildTestIndex();
             var totalEdges = 0;
@@ -157,7 +157,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void HubLabels_CoverAllPairs()
+        public unsafe void HubLabels_CoverAllPairs()
         {
             var index = BuildTestIndex();
             var n = index.ConvexVertices.Length;
@@ -195,7 +195,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Query_ReturnsOptimalPath_StraightLine()
+        public unsafe void Query_ReturnsOptimalPath_StraightLine()
         {
             var index = BuildTestIndex();
             var result = EHLStarQuery.Query(ref index, new float2(1f, 1f), new float2(2f, 1f));
@@ -208,7 +208,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Query_ReturnsPath_AroundObstacle()
+        public unsafe void Query_ReturnsPath_AroundObstacle()
         {
             var index = BuildTestIndex();
             var result = EHLStarQuery.Query(ref index, new float2(1f, 5f), new float2(7f, 5f));
@@ -220,7 +220,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Query_NoPath_WhenBlocked()
+        public unsafe void Query_NoPath_WhenBlocked()
         {
             var mapMin = new float2(0f, 0f);
             var mapMax = new float2(10f, 10f);
@@ -280,7 +280,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void MemoryBudget_Respected_AfterCompression()
+        public unsafe void MemoryBudget_Respected_AfterCompression()
         {
             long budget = 50000;
             var gridDims = new int2(5, 5);
@@ -293,7 +293,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Query_DistanceMonotonicallyIncreasing()
+        public unsafe void Query_DistanceMonotonicallyIncreasing()
         {
             var index = BuildTestIndex();
             var result1 = EHLStarQuery.Query(ref index, new float2(1f, 1f), new float2(2f, 1f));
@@ -307,7 +307,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Index_CellLookup_ReturnsCorrectCell()
+        public unsafe void Index_CellLookup_ReturnsCorrectCell()
         {
             var index = BuildTestIndex();
             var cell00 = index.CellIndex(new float2(0.5f, 0.5f));
@@ -320,7 +320,7 @@ namespace BovineLabs.Grid.EHL.Tests
         }
 
         [Test]
-        public void Query_PathContainsSourceAndTarget()
+        public unsafe void Query_PathContainsSourceAndTarget()
         {
             var index = BuildTestIndex();
             var src = new float2(1f, 1f);

@@ -8,7 +8,7 @@ using Unity.Mathematics;
 public class SubgoalTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(SubgoalApi.TryCreate(10, 10, 100, 1000, Allocator.Temp, out var s));
         Assert.AreEqual(100, s.Grid.Length);
@@ -16,7 +16,7 @@ public class SubgoalTests
     }
 
     [Test]
-    public void Build_OpenGrid_NoSubgoals()
+    public unsafe void Build_OpenGrid_NoSubgoals()
     {
         Assert.IsTrue(SubgoalApi.TryCreate(10, 10, 100, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -28,7 +28,7 @@ public class SubgoalTests
     }
 
     [Test]
-    public void Build_WithObstacles()
+    public unsafe void Build_WithObstacles()
     {
         Assert.IsTrue(SubgoalApi.TryCreate(10, 10, 100, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -47,7 +47,7 @@ public class SubgoalTests
     }
 
     [Test]
-    public void Search_OpenGrid()
+    public unsafe void Search_OpenGrid()
     {
         Assert.IsTrue(SubgoalApi.TryCreate(10, 10, 100, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(100, Allocator.Temp);
@@ -83,7 +83,7 @@ public class SubgoalTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(SubgoalApi.TryCreate(5, 5, 10, 100, Allocator.Temp, out var s));
         SubgoalApi.Dispose(ref s);

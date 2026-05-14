@@ -19,24 +19,25 @@ namespace BovineLabs.Grid.Belief
             {
                 Grid = g,
                 LabelCount = labelCount,
-                Unary = new NativeArray<float>(g.Length * labelCount, a),
-                Messages = new NativeArray<float>(g.Length * 4 * labelCount, a),
-                MessagesNext = new NativeArray<float>(g.Length * 4 * labelCount, a),
-                Belief = new NativeArray<float>(g.Length * labelCount, a),
-                Scratch = new NativeArray<float>(labelCount, a)
+                Allocator = a,
+                Unary = (float*)AllocatorManager.Allocate(a, sizeof(float), UnsafeUtility.AlignOf<float>(), g.Length * labelCount),
+                Messages = (float*)AllocatorManager.Allocate(a, sizeof(float), UnsafeUtility.AlignOf<float>(), g.Length * 4 * labelCount),
+                MessagesNext = (float*)AllocatorManager.Allocate(a, sizeof(float), UnsafeUtility.AlignOf<float>(), g.Length * 4 * labelCount),
+                Belief = (float*)AllocatorManager.Allocate(a, sizeof(float), UnsafeUtility.AlignOf<float>(), g.Length * labelCount),
+                Scratch = (float*)AllocatorManager.Allocate(a, sizeof(float), UnsafeUtility.AlignOf<float>(), labelCount)
             };
             return true;
         }
 
         public static void ClearMessages(ref BeliefState s)
         {
-            s.Messages.Fill(0f);
-            s.MessagesNext.Fill(0f);
+            UnsafeUtility.MemSet(s.Messages, 0, s.Grid.Length * 4 * s.LabelCount * sizeof(float));
+            UnsafeUtility.MemSet(s.MessagesNext, 0, s.Grid.Length * 4 * s.LabelCount * sizeof(float));
         }
 
         public static void SetUnary(ref BeliefState s, in NativeArray<float> unary)
         {
-            NativeArray<float>.Copy(unary, s.Unary);
+            UnsafeUtility.MemCpy(s.Unary, unary.GetUnsafeReadOnlyPtr(), s.Grid.Length * s.LabelCount * sizeof(float));
         }
 
         [BurstCompile]
@@ -49,11 +50,11 @@ namespace BovineLabs.Grid.Belief
             var h = s.Grid.Height;
             var cellCount = w * h;
 
-            var unaryPtr = (float*)s.Unary.GetUnsafeReadOnlyPtr();
+            var unaryPtr = s.Unary;
             var pairwisePtr = (float*)pairwise.GetUnsafeReadOnlyPtr();
-            var messagesPtr = (float*)s.Messages.GetUnsafePtr();
-            var nextMsgPtr = (float*)s.MessagesNext.GetUnsafePtr();
-            var scratchPtr = (float*)s.Scratch.GetUnsafePtr();
+            var messagesPtr = s.Messages;
+            var nextMsgPtr = s.MessagesNext;
+            var scratchPtr = s.Scratch;
 
 
             for (var iter = 0; iter < iterations; iter++)
@@ -138,10 +139,12 @@ namespace BovineLabs.Grid.Belief
                     cellIdx++;
                 }
 
-                (s.Messages, s.MessagesNext) = (s.MessagesNext, s.Messages);
+                var tempMsg = s.Messages;
+                s.Messages = s.MessagesNext;
+                s.MessagesNext = tempMsg;
 
-                messagesPtr = (float*)s.Messages.GetUnsafePtr();
-                nextMsgPtr = (float*)s.MessagesNext.GetUnsafePtr();
+                messagesPtr = s.Messages;
+                nextMsgPtr = s.MessagesNext;
             }
 
             return true;
@@ -154,9 +157,9 @@ namespace BovineLabs.Grid.Belief
 
             var L = s.LabelCount;
             var cellCount = s.Grid.Length;
-            var unaryPtr = (float*)s.Unary.GetUnsafeReadOnlyPtr();
-            var messagesPtr = (float*)s.Messages.GetUnsafeReadOnlyPtr();
-            var beliefPtr = (float*)s.Belief.GetUnsafePtr();
+            var unaryPtr = s.Unary;
+            var messagesPtr = s.Messages;
+            var beliefPtr = s.Belief;
             var labelsPtr = (int*)labels.GetUnsafePtr();
 
             for (var cell = 0; cell < cellCount; cell++)
@@ -190,11 +193,11 @@ namespace BovineLabs.Grid.Belief
 
         public static void Dispose(ref BeliefState s)
         {
-            if (s.Unary.IsCreated) s.Unary.Dispose();
-            if (s.Messages.IsCreated) s.Messages.Dispose();
-            if (s.MessagesNext.IsCreated) s.MessagesNext.Dispose();
-            if (s.Belief.IsCreated) s.Belief.Dispose();
-            if (s.Scratch.IsCreated) s.Scratch.Dispose();
+            if (s.Unary != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Unary); s.Unary = null; }
+            if (s.Messages != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Messages); s.Messages = null; }
+            if (s.MessagesNext != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.MessagesNext); s.MessagesNext = null; }
+            if (s.Belief != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Belief); s.Belief = null; }
+            if (s.Scratch != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Scratch); s.Scratch = null; }
         }
     }
 }

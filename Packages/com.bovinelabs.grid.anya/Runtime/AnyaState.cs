@@ -21,7 +21,7 @@ namespace BovineLabs.Grid.Anya
         public double BestCost;
         public byte SearchComplete;
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Heap.IsCreated) Heap.Dispose();
             if (Pool.IsCreated) Pool.Dispose();

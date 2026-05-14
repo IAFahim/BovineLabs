@@ -17,11 +17,12 @@ namespace BovineLabs.Grid.Cpd
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct CpdState
+    public unsafe struct CpdState
     {
         public Grid2D Grid;
         public UnsafeList<CpdRun> Runs;
-        public NativeArray<RangeI> SourceRuns;
+        public RangeI* SourceRuns;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -37,9 +38,10 @@ namespace BovineLabs.Grid.Cpd
 
             result = new CpdState
             {
+                Allocator = a,
                 Grid = g,
                 Runs = new UnsafeList<CpdRun>(maxRuns, a),
-                SourceRuns = new NativeArray<RangeI>(g.Length, a)
+                SourceRuns = (RangeI*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(RangeI), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<RangeI>(), g.Length)
             };
             return true;
         }
@@ -55,10 +57,10 @@ namespace BovineLabs.Grid.Cpd
             var h = s.Grid.Height;
             var len = s.Grid.Length;
 
-            var firstMove = new NativeArray<byte>(len, Allocator.Temp);
+            var firstMove = new Unity.Collections.NativeArray<byte>(len, Allocator.Temp);
             var fm = (byte*)firstMove.GetUnsafePtr();
-            var dist = new NativeArray<float>(len, Allocator.Temp);
-            var parent = new NativeArray<int>(len, Allocator.Temp);
+            var dist = new Unity.Collections.NativeArray<float>(len, Allocator.Temp);
+            var parent = new Unity.Collections.NativeArray<int>(len, Allocator.Temp);
             var queue = new UnsafeQueue<int>(Allocator.Temp);
 
             for (var source = 0; source < len; source++)
@@ -201,7 +203,7 @@ namespace BovineLabs.Grid.Cpd
         public static void Dispose(ref CpdState s)
         {
             if (s.Runs.IsCreated) s.Runs.Dispose();
-            if (s.SourceRuns.IsCreated) s.SourceRuns.Dispose();
+            if (s.SourceRuns != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.SourceRuns); s.SourceRuns = null; }
         }
     }
 }

@@ -53,12 +53,12 @@ namespace BovineLabs.Grid
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Set(int x, int y, CellState state)
+        public unsafe void Set(int x, int y, CellState state)
         {
             Cells[Index(x, y)] = state;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Cells.IsCreated) Cells.Dispose();
         }
@@ -104,7 +104,7 @@ namespace BovineLabs.Grid
             NodesExplored = 0;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Path.IsCreated) Path.Dispose();
         }

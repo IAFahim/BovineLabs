@@ -7,7 +7,7 @@ using Unity.Mathematics;
 public class ContinuumCrowdTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(10, 10, Allocator.Temp, out var s));
         Assert.AreEqual(100, s.Grid.Length);
@@ -15,7 +15,7 @@ public class ContinuumCrowdTests
     }
 
     [Test]
-    public void ClearDensity()
+    public unsafe void ClearDensity()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(5, 5, Allocator.Temp, out var s));
         s.Density[0] = 5f;
@@ -25,7 +25,7 @@ public class ContinuumCrowdTests
     }
 
     [Test]
-    public void SplatAgents()
+    public unsafe void SplatAgents()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(10, 10, Allocator.Temp, out var s));
         ContinuumCrowdApi.ClearDensity(ref s);
@@ -37,7 +37,7 @@ public class ContinuumCrowdTests
     }
 
     [Test]
-    public void SolvePotential()
+    public unsafe void SolvePotential()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -51,7 +51,7 @@ public class ContinuumCrowdTests
     }
 
     [Test]
-    public void BuildFlow()
+    public unsafe void BuildFlow()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -70,7 +70,7 @@ public class ContinuumCrowdTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(ContinuumCrowdApi.TryCreate(3, 3, Allocator.Temp, out var s));
         ContinuumCrowdApi.Dispose(ref s);

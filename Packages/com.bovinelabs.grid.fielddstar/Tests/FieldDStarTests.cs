@@ -5,7 +5,7 @@ using Unity.Collections;
 public class FieldDStarTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(FieldDStarApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -13,7 +13,7 @@ public class FieldDStarTests
     }
 
     [Test]
-    public void SetGoal()
+    public unsafe void SetGoal()
     {
         Assert.IsTrue(FieldDStarApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.IsTrue(FieldDStarApi.TrySetGoal(ref s, 24));
@@ -22,7 +22,7 @@ public class FieldDStarTests
     }
 
     [Test]
-    public void Step_OpenGrid()
+    public unsafe void Step_OpenGrid()
     {
         Assert.IsTrue(FieldDStarApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var cost = new NativeArray<float>(25, Allocator.Temp);
@@ -34,7 +34,7 @@ public class FieldDStarTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(FieldDStarApi.TryCreate(5, 5, Allocator.Temp, out var s));
         FieldDStarApi.Dispose(ref s);

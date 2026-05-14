@@ -29,7 +29,7 @@ namespace BovineLabs.Grid
             };
         }
 
-        public void Enqueue(T item)
+        public unsafe void Enqueue(T item)
         {
             Data[Tail++] = item;
         }
@@ -46,13 +46,13 @@ namespace BovineLabs.Grid
             return true;
         }
 
-        public void Clear()
+        public unsafe void Clear()
         {
             Head = 0;
             Tail = 0;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Data != null)
             {

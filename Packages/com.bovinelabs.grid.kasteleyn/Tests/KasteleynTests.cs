@@ -6,7 +6,7 @@ using Unity.Collections;
 public class KasteleynTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(KasteleynApi.TryCreate(4, 4, 100, Allocator.Temp, out var s));
         Assert.AreEqual(16, s.Grid.Length);
@@ -14,7 +14,7 @@ public class KasteleynTests
     }
 
     [Test]
-    public void BuildPlanarGraph_2x2()
+    public unsafe void BuildPlanarGraph_2x2()
     {
         Assert.IsTrue(KasteleynApi.TryCreate(2, 2, 10, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -28,7 +28,7 @@ public class KasteleynTests
     }
 
     [Test]
-    public void OrientKasteleyn()
+    public unsafe void OrientKasteleyn()
     {
         Assert.IsTrue(KasteleynApi.TryCreate(2, 2, 10, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -49,7 +49,7 @@ public class KasteleynTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(KasteleynApi.TryCreate(3, 3, 10, Allocator.Temp, out var s));
         KasteleynApi.Dispose(ref s);

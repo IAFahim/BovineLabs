@@ -6,7 +6,7 @@ using Unity.Mathematics;
 
 namespace BovineLabs.Grid.GraphCut
 {
-    public struct GraphCutState
+    public unsafe struct GraphCutState
     {
         public Grid2D Grid;
 
@@ -16,12 +16,13 @@ namespace BovineLabs.Grid.GraphCut
         public UnsafeList<int> EdgeRev;
         public UnsafeList<int> EdgeNext;
 
-        public NativeArray<int> EdgeHead;
-        public NativeArray<int> Excess;
-        public NativeArray<int> Height;
-        public NativeArray<byte> SourceSide;
+        public int* EdgeHead;
+        public int* Excess;
+        public int* Height;
+        public byte* SourceSide;
         public UnsafeList<int> ActiveNodes;
-        public NativeArray<byte> InActiveNodes;
+        public byte* InActiveNodes;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -41,18 +42,19 @@ namespace BovineLabs.Grid.GraphCut
             var nodeCount = g.Length + 2;
             result = new GraphCutState
             {
+                Allocator = a,
                 Grid = g,
                 EdgeTo = new UnsafeList<int>(maxEdges, a),
                 EdgeCap = new UnsafeList<int>(maxEdges, a),
                 EdgeFlow = new UnsafeList<int>(maxEdges, a),
                 EdgeRev = new UnsafeList<int>(maxEdges, a),
                 EdgeNext = new UnsafeList<int>(maxEdges, a),
-                EdgeHead = new NativeArray<int>(nodeCount, a),
-                Excess = new NativeArray<int>(nodeCount, a),
-                Height = new NativeArray<int>(nodeCount, a),
-                SourceSide = new NativeArray<byte>(g.Length, a),
+                EdgeHead = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), nodeCount),
+                Excess = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), nodeCount),
+                Height = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), nodeCount),
+                SourceSide = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 ActiveNodes = new UnsafeList<int>(nodeCount, a),
-                InActiveNodes = new NativeArray<byte>(nodeCount, a)
+                InActiveNodes = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), nodeCount)
             };
             return true;
         }
@@ -69,7 +71,8 @@ namespace BovineLabs.Grid.GraphCut
             s.EdgeFlow.Clear();
             s.EdgeRev.Clear();
             s.EdgeNext.Clear();
-            s.EdgeHead.Fill(-1);
+            var nodeCount = s.Grid.Length + 2;
+            for (int i = 0; i < nodeCount; i++) s.EdgeHead[i] = -1;
 
             var cellCount = s.Grid.Length;
             var sourceIdx = cellCount;
@@ -132,9 +135,9 @@ namespace BovineLabs.Grid.GraphCut
         [BurstCompile]
         public static bool TrySolve(ref GraphCutState s, int sourceCell, int sinkCell)
         {
-            var u0 = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
-            var u1 = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
-            var pw = new NativeArray<int>(s.Grid.Length, Allocator.Temp);
+            var u0 = new Unity.Collections.NativeArray<int>(s.Grid.Length, Allocator.Temp);
+            var u1 = new Unity.Collections.NativeArray<int>(s.Grid.Length, Allocator.Temp);
+            var pw = new Unity.Collections.NativeArray<int>(s.Grid.Length, Allocator.Temp);
             if (sourceCell >= 0 && sourceCell < u0.Length) u0[sourceCell] = 1000000;
             if (sinkCell >= 0 && sinkCell < u1.Length) u1[sinkCell] = 1000000;
             for (var i = 0; i < pw.Length; i++) pw[i] = 1;
@@ -154,15 +157,15 @@ namespace BovineLabs.Grid.GraphCut
             var source = cellCount;
             var sink = cellCount + 1;
 
-            s.Excess.Fill(0);
-            s.Height.Fill(0);
+            UnsafeUtility.MemSet(s.Excess, 0, nodeCount * sizeof(int));
+            UnsafeUtility.MemSet(s.Height, 0, nodeCount * sizeof(int));
             s.ActiveNodes.Clear();
-            s.InActiveNodes.Fill((byte)0);
+            UnsafeUtility.MemSet(s.InActiveNodes, 0, nodeCount * sizeof(byte));
 
-            var excessPtr = (int*)s.Excess.GetUnsafePtr();
-            var heightPtr = (int*)s.Height.GetUnsafePtr();
-            var headPtr = (int*)s.EdgeHead.GetUnsafePtr();
-            var inActivePtr = (byte*)s.InActiveNodes.GetUnsafePtr();
+            var excessPtr = s.Excess;
+            var heightPtr = s.Height;
+            var headPtr = s.EdgeHead;
+            var inActivePtr = s.InActiveNodes;
             var toPtr = s.EdgeTo.Ptr;
             var capPtr = s.EdgeCap.Ptr;
             var flowPtr = s.EdgeFlow.Ptr;
@@ -228,12 +231,12 @@ namespace BovineLabs.Grid.GraphCut
                 }
             }
 
-            s.SourceSide.Fill((byte)0);
-            var sidePtr = (byte*)s.SourceSide.GetUnsafePtr();
+            UnsafeUtility.MemSet(s.SourceSide, 0, cellCount * sizeof(byte));
+            var sidePtr = s.SourceSide;
             var queue = new NativeQueue<int>(Allocator.Temp);
             queue.Enqueue(source);
 
-            var visited = new NativeArray<byte>(nodeCount, Allocator.Temp);
+            var visited = new Unity.Collections.NativeArray<byte>(nodeCount, Allocator.Temp);
             visited[source] = 1;
 
             while (queue.TryDequeue(out var u))
@@ -257,7 +260,7 @@ namespace BovineLabs.Grid.GraphCut
         public static bool TryExtractCutLabels(ref GraphCutState s, ref NativeArray<int> labels, int label0, int label1)
         {
             var labelsPtr = (int*)labels.GetUnsafePtr();
-            var sidePtr = (byte*)s.SourceSide.GetUnsafePtr();
+            var sidePtr = s.SourceSide;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
                 labelsPtr[i] = sidePtr[i] == 1 ? label0 : label1;
@@ -271,12 +274,12 @@ namespace BovineLabs.Grid.GraphCut
             s.EdgeFlow.Dispose();
             s.EdgeRev.Dispose();
             s.EdgeNext.Dispose();
-            if (s.EdgeHead.IsCreated) s.EdgeHead.Dispose();
-            if (s.Excess.IsCreated) s.Excess.Dispose();
-            if (s.Height.IsCreated) s.Height.Dispose();
-            if (s.SourceSide.IsCreated) s.SourceSide.Dispose();
+            if (s.EdgeHead != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.EdgeHead); s.EdgeHead = null; }
+            if (s.Excess != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Excess); s.Excess = null; }
+            if (s.Height != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Height); s.Height = null; }
+            if (s.SourceSide != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.SourceSide); s.SourceSide = null; }
             s.ActiveNodes.Dispose();
-            if (s.InActiveNodes.IsCreated) s.InActiveNodes.Dispose();
+            if (s.InActiveNodes != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.InActiveNodes); s.InActiveNodes = null; }
         }
     }
 }

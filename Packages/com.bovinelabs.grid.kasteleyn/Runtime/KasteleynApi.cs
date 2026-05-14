@@ -7,15 +7,16 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Kasteleyn
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct KasteleynState
+    public unsafe struct KasteleynState
     {
         public Grid2D Grid;
-        public NativeArray<byte> Region;
+        public byte* Region;
         public UnsafeList<int2> Edges;
         public UnsafeList<int2> EdgeCoords;
-        public NativeArray<double> Matrix;
+        public double* Matrix;
         public int VertexCount;
-        public NativeArray<int> CellToVertex;
+        public int* CellToVertex;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -31,13 +32,14 @@ namespace BovineLabs.Grid.Kasteleyn
 
             result = new KasteleynState
             {
+                Allocator = a,
                 Grid = g,
-                Region = new NativeArray<byte>(g.Length, a),
+                Region = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Edges = new UnsafeList<int2>(maxEdges, a),
                 EdgeCoords = new UnsafeList<int2>(maxEdges, a),
-                Matrix = new NativeArray<double>(g.Length * g.Length, a),
+                Matrix = (double*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(double), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<double>(), g.Length * g.Length),
                 VertexCount = 0,
-                CellToVertex = new NativeArray<int>(g.Length, a)
+                CellToVertex = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length)
             };
             return true;
         }
@@ -45,7 +47,7 @@ namespace BovineLabs.Grid.Kasteleyn
         [BurstCompile]
         public static void SetRegion(ref KasteleynState s, in NativeArray<byte> region)
         {
-            UnsafeUtility.MemCpy(s.Region.GetUnsafePtr(), region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
+            UnsafeUtility.MemCpy(s.Region, region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
         }
 
         [BurstCompile]
@@ -53,8 +55,8 @@ namespace BovineLabs.Grid.Kasteleyn
         {
             s.Edges.Clear();
             s.EdgeCoords.Clear();
-            var region = (byte*)s.Region.GetUnsafePtr();
-            var c2v = (int*)s.CellToVertex.GetUnsafePtr();
+            var region = s.Region;
+            var c2v = s.CellToVertex;
             var w = s.Grid.Width;
             var h = s.Grid.Height;
             var len = s.Grid.Length;
@@ -88,7 +90,7 @@ namespace BovineLabs.Grid.Kasteleyn
         [BurstCompile]
         public static bool TryOrientKasteleyn(ref KasteleynState s)
         {
-            var mat = (double*)s.Matrix.GetUnsafePtr();
+            var mat = s.Matrix;
             var n = s.VertexCount;
             var len = n * n;
             for (var i = 0; i < len; i++) mat[i] = 0.0;
@@ -125,8 +127,8 @@ namespace BovineLabs.Grid.Kasteleyn
             if (s.VertexCount % 2 != 0) return true;
 
             var n = s.VertexCount;
-            var mat = new NativeArray<double>(n * n, Allocator.Temp);
-            UnsafeUtility.MemCpy(mat.GetUnsafePtr(), s.Matrix.GetUnsafeReadOnlyPtr(), n * n * 8);
+            var mat = new Unity.Collections.NativeArray<double>(n * n, Allocator.Temp);
+            UnsafeUtility.MemCpy(mat.GetUnsafePtr(), s.Matrix, n * n * 8);
             var m = (double*)mat.GetUnsafePtr();
 
             var det = 1.0;
@@ -174,11 +176,11 @@ namespace BovineLabs.Grid.Kasteleyn
 
         public static void Dispose(ref KasteleynState s)
         {
-            if (s.Region.IsCreated) s.Region.Dispose();
+            if (s.Region != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Region); s.Region = null; }
             if (s.Edges.IsCreated) s.Edges.Dispose();
             if (s.EdgeCoords.IsCreated) s.EdgeCoords.Dispose();
-            if (s.Matrix.IsCreated) s.Matrix.Dispose();
-            if (s.CellToVertex.IsCreated) s.CellToVertex.Dispose();
+            if (s.Matrix != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Matrix); s.Matrix = null; }
+            if (s.CellToVertex != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.CellToVertex); s.CellToVertex = null; }
         }
     }
 }

@@ -8,13 +8,14 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Jps
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct JpsState
+    public unsafe struct JpsState
     {
         public Grid2D Grid;
-        public NativeArray<float> G;
-        public NativeArray<int> Parent;
-        public NativeArray<byte> Closed;
+        public float* G;
+        public int* Parent;
+        public byte* Closed;
         public MinHeap Open;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -36,10 +37,11 @@ namespace BovineLabs.Grid.Jps
 
             result = new JpsState
             {
+                Allocator = allocator,
                 Grid = g,
-                G = new NativeArray<float>(g.Length, allocator),
-                Parent = new NativeArray<int>(g.Length, allocator),
-                Closed = new NativeArray<byte>(g.Length, allocator),
+                G = (float*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                Parent = (int*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                Closed = (byte*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Open = open
             };
             return true;
@@ -66,9 +68,9 @@ namespace BovineLabs.Grid.Jps
         [BurstCompile]
         public static bool TryInitSearch(ref JpsState s, in NativeArray<byte> blocked, int start, int goal)
         {
-            var g = (float*)s.G.GetUnsafePtr();
-            var parent = (int*)s.Parent.GetUnsafePtr();
-            var closed = (byte*)s.Closed.GetUnsafePtr();
+            var g = s.G;
+            var parent = s.Parent;
+            var closed = s.Closed;
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             var len = s.Grid.Length;
 
@@ -95,15 +97,15 @@ namespace BovineLabs.Grid.Jps
             if (s.Open.IsEmpty) return true;
             if (!s.Open.TryPop(out var current)) return true;
 
-            var g = (float*)s.G.GetUnsafePtr();
-            var parent = (int*)s.Parent.GetUnsafePtr();
-            var closed = (byte*)s.Closed.GetUnsafePtr();
+            var g = s.G;
+            var parent = s.Parent;
+            var closed = s.Closed;
             var cid = current.Id;
             closed[cid] = 1;
 
             if (cid == goal)
             {
-                TryExtractPath(in s.Parent, goal, start, ref path);
+                TryExtractPath(s.Parent, goal, start, ref path);
                 return true;
             }
 
@@ -178,7 +180,7 @@ namespace BovineLabs.Grid.Jps
         }
 
         [BurstCompile]
-        public static bool TryExtractPath(in NativeArray<int> parent, int goal, int start, ref NativeList<int> path)
+        public static bool TryExtractPath(int* parent, int goal, int start, ref NativeList<int> path)
         {
             path.Clear();
             var current = goal;
@@ -208,9 +210,9 @@ namespace BovineLabs.Grid.Jps
 
         public static void Dispose(ref JpsState s)
         {
-            if (s.G.IsCreated) s.G.Dispose();
-            if (s.Parent.IsCreated) s.Parent.Dispose();
-            if (s.Closed.IsCreated) s.Closed.Dispose();
+            if (s.G != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.G); s.G = null; }
+            if (s.Parent != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Parent); s.Parent = null; }
+            if (s.Closed != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Closed); s.Closed = null; }
             if (s.Open.IsCreated) s.Open.Dispose();
         }
 

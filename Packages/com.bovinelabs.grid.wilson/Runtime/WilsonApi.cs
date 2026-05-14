@@ -7,13 +7,14 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Wilson
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct WilsonState
+    public unsafe struct WilsonState
     {
         public Grid2D Grid;
-        public NativeArray<byte> InTree;
-        public NativeArray<int> Parent;
-        public NativeArray<int> WalkNext;
+        public byte* InTree;
+        public int* Parent;
+        public int* WalkNext;
         public UnsafeList<int> Walk;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -26,9 +27,9 @@ namespace BovineLabs.Grid.Wilson
             s = new WilsonState
             {
                 Grid = g,
-                InTree = new NativeArray<byte>(g.Length, a),
-                Parent = new NativeArray<int>(g.Length, a),
-                WalkNext = new NativeArray<int>(g.Length, a),
+                InTree = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
+                Parent = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                WalkNext = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
                 Walk = new UnsafeList<int>(g.Length, a)
             };
             return true;
@@ -37,9 +38,9 @@ namespace BovineLabs.Grid.Wilson
         [BurstCompile]
         public static bool TryInitialize(ref WilsonState s, int root)
         {
-            var inTree = (byte*)s.InTree.GetUnsafePtr();
-            var parent = (int*)s.Parent.GetUnsafePtr();
-            var walkNext = (int*)s.WalkNext.GetUnsafePtr();
+            var inTree = s.InTree;
+            var parent = s.Parent;
+            var walkNext = s.WalkNext;
             var len = s.Grid.Length;
             UnsafeUtility.MemSet(inTree, 0, len);
             for (var i = 0; i < len; i++)
@@ -59,8 +60,8 @@ namespace BovineLabs.Grid.Wilson
             s.Walk.Clear();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
-            var inTree = (byte*)s.InTree.GetUnsafePtr();
-            var walkNext = (int*)s.WalkNext.GetUnsafePtr();
+            var inTree = s.InTree;
+            var walkNext = s.WalkNext;
 
             var current = start;
             while (inTree[current] == 0)
@@ -82,7 +83,7 @@ namespace BovineLabs.Grid.Wilson
                 current = next;
             }
 
-            var parent = (int*)s.Parent.GetUnsafePtr();
+            var parent = s.Parent;
             current = start;
             while (inTree[current] == 0)
             {
@@ -101,7 +102,7 @@ namespace BovineLabs.Grid.Wilson
         [BurstCompile]
         public static bool TryBuildTree(ref WilsonState s, ref Random rng)
         {
-            var inTree = (byte*)s.InTree.GetUnsafePtr();
+            var inTree = s.InTree;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
                 if (inTree[i] == 0)
@@ -114,7 +115,7 @@ namespace BovineLabs.Grid.Wilson
         public static bool TryExtractMazeWalls(ref WilsonState s, ref NativeArray<byte> walls)
         {
             var wPtr = (byte*)walls.GetUnsafePtr();
-            var parent = (int*)s.Parent.GetUnsafePtr();
+            var parent = s.Parent;
             var len = s.Grid.Length;
             UnsafeUtility.MemSet(wPtr, 1, len);
             for (var i = 0; i < len; i++)
@@ -128,9 +129,9 @@ namespace BovineLabs.Grid.Wilson
 
         public static void Dispose(ref WilsonState s)
         {
-            if (s.InTree.IsCreated) s.InTree.Dispose();
-            if (s.Parent.IsCreated) s.Parent.Dispose();
-            if (s.WalkNext.IsCreated) s.WalkNext.Dispose();
+            if (s.InTree != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.InTree); s.InTree = null; }
+            if (s.Parent != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Parent); s.Parent = null; }
+            if (s.WalkNext != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.WalkNext); s.WalkNext = null; }
             s.Walk.Dispose();
         }
     }

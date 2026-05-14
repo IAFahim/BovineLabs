@@ -6,7 +6,7 @@ using Unity.Mathematics;
 public class WfcTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(WfcApi.TryCreate(3, 3, 4, Allocator.Temp, out var s));
         Assert.AreEqual(9, s.Grid.Length);
@@ -14,7 +14,7 @@ public class WfcTests
     }
 
     [Test]
-    public void InitializeAllPossible()
+    public unsafe void InitializeAllPossible()
     {
         Assert.IsTrue(WfcApi.TryCreate(3, 3, 4, Allocator.Temp, out var s));
         Assert.IsTrue(WfcApi.TryInitializeAllPossible(ref s));
@@ -23,7 +23,7 @@ public class WfcTests
     }
 
     [Test]
-    public void Observe_Collapses()
+    public unsafe void Observe_Collapses()
     {
         Assert.IsTrue(WfcApi.TryCreate(3, 3, 4, Allocator.Temp, out var s));
         Assert.IsTrue(WfcApi.TryInitializeAllPossible(ref s));
@@ -34,7 +34,7 @@ public class WfcTests
     }
 
     [Test]
-    public void Run_Simple()
+    public unsafe void Run_Simple()
     {
         Assert.IsTrue(WfcApi.TryCreate(3, 3, 2, Allocator.Temp, out var s));
         var output = new NativeArray<int>(9, Allocator.Temp);
@@ -42,7 +42,7 @@ public class WfcTests
 
         Assert.IsTrue(WfcApi.TryLearnAdjacency(ref s, new NativeArray<int>(0, Allocator.Temp), 0, 0));
 
-        for (var i = 0; i < s.Compatibility.Length; i++)
+        for (var i = 0; i < s.PatternCount * 4; i++)
             s.Compatibility[i] = 0x3;
         Assert.IsTrue(WfcApi.TryRun(ref s, ref output, ref rng));
         for (var i = 0; i < 9; i++) Assert.LessOrEqual(output[i], 1);
@@ -51,7 +51,7 @@ public class WfcTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(WfcApi.TryCreate(3, 3, 2, Allocator.Temp, out var s));
         WfcApi.Dispose(ref s);

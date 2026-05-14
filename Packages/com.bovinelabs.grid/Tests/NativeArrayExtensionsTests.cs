@@ -5,7 +5,7 @@ using Unity.Collections;
 public class NativeArrayExtensionsTests
 {
     [Test]
-    public void Fill_Int()
+    public unsafe void Fill_Int()
     {
         var a = new NativeArray<int>(10, Allocator.Temp);
         a.Fill(42);
@@ -14,7 +14,7 @@ public class NativeArrayExtensionsTests
     }
 
     [Test]
-    public void Fill_Float()
+    public unsafe void Fill_Float()
     {
         var a = new NativeArray<float>(5, Allocator.Temp);
         a.Fill(3.14f);
@@ -23,7 +23,7 @@ public class NativeArrayExtensionsTests
     }
 
     [Test]
-    public void Fill_Byte()
+    public unsafe void Fill_Byte()
     {
         var a = new NativeArray<byte>(7, Allocator.Temp);
         a.Fill((byte)255);
@@ -32,7 +32,7 @@ public class NativeArrayExtensionsTests
     }
 
     [Test]
-    public void Fill_Empty()
+    public unsafe void Fill_Empty()
     {
         var a = new NativeArray<int>(0, Allocator.Temp);
         Assert.DoesNotThrow(() => a.Fill(0));

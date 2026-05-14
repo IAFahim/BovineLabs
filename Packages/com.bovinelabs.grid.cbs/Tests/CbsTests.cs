@@ -7,7 +7,7 @@ using Unity.Collections.LowLevel.Unsafe;
 public class CbsTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(CbsApi.TryCreate(10, 10, 100, Allocator.Temp, out var s));
         Assert.AreEqual(100, s.Grid.Length);
@@ -15,7 +15,7 @@ public class CbsTests
     }
 
     [Test]
-    public void Solve_TwoAgents_NoConflict()
+    public unsafe void Solve_TwoAgents_NoConflict()
     {
         Assert.IsTrue(CbsApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -56,7 +56,7 @@ public class CbsTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(CbsApi.TryCreate(5, 5, 10, Allocator.Temp, out var s));
         CbsApi.Dispose(ref s);
@@ -64,7 +64,7 @@ public class CbsTests
     }
 
     [Test]
-    public void Solve_EdgeSwapConflict()
+    public unsafe void Solve_EdgeSwapConflict()
     {
         Assert.IsTrue(CbsApi.TryCreate(5, 5, 5000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -86,7 +86,7 @@ public class CbsTests
     }
 
     [Test]
-    public void Solve_GoalWaitConflict()
+    public unsafe void Solve_GoalWaitConflict()
     {
         Assert.IsTrue(CbsApi.TryCreate(5, 5, 5000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -106,7 +106,7 @@ public class CbsTests
     }
 
     [Test]
-    public void Solve_MultiAgentBottleneck()
+    public unsafe void Solve_MultiAgentBottleneck()
     {
         Assert.IsTrue(CbsApi.TryCreate(7, 5, 10000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(35, Allocator.Temp);

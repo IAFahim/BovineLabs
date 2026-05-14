@@ -7,12 +7,13 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Watershed
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct WatershedState
+    public unsafe struct WatershedState
     {
         public Grid2D Grid;
-        public NativeArray<int> Label;
-        public NativeArray<byte> State;
+        public int* Label;
+        public byte* State;
         public MinHeap Heap;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -26,8 +27,8 @@ namespace BovineLabs.Grid.Watershed
             s = new WatershedState
             {
                 Grid = g,
-                Label = new NativeArray<int>(g.Length, a),
-                State = new NativeArray<byte>(g.Length, a),
+                Label = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                State = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Heap = heap
             };
             return true;
@@ -37,8 +38,8 @@ namespace BovineLabs.Grid.Watershed
         public static bool TryFindMinima(ref WatershedState s, in NativeArray<float> height, out int labelCount)
         {
             labelCount = 0;
-            var label = (int*)s.Label.GetUnsafePtr();
-            var st = (byte*)s.State.GetUnsafePtr();
+            var label = s.Label;
+            var st = s.State;
             var ht = (float*)height.GetUnsafeReadOnlyPtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -165,8 +166,8 @@ namespace BovineLabs.Grid.Watershed
         [BurstCompile]
         public static bool TryFlood(ref WatershedState s, in NativeArray<float> height)
         {
-            var label = (int*)s.Label.GetUnsafePtr();
-            var st = (byte*)s.State.GetUnsafePtr();
+            var label = s.Label;
+            var st = s.State;
             var ht = (float*)height.GetUnsafeReadOnlyPtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -215,7 +216,7 @@ namespace BovineLabs.Grid.Watershed
         [BurstCompile]
         public static bool TryExtractBoundaries(ref WatershedState s, ref NativeArray<byte> boundary)
         {
-            var label = (int*)s.Label.GetUnsafePtr();
+            var label = s.Label;
             var bnd = (byte*)boundary.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -249,8 +250,8 @@ namespace BovineLabs.Grid.Watershed
 
         public static void Dispose(ref WatershedState s)
         {
-            if (s.Label.IsCreated) s.Label.Dispose();
-            if (s.State.IsCreated) s.State.Dispose();
+            if (s.Label != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Label); s.Label = null; }
+            if (s.State != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.State); s.State = null; }
             if (s.Heap.IsCreated) s.Heap.Dispose();
         }
     }

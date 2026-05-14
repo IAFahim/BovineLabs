@@ -7,7 +7,7 @@ using Unity.Mathematics;
 public class FastMarchingTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -15,7 +15,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void InitSources_SetsZero()
+    public unsafe void InitSources_SetsZero()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var src = new NativeArray<int>(new[] { 12 }, Allocator.Temp);
@@ -26,7 +26,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void InitSources_OtherInf()
+    public unsafe void InitSources_OtherInf()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var src = new NativeArray<int>(new[] { 0 }, Allocator.Temp);
@@ -37,7 +37,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void Propagate_Line1D()
+    public unsafe void Propagate_Line1D()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var speed = new NativeArray<float>(5, Allocator.Temp);
@@ -55,7 +55,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void Propagate_2D()
+    public unsafe void Propagate_2D()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var speed = new NativeArray<float>(9, Allocator.Temp);
@@ -72,7 +72,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void Propagate_SlowSpeed()
+    public unsafe void Propagate_SlowSpeed()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var speed = new NativeArray<float>(5, Allocator.Temp);
@@ -87,7 +87,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void GradientFlow_NotNull()
+    public unsafe void GradientFlow_NotNull()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var speed = new NativeArray<float>(25, Allocator.Temp);
@@ -106,7 +106,7 @@ public class FastMarchingTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(FastMarchingApi.TryCreate(3, 3, Allocator.Temp, out var s));
         FastMarchingApi.Dispose(ref s);

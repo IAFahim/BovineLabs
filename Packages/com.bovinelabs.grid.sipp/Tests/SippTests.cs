@@ -6,7 +6,7 @@ using Unity.Collections;
 public class SippTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(SippApi.TryCreate(5, 5, 100, 100, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -14,7 +14,7 @@ public class SippTests
     }
 
     [Test]
-    public void Search_StartEqualsGoal()
+    public unsafe void Search_StartEqualsGoal()
     {
         Assert.IsTrue(SippApi.TryCreate(5, 5, 100, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -28,7 +28,7 @@ public class SippTests
     }
 
     [Test]
-    public void Search_Adjacent()
+    public unsafe void Search_Adjacent()
     {
         Assert.IsTrue(SippApi.TryCreate(5, 5, 100, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -44,7 +44,7 @@ public class SippTests
     }
 
     [Test]
-    public void Search_BlockedGoal()
+    public unsafe void Search_BlockedGoal()
     {
         Assert.IsTrue(SippApi.TryCreate(3, 3, 50, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(9, Allocator.Temp);
@@ -58,7 +58,7 @@ public class SippTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(SippApi.TryCreate(3, 3, 10, 10, Allocator.Temp, out var s));
         SippApi.Dispose(ref s);

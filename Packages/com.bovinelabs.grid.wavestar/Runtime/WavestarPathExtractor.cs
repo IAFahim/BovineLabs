@@ -19,7 +19,7 @@ namespace BovineLabs.Grid.Wavestar
         public NativeArray<bool> pathFound;
         public NativeArray<float> pathLength;
 
-        public void Execute()
+        public unsafe void Execute()
         {
             pathFound[0] = false;
             pathLength[0] = 0f;

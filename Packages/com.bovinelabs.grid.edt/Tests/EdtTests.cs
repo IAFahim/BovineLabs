@@ -6,7 +6,7 @@ using Unity.Collections;
 public class EdtTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(EdtApi.TryCreate(10, 10, Allocator.Temp, out var s));
         Assert.AreEqual(100, s.Grid.Length);
@@ -14,7 +14,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Init_ObstacleIsZero()
+    public unsafe void Init_ObstacleIsZero()
     {
         var b = new NativeArray<byte>(new byte[] { 1, 0, 0 }, Allocator.Temp);
         var d = new NativeArray<float>(3, Allocator.Temp);
@@ -25,7 +25,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Init_FreeIsInf()
+    public unsafe void Init_FreeIsInf()
     {
         var b = new NativeArray<byte>(new byte[] { 0, 0 }, Allocator.Temp);
         var d = new NativeArray<float>(2, Allocator.Temp);
@@ -36,7 +36,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_Single()
+    public unsafe void Transform1D_Single()
     {
         var len = 5;
         var f = new NativeArray<float>(len, Allocator.Temp);
@@ -58,7 +58,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_TwoSources()
+    public unsafe void Transform1D_TwoSources()
     {
         var len = 5;
         var f = new NativeArray<float>(len, Allocator.Temp);
@@ -83,7 +83,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_AllObstacles()
+    public unsafe void Transform1D_AllObstacles()
     {
         var len = 4;
         var f = new NativeArray<float>(len, Allocator.Temp);
@@ -100,7 +100,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_AllFree()
+    public unsafe void Transform1D_AllFree()
     {
         var len = 3;
         var f = new NativeArray<float>(len, Allocator.Temp);
@@ -117,7 +117,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_Length1()
+    public unsafe void Transform1D_Length1()
     {
         var f = new NativeArray<float>(1, Allocator.Temp);
         var o = new NativeArray<float>(1, Allocator.Temp);
@@ -133,7 +133,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Transform1D_Length0()
+    public unsafe void Transform1D_Length0()
     {
         var f = new NativeArray<float>(1, Allocator.Temp);
         var o = new NativeArray<float>(1, Allocator.Temp);
@@ -147,7 +147,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_CenterObstacle()
+    public unsafe void Build_CenterObstacle()
     {
         Assert.IsTrue(EdtApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(9, Allocator.Temp);
@@ -165,7 +165,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_CornerObstacle()
+    public unsafe void Build_CornerObstacle()
     {
         Assert.IsTrue(EdtApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(9, Allocator.Temp);
@@ -182,7 +182,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_AllObstacles()
+    public unsafe void Build_AllObstacles()
     {
         Assert.IsTrue(EdtApi.TryCreate(4, 4, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(16, Allocator.Temp);
@@ -196,7 +196,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_NoObstacles()
+    public unsafe void Build_NoObstacles()
     {
         Assert.IsTrue(EdtApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(9, Allocator.Temp);
@@ -210,7 +210,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_Line()
+    public unsafe void Build_Line()
     {
         Assert.IsTrue(EdtApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(5, Allocator.Temp);
@@ -227,7 +227,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_Symmetric()
+    public unsafe void Build_Symmetric()
     {
         Assert.IsTrue(EdtApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(5, Allocator.Temp);
@@ -243,7 +243,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_OffCenter()
+    public unsafe void Build_OffCenter()
     {
         Assert.IsTrue(EdtApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(25, Allocator.Temp);
@@ -259,7 +259,7 @@ public class EdtTests
     }
 
     [Test]
-    public void ToDistance_Sqrt()
+    public unsafe void ToDistance_Sqrt()
     {
         var d2 = new NativeArray<float>(new[] { 0f, 1f, 4f, 9f }, Allocator.Temp);
         var d = new NativeArray<float>(4, Allocator.Temp);
@@ -271,7 +271,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Dispose_DoubleSafe()
+    public unsafe void Dispose_DoubleSafe()
     {
         Assert.IsTrue(EdtApi.TryCreate(3, 3, Allocator.Temp, out var s));
         EdtApi.Dispose(ref s);
@@ -279,7 +279,7 @@ public class EdtTests
     }
 
     [Test]
-    public void Build_1x1()
+    public unsafe void Build_1x1()
     {
         Assert.IsTrue(EdtApi.TryCreate(1, 1, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(new byte[] { 1 }, Allocator.Temp);

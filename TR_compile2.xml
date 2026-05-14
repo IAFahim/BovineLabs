@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="7" result="Failed(Child)" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.0401657">
+  <test-suite type="TestSuite" id="1000" name="BovineLabs" fullname="BovineLabs" runstate="Runnable" testcasecount="197" result="Failed" site="Child" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.040166" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1091" name="com.bovinelabs.grid.anya.tests.dll" fullname="/home/i/Documents/BovineLabs/Library/ScriptAssemblies/com.bovinelabs.grid.anya.tests.dll" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.030772" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="58536" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1083" name="AnyaTests" fullname="AnyaTests" classname="AnyaTests" runstate="Runnable" testcasecount="7" result="Failed" site="Child" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.029832" total="7" passed="6" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1084" name="Create_Dimensions" fullname="AnyaTests.Create_Dimensions" methodname="Create_Dimensions" classname="AnyaTests" runstate="Runnable" seed="437812296" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.008504" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1090" name="Dispose_Double" fullname="AnyaTests.Dispose_Double" methodname="Dispose_Double" classname="AnyaTests" runstate="Runnable" seed="76949413" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.000148" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1086" name="Search_BlockedGoal" fullname="AnyaTests.Search_BlockedGoal" methodname="Search_BlockedGoal" classname="AnyaTests" runstate="Runnable" seed="1224182628" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.002395" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1089" name="Search_CornerHugging" fullname="AnyaTests.Search_CornerHugging" methodname="Search_CornerHugging" classname="AnyaTests" runstate="Runnable" seed="416450016" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.001905" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1085" name="Search_DirectLine" fullname="AnyaTests.Search_DirectLine" methodname="Search_DirectLine" classname="AnyaTests" runstate="Runnable" seed="655068693" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.000247" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1088" name="Search_EuclideanCost_OpenGrid" fullname="AnyaTests.Search_EuclideanCost_OpenGrid" methodname="Search_EuclideanCost_OpenGrid" classname="AnyaTests" runstate="Runnable" seed="1227508705" result="Passed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.002052" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1087" name="Search_WithWall" fullname="AnyaTests.Search_WithWall" methodname="Search_WithWall" classname="AnyaTests" runstate="Runnable" seed="44706858" result="Failed" start-time="2026-05-14 06:11:31Z" end-time="2026-05-14 06:11:31Z" duration="0.002937" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+            <stack-trace><![CDATA[at AnyaTests.Search_WithWall () [0x00067] in ./Packages/com.bovinelabs.grid.anya/Tests/AnyaTests.cs:40
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Saving results to: /home/i/.config/unity3d/DefaultCompany/BovineLabs/TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

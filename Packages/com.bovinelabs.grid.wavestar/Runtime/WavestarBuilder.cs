@@ -17,7 +17,7 @@ namespace BovineLabs.Grid.Wavestar
         public NativeHashSet<int> traversableSubvolumes;
         public NativeArray<int> distanceToObstacle;
 
-        public void Execute()
+        public unsafe void Execute()
         {
             var obstacleMap = new NativeObstacleMap(obstacleGrid, sizeX, sizeY, sizeZ);
             ComputeDistanceField();

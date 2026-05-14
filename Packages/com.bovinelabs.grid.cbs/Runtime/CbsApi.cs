@@ -30,7 +30,7 @@ namespace BovineLabs.Grid.Cbs
         public int Parent;
     }
 
-    public struct CbsState
+    public unsafe struct CbsState
     {
         public Grid2D Grid;
         public UnsafeList<CbsNode> Nodes;
@@ -42,6 +42,7 @@ namespace BovineLabs.Grid.Cbs
         public byte SolveComplete;
         public int AgentCount;
         public int SolutionNode;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -57,6 +58,7 @@ namespace BovineLabs.Grid.Cbs
 
             result = new CbsState
             {
+                Allocator = a,
                 Grid = g,
                 Nodes = new UnsafeList<CbsNode>(maxNodes, a),
                 Constraints = new UnsafeList<CbsConstraint>(maxNodes * 10, a),
@@ -359,8 +361,8 @@ namespace BovineLabs.Grid.Cbs
             var width = s.Grid.Width;
             var timeHorizon = math.max(100, gridLen);
 
-            var g = new NativeArray<float>(gridLen * timeHorizon, Allocator.Temp);
-            var parent = new NativeArray<int>(gridLen * timeHorizon, Allocator.Temp);
+            var g = new Unity.Collections.NativeArray<float>(gridLen * timeHorizon, Allocator.Temp);
+            var parent = new Unity.Collections.NativeArray<int>(gridLen * timeHorizon, Allocator.Temp);
             g.Fill(float.PositiveInfinity);
             parent.Fill(-1);
 

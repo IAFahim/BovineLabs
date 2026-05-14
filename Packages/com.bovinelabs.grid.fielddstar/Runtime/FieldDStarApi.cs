@@ -6,14 +6,15 @@ using Unity.Mathematics;
 
 namespace BovineLabs.Grid.FieldDStar
 {
-    public struct FieldDStarState
+    public unsafe struct FieldDStarState
     {
         public Grid2D Grid;
         public int Goal;
-        public NativeArray<float> G;
-        public NativeArray<float> RHS;
-        public NativeArray<float2> Flow;
+        public float* G;
+        public float* RHS;
+        public float2* Flow;
         public MinHeap Heap;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -35,10 +36,11 @@ namespace BovineLabs.Grid.FieldDStar
 
             result = new FieldDStarState
             {
+                Allocator = a,
                 Grid = g,
-                G = new NativeArray<float>(g.Length, a),
-                RHS = new NativeArray<float>(g.Length, a),
-                Flow = new NativeArray<float2>(g.Length, a),
+                G = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                RHS = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                Flow = (float2*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float2), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float2>(), g.Length),
                 Heap = heap
             };
             return true;
@@ -47,9 +49,12 @@ namespace BovineLabs.Grid.FieldDStar
         public static bool TryReset(ref FieldDStarState s)
         {
             s.Heap.Clear();
-            s.G.Fill(float.PositiveInfinity);
-            s.RHS.Fill(float.PositiveInfinity);
-            s.Flow.Fill(float2.zero);
+            var len = s.Grid.Length;
+            for (var i = 0; i < len; i++) {
+                s.G[i] = float.PositiveInfinity;
+                s.RHS[i] = float.PositiveInfinity;
+                s.Flow[i] = float2.zero;
+            }
             return true;
         }
 
@@ -74,8 +79,8 @@ namespace BovineLabs.Grid.FieldDStar
 
             if (!s.Heap.TryPop(out var node)) return false;
             var u = node.Id;
-            var gPtr = (float*)s.G.GetUnsafePtr();
-            var rhsPtr = (float*)s.RHS.GetUnsafePtr();
+            var gPtr = s.G;
+            var rhsPtr = s.RHS;
 
             if (gPtr[u] > rhsPtr[u])
             {
@@ -110,8 +115,8 @@ namespace BovineLabs.Grid.FieldDStar
             var p = s.Grid.ToCoord(cell);
             var width = s.Grid.Width;
             var height = s.Grid.Height;
-            var gPtr = (float*)s.G.GetUnsafePtr();
-            var rhsPtr = (float*)s.RHS.GetUnsafePtr();
+            var gPtr = s.G;
+            var rhsPtr = s.RHS;
             var costPtr = (float*)cost.GetUnsafeReadOnlyPtr();
 
             for (var i = 0; i < 8; i++)
@@ -186,8 +191,8 @@ namespace BovineLabs.Grid.FieldDStar
             var cellCount = s.Grid.Length;
             var width = s.Grid.Width;
             var height = s.Grid.Height;
-            var gPtr = (float*)s.G.GetUnsafeReadOnlyPtr();
-            var flowPtr = (float2*)s.Flow.GetUnsafePtr();
+            var gPtr = s.G;
+            var flowPtr = s.Flow;
 
             for (var i = 0; i < cellCount; i++)
             {
@@ -219,9 +224,9 @@ namespace BovineLabs.Grid.FieldDStar
 
         public static void Dispose(ref FieldDStarState s)
         {
-            if (s.G.IsCreated) s.G.Dispose();
-            if (s.RHS.IsCreated) s.RHS.Dispose();
-            if (s.Flow.IsCreated) s.Flow.Dispose();
+            if (s.G != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.G); s.G = null; }
+            if (s.RHS != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.RHS); s.RHS = null; }
+            if (s.Flow != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Flow); s.Flow = null; }
             if (s.Heap.IsCreated) s.Heap.Dispose();
         }
     }

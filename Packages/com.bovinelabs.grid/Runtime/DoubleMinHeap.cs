@@ -44,7 +44,7 @@ namespace BovineLabs.Grid
         public int Length => Count;
         public bool IsEmpty => Count == 0;
 
-        public void Clear()
+        public unsafe void Clear()
         {
             Count = 0;
             UnsafeUtility.MemSet(Positions, 0xFF, (long)Capacity * UnsafeUtility.SizeOf<int>());
@@ -129,9 +129,7 @@ namespace BovineLabs.Grid
 
         private void Swap(int a, int b)
         {
-            var tmp = Data[a];
-            Data[a] = Data[b];
-            Data[b] = tmp;
+            (Data[a], Data[b]) = (Data[b], Data[a]);
             Positions[Data[a].Id] = a;
             Positions[Data[b].Id] = b;
         }
@@ -143,7 +141,7 @@ namespace BovineLabs.Grid
             return a.Key1 < b.Key1;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Data != null)
             {

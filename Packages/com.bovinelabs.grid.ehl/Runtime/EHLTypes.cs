@@ -168,7 +168,7 @@ namespace BovineLabs.Grid.EHL
 
         public bool IsCreated => Cells.IsCreated;
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Cells.IsCreated) Cells.Dispose();
             if (ViaLabels.IsCreated) ViaLabels.Dispose();
@@ -235,7 +235,7 @@ namespace BovineLabs.Grid.EHL
             PathFound = false;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Waypoints.IsCreated) Waypoints.Dispose();
         }

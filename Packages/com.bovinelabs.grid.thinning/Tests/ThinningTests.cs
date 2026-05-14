@@ -6,7 +6,7 @@ using Unity.Collections;
 public class ThinningTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(ThinningApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -14,7 +14,7 @@ public class ThinningTests
     }
 
     [Test]
-    public void Iterate_RemovesBorder()
+    public unsafe void Iterate_RemovesBorder()
     {
         Assert.IsTrue(ThinningApi.TryCreate(5, 5, Allocator.Temp, out var s));
         var solid = new NativeArray<byte>(25, Allocator.Temp);
@@ -26,7 +26,7 @@ public class ThinningTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(ThinningApi.TryCreate(3, 3, Allocator.Temp, out var s));
         ThinningApi.Dispose(ref s);

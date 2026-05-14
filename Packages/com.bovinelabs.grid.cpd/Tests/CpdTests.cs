@@ -6,7 +6,7 @@ using Unity.Collections;
 public class CpdTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(CpdApi.TryCreate(5, 5, 1000, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -14,7 +14,7 @@ public class CpdTests
     }
 
     [Test]
-    public void Build_OpenGrid()
+    public unsafe void Build_OpenGrid()
     {
         Assert.IsTrue(CpdApi.TryCreate(3, 3, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(9, Allocator.Temp);
@@ -26,7 +26,7 @@ public class CpdTests
     }
 
     [Test]
-    public void TryGetFirstMove()
+    public unsafe void TryGetFirstMove()
     {
         Assert.IsTrue(CpdApi.TryCreate(3, 3, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(9, Allocator.Temp);
@@ -39,7 +39,7 @@ public class CpdTests
     }
 
     [Test]
-    public void ExtractPath()
+    public unsafe void ExtractPath()
     {
         Assert.IsTrue(CpdApi.TryCreate(3, 3, 1000, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(9, Allocator.Temp);
@@ -56,7 +56,7 @@ public class CpdTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(CpdApi.TryCreate(3, 3, 10, Allocator.Temp, out var s));
         CpdApi.Dispose(ref s);

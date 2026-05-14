@@ -4,11 +4,12 @@ using Unity.Collections.LowLevel.Unsafe;
 
 namespace BovineLabs.Grid.Thinning
 {
-    public struct ThinningState
+    public unsafe struct ThinningState
     {
         public Grid2D Grid;
-        public NativeArray<byte> Mark;
+        public byte* Mark;
         public UnsafeList<int> Frontier;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -21,7 +22,7 @@ namespace BovineLabs.Grid.Thinning
             s = new ThinningState
             {
                 Grid = g,
-                Mark = new NativeArray<byte>(g.Length, a),
+                Mark = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Frontier = new UnsafeList<int>(g.Length, a)
             };
             return true;
@@ -43,8 +44,8 @@ namespace BovineLabs.Grid.Thinning
             var width = s.Grid.Width;
             var height = s.Grid.Height;
             var solidPtr = (byte*)solid.GetUnsafePtr();
-            var markPtr = (byte*)s.Mark.GetUnsafePtr();
-            s.Mark.Fill((byte)0);
+            var markPtr = s.Mark;
+            UnsafeUtility.MemSet(s.Mark, 0, s.Grid.Length * sizeof(byte));
 
             var toDelete = new UnsafeList<int>(s.Grid.Length, Allocator.Temp);
 
@@ -102,7 +103,7 @@ namespace BovineLabs.Grid.Thinning
 
         public static void Dispose(ref ThinningState s)
         {
-            if (s.Mark.IsCreated) s.Mark.Dispose();
+            if (s.Mark != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Mark); s.Mark = null; }
             s.Frontier.Dispose();
         }
     }

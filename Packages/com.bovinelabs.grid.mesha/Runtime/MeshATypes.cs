@@ -61,14 +61,14 @@ namespace BovineLabs.Grid.MeshA
             PrimsByHeading = new NativeParallelMultiHashMap<int, int>(capacity, allocator);
         }
 
-        public void Add(MotionPrimitive prim)
+        public unsafe void Add(MotionPrimitive prim)
         {
             var idx = Primitives.Length;
             Primitives.Add(prim);
             PrimsByHeading.Add(prim.StartTheta, idx);
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (Primitives.IsCreated)
             {
@@ -147,7 +147,7 @@ namespace BovineLabs.Grid.MeshA
             }
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (SuccessorsFlat.IsCreated) SuccessorsFlat.Dispose();
             if (SuccOffsets.IsCreated) SuccOffsets.Dispose();

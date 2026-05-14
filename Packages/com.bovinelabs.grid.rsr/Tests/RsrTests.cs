@@ -5,7 +5,7 @@ using Unity.Collections;
 public class RsrTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(RsrApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -13,7 +13,7 @@ public class RsrTests
     }
 
     [Test]
-    public void Build_OpenGrid()
+    public unsafe void Build_OpenGrid()
     {
         Assert.IsTrue(RsrApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -27,7 +27,7 @@ public class RsrTests
     }
 
     [Test]
-    public void Build_WithWall()
+    public unsafe void Build_WithWall()
     {
         Assert.IsTrue(RsrApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -40,7 +40,7 @@ public class RsrTests
     }
 
     [Test]
-    public void GetSuccessors_Interior()
+    public unsafe void GetSuccessors_Interior()
     {
         Assert.IsTrue(RsrApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -57,7 +57,7 @@ public class RsrTests
     }
 
     [Test]
-    public void GetSuccessors_Perimeter()
+    public unsafe void GetSuccessors_Perimeter()
     {
         Assert.IsTrue(RsrApi.TryCreate(5, 5, 100, Allocator.Temp, out var s));
         var blocked = new NativeArray<byte>(25, Allocator.Temp);
@@ -73,7 +73,7 @@ public class RsrTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(RsrApi.TryCreate(3, 3, 10, Allocator.Temp, out var s));
         RsrApi.Dispose(ref s);

@@ -16,12 +16,13 @@ namespace BovineLabs.Grid.Rsr
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct RsrState
+    public unsafe struct RsrState
     {
         public Grid2D Grid;
-        public NativeArray<int> RectOfCell;
+        public int* RectOfCell;
         public UnsafeList<RsrRect> Rects;
         public UnsafeList<int> PerimeterCells;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -37,8 +38,9 @@ namespace BovineLabs.Grid.Rsr
 
             result = new RsrState
             {
+                Allocator = a,
                 Grid = g,
-                RectOfCell = new NativeArray<int>(g.Length, a),
+                RectOfCell = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
                 Rects = new UnsafeList<RsrRect>(maxRects, a),
                 PerimeterCells = new UnsafeList<int>(g.Length, a)
             };
@@ -49,7 +51,7 @@ namespace BovineLabs.Grid.Rsr
         public static bool TryBuild(ref RsrState s, in NativeArray<byte> blocked)
         {
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
-            var roc = (int*)s.RectOfCell.GetUnsafePtr();
+            var roc = s.RectOfCell;
             var w = s.Grid.Width;
             var h = s.Grid.Height;
             var len = s.Grid.Length;
@@ -58,7 +60,7 @@ namespace BovineLabs.Grid.Rsr
             s.PerimeterCells.Clear();
             for (var i = 0; i < len; i++) roc[i] = -1;
 
-            var used = new NativeArray<byte>(len, Allocator.Temp);
+            var used = new Unity.Collections.NativeArray<byte>(len, Allocator.Temp);
             var usd = (byte*)used.GetUnsafePtr();
 
             for (var y = 0; y < h; y++)
@@ -153,7 +155,7 @@ namespace BovineLabs.Grid.Rsr
             ref NativeList<int> successors)
         {
             successors.Clear();
-            var roc = (int*)s.RectOfCell.GetUnsafePtr();
+            var roc = s.RectOfCell;
             var rectId = roc[cell];
             if (rectId < 0 || rectId >= s.Rects.Length) return false;
 
@@ -193,7 +195,7 @@ namespace BovineLabs.Grid.Rsr
 
         public static void Dispose(ref RsrState s)
         {
-            if (s.RectOfCell.IsCreated) s.RectOfCell.Dispose();
+            if (s.RectOfCell != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.RectOfCell); s.RectOfCell = null; }
             if (s.Rects.IsCreated) s.Rects.Dispose();
             if (s.PerimeterCells.IsCreated) s.PerimeterCells.Dispose();
         }

@@ -175,7 +175,7 @@ namespace BovineLabs.Grid.Wavestar
             return data.TryGetValue(idx.MortonCode, out subvolData);
         }
 
-        public void Set(OctreeIndex idx, SubvolumeData sv)
+        public unsafe void Set(OctreeIndex idx, SubvolumeData sv)
         {
             data[idx.MortonCode] = sv;
         }
@@ -185,7 +185,7 @@ namespace BovineLabs.Grid.Wavestar
             return data.ContainsKey(idx.MortonCode);
         }
 
-        public void Remove(OctreeIndex idx)
+        public unsafe void Remove(OctreeIndex idx)
         {
             data.Remove(idx.MortonCode);
         }
@@ -203,12 +203,12 @@ namespace BovineLabs.Grid.Wavestar
             return data.GetValueArray(allocator);
         }
 
-        public void Clear()
+        public unsafe void Clear()
         {
             data.Clear();
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (data.IsCreated)
                 data.Dispose();
@@ -314,12 +314,12 @@ namespace BovineLabs.Grid.Wavestar
 
         public bool IsCreated => heap.IsCreated;
 
-        public void Clear()
+        public unsafe void Clear()
         {
             heap.Clear();
         }
 
-        public void Push(OpenSetElement element)
+        public unsafe void Push(OpenSetElement element)
         {
             heap.Add(element);
             BubbleUp(heap.Length - 1);
@@ -336,7 +336,7 @@ namespace BovineLabs.Grid.Wavestar
             return root;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (heap.IsCreated)
                 heap.Dispose();

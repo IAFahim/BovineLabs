@@ -1,5 +1,6 @@
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using Unity.Mathematics;
 
@@ -28,7 +29,7 @@ namespace BovineLabs.Grid.EHL
         public NativeList<int> SuccValuesOut;
 
 
-        public void Execute()
+        public unsafe void Execute()
         {
             var n = VertexCount;
             if (n == 0) return;
@@ -59,9 +60,13 @@ namespace BovineLabs.Grid.EHL
                 covered[i] = false;
 
 
-            var hubLabels = new NativeArray<NativeList<VisibilityLabel>>(n, Allocator.Temp);
+            var hubLabels = (UnsafeList<VisibilityLabel>**)UnsafeUtility.Malloc(n * sizeof(System.IntPtr), UnsafeUtility.AlignOf<System.IntPtr>(), Allocator.Temp);
             for (var i = 0; i < n; i++)
-                hubLabels[i] = new NativeList<VisibilityLabel>(Allocator.Temp);
+            {
+                var list = (UnsafeList<VisibilityLabel>*)UnsafeUtility.Malloc(sizeof(UnsafeList<VisibilityLabel>), UnsafeUtility.AlignOf<UnsafeList<VisibilityLabel>>(), Allocator.Temp);
+                *list = new UnsafeList<VisibilityLabel>(16, Allocator.Temp);
+                hubLabels[i] = list;
+            }
 
 
             var totalPairs = 0;
@@ -109,8 +114,8 @@ namespace BovineLabs.Grid.EHL
                     if (dist[v * n + bestHub] < float.MaxValue)
                     {
                         var alreadyPresent = false;
-                        for (var k = 0; k < hubLabels[v].Length; k++)
-                            if (hubLabels[v][k].HubVertexId == bestHub)
+                        for (var k = 0; k < hubLabels[v]->Length; k++)
+                            if (hubLabels[v]->Ptr[k].HubVertexId == bestHub)
                             {
                                 alreadyPresent = true;
                                 break;
@@ -118,7 +123,7 @@ namespace BovineLabs.Grid.EHL
 
                         if (!alreadyPresent)
                         {
-                            hubLabels[v].Add(new VisibilityLabel(
+                            hubLabels[v]->Add(new VisibilityLabel(
                                 bestHub,
                                 dist[v * n + bestHub],
                                 succ[v * n + bestHub]
@@ -155,17 +160,18 @@ namespace BovineLabs.Grid.EHL
             var offset = 0;
             for (var v = 0; v < n; v++)
             {
-                hubLabels[v].Sort();
+                hubLabels[v]->Sort();
                 HubOffsetsOut.Add(offset);
-                HubCountsOut.Add(hubLabels[v].Length);
-                offset += hubLabels[v].Length;
+                HubCountsOut.Add(hubLabels[v]->Length);
+                offset += hubLabels[v]->Length;
 
-                for (var k = 0; k < hubLabels[v].Length; k++) HubLabelsOut.Add(hubLabels[v][k]);
+                for (var k = 0; k < hubLabels[v]->Length; k++) HubLabelsOut.Add(hubLabels[v]->Ptr[k]);
 
-                hubLabels[v].Dispose();
+                hubLabels[v]->Dispose();
+                Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(hubLabels[v], Unity.Collections.Allocator.Temp);
             }
 
-            hubLabels.Dispose();
+            Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(hubLabels, Unity.Collections.Allocator.Temp);
             covered.Dispose();
             dist.Dispose();
             succ.Dispose();

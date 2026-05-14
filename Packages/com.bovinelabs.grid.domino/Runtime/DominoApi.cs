@@ -7,12 +7,13 @@ using Unity.Collections.LowLevel.Unsafe;
 namespace BovineLabs.Grid.Domino
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct DominoState
+    public unsafe struct DominoState
     {
         public Grid2D Grid;
-        public NativeArray<byte> Region;
-        public NativeArray<int> Height;
-        public NativeArray<byte> MatchingDir;
+        public byte* Region;
+        public int* Height;
+        public byte* MatchingDir;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -28,10 +29,11 @@ namespace BovineLabs.Grid.Domino
 
             result = new DominoState
             {
+                Allocator = a,
                 Grid = g,
-                Region = new NativeArray<byte>(g.Length, a),
-                Height = new NativeArray<int>(g.Length, a),
-                MatchingDir = new NativeArray<byte>(g.Length, a)
+                Region = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
+                Height = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                MatchingDir = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length)
             };
             return true;
         }
@@ -39,13 +41,13 @@ namespace BovineLabs.Grid.Domino
         [BurstCompile]
         public static void SetRegion(ref DominoState s, in NativeArray<byte> region)
         {
-            UnsafeUtility.MemCpy(s.Region.GetUnsafePtr(), region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
+            UnsafeUtility.MemCpy(s.Region, region.GetUnsafeReadOnlyPtr(), s.Grid.Length);
         }
 
         [BurstCompile]
         public static bool CheckTileableByParity(ref DominoState s)
         {
-            var region = (byte*)s.Region.GetUnsafePtr();
+            var region = s.Region;
             var w = s.Grid.Width;
             var len = s.Grid.Length;
             int black = 0, white = 0;
@@ -67,8 +69,8 @@ namespace BovineLabs.Grid.Domino
             var w = s.Grid.Width;
             var h = s.Grid.Height;
             var len = s.Grid.Length;
-            var region = (byte*)s.Region.GetUnsafePtr();
-            var matchDir = (byte*)s.MatchingDir.GetUnsafePtr();
+            var region = s.Region;
+            var matchDir = s.MatchingDir;
             UnsafeUtility.MemSet(matchDir, 0, len);
 
             if (!GraphCutApi.TryCreate(w, h, len * 10, Allocator.Temp, out var cut)) return false;
@@ -130,7 +132,7 @@ namespace BovineLabs.Grid.Domino
                 return false;
             }
 
-            var head = (int*)cut.EdgeHead.GetUnsafePtr();
+            var head = cut.EdgeHead;
             var to = cut.EdgeTo.Ptr;
             var flow = cut.EdgeFlow.Ptr;
             var next = cut.EdgeNext.Ptr;
@@ -163,10 +165,10 @@ namespace BovineLabs.Grid.Domino
             var w = s.Grid.Width;
             var h = s.Grid.Height;
             var len = s.Grid.Length;
-            var region = (byte*)s.Region.GetUnsafePtr();
-            var height = (int*)s.Height.GetUnsafePtr();
+            var region = s.Region;
+            var height = s.Height;
 
-            var vis = new NativeArray<byte>(len, Allocator.Temp);
+            var vis = new Unity.Collections.NativeArray<byte>(len, Allocator.Temp);
             var vPtr = (byte*)vis.GetUnsafePtr();
             UnsafeUtility.MemSet(vPtr, 0, len);
             UnsafeUtility.MemSet(height, 0, len * 4);
@@ -240,7 +242,7 @@ namespace BovineLabs.Grid.Domino
         {
             var w = s.Grid.Width;
             var h = s.Grid.Height;
-            if (cell < 0 || cell >= s.MatchingDir.Length || s.MatchingDir[cell] == 0) return false;
+            if (cell < 0 || cell >= s.Grid.Length || s.MatchingDir[cell] == 0) return false;
 
             var cx = cell % w;
             var cy = cell / w;
@@ -279,9 +281,9 @@ namespace BovineLabs.Grid.Domino
 
         public static void Dispose(ref DominoState s)
         {
-            if (s.Region.IsCreated) s.Region.Dispose();
-            if (s.Height.IsCreated) s.Height.Dispose();
-            if (s.MatchingDir.IsCreated) s.MatchingDir.Dispose();
+            if (s.Region != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Region); s.Region = null; }
+            if (s.Height != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Height); s.Height = null; }
+            if (s.MatchingDir != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.MatchingDir); s.MatchingDir = null; }
         }
     }
 }

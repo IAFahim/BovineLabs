@@ -6,18 +6,19 @@ using Unity.Mathematics;
 
 namespace BovineLabs.Grid.Wfc
 {
-    public struct WfcState
+    public unsafe struct WfcState
     {
         public Grid2D Grid;
         public int PatternCount;
-        public NativeArray<ulong> PossibleBits;
-        public NativeArray<int> Entropy;
-        public NativeArray<ulong> Compatibility;
+        public ulong* PossibleBits;
+        public int* Entropy;
+        public ulong* Compatibility;
         public UnsafeQueue<int> Queue;
-        public NativeArray<byte> Dirty;
+        public byte* Dirty;
 
         public MinHeap ObserveHeap;
         public byte WfcComplete;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -33,11 +34,11 @@ namespace BovineLabs.Grid.Wfc
             {
                 Grid = g,
                 PatternCount = patternCount,
-                PossibleBits = new NativeArray<ulong>(g.Length, a),
-                Entropy = new NativeArray<int>(g.Length, a),
-                Compatibility = new NativeArray<ulong>(patternCount * 4, a),
+                PossibleBits = (ulong*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(ulong), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<ulong>(), g.Length),
+                Entropy = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                Compatibility = (ulong*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(ulong), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<ulong>(), patternCount * 4),
                 Queue = new UnsafeQueue<int>(a),
-                Dirty = new NativeArray<byte>(g.Length, a),
+                Dirty = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 ObserveHeap = heap,
                 WfcComplete = 0
             };
@@ -52,8 +53,8 @@ namespace BovineLabs.Grid.Wfc
             else all = (1UL << s.PatternCount) - 1;
 
             var len = s.Grid.Length;
-            var possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
-            var entropyPtr = (int*)s.Entropy.GetUnsafePtr();
+            var possiblePtr = s.PossibleBits;
+            var entropyPtr = s.Entropy;
 
             for (var i = 0; i < len; i++)
             {
@@ -62,7 +63,7 @@ namespace BovineLabs.Grid.Wfc
             }
 
             s.Queue.Clear();
-            s.Dirty.Fill((byte)0);
+            UnsafeUtility.MemSet(s.Dirty, 0, s.Grid.Length * sizeof(byte));
             return true;
         }
 
@@ -70,9 +71,9 @@ namespace BovineLabs.Grid.Wfc
         public static bool TryLearnAdjacency(ref WfcState s, in NativeArray<int> sample, int sampleWidth,
             int sampleHeight)
         {
-            s.Compatibility.Fill(0UL);
+            UnsafeUtility.MemSet(s.Compatibility, 0, s.PatternCount * 4 * sizeof(ulong));
             var samplePtr = (int*)sample.GetUnsafeReadOnlyPtr();
-            var compatibilityPtr = (ulong*)s.Compatibility.GetUnsafePtr();
+            var compatibilityPtr = s.Compatibility;
 
             for (var y = 0; y < sampleHeight; y++)
             for (var x = 0; x < sampleWidth; x++)
@@ -112,10 +113,10 @@ namespace BovineLabs.Grid.Wfc
         {
             var width = s.Grid.Width;
             var height = s.Grid.Height;
-            var possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
-            var entropyPtr = (int*)s.Entropy.GetUnsafePtr();
-            var compatibilityPtr = (ulong*)s.Compatibility.GetUnsafeReadOnlyPtr();
-            var dirtyPtr = (byte*)s.Dirty.GetUnsafePtr();
+            var possiblePtr = s.PossibleBits;
+            var entropyPtr = s.Entropy;
+            var compatibilityPtr = s.Compatibility;
+            var dirtyPtr = s.Dirty;
 
             while (s.Queue.TryDequeue(out var cell))
             {
@@ -170,7 +171,7 @@ namespace BovineLabs.Grid.Wfc
 
             var len = s.Grid.Length;
             var outputPtr = (int*)output.GetUnsafePtr();
-            var possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
+            var possiblePtr = s.PossibleBits;
             for (var i = 0; i < len; i++)
             {
                 var bits = possiblePtr[i];
@@ -189,7 +190,7 @@ namespace BovineLabs.Grid.Wfc
             s.WfcComplete = 0;
 
             var len = s.Grid.Length;
-            var entropyPtr = (int*)s.Entropy.GetUnsafePtr();
+            var entropyPtr = s.Entropy;
 
             for (var i = 0; i < len; i++)
                 if (entropyPtr[i] > 1)
@@ -205,8 +206,8 @@ namespace BovineLabs.Grid.Wfc
             if (s.WfcComplete != 0) return false;
 
             var len = s.Grid.Length;
-            var entropyPtr = (int*)s.Entropy.GetUnsafePtr();
-            var possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
+            var entropyPtr = s.Entropy;
+            var possiblePtr = s.PossibleBits;
 
             while (!s.ObserveHeap.IsEmpty)
             {
@@ -243,7 +244,7 @@ namespace BovineLabs.Grid.Wfc
                     return false;
                 }
 
-                var dirtyPtr = (byte*)s.Dirty.GetUnsafePtr();
+                var dirtyPtr = s.Dirty;
                 for (var i = 0; i < len; i++)
                     if (dirtyPtr[i] != 0)
                     {
@@ -266,7 +267,7 @@ namespace BovineLabs.Grid.Wfc
             if (s.WfcComplete != 1) return false;
 
             var len = s.Grid.Length;
-            var possiblePtr = (ulong*)s.PossibleBits.GetUnsafePtr();
+            var possiblePtr = s.PossibleBits;
             var outputPtr = (int*)output.GetUnsafePtr();
             for (var i = 0; i < len; i++)
             {
@@ -279,11 +280,11 @@ namespace BovineLabs.Grid.Wfc
 
         public static void Dispose(ref WfcState s)
         {
-            if (s.PossibleBits.IsCreated) s.PossibleBits.Dispose();
-            if (s.Entropy.IsCreated) s.Entropy.Dispose();
-            if (s.Compatibility.IsCreated) s.Compatibility.Dispose();
+            if (s.PossibleBits != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.PossibleBits); s.PossibleBits = null; }
+            if (s.Entropy != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Entropy); s.Entropy = null; }
+            if (s.Compatibility != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Compatibility); s.Compatibility = null; }
             if (s.Queue.IsCreated) s.Queue.Dispose();
-            if (s.Dirty.IsCreated) s.Dirty.Dispose();
+            if (s.Dirty != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Dirty); s.Dirty = null; }
             if (s.ObserveHeap.IsCreated) s.ObserveHeap.Dispose();
         }
     }

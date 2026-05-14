@@ -4,9 +4,9 @@
 
 Current code uses `NativeArray<T>` + `GetUnsafePtr()` which is functional but not Recast-standard. For maximum throughput:
 
-- [ ] **State structs → raw pointers** — Replace `NativeArray<T>` fields with `T*` + `AllocatorManager.AllocatorHandle`. Eliminates safety handle overhead entirely. Pattern: `AllocatorManager.Allocate(handle, size, align)` in `TryCreate`, `AllocatorManager.Free` in `Dispose`.
-- [ ] **EHLIndexer** — `NativeHashMap` allocation inside double loop → hoist out, `.Clear()` per cell. `NativeArray<NativeList<T>>` → flat `T*` + offset/count arrays.
-- [ ] **HashLife** — `NativeParallelHashMap<ulong,int>` → custom open-addressing flat hash for Intern/ResultCache.
+- [x] **State structs → raw pointers** — Replace `NativeArray<T>` fields with `T*` + `AllocatorManager.AllocatorHandle`. Eliminates safety handle overhead entirely. Pattern: `AllocatorManager.Allocate(handle, size, align)` in `TryCreate`, `AllocatorManager.Free` in `Dispose`.
+- [x] **EHLIndexer** — `NativeHashMap` allocation inside double loop → hoist out, `.Clear()` per cell. `NativeArray<NativeList<T>>` → flat `T*` + offset/count arrays.
+- [x] **HashLife** — `NativeParallelHashMap<ulong,int>` → custom open-addressing flat hash for Intern/ResultCache.
 
 ## Done ✓
 

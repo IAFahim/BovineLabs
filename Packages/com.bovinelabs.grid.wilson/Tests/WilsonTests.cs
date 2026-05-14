@@ -6,7 +6,7 @@ using Unity.Mathematics;
 public class WilsonTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(WilsonApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -14,7 +14,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void Initialize_Root()
+    public unsafe void Initialize_Root()
     {
         Assert.IsTrue(WilsonApi.TryCreate(5, 5, Allocator.Temp, out var s));
         Assert.IsTrue(WilsonApi.TryInitialize(ref s, 0));
@@ -24,7 +24,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void BuildTree_Small()
+    public unsafe void BuildTree_Small()
     {
         Assert.IsTrue(WilsonApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var rng = new Random(42);
@@ -42,7 +42,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void BuildTree_1x5()
+    public unsafe void BuildTree_1x5()
     {
         Assert.IsTrue(WilsonApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var rng = new Random(123);
@@ -53,7 +53,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void BuildTree_Large()
+    public unsafe void BuildTree_Large()
     {
         Assert.IsTrue(WilsonApi.TryCreate(10, 10, Allocator.Temp, out var s));
         var rng = new Random(999);
@@ -64,7 +64,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void ExtractMazeWalls()
+    public unsafe void ExtractMazeWalls()
     {
         Assert.IsTrue(WilsonApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var rng = new Random(42);
@@ -83,7 +83,7 @@ public class WilsonTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(WilsonApi.TryCreate(3, 3, Allocator.Temp, out var s));
         WilsonApi.Dispose(ref s);

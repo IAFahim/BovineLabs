@@ -8,10 +8,11 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.FastSweeping
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct FastSweepingState
+    public unsafe struct FastSweepingState
     {
         public Grid2D Grid;
-        public NativeArray<float> T;
+        public float* T;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -27,8 +28,9 @@ namespace BovineLabs.Grid.FastSweeping
 
             result = new FastSweepingState
             {
+                Allocator = a,
                 Grid = g,
-                T = new NativeArray<float>(g.Length, a)
+                T = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length)
             };
             return true;
         }
@@ -36,7 +38,7 @@ namespace BovineLabs.Grid.FastSweeping
         [BurstCompile]
         public static bool TryInitialize(ref FastSweepingState s, in NativeArray<int> sources)
         {
-            var t = (float*)s.T.GetUnsafePtr();
+            var t = s.T;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++) t[i] = float.PositiveInfinity;
             var src = (int*)sources.GetUnsafeReadOnlyPtr();
@@ -47,7 +49,7 @@ namespace BovineLabs.Grid.FastSweeping
         [BurstCompile]
         public static bool TrySweepAllDirections(ref FastSweepingState s, in NativeArray<float> speed, int rounds)
         {
-            var t = (float*)s.T.GetUnsafePtr();
+            var t = s.T;
             var sp = (float*)speed.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -132,7 +134,7 @@ namespace BovineLabs.Grid.FastSweeping
         [BurstCompile]
         public static bool TryRelaxCell(in FastSweepingState s, in NativeArray<float> speed, int cell)
         {
-            var t = (float*)s.T.GetUnsafePtr();
+            var t = s.T;
             var sp = (float*)speed.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -193,7 +195,7 @@ namespace BovineLabs.Grid.FastSweeping
 
         public static void Dispose(ref FastSweepingState s)
         {
-            if (s.T.IsCreated) s.T.Dispose();
+            if (s.T != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.T); s.T = null; }
         }
     }
 }

@@ -10,12 +10,13 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.Edt
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct EdtState
+    public unsafe struct EdtState
     {
         public Grid2D Grid;
-        public NativeArray<float> Temp;
-        public NativeArray<int> V;
-        public NativeArray<float> Z;
+        public float* Temp;
+        public int* V;
+        public float* Z;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -31,10 +32,11 @@ namespace BovineLabs.Grid.Edt
 
             result = new EdtState
             {
+                Allocator = allocator,
                 Grid = grid,
-                Temp = new NativeArray<float>(width * height, allocator),
-                V = new NativeArray<int>(math.max(width, height), allocator),
-                Z = new NativeArray<float>(math.max(width, height) + 1, allocator)
+                Temp = (float*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), width * height),
+                V = (int*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), math.max(width, height)),
+                Z = (float*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), math.max(width, height) + 1)
             };
             return true;
         }
@@ -110,9 +112,9 @@ namespace BovineLabs.Grid.Edt
             InitFromBlocked(in blocked, ref dist2);
 
             var dist2Ptr = (float*)dist2.GetUnsafePtr();
-            var temp = (float*)s.Temp.GetUnsafePtr();
-            var v = (int*)s.V.GetUnsafePtr();
-            var z = (float*)s.Z.GetUnsafePtr();
+            var temp = s.Temp;
+            var v = s.V;
+            var z = s.Z;
             var w = s.Grid.Width;
             var h = s.Grid.Height;
 
@@ -204,9 +206,9 @@ namespace BovineLabs.Grid.Edt
 
         public static void Dispose(ref EdtState s)
         {
-            if (s.Temp.IsCreated) s.Temp.Dispose();
-            if (s.V.IsCreated) s.V.Dispose();
-            if (s.Z.IsCreated) s.Z.Dispose();
+            if (s.Temp != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Temp); s.Temp = null; }
+            if (s.V != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.V); s.V = null; }
+            if (s.Z != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Z); s.Z = null; }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -223,7 +225,7 @@ namespace BovineLabs.Grid.Edt
         public int Width;
         public int MaxDim;
 
-        public void Execute(int rowIndex)
+        public unsafe void Execute(int rowIndex)
         {
             var v = (int*)UnsafeUtility.Malloc(
                 UnsafeUtility.SizeOf<int>() * MaxDim, UnsafeUtility.AlignOf<int>(), Allocator.Temp);
@@ -246,7 +248,7 @@ namespace BovineLabs.Grid.Edt
         public int Height;
         public int MaxDim;
 
-        public void Execute(int colIndex)
+        public unsafe void Execute(int colIndex)
         {
             var v = (int*)UnsafeUtility.Malloc(
                 UnsafeUtility.SizeOf<int>() * MaxDim, UnsafeUtility.AlignOf<int>(), Allocator.Temp);

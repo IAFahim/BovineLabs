@@ -8,7 +8,7 @@ namespace BovineLabs.Grid
         public int Height;
         public int Length;
 
-        public void Setup(int width, int height)
+        public unsafe void Setup(int width, int height)
         {
             Width = width;
             Height = height;

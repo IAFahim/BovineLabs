@@ -5,7 +5,7 @@ using Unity.Collections;
 public class SandpileTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(SandpileApi.TryCreate(5, 3, Allocator.Temp, out var s));
         Assert.AreEqual(15, s.Grid.Length);
@@ -13,7 +13,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Clear_Zeros()
+    public unsafe void Clear_Zeros()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 10);
@@ -23,7 +23,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Add_SetsValue()
+    public unsafe void Add_SetsValue()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 3);
@@ -32,7 +32,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Add_Stable_NoEnqueue()
+    public unsafe void Add_Stable_NoEnqueue()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 3);
@@ -41,7 +41,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Add_Unstable_Enqueues()
+    public unsafe void Add_Unstable_Enqueues()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 4);
@@ -50,7 +50,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Relax_SingleTopple()
+    public unsafe void Relax_SingleTopple()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 4);
@@ -65,7 +65,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Relax_Chain()
+    public unsafe void Relax_Chain()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 3);
@@ -76,7 +76,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Relax_Conservation()
+    public unsafe void Relax_Conservation()
     {
         Assert.IsTrue(SandpileApi.TryCreate(5, 5, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 12, 16);
@@ -89,7 +89,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Relax_Edge()
+    public unsafe void Relax_Edge()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 0, 4);
@@ -101,7 +101,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Relax_MultipleSources()
+    public unsafe void Relax_MultipleSources()
     {
         Assert.IsTrue(SandpileApi.TryCreate(5, 5, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 6, 8);
@@ -113,7 +113,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Stable_UnderThreshold()
+    public unsafe void Stable_UnderThreshold()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.AddGrains(ref s, 4, 3);
@@ -123,7 +123,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void IsStable_Empty()
+    public unsafe void IsStable_Empty()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         Assert.IsTrue(SandpileApi.IsStable(ref s));
@@ -131,7 +131,7 @@ public class SandpileTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(SandpileApi.TryCreate(3, 3, Allocator.Temp, out var s));
         SandpileApi.Dispose(ref s);

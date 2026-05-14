@@ -8,17 +8,18 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.DStarLite
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct DStarLiteState
+    public unsafe struct DStarLiteState
     {
         public Grid2D Grid;
         public int Start;
         public int Goal;
         public float Km;
-        public NativeArray<float> G;
-        public NativeArray<float> RHS;
+        public float* G;
+        public float* RHS;
         public MinHeap Open;
-        public NativeArray<byte> InOpen;
-        public NativeArray<int> Parent;
+        public byte* InOpen;
+        public int* Parent;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -34,12 +35,13 @@ namespace BovineLabs.Grid.DStarLite
 
             result = new DStarLiteState
             {
+                Allocator = allocator,
                 Grid = g,
-                G = new NativeArray<float>(g.Length, allocator),
-                RHS = new NativeArray<float>(g.Length, allocator),
+                G = (float*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                RHS = (float*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
                 Open = heap,
-                InOpen = new NativeArray<byte>(g.Length, allocator),
-                Parent = new NativeArray<int>(g.Length, allocator)
+                InOpen = (byte*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
+                Parent = (int*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length)
             };
             return true;
         }
@@ -54,10 +56,10 @@ namespace BovineLabs.Grid.DStarLite
             s.Km = 0f;
             s.Open.Clear();
 
-            var gPtr = (float*)s.G.GetUnsafePtr();
-            var rhsPtr = (float*)s.RHS.GetUnsafePtr();
-            var inOpen = (byte*)s.InOpen.GetUnsafePtr();
-            var parent = (int*)s.Parent.GetUnsafePtr();
+            var gPtr = s.G;
+            var rhsPtr = s.RHS;
+            var inOpen = s.InOpen;
+            var parent = s.Parent;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
             {
@@ -89,10 +91,10 @@ namespace BovineLabs.Grid.DStarLite
             int cell)
         {
             if (!s.Grid.InBounds(cell)) return false;
-            var gPtr = (float*)s.G.GetUnsafePtr();
-            var rhsPtr = (float*)s.RHS.GetUnsafePtr();
-            var inOpen = (byte*)s.InOpen.GetUnsafePtr();
-            var parentPtr = (int*)s.Parent.GetUnsafePtr();
+            var gPtr = s.G;
+            var rhsPtr = s.RHS;
+            var inOpen = s.InOpen;
+            var parentPtr = s.Parent;
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             var costPtr = cost.IsCreated ? (float*)cost.GetUnsafeReadOnlyPtr() : null;
             return TryUpdateVertex(gPtr, rhsPtr, inOpen, parentPtr, blk, costPtr, ref s.Open, s.Grid, s.Goal, s.Start,
@@ -103,10 +105,10 @@ namespace BovineLabs.Grid.DStarLite
         public static bool TryRepair(ref DStarLiteState s, in NativeArray<byte> blocked, in NativeArray<float> cost,
             int maxPops)
         {
-            var gPtr = (float*)s.G.GetUnsafePtr();
-            var rhsPtr = (float*)s.RHS.GetUnsafePtr();
-            var inOpen = (byte*)s.InOpen.GetUnsafePtr();
-            var parentPtr = (int*)s.Parent.GetUnsafePtr();
+            var gPtr = s.G;
+            var rhsPtr = s.RHS;
+            var inOpen = s.InOpen;
+            var parentPtr = s.Parent;
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             var costPtr = cost.IsCreated ? (float*)cost.GetUnsafeReadOnlyPtr() : null;
             var w = s.Grid.Width;
@@ -168,12 +170,12 @@ namespace BovineLabs.Grid.DStarLite
             in NativeArray<float> cost, ref NativeList<int> path)
         {
             path.Clear();
-            var gPtr = (float*)s.G.GetUnsafePtr();
+            var gPtr = s.G;
             var blk = (byte*)blocked.GetUnsafeReadOnlyPtr();
             var costPtr = cost.IsCreated ? (float*)cost.GetUnsafeReadOnlyPtr() : null;
             var w = s.Grid.Width;
 
-            var rhsStart = ((float*)s.RHS.GetUnsafePtr())[s.Start];
+            var rhsStart = (s.RHS)[s.Start];
             if (rhsStart >= float.PositiveInfinity) return false;
             if (blk[s.Start] != 0) return false;
 
@@ -215,11 +217,11 @@ namespace BovineLabs.Grid.DStarLite
 
         public static void Dispose(ref DStarLiteState s)
         {
-            if (s.G.IsCreated) s.G.Dispose();
-            if (s.RHS.IsCreated) s.RHS.Dispose();
+            if (s.G != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.G); s.G = null; }
+            if (s.RHS != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.RHS); s.RHS = null; }
             if (s.Open.IsCreated) s.Open.Dispose();
-            if (s.InOpen.IsCreated) s.InOpen.Dispose();
-            if (s.Parent.IsCreated) s.Parent.Dispose();
+            if (s.InOpen != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.InOpen); s.InOpen = null; }
+            if (s.Parent != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Parent); s.Parent = null; }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

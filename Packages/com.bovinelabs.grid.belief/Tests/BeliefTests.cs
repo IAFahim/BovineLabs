@@ -6,7 +6,7 @@ using Unity.Collections;
 public class BeliefTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(BeliefApi.TryCreate(5, 5, 2, Allocator.Temp, out var s));
         Assert.AreEqual(25, s.Grid.Length);
@@ -15,17 +15,17 @@ public class BeliefTests
     }
 
     [Test]
-    public void ClearMessages()
+    public unsafe void ClearMessages()
     {
         Assert.IsTrue(BeliefApi.TryCreate(3, 3, 2, Allocator.Temp, out var s));
-        for (var i = 0; i < s.Messages.Length; i++) s.Messages[i] = 5f;
+        for (var i = 0; i < 400; i++) s.Messages[i] = 5f;
         BeliefApi.ClearMessages(ref s);
-        for (var i = 0; i < s.Messages.Length; i++) Assert.AreEqual(0f, s.Messages[i], 0.001f);
+        for (var i = 0; i < 400; i++) Assert.AreEqual(0f, s.Messages[i], 0.001f);
         BeliefApi.Dispose(ref s);
     }
 
     [Test]
-    public void Iterate_ThenDecode()
+    public unsafe void Iterate_ThenDecode()
     {
         Assert.IsTrue(BeliefApi.TryCreate(3, 3, 2, Allocator.Temp, out var s));
         var unary = new NativeArray<float>(s.Grid.Length * 2, Allocator.Temp);
@@ -50,7 +50,7 @@ public class BeliefTests
     }
 
     [Test]
-    public void ConsensusChain()
+    public unsafe void ConsensusChain()
     {
         Assert.IsTrue(BeliefApi.TryCreate(5, 1, 2, Allocator.Temp, out var s));
         var unary = new NativeArray<float>(s.Grid.Length * 2, Allocator.Temp);
@@ -78,7 +78,7 @@ public class BeliefTests
     }
 
     [Test]
-    public void MessageClear_NoGhostBeliefs()
+    public unsafe void MessageClear_NoGhostBeliefs()
     {
         Assert.IsTrue(BeliefApi.TryCreate(3, 1, 2, Allocator.Temp, out var s));
         var unary1 = new NativeArray<float>(s.Grid.Length * 2, Allocator.Temp);
@@ -113,7 +113,7 @@ public class BeliefTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(BeliefApi.TryCreate(3, 3, 2, Allocator.Temp, out var s));
         BeliefApi.Dispose(ref s);

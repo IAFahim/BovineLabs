@@ -14,12 +14,13 @@ namespace BovineLabs.Grid.Cftp
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct CftpState
+    public unsafe struct CftpState
     {
         public Grid2D Grid;
-        public NativeArray<byte> Low;
-        public NativeArray<byte> High;
+        public byte* Low;
+        public byte* High;
         public UnsafeList<CftpUpdate> Updates;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -35,9 +36,10 @@ namespace BovineLabs.Grid.Cftp
 
             result = new CftpState
             {
+                Allocator = a,
                 Grid = g,
-                Low = new NativeArray<byte>(g.Length, a),
-                High = new NativeArray<byte>(g.Length, a),
+                Low = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
+                High = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Updates = new UnsafeList<CftpUpdate>(maxUpdates, a)
             };
             return true;
@@ -46,8 +48,8 @@ namespace BovineLabs.Grid.Cftp
         [BurstCompile]
         public static void InitializeExtremes(ref CftpState s)
         {
-            var low = (byte*)s.Low.GetUnsafePtr();
-            var high = (byte*)s.High.GetUnsafePtr();
+            var low = s.Low;
+            var high = s.High;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
             {
@@ -81,8 +83,8 @@ namespace BovineLabs.Grid.Cftp
         {
             InitializeExtremes(ref s);
 
-            var low = (byte*)s.Low.GetUnsafePtr();
-            var high = (byte*)s.High.GetUnsafePtr();
+            var low = s.Low;
+            var high = s.High;
             var w = s.Grid.Width;
             var h = s.Grid.Height;
             var len = s.Grid.Length;
@@ -128,8 +130,8 @@ namespace BovineLabs.Grid.Cftp
         [BurstCompile]
         public static bool Coalesced(ref CftpState s)
         {
-            var low = (byte*)s.Low.GetUnsafePtr();
-            var high = (byte*)s.High.GetUnsafePtr();
+            var low = s.Low;
+            var high = s.High;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
                 if (low[i] != high[i])
@@ -148,7 +150,7 @@ namespace BovineLabs.Grid.Cftp
                 Replay(ref s);
                 if (Coalesced(ref s))
                 {
-                    UnsafeUtility.MemCpy(sample.GetUnsafePtr(), s.Low.GetUnsafeReadOnlyPtr(), s.Grid.Length);
+                    UnsafeUtility.MemCpy(sample.GetUnsafePtr(), s.Low, s.Grid.Length);
                     return true;
                 }
             }
@@ -158,8 +160,8 @@ namespace BovineLabs.Grid.Cftp
 
         public static void Dispose(ref CftpState s)
         {
-            if (s.Low.IsCreated) s.Low.Dispose();
-            if (s.High.IsCreated) s.High.Dispose();
+            if (s.Low != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Low); s.Low = null; }
+            if (s.High != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.High); s.High = null; }
             if (s.Updates.IsCreated) s.Updates.Dispose();
         }
     }

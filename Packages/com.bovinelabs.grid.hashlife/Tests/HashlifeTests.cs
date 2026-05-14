@@ -5,16 +5,16 @@ using Unity.Collections;
 public class HashlifeTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
         Assert.IsTrue(s.Nodes.IsCreated);
-        Assert.IsTrue(s.Intern.IsCreated);
+        Assert.IsTrue(s.Intern.Keys != null);
         HashlifeApi.Dispose(ref s);
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
         HashlifeApi.Dispose(ref s);
@@ -22,7 +22,7 @@ public class HashlifeTests
     }
 
     [Test]
-    public void Create_Leaves()
+    public unsafe void Create_Leaves()
     {
         Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
         Assert.AreEqual(0, s.Nodes[0].Level);
@@ -31,7 +31,7 @@ public class HashlifeTests
     }
 
     [Test]
-    public void MakeNode_Interns()
+    public unsafe void MakeNode_Interns()
     {
         Assert.IsTrue(HashlifeApi.TryCreate(100, Allocator.Temp, out var s));
         Assert.IsTrue(HashlifeApi.TryMakeNode(ref s, 0, 0, 0, 0, out var id1));

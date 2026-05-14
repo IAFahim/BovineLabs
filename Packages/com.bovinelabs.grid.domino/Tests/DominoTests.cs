@@ -6,7 +6,7 @@ using Unity.Collections;
 public class DominoTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(DominoApi.TryCreate(4, 4, Allocator.Temp, out var s));
         Assert.AreEqual(16, s.Grid.Length);
@@ -14,7 +14,7 @@ public class DominoTests
     }
 
     [Test]
-    public void CheckTileable_Even()
+    public unsafe void CheckTileable_Even()
     {
         Assert.IsTrue(DominoApi.TryCreate(2, 2, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -26,7 +26,7 @@ public class DominoTests
     }
 
     [Test]
-    public void CheckTileable_Odd()
+    public unsafe void CheckTileable_Odd()
     {
         Assert.IsTrue(DominoApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(9, Allocator.Temp);
@@ -38,7 +38,7 @@ public class DominoTests
     }
 
     [Test]
-    public void BuildTiling_2x2()
+    public unsafe void BuildTiling_2x2()
     {
         Assert.IsTrue(DominoApi.TryCreate(2, 2, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -50,7 +50,7 @@ public class DominoTests
     }
 
     [Test]
-    public void BuildTiling_4x4()
+    public unsafe void BuildTiling_4x4()
     {
         Assert.IsTrue(DominoApi.TryCreate(4, 4, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(16, Allocator.Temp);
@@ -63,7 +63,7 @@ public class DominoTests
     }
 
     [Test]
-    public void MutilatedChessboard_Untileable()
+    public unsafe void MutilatedChessboard_Untileable()
     {
         Assert.IsTrue(DominoApi.TryCreate(8, 8, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(64, Allocator.Temp);
@@ -78,7 +78,7 @@ public class DominoTests
     }
 
     [Test]
-    public void Flip_HorizontalToVertical()
+    public unsafe void Flip_HorizontalToVertical()
     {
         Assert.IsTrue(DominoApi.TryCreate(2, 2, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -109,7 +109,7 @@ public class DominoTests
     }
 
     [Test]
-    public void Flip_OutOfBounds_ReturnsFalse()
+    public unsafe void Flip_OutOfBounds_ReturnsFalse()
     {
         Assert.IsTrue(DominoApi.TryCreate(2, 2, Allocator.Temp, out var s));
         var region = new NativeArray<byte>(4, Allocator.Temp);
@@ -122,7 +122,7 @@ public class DominoTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(DominoApi.TryCreate(3, 3, Allocator.Temp, out var s));
         DominoApi.Dispose(ref s);

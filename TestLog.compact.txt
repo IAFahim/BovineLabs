@@ -1,0 +1,28 @@
+status=compile_failed compile_errors=9
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(386,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(397,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(451,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(386,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(397,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(451,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(386,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(397,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll
+
+ERROR Packages/com.bovinelabs.grid.anya/Runtime/AnyaApi.cs(451,10): error CS0579: Duplicate 'MethodImpl' attribute
+assembly=com.bovinelabs.grid.anya.dll

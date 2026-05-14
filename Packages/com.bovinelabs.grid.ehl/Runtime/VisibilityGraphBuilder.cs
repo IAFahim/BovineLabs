@@ -1,5 +1,6 @@
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using Unity.Mathematics;
 
@@ -17,7 +18,7 @@ namespace BovineLabs.Grid.EHL
         public NativeList<int> AdjOffsetsOut;
         public NativeList<int> AdjCountsOut;
 
-        public void Execute()
+        public unsafe void Execute()
         {
             var totalPolygons = PolyOffsets.Length;
             var convexVerts = new NativeList<ConvexVertex>(Allocator.Temp);
@@ -57,9 +58,13 @@ namespace BovineLabs.Grid.EHL
             var n = convexVerts.Length;
 
 
-            var adjLists = new NativeArray<NativeList<AdjEdge>>(n, Allocator.Temp);
+            var adjLists = (UnsafeList<AdjEdge>**)UnsafeUtility.Malloc(n * sizeof(System.IntPtr), UnsafeUtility.AlignOf<System.IntPtr>(), Allocator.Temp);
             for (var i = 0; i < n; i++)
-                adjLists[i] = new NativeList<AdjEdge>(Allocator.Temp);
+            {
+                var list = (UnsafeList<AdjEdge>*)UnsafeUtility.Malloc(sizeof(UnsafeList<AdjEdge>), UnsafeUtility.AlignOf<UnsafeList<AdjEdge>>(), Allocator.Temp);
+                *list = new UnsafeList<AdjEdge>(16, Allocator.Temp);
+                adjLists[i] = list;
+            }
 
             for (var i = 0; i < n; i++)
             for (var j = i + 1; j < n; j++)
@@ -73,8 +78,8 @@ namespace BovineLabs.Grid.EHL
                 if (AreCoVisible(a, b, i, j, convexVerts, ObstacleEdges))
                 {
                     var dist = math.distance(a, b);
-                    adjLists[i].Add(new AdjEdge(j, dist));
-                    adjLists[j].Add(new AdjEdge(i, dist));
+                    adjLists[i]->Add(new AdjEdge(j, dist));
+                    adjLists[j]->Add(new AdjEdge(i, dist));
                 }
             }
 
@@ -85,19 +90,20 @@ namespace BovineLabs.Grid.EHL
                 var list = adjLists[i];
 
 
-                list.Sort();
+                list->Sort();
 
                 AdjOffsetsOut.Add(edgeOffset);
-                AdjCountsOut.Add(list.Length);
-                edgeOffset += list.Length;
+                AdjCountsOut.Add(list->Length);
+                edgeOffset += list->Length;
 
-                for (var e = 0; e < list.Length; e++) AdjEdgesOut.Add(list[e]);
+                for (var e = 0; e < list->Length; e++) AdjEdgesOut.Add(list->Ptr[e]);
 
                 ConvexVertices.Add(convexVerts[i]);
-                list.Dispose();
+                list->Dispose();
+                Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(list, Unity.Collections.Allocator.Temp);
             }
 
-            adjLists.Dispose();
+            Unity.Collections.LowLevel.Unsafe.UnsafeUtility.Free(adjLists, Unity.Collections.Allocator.Temp);
             convexVerts.Dispose();
             vertexPolyId.Dispose();
         }

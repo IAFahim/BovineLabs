@@ -9,7 +9,7 @@ public class DStarLiteTests
     private DStarLiteState state;
 
     [SetUp]
-    public void SetUp()
+    public unsafe void SetUp()
     {
         Assert.IsTrue(DStarLiteApi.TryCreate(10, 10, Allocator.Temp, out var s));
         state = s;
@@ -18,20 +18,20 @@ public class DStarLiteTests
     }
 
     [TearDown]
-    public void TearDown()
+    public unsafe void TearDown()
     {
         DStarLiteApi.Dispose(ref state);
         if (blocked.IsCreated) blocked.Dispose();
     }
 
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.AreEqual(100, state.Grid.Length);
     }
 
     [Test]
-    public void Initialize_StartGoal()
+    public unsafe void Initialize_StartGoal()
     {
         Assert.IsTrue(DStarLiteApi.TryInitialize(ref state, 0, 99, blocked));
         Assert.AreEqual(0, state.Start);
@@ -40,7 +40,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Initialize_GIsInf()
+    public unsafe void Initialize_GIsInf()
     {
         Assert.IsTrue(DStarLiteApi.TryInitialize(ref state, 0, 99, blocked));
         for (var i = 0; i < state.Grid.Length; i++)
@@ -48,7 +48,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Repair_OpenGrid()
+    public unsafe void Repair_OpenGrid()
     {
         var cost = new NativeArray<float>(0, Allocator.Temp);
         Assert.IsTrue(DStarLiteApi.TryInitialize(ref state, 0, 99, blocked));
@@ -57,7 +57,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Repair_BlockedGoal()
+    public unsafe void Repair_BlockedGoal()
     {
         blocked[99] = 1;
         var cost = new NativeArray<float>(0, Allocator.Temp);
@@ -67,7 +67,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Repair_BlockedStart()
+    public unsafe void Repair_BlockedStart()
     {
         blocked[0] = 1;
         var cost = new NativeArray<float>(0, Allocator.Temp);
@@ -77,7 +77,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Repair_StartEqualsGoal()
+    public unsafe void Repair_StartEqualsGoal()
     {
         var cost = new NativeArray<float>(0, Allocator.Temp);
         Assert.IsTrue(DStarLiteApi.TryInitialize(ref state, 42, 42, blocked));
@@ -86,7 +86,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void NotifyMoved()
+    public unsafe void NotifyMoved()
     {
         Assert.IsTrue(DStarLiteApi.TryInitialize(ref state, 0, 99, blocked));
         DStarLiteApi.NotifyMoved(ref state, 5);
@@ -95,7 +95,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Repair_1x5_Linear()
+    public unsafe void Repair_1x5_Linear()
     {
         Assert.IsTrue(DStarLiteApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var b = new NativeArray<byte>(5, Allocator.Temp);
@@ -109,7 +109,7 @@ public class DStarLiteTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(DStarLiteApi.TryCreate(3, 3, Allocator.Temp, out var s));
         DStarLiteApi.Dispose(ref s);

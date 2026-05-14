@@ -42,7 +42,7 @@ namespace BovineLabs.Grid.Wavestar
 
         private NativeObstacleMap obstacleMap;
 
-        public void Execute()
+        public unsafe void Execute()
         {
             obstacleMap = new NativeObstacleMap(obstacleGrid, sizeX, sizeY, sizeZ);
             pathFound[0] = false;

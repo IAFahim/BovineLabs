@@ -33,7 +33,7 @@ namespace BovineLabs.Grid
 
         public int Count { get; private set; }
 
-        public void Push(int nodeId, float priority)
+        public unsafe void Push(int nodeId, float priority)
         {
             if (Count >= capacity) Resize();
             var heapIdx = Count;
@@ -67,7 +67,7 @@ namespace BovineLabs.Grid
             return nodeId >= 0 && nodeId < capacity && nodeToHeap[nodeId] >= 0;
         }
 
-        public void TryUpdate(int nodeId, float newPriority)
+        public unsafe void TryUpdate(int nodeId, float newPriority)
         {
             if (!Contains(nodeId)) return;
             var heapIdx = nodeToHeap[nodeId];
@@ -143,7 +143,7 @@ namespace BovineLabs.Grid
             capacity = newCap;
         }
 
-        public void Dispose()
+        public unsafe void Dispose()
         {
             if (priorities.IsCreated) priorities.Dispose();
             if (ids.IsCreated) ids.Dispose();

@@ -2,14 +2,15 @@ using Unity.Collections;
 
 namespace BovineLabs.Grid.Belief
 {
-    public struct BeliefState
+    public unsafe struct BeliefState
     {
         public Grid2D Grid;
         public int LabelCount;
-        public NativeArray<float> Unary;
-        public NativeArray<float> Messages;
-        public NativeArray<float> MessagesNext;
-        public NativeArray<float> Belief;
-        public NativeArray<float> Scratch;
+        public float* Unary;
+        public float* Messages;
+        public float* MessagesNext;
+        public float* Belief;
+        public float* Scratch;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 }

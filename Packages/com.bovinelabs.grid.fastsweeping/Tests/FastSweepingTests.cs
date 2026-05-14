@@ -5,7 +5,7 @@ using Unity.Collections;
 public class FastSweepingTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(5, 3, Allocator.Temp, out var s));
         Assert.AreEqual(15, s.Grid.Length);
@@ -13,7 +13,7 @@ public class FastSweepingTests
     }
 
     [Test]
-    public void InitSources_SetsZero()
+    public unsafe void InitSources_SetsZero()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var src = new NativeArray<int>(new[] { 0 }, Allocator.Temp);
@@ -32,7 +32,7 @@ public class FastSweepingTests
     }
 
     [Test]
-    public void Sweep_1D()
+    public unsafe void Sweep_1D()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var speed = MakeSpeed(5, 1f, Allocator.Temp);
@@ -48,7 +48,7 @@ public class FastSweepingTests
     }
 
     [Test]
-    public void Sweep_2D_Center()
+    public unsafe void Sweep_2D_Center()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(3, 3, Allocator.Temp, out var s));
         var speed = MakeSpeed(9, 1f, Allocator.Temp);
@@ -64,11 +64,11 @@ public class FastSweepingTests
     }
 
     [Test]
-    public void RelaxCell_Updates()
+    public unsafe void RelaxCell_Updates()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(5, 1, Allocator.Temp, out var s));
         var speed = MakeSpeed(5, 1f, Allocator.Temp);
-        for (var i = 0; i < s.T.Length; i++) s.T[i] = float.PositiveInfinity;
+        for (var i = 0; i < s.Grid.Length; i++) s.T[i] = float.PositiveInfinity;
         s.T[0] = 0f;
         Assert.IsTrue(FastSweepingApi.TryRelaxCell(s, speed, 1));
         Assert.AreEqual(1f, s.T[1], 0.01f);
@@ -77,7 +77,7 @@ public class FastSweepingTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(FastSweepingApi.TryCreate(3, 3, Allocator.Temp, out var s));
         FastSweepingApi.Dispose(ref s);

@@ -7,33 +7,33 @@ public class MinHeapTests
     private MinHeap heap;
 
     [SetUp]
-    public void SetUp()
+    public unsafe void SetUp()
     {
         Assert.IsTrue(MinHeap.TryCreate(100, Allocator.Temp, out heap));
     }
 
     [TearDown]
-    public void TearDown()
+    public unsafe void TearDown()
     {
         heap.Dispose();
     }
 
     [Test]
-    public void Empty_OnCreate()
+    public unsafe void Empty_OnCreate()
     {
         Assert.IsTrue(heap.IsEmpty);
         Assert.AreEqual(0, heap.Length);
     }
 
     [Test]
-    public void Insert_Single()
+    public unsafe void Insert_Single()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 5f)));
         Assert.AreEqual(1, heap.Length);
     }
 
     [Test]
-    public void Pop_Single()
+    public unsafe void Pop_Single()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(3, 7f)));
         Assert.IsTrue(heap.TryPop(out var n));
@@ -42,7 +42,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Pop_Ordered()
+    public unsafe void Pop_Ordered()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 5f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(1, 2f)));
@@ -59,7 +59,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Pop_TieBreak()
+    public unsafe void Pop_TieBreak()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 1f, 5f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(1, 1f, 2f)));
@@ -73,7 +73,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void DecreaseKey()
+    public unsafe void DecreaseKey()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 10f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(1, 5f)));
@@ -85,7 +85,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void DecreaseKey_NoIncrease()
+    public unsafe void DecreaseKey_NoIncrease()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 1f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 10f)));
@@ -94,7 +94,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Peek_NoRemove()
+    public unsafe void Peek_NoRemove()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 3f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(1, 1f)));
@@ -102,20 +102,20 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Contains_Inserted()
+    public unsafe void Contains_Inserted()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(5, 3f)));
         Assert.IsTrue(heap.Contains(5));
     }
 
     [Test]
-    public void Contains_NotInserted()
+    public unsafe void Contains_NotInserted()
     {
         Assert.IsFalse(heap.Contains(0));
     }
 
     [Test]
-    public void Contains_AfterPop()
+    public unsafe void Contains_AfterPop()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(5, 3f)));
         Assert.IsTrue(heap.TryPop(out _));
@@ -123,7 +123,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Clear()
+    public unsafe void Clear()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 5f)));
         heap.Clear();
@@ -132,7 +132,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void Many_MaintainsOrder()
+    public unsafe void Many_MaintainsOrder()
     {
         for (var i = 0; i < 50; i++) Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(i, (50 - i) * 1.5f)));
         var prev = float.NegativeInfinity;
@@ -145,7 +145,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void DecreaseKey_Interleaved()
+    public unsafe void DecreaseKey_Interleaved()
     {
         for (var i = 0; i < 10; i++) Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(i, 100f - i)));
         for (var i = 0; i < 10; i++) Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(i, i * 0.5f)));
@@ -163,7 +163,7 @@ public class MinHeapTests
     }
 
     [Test]
-    public void DuplicateId_OneEntry()
+    public unsafe void DuplicateId_OneEntry()
     {
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 5f)));
         Assert.IsTrue(heap.TryInsertOrDecrease(new HeapNode(0, 3f)));

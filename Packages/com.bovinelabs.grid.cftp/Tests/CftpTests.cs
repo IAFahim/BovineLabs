@@ -6,7 +6,7 @@ using Unity.Mathematics;
 public class CftpTests
 {
     [Test]
-    public void Create_Dimensions()
+    public unsafe void Create_Dimensions()
     {
         Assert.IsTrue(CftpApi.TryCreate(3, 3, 100, Allocator.Temp, out var s));
         Assert.AreEqual(9, s.Grid.Length);
@@ -14,7 +14,7 @@ public class CftpTests
     }
 
     [Test]
-    public void InitializeExtremes()
+    public unsafe void InitializeExtremes()
     {
         Assert.IsTrue(CftpApi.TryCreate(3, 3, 100, Allocator.Temp, out var s));
         CftpApi.InitializeExtremes(ref s);
@@ -28,7 +28,7 @@ public class CftpTests
     }
 
     [Test]
-    public void Coalesced_NotInitially()
+    public unsafe void Coalesced_NotInitially()
     {
         Assert.IsTrue(CftpApi.TryCreate(3, 3, 100, Allocator.Temp, out var s));
         CftpApi.InitializeExtremes(ref s);
@@ -37,7 +37,7 @@ public class CftpTests
     }
 
     [Test]
-    public void GenerateUpdates()
+    public unsafe void GenerateUpdates()
     {
         Assert.IsTrue(CftpApi.TryCreate(3, 3, 1000, Allocator.Temp, out var s));
         var rng = new Random(42);
@@ -47,7 +47,7 @@ public class CftpTests
     }
 
     [Test]
-    public void Dispose_Double()
+    public unsafe void Dispose_Double()
     {
         Assert.IsTrue(CftpApi.TryCreate(3, 3, 10, Allocator.Temp, out var s));
         CftpApi.Dispose(ref s);

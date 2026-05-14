@@ -8,12 +8,13 @@ using Unity.Mathematics;
 namespace BovineLabs.Grid.FastMarching
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct FastMarchingState
+    public unsafe struct FastMarchingState
     {
         public Grid2D Grid;
-        public NativeArray<float> T;
-        public NativeArray<byte> State;
+        public float* T;
+        public byte* State;
         public MinHeap Heap;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -35,9 +36,10 @@ namespace BovineLabs.Grid.FastMarching
 
             result = new FastMarchingState
             {
+                Allocator = a,
                 Grid = g,
-                T = new NativeArray<float>(g.Length, a),
-                State = new NativeArray<byte>(g.Length, a),
+                T = (float*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(float), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<float>(), g.Length),
+                State = (byte*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(byte), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<byte>(), g.Length),
                 Heap = heap
             };
             return true;
@@ -46,8 +48,8 @@ namespace BovineLabs.Grid.FastMarching
         [BurstCompile]
         public static void InitializeSources(ref FastMarchingState s, in NativeArray<int> sources)
         {
-            var t = (float*)s.T.GetUnsafePtr();
-            var st = (byte*)s.State.GetUnsafePtr();
+            var t = s.T;
+            var st = s.State;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++)
             {
@@ -75,8 +77,8 @@ namespace BovineLabs.Grid.FastMarching
             var u = node.Id;
             s.State[u] = 2;
 
-            var t = (float*)s.T.GetUnsafePtr();
-            var st = (byte*)s.State.GetUnsafePtr();
+            var t = s.T;
+            var st = s.State;
             var spd = (float*)speed.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -161,7 +163,7 @@ namespace BovineLabs.Grid.FastMarching
         [BurstCompile]
         public static void BuildGradientFlow(ref FastMarchingState s, ref NativeArray<float2> flow)
         {
-            var t = (float*)s.T.GetUnsafePtr();
+            var t = s.T;
             var fl = (float2*)flow.GetUnsafePtr();
             var w = s.Grid.Width;
             var h = s.Grid.Height;
@@ -188,8 +190,8 @@ namespace BovineLabs.Grid.FastMarching
 
         public static void Dispose(ref FastMarchingState s)
         {
-            if (s.T.IsCreated) s.T.Dispose();
-            if (s.State.IsCreated) s.State.Dispose();
+            if (s.T != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.T); s.T = null; }
+            if (s.State != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.State); s.State = null; }
             if (s.Heap.IsCreated) s.Heap.Dispose();
         }
     }

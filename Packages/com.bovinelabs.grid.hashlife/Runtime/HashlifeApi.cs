@@ -1,6 +1,7 @@
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.Mathematics;
 
 namespace BovineLabs.Grid.Hashlife
 {
@@ -14,11 +15,95 @@ namespace BovineLabs.Grid.Hashlife
         public ulong Hash;
     }
 
-    public struct HashlifeState
+    public unsafe struct FlatHashMap
+    {
+        public ulong* Keys;
+        public int* Values;
+        public int Capacity;
+        public int Count;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
+
+        public static bool TryCreate(int capacity, Unity.Collections.AllocatorManager.AllocatorHandle allocator, out FlatHashMap map)
+        {
+            capacity = math.ceilpow2(capacity * 2);
+            map = new FlatHashMap
+            {
+                Keys = (ulong*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(ulong), UnsafeUtility.AlignOf<ulong>(), capacity),
+                Values = (int*)Unity.Collections.AllocatorManager.Allocate(allocator, sizeof(int), UnsafeUtility.AlignOf<int>(), capacity),
+                Capacity = capacity,
+                Count = 0,
+                Allocator = allocator
+            };
+            UnsafeUtility.MemSet(map.Keys, 0xFF, capacity * sizeof(ulong));
+            return true;
+        }
+
+        public unsafe void Dispose()
+        {
+            if (Keys != null)
+            {
+                Unity.Collections.AllocatorManager.Free(Allocator, Keys);
+                Keys = null;
+            }
+            if (Values != null)
+            {
+                Unity.Collections.AllocatorManager.Free(Allocator, Values);
+                Values = null;
+            }
+        }
+
+        public bool TryGetValue(ulong key, out int value)
+        {
+            if (Count == 0) { value = 0; return false; }
+            uint mask = (uint)(Capacity - 1);
+            uint hash = (uint)(key ^ (key >> 32));
+            uint idx = hash & mask;
+
+            for (int i = 0; i < Capacity; i++)
+            {
+                ulong k = Keys[idx];
+                if (k == key)
+                {
+                    value = Values[idx];
+                    return true;
+                }
+                if (k == 0xFFFFFFFFFFFFFFFFUL)
+                {
+                    break;
+                }
+                idx = (idx + 1) & mask;
+            }
+            value = 0;
+            return false;
+        }
+
+        public unsafe void Add(ulong key, int value)
+        {
+            uint mask = (uint)(Capacity - 1);
+            uint hash = (uint)(key ^ (key >> 32));
+            uint idx = hash & mask;
+
+            for (int i = 0; i < Capacity; i++)
+            {
+                ulong k = Keys[idx];
+                if (k == 0xFFFFFFFFFFFFFFFFUL || k == key)
+                {
+                    if (k == 0xFFFFFFFFFFFFFFFFUL) Count++;
+                    Keys[idx] = key;
+                    Values[idx] = value;
+                    return;
+                }
+                idx = (idx + 1) & mask;
+            }
+        }
+    }
+
+    public unsafe struct HashlifeState
     {
         public UnsafeList<HashlifeNode> Nodes;
-        public NativeParallelHashMap<ulong, int> Intern;
-        public NativeParallelHashMap<ulong, int> ResultCache;
+        public FlatHashMap Intern;
+        public FlatHashMap ResultCache;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -26,11 +111,15 @@ namespace BovineLabs.Grid.Hashlife
     {
         public static bool TryCreate(int maxNodes, Allocator a, out HashlifeState result)
         {
+            FlatHashMap.TryCreate(maxNodes, a, out var internMap);
+            FlatHashMap.TryCreate(maxNodes, a, out var cacheMap);
+
             result = new HashlifeState
             {
+                Allocator = a,
                 Nodes = new UnsafeList<HashlifeNode>(maxNodes, a),
-                Intern = new NativeParallelHashMap<ulong, int>(maxNodes, a),
-                ResultCache = new NativeParallelHashMap<ulong, int>(maxNodes, a)
+                Intern = internMap,
+                ResultCache = cacheMap
             };
 
             CreateLeaf(ref result, 0, out _);
@@ -82,7 +171,7 @@ namespace BovineLabs.Grid.Hashlife
 
             id = s.Nodes.Length;
             s.Nodes.Add(node);
-            s.Intern[h] = id;
+            s.Intern.Add(h, id);
             return true;
         }
 
@@ -108,7 +197,7 @@ namespace BovineLabs.Grid.Hashlife
             if (node.Level == 2)
             {
                 if (!ComputeLevel2(ref s, nodeIdx, out result)) return false;
-                s.ResultCache[(ulong)nodeIdx] = result;
+                s.ResultCache.Add((ulong)nodeIdx, result);
                 return true;
             }
 
@@ -149,7 +238,7 @@ namespace BovineLabs.Grid.Hashlife
 
             TryMakeNode(ref s, r00, r10, r01, r11, out result);
 
-            s.ResultCache[(ulong)nodeIdx] = result;
+            s.ResultCache.Add((ulong)nodeIdx, result);
             return true;
         }
 
@@ -222,8 +311,8 @@ namespace BovineLabs.Grid.Hashlife
         public static void Dispose(ref HashlifeState s)
         {
             if (s.Nodes.IsCreated) s.Nodes.Dispose();
-            if (s.Intern.IsCreated) s.Intern.Dispose();
-            if (s.ResultCache.IsCreated) s.ResultCache.Dispose();
+            s.Intern.Dispose();
+            s.ResultCache.Dispose();
         }
     }
 }

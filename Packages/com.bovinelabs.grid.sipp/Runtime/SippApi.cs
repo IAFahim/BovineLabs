@@ -30,15 +30,16 @@ namespace BovineLabs.Grid.Sipp
         public float EndTime;
     }
 
-    public struct SippState
+    public unsafe struct SippState
     {
         public Grid2D Grid;
         public UnsafeList<SafeInterval> Intervals;
-        public NativeArray<RangeI> CellIntervals;
+        public RangeI* CellIntervals;
         public UnsafeList<SippNode> Nodes;
         public MinHeap Heap;
         public UnsafeList<float> BestTime;
         public UnsafeList<DynamicObstacle> Obstacles;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -55,7 +56,7 @@ namespace BovineLabs.Grid.Sipp
             {
                 Grid = g,
                 Intervals = new UnsafeList<SafeInterval>(maxIntervals, a),
-                CellIntervals = new NativeArray<RangeI>(g.Length, a),
+                CellIntervals = (RangeI*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(RangeI), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<RangeI>(), g.Length),
                 Nodes = new UnsafeList<SippNode>(maxNodes, a),
                 Heap = heap,
                 BestTime = new UnsafeList<float>(maxIntervals, a),
@@ -223,7 +224,7 @@ namespace BovineLabs.Grid.Sipp
         public static void Dispose(ref SippState s)
         {
             if (s.Intervals.IsCreated) s.Intervals.Dispose();
-            if (s.CellIntervals.IsCreated) s.CellIntervals.Dispose();
+            if (s.CellIntervals != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.CellIntervals); s.CellIntervals = null; }
             if (s.Nodes.IsCreated) s.Nodes.Dispose();
             s.Heap.Dispose();
             if (s.BestTime.IsCreated) s.BestTime.Dispose();

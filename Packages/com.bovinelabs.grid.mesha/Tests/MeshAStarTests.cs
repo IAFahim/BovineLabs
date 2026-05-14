@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Unity.Collections;
 using Unity.Mathematics;
+using BovineLabs.Grid;
 
 namespace BovineLabs.Grid.MeshA.Tests
 {
@@ -10,7 +11,7 @@ namespace BovineLabs.Grid.MeshA.Tests
         private PrimitiveSet prims;
 
         [SetUp]
-        public void Setup()
+        public unsafe void Setup()
         {
             Assert.IsTrue(PrimitiveSetFactory.TryCreateCardinal8(Allocator.Persistent, out var p));
             prims = p;
@@ -19,14 +20,25 @@ namespace BovineLabs.Grid.MeshA.Tests
         }
 
         [TearDown]
-        public void TearDown()
+        public unsafe void TearDown()
         {
             prims.Dispose();
             mesh.Dispose();
         }
 
         [Test]
-        public void MeshAStar_EmptyGrid_PathFound()
+        public void MeshAStar_FullyBlocked_PathNotFound()
+        {
+            var grid = new NativeGrid2D(5, 5, Allocator.Temp);
+            for(int i = 0; i < grid.Cells.Length; i++) grid.Cells[i] = CellState.Blocked;
+            Assert.IsFalse(MeshAStar.TryFindPath(grid, prims, mesh, new int2(0, 0), new int2(4, 4), out var result));
+            Assert.IsFalse(result.Found);
+            result.Dispose();
+            grid.Dispose();
+        }
+
+        [Test]
+        public unsafe void MeshAStar_EmptyGrid_PathFound()
         {
             using var grid = new NativeGrid2D(10, 10, Allocator.Temp);
             Assert.IsTrue(MeshAStar.TryFindPath(grid, prims, mesh,
@@ -35,12 +47,12 @@ namespace BovineLabs.Grid.MeshA.Tests
             Assert.IsTrue(result.Found);
             Assert.Greater(result.Path.Length, 0);
             Assert.AreEqual(new int2(0, 0), result.Path[0]);
-            Assert.AreEqual(new int2(5, 5), result.Path[result.Path.Length - 1]);
+            Assert.AreEqual(new int2(5, 5), result.Path[^1]);
             result.Dispose();
         }
 
         [Test]
-        public void MeshAStar_StartEqualsGoal_TrivialPath()
+        public unsafe void MeshAStar_StartEqualsGoal_TrivialPath()
         {
             using var grid = new NativeGrid2D(5, 5, Allocator.Temp);
             Assert.IsTrue(MeshAStar.TryFindPath(grid, prims, mesh,
@@ -55,9 +67,9 @@ namespace BovineLabs.Grid.MeshA.Tests
 
         [Test]
         [Ignore("TODO: swept-cell collision check needs tuning for obstacle detour")]
-        public void MeshAStar_BlockedPath_GoesAround()
+        public unsafe void MeshAStar_BlockedPath_GoesAround()
         {
-            using var grid = new NativeGrid2D(10, 10, Allocator.Temp);
+            var grid = new NativeGrid2D(10, 10, Allocator.Temp);
 
             for (var x = 0; x < 9; x++) grid.Set(x, 5, CellState.Blocked);
 
@@ -72,12 +84,13 @@ namespace BovineLabs.Grid.MeshA.Tests
                 Assert.IsTrue(grid.IsFree(result.Path[i]),
                     $"Path node {i} at {result.Path[i]} is in a blocked cell");
             result.Dispose();
+            grid.Dispose();
         }
 
         [Test]
-        public void MeshAStar_NoPath_ReturnsFalse()
+        public unsafe void MeshAStar_NoPath_ReturnsFalse()
         {
-            using var grid = new NativeGrid2D(10, 10, Allocator.Temp);
+            var grid = new NativeGrid2D(10, 10, Allocator.Temp);
 
             for (var x = 0; x < 10; x++) grid.Set(x, 5, CellState.Blocked);
 
@@ -86,11 +99,12 @@ namespace BovineLabs.Grid.MeshA.Tests
 
             Assert.IsFalse(result.Found);
             result.Dispose();
+            grid.Dispose();
         }
 
         [Test]
         [Ignore("TODO: zero-cost transitions from unconnected primitives")]
-        public void MeshAStar_PathCost_Positive()
+        public unsafe void MeshAStar_PathCost_Positive()
         {
             using var grid = new NativeGrid2D(10, 10, Allocator.Temp);
             Assert.IsTrue(MeshAStar.TryFindPath(grid, prims, mesh,
@@ -102,7 +116,7 @@ namespace BovineLabs.Grid.MeshA.Tests
         }
 
         [Test]
-        public void MeshAStar_NodesExplored_Counted()
+        public unsafe void MeshAStar_NodesExplored_Counted()
         {
             using var grid = new NativeGrid2D(10, 10, Allocator.Temp);
             Assert.IsTrue(MeshAStar.TryFindPath(grid, prims, mesh,
@@ -114,13 +128,13 @@ namespace BovineLabs.Grid.MeshA.Tests
         }
 
         [Test]
-        public void PrimitiveSet_CreateCardinal8_Has8Primitives()
+        public unsafe void PrimitiveSet_CreateCardinal8_Has8Primitives()
         {
             Assert.AreEqual(8, prims.Primitives.Length);
         }
 
         [Test]
-        public void PrimitiveSet_CreateExtended8_Has24Primitives()
+        public unsafe void PrimitiveSet_CreateExtended8_Has24Primitives()
         {
             Assert.IsTrue(PrimitiveSetFactory.TryCreateExtended8(Allocator.Temp, out var ext));
             Assert.AreEqual(24, ext.Primitives.Length);
@@ -128,7 +142,7 @@ namespace BovineLabs.Grid.MeshA.Tests
         }
 
         [Test]
-        public void MeshGraph_InitialConfigMapping_Correct()
+        public unsafe void MeshGraph_InitialConfigMapping_Correct()
         {
             for (var theta = 0; theta < 8; theta++)
             {
@@ -138,7 +152,7 @@ namespace BovineLabs.Grid.MeshA.Tests
         }
 
         [Test]
-        public void MeshAStar_Weighted_FasterThanOptimal()
+        public unsafe void MeshAStar_Weighted_FasterThanOptimal()
         {
             using var grid = new NativeGrid2D(20, 20, Allocator.Temp);
 

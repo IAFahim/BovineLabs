@@ -17,13 +17,14 @@ namespace BovineLabs.Grid.Morse
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct MorseState
+    public unsafe struct MorseState
     {
         public Grid2D Grid;
-        public NativeArray<int> Ascending;
-        public NativeArray<int> Descending;
+        public int* Ascending;
+        public int* Descending;
         public UnsafeList<CriticalPoint> Critical;
-        public NativeArray<int> Component;
+        public int* Component;
+        public Unity.Collections.AllocatorManager.AllocatorHandle Allocator;
     }
 
     [BurstCompile]
@@ -39,11 +40,12 @@ namespace BovineLabs.Grid.Morse
 
             result = new MorseState
             {
+                Allocator = a,
                 Grid = g,
-                Ascending = new NativeArray<int>(g.Length, a),
-                Descending = new NativeArray<int>(g.Length, a),
+                Ascending = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
+                Descending = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length),
                 Critical = new UnsafeList<CriticalPoint>(maxCritical, a),
-                Component = new NativeArray<int>(g.Length, a)
+                Component = (int*)Unity.Collections.AllocatorManager.Allocate(a, sizeof(int), Unity.Collections.LowLevel.Unsafe.UnsafeUtility.AlignOf<int>(), g.Length)
             };
             return true;
         }
@@ -53,8 +55,8 @@ namespace BovineLabs.Grid.Morse
         {
             s.Critical.Clear();
             var sc = (float*)scalar.GetUnsafeReadOnlyPtr();
-            var asc = (int*)s.Ascending.GetUnsafePtr();
-            var desc = (int*)s.Descending.GetUnsafePtr();
+            var asc = s.Ascending;
+            var desc = s.Descending;
             var w = s.Grid.Width;
             var h = s.Grid.Height;
 
@@ -118,8 +120,8 @@ namespace BovineLabs.Grid.Morse
         [BurstCompile]
         public static bool TryTraceManifolds(ref MorseState s)
         {
-            var comp = (int*)s.Component.GetUnsafePtr();
-            var desc = (int*)s.Descending.GetUnsafePtr();
+            var comp = s.Component;
+            var desc = s.Descending;
             var len = s.Grid.Length;
             for (var i = 0; i < len; i++) comp[i] = -1;
 
@@ -158,7 +160,7 @@ namespace BovineLabs.Grid.Morse
         public static bool TryPairByPersistence(ref MorseState s, in NativeArray<float> scalar)
         {
             var sc = (float*)scalar.GetUnsafeReadOnlyPtr();
-            var desc = (int*)s.Descending.GetUnsafePtr();
+            var desc = s.Descending;
             var len = s.Grid.Length;
             var crit = s.Critical.Ptr;
 
@@ -185,7 +187,7 @@ namespace BovineLabs.Grid.Morse
         [BurstCompile]
         public static bool TrySimplify(ref MorseState s, in NativeArray<float> scalar, float threshold)
         {
-            var desc = (int*)s.Descending.GetUnsafePtr();
+            var desc = s.Descending;
             var crit = s.Critical.Ptr;
             var len = s.Grid.Length;
 
@@ -203,10 +205,10 @@ namespace BovineLabs.Grid.Morse
 
         public static void Dispose(ref MorseState s)
         {
-            if (s.Ascending.IsCreated) s.Ascending.Dispose();
-            if (s.Descending.IsCreated) s.Descending.Dispose();
+            if (s.Ascending != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Ascending); s.Ascending = null; }
+            if (s.Descending != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Descending); s.Descending = null; }
             if (s.Critical.IsCreated) s.Critical.Dispose();
-            if (s.Component.IsCreated) s.Component.Dispose();
+            if (s.Component != null) { Unity.Collections.AllocatorManager.Free(s.Allocator, s.Component); s.Component = null; }
         }
     }
 }

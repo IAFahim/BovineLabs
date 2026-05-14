@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="18" result="Passed" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.0348938">
+  <test-suite type="TestSuite" id="1000" name="BovineLabs" fullname="BovineLabs" runstate="Runnable" testcasecount="215" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.034894" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1163" name="com.bovinelabs.grid.jps.tests.dll" fullname="/home/i/Documents/BovineLabs/Library/ScriptAssemblies/com.bovinelabs.grid.jps.tests.dll" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.028747" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="75362" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1144" name="JpsTests" fullname="JpsTests" classname="JpsTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.027819" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1162" name="_1x5_Linear" fullname="JpsTests._1x5_Linear" methodname="_1x5_Linear" classname="JpsTests" runstate="Runnable" seed="657904769" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.012218" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1161" name="_2x2_Diagonal" fullname="JpsTests._2x2_Diagonal" methodname="_2x2_Diagonal" classname="JpsTests" runstate="Runnable" seed="229153111" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000375" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1146" name="Adjacent" fullname="JpsTests.Adjacent" methodname="Adjacent" classname="JpsTests" runstate="Runnable" seed="2012472158" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000249" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1148" name="BlockedGoal" fullname="JpsTests.BlockedGoal" methodname="BlockedGoal" classname="JpsTests" runstate="Runnable" seed="1262202971" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000332" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1149" name="BlockedStart" fullname="JpsTests.BlockedStart" methodname="BlockedStart" classname="JpsTests" runstate="Runnable" seed="1556664539" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000202" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1151" name="CompletelyWalled" fullname="JpsTests.CompletelyWalled" methodname="CompletelyWalled" classname="JpsTests" runstate="Runnable" seed="568201205" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000410" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1160" name="Dispose_Double" fullname="JpsTests.Dispose_Double" methodname="Dispose_Double" classname="JpsTests" runstate="Runnable" seed="1183615409" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000162" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1159" name="ExtractPath_Broken" fullname="JpsTests.ExtractPath_Broken" methodname="ExtractPath_Broken" classname="JpsTests" runstate="Runnable" seed="280406304" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.001688" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1158" name="ExtractPath_Single" fullname="JpsTests.ExtractPath_Single" methodname="ExtractPath_Single" classname="JpsTests" runstate="Runnable" seed="1194461879" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000218" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1157" name="ExtractPath_TwoSteps" fullname="JpsTests.ExtractPath_TwoSteps" methodname="ExtractPath_TwoSteps" classname="JpsTests" runstate="Runnable" seed="1263291678" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000216" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1155" name="Jump_Diagonal" fullname="JpsTests.Jump_Diagonal" methodname="Jump_Diagonal" classname="JpsTests" runstate="Runnable" seed="1351014191" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000275" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1154" name="Jump_HitWall" fullname="JpsTests.Jump_HitWall" methodname="Jump_HitWall" classname="JpsTests" runstate="Runnable" seed="2084522757" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000189" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1156" name="Jump_OutOfBounds" fullname="JpsTests.Jump_OutOfBounds" methodname="Jump_OutOfBounds" classname="JpsTests" runstate="Runnable" seed="332011483" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000172" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1153" name="Jump_ToGoal" fullname="JpsTests.Jump_ToGoal" methodname="Jump_ToGoal" classname="JpsTests" runstate="Runnable" seed="1129768766" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000193" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1152" name="NoBacktracking" fullname="JpsTests.NoBacktracking" methodname="NoBacktracking" classname="JpsTests" runstate="Runnable" seed="58318857" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000493" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1147" name="OpenGrid_Distant" fullname="JpsTests.OpenGrid_Distant" methodname="OpenGrid_Distant" classname="JpsTests" runstate="Runnable" seed="593191602" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000251" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1145" name="StartEqualsGoal" fullname="JpsTests.StartEqualsGoal" methodname="StartEqualsGoal" classname="JpsTests" runstate="Runnable" seed="758735672" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000228" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1150" name="WallAround" fullname="JpsTests.WallAround" methodname="WallAround" classname="JpsTests" runstate="Runnable" seed="1333931708" result="Passed" start-time="2026-05-14 06:33:05Z" end-time="2026-05-14 06:33:05Z" duration="0.000267" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: /home/i/.config/unity3d/DefaultCompany/BovineLabs/TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
