@@ -4,7 +4,7 @@ This document outlines the strict performance, architectural, and stylistic guid
 
 **Primary Directive:** Maximize performance using the Unity DOTS stack (`Unity.Burst`, `Unity.Collections`, `Unity.Mathematics`).
 
-**Current Status:** 145/145 tests pass. All green. Your Job: Perfect the algorithms.
+**Current Status:** 33/34 tests pass. One failure: `AnyaTests.Search_WithWall` — interval splitting bug. See `Packages/todo.md`.
 
 **Quick Start:** Edit code → run tests → parse with compactor. See §7 below. 
 ---
@@ -334,7 +334,7 @@ If `overrideReferences != true` or `"nunit.framework.dll"` is missing or `includ
 
 ---
 
-## 9. Cross-Package Gotchas
+## 10. Cross-Package Gotchas
 
 ### `NativeArray<T>.Fill()` Extension Method
 Defined in `com.bovinelabs.grid/Runtime/MinHeap.cs` as `NativeArrayExtensions.Fill<T>`. Requires `using BovineLabs.Grid;` in any file that calls `.Fill()`. Missing using → `CS1061: 'NativeArray<float>' does not contain a definition for 'Fill'`.
@@ -347,8 +347,10 @@ Defined in `com.bovinelabs.grid/Runtime/MinHeap.cs` as `NativeArrayExtensions.Fi
 ### Domino Bipartite Matching
 Must add edges in ALL 4 directions from black cells to white neighbors (not just right/down). Bottom-right corner black cells can only match left/up. Flow extraction must handle negative diff: `diff == -1` → `matchDir[v] = 1`, `diff == -w` → `matchDir[v] = 2`.
 
-### Anya Interval Search (COMPLETE)
-LineOfSight uses Amanatides & Woo fast voxel traversal (not Bresenham). Anya uses `DoubleMinHeap` for double-precision f-values. Zero-length intervals filtered. Duplicate node detection via linear scan. `math.isinf()` guards on projection bounds before int cast. Known limitations: incomplete corner detection on dense obstacle maps, interval splitting at blocked cells (currently `continue`s past them instead of splitting). Fuzz testing monitors these gaps.
+### Anya Interval Search (KNOWN BUG)
+LineOfSight uses Amanatides & Woo fast voxel traversal (not Bresenham). Anya uses `DoubleMinHeap` for double-precision f-values. Zero-length intervals filtered. Duplicate node detection via linear scan. `math.isinf()` guards on projection bounds before int cast.
+
+**Bug:** `Search_WithWall` fails — `(0,0)→(9,0)` with blocked cell at `(5,0)`. The expansion loop iterates cells and `continue`s past blocked ones, but doesn't accumulate consecutive free cells into contiguous sub-intervals. When expanding back up to row 0 from row 1, the infinite-width projection scans x=0..9, hits blocked x=5, skips it, but the nodes at x=6..9 never connect back to goal because each is a tiny interval around a single cell. **Fix direction:** accumulate consecutive free cells in the scan loop into proper intervals `[freeStart, freeEnd)` before calling `PushNode`.
 
 ### CBS Edge Constraints (IMPLEMENTED)
 `CbsConstraint` now supports both vertex and edge constraints:
@@ -366,7 +368,72 @@ Both heap types live in `com.bovinelabs.grid/Runtime/`.
 
 ---
 
-## 10. Logging
+## 11. Visualization Architecture (Steppable ECS Pattern)
+
+Algorithms are designed to run to completion (`TrySearch`, `TryRun`). The visualization system (BovineLabs.Quill) needs frame-by-frame data. The bridge is the **Steppable ECS State Machine** — 4 layers:
+
+### Layer 1: Core Algorithm (Unmanaged Steppers)
+
+Split monolithic `while` loops into:
+- `TryInitialize(ref XState, ...)` — sets up start/goal, clears heaps
+- `TryStep(ref XState, ...)` — pops one node, expands, returns `true` while running
+
+Existing examples: `FastMarchingApi.TryPropagateStep`, `FieldDStarApi.TryStep`.
+
+### Layer 2: ECS Solver Components (Data Holder)
+
+Wrap unsafe algorithm state inside unmanaged `IComponentData`:
+```csharp
+public struct FastMarchingSolver : IComponentData
+{
+    public FastMarchingState State;
+    public bool IsInitialized;
+    public bool IsComplete;
+}
+```
+
+### Layer 3: Bridge Systems (The Missing Link)
+
+`ISystem` that runs every frame. Checks `GridVisualizerMode`:
+- **Live:** `while(Step() == Running) {}` — finish instantly, record final path to Quill
+- **Step:** Call `Step()` once, copy Open/Closed sets into `DynamicBuffer<GridCellVisual>`
+
+```csharp
+foreach (var (solver, visualizer, global, cells) in SystemAPI.Query<
+    RefRW<FastMarchingSolver>,
+    RefRO<GridVisualizerData>,
+    RefRO<GridVisualizerGlobal>,
+    DynamicBuffer<GridCellVisual>>())
+{
+    ref var fm = ref solver.ValueRW;
+    if (fm.IsInitialized && !fm.IsComplete)
+    {
+        if (global.ValueRO.Mode == GridVisualizerMode.Live)
+            fm.IsComplete = FastMarchingApi.TryPropagateAll(ref fm.State, speed);
+        else
+            fm.IsComplete = !FastMarchingApi.TryPropagateStep(ref fm.State, speed);
+    }
+
+    cells.Clear();
+    // Copy frontier/heatmap from fm.State into cells buffer
+}
+```
+
+### Layer 4: Quill Rendering (Already Done)
+
+Systems like `GridCellRenderSystem` / `GridIntervalRenderSystem` read buffers and dispatch to `DrawSystem.Singleton`. Don't change this layer.
+
+### Algorithms Needing Steppable Refactoring
+
+| Algorithm | Current | Target |
+|---|---|---|
+| Anya | Monolithic `while` | `TryInitSearch` + `TryStepSearch`. Hook: iterate `AnyaState.Pool` intervals → `DynamicBuffer<GridIntervalVisual>` |
+| CBS | Nested A* in constraint tree | Separate high-level (tree) + low-level (A*) steppers. Hook: conflicts → `GridConflictVisual`, agent paths → `GridAgentPathVisual` |
+| WFC | `TryRun` massive while | `TryObserveStep` + `TryPropagateStep`. Hook: `WfcState.Entropy` → `GridCellVisual.LayerHeatmap` (low entropy = cold, high = hot) |
+
+---
+
+## 12. Logging
 
 Use BovineLabs logging, not `Debug.Log*`.
 - In ECS systems: `var logger = SystemAPI.GetSingleton<BLLogger>(); logger.LogInfoString(...);`

@@ -1,36 +1,51 @@
-# Pathfinding & Grid Algorithms - TODO
+# Grid Algorithms TODO
 
-## In Progress
-(none currently)
+## Immediate (Blockers)
 
-## Done
-- [x] **CBS** — Edge swap conflicts, goal-wait conflicts, multi-agent bottleneck tests all passing
-- [x] **Domino** — Bipartite matching via manual flow network (bypass BuildBinaryEnergy), 4-directional edges, negative diff handling
-- [x] **GraphCut** — Undirected pairwise edges, bottleneck test, grid partition test
-- [x] **Belief** — Message buffer clearing per iteration, consensus chain test, ghost belief test
-- [x] **Test asmdef** — All 5 test assemblies use correct template (Editor platform, overrideReferences, nunit.framework.dll)
-- [x] **Anya** — LineOfSight shortcut, bidirectional expansion, Euclidean cost test, corner test
-- [x] **Anya Search_WithWall** — Fixed: `(int)math.ceil(double.PositiveInfinity)` overflow guard, zero-length interval filter, duplicate node detection
-- [x] **Anya precision** — `DoubleMinHeap` + `DoubleHeapNode` with `double` keys; AnyaApi now uses full double-precision f-values eliminating float-truncation suboptimality
-- [x] **Anya NoBlockedTraversal** — Replaced Bresenham LoS with Amanatides & Woo fast voxel traversal (epsilon-robust)
-- [x] **CBS edge constraints** — `CbsConstraint` upgraded to `(Agent, Cell, CellFrom, Time)` format. Vertex constraints: `CellFrom == -1`. Edge constraints: `CellFrom >= 0`. `FindConflict` returns `conflictType` (0=vertex, 1=swap). `TryAStar` validates both. Test: `AStar_EdgeConstraint`
-- [x] **Fuzz** — `PathfinderFuzzTests` in `shattered-unit-tests` package. 7 test configurations × 10-20 trials each. Random xorshift grids at varying densities. Validates path start/goal correctness, cross-validates JPS/Anya reachability, monitors Anya optimality gaps. 145 total tests all pass.
-- [x] **Anya completeness** — Interval splitting at blocked cells: clear-run walker creates sub-intervals `[max(pL,x), min(pR,runEnd+1)]` around blocked cells instead of `continue`-ing
-- [x] **Anya optimality** — `ExpandCorners` scans all integer x positions in `[L,R]` for left/right wall corners; `TryAddCornerNode` creates bi-directional expansion from detected corners
-- [x] **MeshA hash map elimination** — Replaced 3× `NativeHashMap` with flat `float*`/`int*` arrays + `uint*` bit-packed closed set (1 bit per state). Uses `MinHeap` with `TryInsertOrDecrease` for decrease-key. All via `UnsafeUtility.Malloc(Allocator.Temp)`.
-- [x] **EHL SIMD Jaccard** — `ComputeOverlap` uses `ulong` bitmask + `math.countbits()` for Jaccard coefficient. Fast path for ≤64 hubs, multi-word fallback for larger.
-- [x] **Belief propagation optimization** — `TryIterate` rewritten with precomputed bounds, running `cellIdx++` increment, inlined direction mapping, unrolled 4-direction message sum, `UnsafeUtility.MemSet` for buffer clear, pointer-only access (zero NativeArray indexing). `TryDecodeMap` uses unrolled 4-direction message sum.
-- [x] **Anya steppable** — `TryInitSearch` + `TryStepSearch` + `TryExtractPath`. Monolithic `TrySearch` preserved as backward-compatible wrapper. Steppable state: `Start`, `Goal`, `BestNode`, `BestCost`, `SearchComplete`.
-- [x] **WFC steppable** — `TryInitWfc` + `TryObserveStep` + `TryExtractOutput`. Monolithic `TryRun` preserved as backward-compatible wrapper. Steppable state: `ObserveHeap`, `WfcComplete` (0=running, 1=done, 2=contradiction).
-- [x] **CBS steppable** — `TryInitSolve` + `TryStepSolve` + `TryExtractSolution`. Monolithic `TrySolve` preserved as backward-compatible wrapper. Steppable state: `SolveComplete`, `AgentCount`, `SolutionNode`.
-- [x] **EDT ScheduleParallel** — `TryBuildScheduled` returns `JobHandle` pipeline: `EdtRowJob.ScheduleParallel` → `EdtColJob.ScheduleParallel` with proper dependency chaining. `TryBuildParallel` convenience wrapper completes inline. `TryBuild` (sequential) unchanged.
-- [x] **Continuum crowd optimization** — `TrySolvePotential` Gauss-Seidel sweeps flattened to 1D running `idx++`/`idx--` pointer increments. `RelaxCell` accepts precomputed index. `TryBuildFlow` flattened to 1D with running `idx++`. All neighbor reads via `pot[idx±1]`/`pot[idx±w]` — zero division/index math in inner loops.
-- [x] **DStarLite pointer optimization** — All `s.G`/`s.RHS`/`s.InOpen`/`s.Parent` accesses in `TryRepair`, `TryExtractPath`, `CalculateKey`, `TryUpdateVertex`, `TryUpdateSuccessors` replaced with pre-extracted `float*`/`byte*`/`int*` pointers. Zero NativeArray indexing in hot loops.
-- [x] **RSR pointer optimization** — `TryGetSuccessors` extracts `RectOfCell` pointer once; neighbor lookups via `roc[idx]` instead of `s.RectOfCell[idx]`.
-- [x] **Subgoal pointer optimization** — `TryRelax` and `ExtractPath` take `float*`/`int*` raw pointers instead of `NativeArray<float/int>` refs. Eliminates safety handle overhead in A* inner loop.
+- [ ] **Anya `Search_WithWall`** — Only failing test (1/34). `(0,0)→(9,0)` with blocked `(5,0)`. Root cause: interval scanning hits blocked cell and `continue`s past it, but doesn't properly split into two sub-intervals `[0,5)` and `[6,10)`. The node from row 1 expanding back up to row 0 with infinite-width projection scans all x=0..9, hits blocked x=5, skips it, but the interval `oL..oR` at x=6..9 never gets created because `cellY = min(1,0) = 0` means it checks row 0 cells which includes x=5. The fix: when scanning `startX..endX`, accumulate consecutive free cells into contiguous intervals instead of per-cell intervals. See AGENTS.md §9 "Anya Interval Expansion (KNOWN BUG)".
 
-## Future
-- [ ] Verify all changes compile and 145+ tests pass in Unity
-- [ ] Profile: benchmark Anya steppable vs monolithic, WFC observe-step throughput, CBS step latency
-- [ ] HashLife: evaluate replacing `NativeParallelHashMap<ulong,int>` with custom open-addressing flat hash for Intern/ResultCache
-- [ ] Subgoal: TryRelax inner loop could use SoA layout (gArr + parent as parallel arrays already, but subgoals Ptr access is still random)
+## Steppable Refactoring (for Visualization)
+
+These algorithms have monolithic `while` loops that need `TryInit` + `TryStep` decomposition so a visualization system can drive them frame-by-frame.
+
+- [ ] **AnyaApi** → `TryInitSearch(start, goal)` + `TryStepSearch(out bool foundGoal)`. Extract the `while (!heap.IsEmpty)` body into single-pop step.
+- [ ] **WfcApi** → `TryObserveStep()` + `TryPropagateStep()`. Split `TryRun`'s `while(!heap.IsEmpty)` into observe-one + propagate-one.
+- [ ] **CbsApi** → Separate high-level constraint tree stepper from low-level A* stepper. Nested loop → two state machines.
+- [ ] **JpsApi** → `TryInitSearch` + `TryStepSearch` (jump point expansion per step).
+
+## Recast-Level Optimization (Performance Pass)
+
+Current code uses `NativeArray<T>` + `GetUnsafePtr()` which is functional but not Recast-standard. For maximum throughput:
+
+- [ ] **State structs → raw pointers** — Replace `NativeArray<T>` fields with `T*` + `AllocatorManager.AllocatorHandle`. Eliminates safety handle overhead entirely. Pattern: `AllocatorManager.Allocate(handle, size, align)` in `TryCreate`, `AllocatorManager.Free` in `Dispose`.
+- [ ] **BeliefApi** — `Messages`/`MessagesNext` pointer swap instead of copy. Already partially done. Add `UnsafeUtility.MemClear` for zeroing.
+- [ ] **EHLIndexer** — `NativeHashMap` allocation inside double loop → hoist out, `.Clear()` per cell. `NativeArray<NativeList<T>>` → flat `T*` + offset/count arrays.
+- [ ] **MeshAStar** — `UnsafeUtility.Malloc` per query → pre-allocate in `MeshAStarState`, `MemClear` at query start.
+- [ ] **MultiResThetaStar / Wavestar** — `NativeMinPQ`, `NativeHashSet`, `NativeHashMap` allocated per `Execute()` → store in query context, `.Clear()` at start.
+- [ ] **MinHeap comparison** — Add `[MethodImpl(AggressiveInlining)]` to `Less`, `Swap`, `SiftUp`, `SiftDown`.
+- [ ] **HashLife** — `NativeParallelHashMap<ulong,int>` → custom open-addressing flat hash for Intern/ResultCache.
+- [ ] **Anya helpers** — `PushNode`, `IsEdgePassable`, `NodeEquals` need `[MethodImpl(AggressiveInlining)]`.
+
+## CBS Edge Constraints
+
+- [ ] **Upgrade `CbsConstraint`** — Add `CellFrom` field. `CellFrom == -1` → vertex constraint (agent can't occupy `Cell` at `Time`). `CellFrom >= 0` → edge constraint (agent can't traverse `CellFrom → Cell` at `Time`).
+- [ ] **Update `FindConflict`** — Detect swap conflicts (agents swap positions between T and T+1). Generate edge constraints instead of approximating with vertex constraints.
+- [ ] **Update `TryAStar`** — Validate both vertex and edge constraints during neighbor expansion.
+
+## Test Coverage Gaps
+
+- [ ] **Create_Dimensions** — Every algorithm should verify memory sizes and Grid2D correctness after `TryCreate`.
+- [ ] **Dispose_Double** — Every algorithm should verify calling `Dispose(ref s)` twice does not throw.
+- [ ] **Blocked/NoPath** — Fully blocked goal, out-of-bounds start/goal, empty grid.
+- [ ] **Fuzz** — Pathfinder equivalence tests: A* vs JPS vs Anya on random grids (same start/goal, verify path cost matches within epsilon).
+
+## Done ✓
+
+- [x] **CBS** — Edge swap conflict detection, goal-wait clamping, multi-agent bottleneck tests
+- [x] **Domino** — Manual bipartite flow network, 4-directional edges, negative diff handling, mutilated chessboard test
+- [x] **GraphCut** — Undirected pairwise, public `AddEdgeInternal`, bottleneck + partition tests
+- [x] **Belief** — `MessagesNext.Fill(0f)` per iteration, consensus + ghost belief tests
+- [x] **Anya** — Double precision, bidirectional expansion, LineOfSight shortcut, euclidean cost + corner tests
+- [x] **Test asmdef** — All 5 test assemblies use correct template
+- [x] **AGENTS.md** — Full workflow, gotchas, known bugs, cross-package references
+- [x] **Skill file** — `grid-tests` skill with compactor loop
