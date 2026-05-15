@@ -151,7 +151,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912966824055113308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6d5a07a3cf34c9da0f7aa29435adad0, type: 3}
   m_Name: 
@@ -166,7 +166,7 @@ MonoBehaviour:
     conditions:
     - Name: CurrentHealth
       Condition: {fileID: 11400000, guid: a2c8bd61e59f4d298796af28322b0fdb, type: 2}
-      Target: 1
+      Target: 2
       Operation: 4
       ComparisonMode: 0
       Value: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912966824055113308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d132318fd4a94957947f32561bd4f38f, type: 3}
   m_Name: 
@@ -215,7 +215,7 @@ PlayableDirector:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912966824055113308}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: a6c14f678bdb232cab04b7649a1d1690, type: 2}
   m_InitialState: 1
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912966824055113308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8dcbda6791f5f841a9bee881a1df3ac, type: 3}
   m_Name: 
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7912966824055113308}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72f40eccefaf4b1d9a64964f08d866b8, type: 3}
   m_Name: 

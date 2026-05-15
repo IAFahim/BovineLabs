@@ -5554,7 +5554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &440108313
 Transform:
   m_ObjectHideFlags: 0
@@ -7889,6 +7889,138 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 492110645}
   m_SourcePrefab: {fileID: 100100000, guid: bfa42ba6d484e4e448024c9acf736ce9, type: 3}
+--- !u!1 &1036715270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1036715271}
+  - component: {fileID: 1036715274}
+  - component: {fileID: 1036715273}
+  - component: {fileID: 1036715272}
+  - component: {fileID: 1036715275}
+  m_Layer: 0
+  m_Name: Fire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1036715271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036715270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1036715272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036715270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d5a07a3cf34c9da0f7aa29435adad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.ReactionAuthoring
+  Active:
+    trigger: 0
+    cooldown: 0
+    cooldownAfterDuration: 0
+    duration: 0
+    cancellable: 0
+  Conditions:
+    conditions:
+    - Name: OnInputJump
+      Condition: {fileID: 11400000, guid: 5f3b5168811f23d4e87bdf30fd357d9f, type: 2}
+      Target: 2
+      Operation: 1
+      ComparisonMode: 0
+      Value: 1
+      CustomValue:
+        rid: -2
+      MinComparisonMode: 0
+      ValueMin: 0
+      CustomValueMin:
+        rid: -2
+      MaxComparisonMode: 0
+      ValueMax: 0
+      CustomValueMax:
+        rid: -2
+      Features: 3
+      DestroyIfTargetDestroyed: 0
+      CancelActive: 0
+    conditionLogic:
+      expression: 
+    chanceToTrigger: 1
+    doNotReset: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!114 &1036715273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036715270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0038df9991804dab9b4127193908728a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Core.TargetsAuthoring
+  Owner: {fileID: 1387560016}
+  Source: {fileID: 0}
+  Target: {fileID: 1387560016}
+  Custom:
+    Enable: 0
+    Target0: {fileID: 0}
+    Target1: {fileID: 0}
+  Initialize:
+    Target: 2
+--- !u!114 &1036715274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036715270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d1839be73e81ae4c97132df4493e93f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Core.Extensions.Authoring::BovineLabs.Core.Authoring.LifeCycle.LifeCycleAuthoring
+--- !u!114 &1036715275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036715270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baddbaf9d465492f893085a6710849e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Reaction.Authoring::BovineLabs.Reaction.Authoring.Actions.ActionCreateAuthoring
+  Create:
+  - Definition: {fileID: 11400000, guid: 9e38df8b35f84594e9d43655037fb8fe, type: 2}
+    Target: 2
+    DestroyOnDisabled: 0
 --- !u!1 &1241495307
 GameObject:
   m_ObjectHideFlags: 0
@@ -7909,7 +8041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1241495308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10398,6 +10530,70 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504515829}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1586938273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586938274}
+  - component: {fileID: 1586938276}
+  - component: {fileID: 1586938275}
+  m_Layer: 0
+  m_Name: Inputs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1586938274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586938273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1586938275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586938273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c238a9d99814c3fb11798728c074d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BovineLabs.Timeline.Core.Authoring::BovineLabs.Timeline.Core.Authoring.TimelineReferenceAuthoring
+--- !u!320 &1586938276
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586938273}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: c79c59faed936ddb3bfea777e30d520c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 1
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -7378708195165862340, guid: c79c59faed936ddb3bfea777e30d520c, type: 2}
+    value: {fileID: 459224084}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1642187687
 GameObject:
   m_ObjectHideFlags: 0
@@ -10704,7 +10900,7 @@ Transform:
   m_GameObject: {fileID: 1715107373}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3314136, y: 0.46193975, z: -0.19134174, w: 0.8001032}
-  m_LocalPosition: {x: -11.291589, y: 13.038405, z: -6.519202}
+  m_LocalPosition: {x: -11.291589, y: 14.706406, z: -6.519202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -10803,7 +10999,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1749563369
 Transform:
   m_ObjectHideFlags: 0
@@ -10813,7 +11009,7 @@ Transform:
   m_GameObject: {fileID: 1749563368}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.668, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -10934,4 +11130,6 @@ SceneRoots:
   - {fileID: 1241495310}
   - {fileID: 1749563369}
   - {fileID: 492277831}
+  - {fileID: 1036715271}
+  - {fileID: 1586938274}
   - {fileID: 913748216}

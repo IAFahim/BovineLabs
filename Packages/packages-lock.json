@@ -5,16 +5,16 @@
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.bovinelabs.core": "1.6.0"
+        "com.bovinelabs.core": "1.6.1"
       },
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.bridge": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.core": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.core",
@@ -23,7 +23,7 @@
       "dependencies": {
         "com.unity.entities": "1.4.5"
       },
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.essence": {
       "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
@@ -33,7 +33,7 @@
         "com.bovinelabs.core": "1.4.4",
         "com.bovinelabs.reaction": "0.5.0"
       },
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.grid": {
       "version": "https://github.com/IAFahim/com.bovinelabs.grid.git",
@@ -88,7 +88,7 @@
       "dependencies": {
         "com.bovinelabs.core": "1.4.6"
       },
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.spatial": {
       "version": "file:BovineLabs.Spatial",
@@ -110,7 +110,7 @@
         "com.bovinelabs.core": "1.6.0",
         "com.unity.timeline": "1.8.11"
       },
-      "hash": "e30f2d1c4c57b5c278c9b793d588e96ea6351ee6"
+      "hash": "544246b3801148a68e39ccb6c1fb3ccde6485787"
     },
     "com.bovinelabs.timeline.animation": {
       "version": "file:BovineLabs.Timeline.Animation",
@@ -277,7 +277,7 @@
       "dependencies": {
         "com.unity.modules.subsystems": "1.0.0"
       },
-      "hash": "51bb63dccdb0ac4e40b6a8bfd17a153b1696ae11"
+      "hash": "19e06634f4f0411898eacf0f1ad55a49fbcc6929"
     },
     "com.rukhanka.animation": {
       "version": "file:com.rukhanka.animation",
