@@ -58,14 +58,14 @@
       }
     },
     "com.bovinelabs.quill": {
-      "version": "https://github.com/IAFahim/com.bovinelabs.quill.git",
+      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.quill",
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.bovinelabs.core": "1.4.6",
-        "com.unity.entities.graphics": "1.4.13-pre.4"
+        "com.bovinelabs.core": "1.6.0",
+        "com.unity.entities.graphics": "1.4.15"
       },
-      "hash": "e20cddee7c935ead9d4e077930807d65c1ac0039"
+      "hash": "77e8a565196e92aa797e7be77f25ae23ff83d213"
     },
     "com.bovinelabs.quill.grid": {
       "version": "file:BovineLabs.Quill.Grid",
@@ -270,6 +270,15 @@
         "com.bovinelabs.timeline.core": "1.0.0"
       }
     },
+    "com.bovinelabs.vibe": {
+      "version": "file:com.bovinelabs.vibe",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.bovinelabs.core": "1.6.1",
+        "com.bovinelabs.timeline": "1.0.2"
+      }
+    },
     "com.gitcopy.gc": {
       "version": "https://github.com/IAFahim/GC.git?path=/integration/unity/Packages/com.gitcopy.gc",
       "depth": 0,
@@ -278,6 +287,15 @@
         "com.unity.modules.subsystems": "1.0.0"
       },
       "hash": "19e06634f4f0411898eacf0f1ad55a49fbcc6929"
+    },
+    "com.iafahim.test-pkg": {
+      "version": "https://github.com/IAFahim/com.iafahim.test-pkg.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.mathematics": "1.3.2"
+      },
+      "hash": "cdadf92ef21a0f7ff7db549ba362076ef070c3bd"
     },
     "com.rukhanka.animation": {
       "version": "file:com.rukhanka.animation",

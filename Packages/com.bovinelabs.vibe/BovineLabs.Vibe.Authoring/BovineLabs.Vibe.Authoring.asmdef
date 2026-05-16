@@ -1,0 +1,91 @@
+{
+    "name": "BovineLabs.Vibe.Authoring",
+    "rootNamespace": "",
+    "references": [
+        "BovineLabs.Anchor",
+        "BovineLabs.Bridge.Authoring",
+        "BovineLabs.Bridge.Data",
+        "BovineLabs.Core",
+        "BovineLabs.Core.Authoring",
+        "BovineLabs.Core.Extensions",
+        "BovineLabs.Core.Extensions.Authoring",
+        "BovineLabs.Timeline",
+        "BovineLabs.Timeline.Authoring",
+        "BovineLabs.Timeline.Data",
+        "BovineLabs.Vibe.Data",
+        "BovineLabs.Reaction.Authoring",
+        "BovineLabs.Reaction.Data",
+        "Rukhanka.Runtime",
+        "Rukhanka.Toolbox",
+        "Unity.AppUI",
+        "Unity.AppUI.Navigation",
+        "Unity.Burst",
+        "Unity.Cinemachine",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Entities.Graphics",
+        "Unity.Entities.Hybrid",
+        "Unity.InputSystem",
+        "Unity.Mathematics",
+        "Unity.Mathematics.Extensions",
+        "Unity.Physics",
+        "Unity.Physics.Custom",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.Splines",
+        "Unity.Timeline",
+        "Unity.Transforms"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.bovinelabs.reaction",
+            "expression": "",
+            "define": "BL_REACTION"
+        },
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "",
+            "define": "UNITY_CINEMACHINE"
+        },
+        {
+            "name": "com.unity.physics",
+            "expression": "",
+            "define": "UNITY_PHYSICS"
+        },
+        {
+            "name": "com.bovinelabs.bridge",
+            "expression": "",
+            "define": "BOVINELABS_BRIDGE"
+        },
+        {
+            "name": "com.bovinelabs.anchor",
+            "expression": "",
+            "define": "BL_ANCHOR"
+        },
+        {
+            "name": "com.rukhanka.animation",
+            "expression": "",
+            "define": "RUKHANKA"
+        },
+        {
+            "name": "com.unity.render-pipelines.high-definition",
+            "expression": "",
+            "define": "UNITY_HDRP"
+        },
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "UNITY_URP"
+        }
+    ],
+    "noEngineReferences": false
+}

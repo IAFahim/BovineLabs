@@ -1,0 +1,21 @@
+{
+  "name": "com.bovinelabs.vibe",
+  "description": "Vibe is a package that integrates with Reaction for making a game feel good.",
+  "version": "0.1.0",
+  "unity": "6000.3",
+  "displayName": "BovineLabs Vibe",
+  "dependencies": {
+    "com.bovinelabs.core": "1.6.1",
+    "com.bovinelabs.timeline": "1.0.2"
+  },
+  "keywords": [
+    "Feel",
+	"Vibe",
+	"Entities",
+	"ECS",
+	"DOTS"
+  ],
+  "author": {
+    "name": "BovineLabs"
+  }
+}

@@ -1,0 +1,73 @@
+{
+    "name": "BovineLabs.Vibe.Tests",
+    "rootNamespace": "",
+    "references": [
+        "BovineLabs.Core",
+        "BovineLabs.Core.Extensions",
+        "BovineLabs.Testing",
+        "BovineLabs.Timeline",
+        "BovineLabs.Timeline.Data",
+        "BovineLabs.Bridge.Data",
+        "BovineLabs.Bridge.Input",
+        "BovineLabs.Reaction.Data",
+        "BovineLabs.Vibe",
+        "BovineLabs.Vibe.Data",
+        "Rukhanka.Runtime",
+        "Unity.Burst",
+        "Unity.Cinemachine",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Mathematics",
+        "Unity.Physics",
+        "Unity.Physics.Custom",
+        "Unity.Transforms",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.bovinelabs.reaction",
+            "expression": "",
+            "define": "BL_REACTION"
+        },
+        {
+            "name": "com.bovinelabs.bridge",
+            "expression": "",
+            "define": "BOVINELABS_BRIDGE"
+        },
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "",
+            "define": "UNITY_CINEMACHINE"
+        },
+        {
+            "name": "com.unity.physics",
+            "expression": "",
+            "define": "UNITY_PHYSICS"
+        },
+        {
+            "name": "com.bovinelabs.anchor",
+            "expression": "",
+            "define": "BL_ANCHOR"
+        },
+        {
+            "name": "com.rukhanka.animation",
+            "expression": "",
+            "define": "RUKHANKA"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,74 @@
+{
+    "name": "BovineLabs.Vibe.Editor",
+    "rootNamespace": "",
+    "references": [
+        "BovineLabs.Bridge.Data",
+        "BovineLabs.Core",
+        "BovineLabs.Core.Editor",
+        "BovineLabs.Core.Extensions",
+        "BovineLabs.Core.Extensions.Editor",
+        "BovineLabs.Timeline",
+        "BovineLabs.Timeline.Authoring",
+        "BovineLabs.Timeline.Data",
+        "BovineLabs.Timeline.Editor",
+        "BovineLabs.Vibe",
+        "BovineLabs.Vibe.Authoring",
+        "BovineLabs.Vibe.Data",
+        "Rukhanka.Runtime",
+        "Rukhanka.Toolbox",
+        "Unity.Burst",
+        "Unity.Collections",
+        "Unity.Entities",
+        "Unity.Entities.Graphics",
+        "Unity.Entities.Hybrid",
+        "Unity.InputSystem",
+        "Unity.Mathematics",
+        "Unity.Mathematics.Extensions",
+        "Unity.Physics",
+        "Unity.Timeline",
+        "Unity.Transforms"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.cinemachine",
+            "expression": "",
+            "define": "UNITY_CINEMACHINE"
+        },
+        {
+            "name": "com.unity.physics",
+            "expression": "",
+            "define": "UNITY_PHYSICS"
+        },
+        {
+            "name": "com.bovinelabs.bridge",
+            "expression": "",
+            "define": "BOVINELABS_BRIDGE"
+        },
+        {
+            "name": "com.rukhanka.animation",
+            "expression": "",
+            "define": "RUKHANKA"
+        },
+        {
+            "name": "com.unity.render-pipelines.high-definition",
+            "expression": "",
+            "define": "UNITY_HDRP"
+        },
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "UNITY_URP"
+        }
+    ],
+    "noEngineReferences": false
+}

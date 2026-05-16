@@ -1,0 +1,47 @@
+// <copyright file="TrackActivateJob.cs" company="BovineLabs">
+//     Copyright (c) BovineLabs. All rights reserved.
+// </copyright>
+
+namespace BovineLabs.Vibe.Jobs
+{
+    using BovineLabs.Timeline.Data;
+    using BovineLabs.Vibe.Data;
+    using Unity.Burst;
+    using Unity.Burst.Intrinsics;
+    using Unity.Collections;
+    using Unity.Entities;
+
+    [BurstCompile]
+    public unsafe struct TrackActivateJob<TC, TI> : IJobChunk
+        where TI : unmanaged, IInitial<TC>
+        where TC : unmanaged, IComponentData
+    {
+        public ComponentTypeHandle<TI> InitialHandle;
+
+        [ReadOnly]
+        public ComponentTypeHandle<TrackBinding> TrackBindingHandle;
+
+        [ReadOnly]
+        public ComponentLookup<TC> Targets;
+
+        public void Execute(in ArchetypeChunk chunk, int chunkIndexInQuery, bool useEnabledMask, in v128 chunkEnabledMask)
+        {
+            var initials = (TI*)chunk.GetRequiredComponentDataPtrRW(ref this.InitialHandle);
+            var trackBindings = (TrackBinding*)chunk.GetRequiredComponentDataPtrRO(ref this.TrackBindingHandle);
+
+            var enumerator = new ChunkEntityEnumerator(useEnabledMask, chunkEnabledMask, chunk.Count);
+            while (enumerator.NextEntityIndex(out var entityIndexInChunk))
+            {
+                ref var initial = ref initials[entityIndexInChunk];
+                ref readonly var trackBinding = ref trackBindings[entityIndexInChunk];
+
+                if (!this.Targets.TryGetComponent(trackBinding.Value, out var target))
+                {
+                    continue;
+                }
+
+                initial.Value = target;
+            }
+        }
+    }
+}
