@@ -23,13 +23,6 @@
     "ecs",
     "grid"
   ],
-  "samples": [
-    {
-      "displayName": "Grid",
-      "description": "Quill grid sample content for validating grid functionality.",
-      "path": "Sample~/Grid"
-    }
-  ],
   "documentationUrl": "Documentation~/com.bovinelabs.quill.grid.md",
   "changelogUrl": "CHANGELOG.md",
   "licensesUrl": "LICENSE.md"
