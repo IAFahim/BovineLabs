@@ -32,9 +32,9 @@
     "com.unity.physics": "6.6.0",
     "com.unity.render-pipelines.universal": "17.6.0",
     "com.unity.sdk.linux-x86_64": "1.0.2",
-    "com.unity.test-framework": "1.7.1",
+    "com.unity.test-framework": "1.8.0",
     "com.unity.toolchain.linux-x86_64-linux": "1.0.2",
-    "com.unity.ugui": "2.5.0",
+    "com.unity.ugui": "2.6.0",
     "com.youngwoocho02.unity-cli-connector": "https://github.com/youngwoocho02/unity-cli.git?path=unity-connector",
     "com.unity.modules.terrainphysics": "1.0.0"
   }

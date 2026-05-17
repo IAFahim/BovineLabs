@@ -98,7 +98,7 @@ MonoBehaviour:
       m_Values: []
     obsoleteHasProbeVolumes:
       m_Keys: []
-      m_Values: 
+      m_Values: {_typeName: UInt8, _data: }
   references:
     version: 2
     RefIds:
