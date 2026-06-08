@@ -131,7 +131,7 @@ MonoBehaviour:
   trackOffset: 0
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  avatarMask: {fileID: 0}
+  avatarMask: {fileID: 31900000, guid: afee539b36297f8be9cc97288c7fe36a, type: 2}
   applyAvatarMask: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -252,5 +252,5 @@ MonoBehaviour:
   trackOffset: 0
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
-  avatarMask: {fileID: 31900000, guid: 8bda9a55bc0d8e4449a71dccd2c4c103, type: 2}
+  avatarMask: {fileID: 31900000, guid: 3e333a8cad7eabb8490acf7fc1842307, type: 2}
   applyAvatarMask: 1

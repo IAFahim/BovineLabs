@@ -131,6 +131,14 @@ PrefabInstance:
       propertyPath: m_PrefabInstanceID
       value: 141440391
       objectReference: {fileID: 0}
+    - target: {fileID: 1146922766023240353, guid: 2cf96c7253b99a4f0b8878443af0fb1e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112141447495895808, guid: 2cf96c7253b99a4f0b8878443af0fb1e, type: 3}
+      propertyPath: avatarOptimizationMask
+      value: 
+      objectReference: {fileID: 31900000, guid: afee539b36297f8be9cc97288c7fe36a, type: 2}
     - target: {fileID: 5202540583985552405, guid: 2cf96c7253b99a4f0b8878443af0fb1e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -175,6 +183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7921783443034814916, guid: 2cf96c7253b99a4f0b8878443af0fb1e, type: 3}
+      propertyPath: fallbackAnimationClip
+      value: 
+      objectReference: {fileID: 7400012, guid: 1bbe72df8c2b6af46bfbadad72175372, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
