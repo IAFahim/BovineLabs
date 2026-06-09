@@ -4,6 +4,7 @@
     "com.bovinelabs.bridge": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.bridge",
     "com.bovinelabs.core": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.core",
     "com.bovinelabs.essence": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.essence",
+    "com.bovinelabs.vibe": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.vibe",
     "com.bovinelabs.grid": "https://github.com/IAFahim/com.bovinelabs.grid.git",
     "com.bovinelabs.grove": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.grove",
     "com.bovinelabs.quill": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.quill",

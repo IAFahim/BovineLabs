@@ -259,6 +259,16 @@
         "com.bovinelabs.timeline.core": "1.0.0"
       }
     },
+    "com.bovinelabs.vibe": {
+      "version": "https://github.com/IAFahim/tertle-monorepo.git?path=com.bovinelabs.vibe",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.bovinelabs.core": "1.6.1",
+        "com.bovinelabs.timeline": "1.0.2"
+      },
+      "hash": "306cb091dfdaf3e2e387252015912fc12610155d"
+    },
     "com.firealt.blinq": {
       "version": "https://github.com/Fire-Aalt/BLinq.git",
       "depth": 0,

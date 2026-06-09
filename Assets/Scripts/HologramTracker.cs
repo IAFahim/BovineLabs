@@ -9,10 +9,6 @@ public class HologramTracker : MonoBehaviour
         // and the active Game View camera in Play Mode.
         var cam = Camera.current;
         if (cam != null)
-        {
-            // By copying the camera's rotation exactly, the text's negative Z-axis 
-            // (the front of the TMPro) will directly face the camera, preventing flipping.
-            transform.rotation = cam.transform.rotation * UnityEngine.Quaternion.Euler(0, 180f, 0);
-        }
+            transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward, cam.transform.rotation * Vector3.up);
     }
 }
