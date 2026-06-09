@@ -12,7 +12,7 @@ public class HologramTracker : MonoBehaviour
         {
             // By copying the camera's rotation exactly, the text's negative Z-axis 
             // (the front of the TMPro) will directly face the camera, preventing flipping.
-            transform.rotation = cam.transform.rotation;
+            transform.rotation = cam.transform.rotation * UnityEngine.Quaternion.Euler(0, 180f, 0);
         }
     }
 }
