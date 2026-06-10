@@ -1469,6 +1469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb458f06bc41f98dd5b0cae8cf891f, type: 3}
   m_Name: EssenceUIClip(Clone)
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
+  Source:
+    Mode: 0
+    Player: 0
+    Route: 0
+    Link: {fileID: 0}
   Stats:
   - {fileID: 11400000, guid: 8d4eb6003a4fef5b18d84bc4a801d67f, type: 2}
   Intrinsics:
@@ -2086,6 +2091,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb458f06bc41f98dd5b0cae8cf891f, type: 3}
   m_Name: EssenceUIClip(Clone)
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
+  Source:
+    Mode: 0
+    Player: 0
+    Route: 0
+    Link: {fileID: 0}
   Stats:
   - {fileID: 11400000, guid: 8d4eb6003a4fef5b18d84bc4a801d67f, type: 2}
   Intrinsics:
@@ -2103,6 +2113,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9acb458f06bc41f98dd5b0cae8cf891f, type: 3}
   m_Name: EssenceUIClip
   m_EditorClassIdentifier: BovineLabs.Timeline.UI.Authoring::BovineLabs.Timeline.UI.Authoring.EssenceUIClip
+  Source:
+    Mode: 0
+    Player: 0
+    Route: 0
+    Link: {fileID: 0}
   Stats:
   - {fileID: 11400000, guid: 8d4eb6003a4fef5b18d84bc4a801d67f, type: 2}
   Intrinsics:
@@ -3393,6 +3408,8 @@ MonoBehaviour:
     - Action: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
       Mode: 0
       Phase: 0
+      MaxGapTicks: 0
+      MinChargeTicks: 30
     Condition: {fileID: 11400000, guid: 5f3b5168811f23d4e87bdf30fd357d9f, type: 2}
     Value: 1
   RouteTo: {fileID: 11400000, guid: 107f0f9aa8c3327da9d3b31dc6c772b8, type: 2}
@@ -3774,6 +3791,10 @@ MonoBehaviour:
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
   avatarMask: {fileID: 0}
   applyAvatarMask: 1
+  ExitIdleClip: {fileID: 0}
+  BlendInDuration: 0.25
+  BlendOutDuration: 0.25
+  FallbackPlaybackMode: 0
 --- !u!114 &4497018687995842795
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4124,6 +4145,7 @@ MonoBehaviour:
     y: 0
   ReadKind: 1
   ReadFrom: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+  maxSpeed: 5
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
   removeStartOffset: 0
@@ -4426,6 +4448,10 @@ MonoBehaviour:
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
   avatarMask: {fileID: 0}
   applyAvatarMask: 1
+  ExitIdleClip: {fileID: 0}
+  BlendInDuration: 0.25
+  BlendOutDuration: 0.25
+  FallbackPlaybackMode: 0
 --- !u!114 &5672766414000748912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4819,6 +4845,7 @@ MonoBehaviour:
     y: 0.7
   ReadKind: 1
   ReadFrom: {fileID: 11400000, guid: c868fab23b9ed69fcafbf52732dcf4cf, type: 2}
+  maxSpeed: 5
   positionOffset: {x: 0, y: 0, z: 0}
   eulerAnglesOffset: {x: 0, y: 0, z: 0}
   removeStartOffset: 0
