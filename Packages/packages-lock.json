@@ -175,7 +175,7 @@
         "com.bovinelabs.timeline.core": "1.0.0"
       }
     },
-    "com.bovinelabs.timeline.physics": {
+    "com.bovinelabs.timeline.physics.fix": {
       "version": "file:BovineLabs.Timeline.Physics",
       "depth": 0,
       "source": "embedded",
