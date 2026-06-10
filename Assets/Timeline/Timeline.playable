@@ -1218,6 +1218,7 @@ MonoBehaviour:
   teleportRelativeToLink: {fileID: 0}
   azimuthTarget: 3
   azimuthTargetLink: {fileID: 0}
+  referenceFrame: 1
   azimuthCenter: 0
   azimuthHalfRange: 180
   elevationCenter: 0
@@ -2347,6 +2348,7 @@ MonoBehaviour:
   teleportRelativeToLink: {fileID: 0}
   azimuthTarget: 1
   azimuthTargetLink: {fileID: 0}
+  referenceFrame: 1
   azimuthCenter: 0
   azimuthHalfRange: 180
   elevationCenter: 0
@@ -3409,7 +3411,7 @@ MonoBehaviour:
       Mode: 0
       Phase: 0
       MaxGapTicks: 0
-      MinChargeTicks: 30
+      MinChargeTicks: 1
     Condition: {fileID: 11400000, guid: 5f3b5168811f23d4e87bdf30fd357d9f, type: 2}
     Value: 1
   RouteTo: {fileID: 11400000, guid: 107f0f9aa8c3327da9d3b31dc6c772b8, type: 2}

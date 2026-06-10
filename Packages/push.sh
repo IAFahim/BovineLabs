@@ -49,21 +49,35 @@ if [ ${#PACKAGE_PATHS[@]} -gt 0 ]; then
         
         # Determine if we need to push (handles unpushed changes you forgot about)
         NEEDS_PUSH=false
+        PUSH_ARGS=""
         upstream=$(git rev-parse --abbrev-ref '@{upstream}' 2>/dev/null || echo "")
         
         if [ -z "$upstream" ]; then
-            # No upstream branch configured -> Needs push
-            NEEDS_PUSH=true
+            # Detached HEAD or no upstream branch configured
+            BRANCH=$(git symbolic-ref -q --short HEAD || echo "")
+            if [ -z "$BRANCH" ]; then
+                # Detached HEAD
+                DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@' || echo "main")
+                if ! git merge-base --is-ancestor HEAD "origin/$DEFAULT_BRANCH" 2>/dev/null; then
+                    NEEDS_PUSH=true
+                    PUSH_ARGS="origin HEAD:$DEFAULT_BRANCH"
+                fi
+            else
+                # On a branch, no upstream
+                NEEDS_PUSH=true
+                PUSH_ARGS="-u origin $BRANCH"
+            fi
         else
             # Check if there are any unpushed commits
             if [ -n "$(git rev-list "${upstream}..HEAD" 2>/dev/null)" ]; then
                 NEEDS_PUSH=true
+                BRANCH=$(git symbolic-ref -q --short HEAD)
+                PUSH_ARGS="-u origin $BRANCH"
             fi
         fi
         
         if [ "$NEEDS_PUSH" = true ]; then
-            # Push and set upstream automatically (-u)
-            if git push -u origin HEAD >/dev/null 2>&1; then
+            if git push $PUSH_ARGS >/dev/null 2>&1; then
                 ok "$label — pushed"
             else
                 warn "$label — push failed"
